@@ -1,20 +1,19 @@
 #!/usr/bin/env bash
 
-if [[ ! -d "$HOME/dev" ]]; then
-  mkdir -p "$HOME/dev"
-fi
+printf "Installing Homebrew, a great OS X package manager ..."
+  ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
 
-cd "$HOME/dev"
+printf "Installing git for version control ..."
+  brew git
 
-printf "Installing OS packages. You will be prompted for your password ..."
-  sudo apt-get update
-  sudo apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev
+printf "Installing Postgres, a great open source relational database ..."
+  brew install postgres --no-python
 
-printf "Install Postgres, a great open source relational database ..."
-  sudo apt-get libpq-dev postgresql
+printf "Installing Redis, a key-value database ..."
+  brew install redis
 
 printf "Installing ImageMagick, good for cropping and re-sizing images ..."
-  sudo apt-get install imagemagick --fix-missing
+  brew install imagemagick
 
 printf "Installing RVM (Ruby Version Manager) ..."
   bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
@@ -38,13 +37,10 @@ printf "Installing the Heroku gem to interact with the http://heroku.com API ...
 printf "Installing the Taps gem to push and pull SQL databases between development, staging, and production environments ..."
   gem install taps --no-rdoc --no-ri
 
-printf "Installing the sqlite3 gem ..."
-  gem install sqlite3 --no-rdoc --no-ri
-
 printf "Setting up SSH keys. Press enter at each prompt ..."
   ssh-keygen
 
-printf "This is your public key. Copy and paste it into your Github account ..."
-  cat ~/.ssh/id_rsa.pub
+printf "Copying public key to clipboard. Paste it into your Github account ..."
+  cat ~/.ssh/id_rsa.pub | pbcopy
   open https://github.com/account/ssh
 

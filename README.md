@@ -6,11 +6,17 @@ Laptop is a set of scripts to get your laptop set up as a development machine.
 Mac OS X
 --------
 
-First, install XCode. It comes with your OS X CD or you can [download it](http://developer.apple.com/technologies/tools/xcode.html).
+First, install [XCode](http://developer.apple.com/technologies/tools/xcode.html).
 
-    ruby -e "$(curl -fsSL https://github.com/thoughtbot/laptop/raw/master/mac.rb)"
+Then, run this one-liner:
+
+    bash < <( https://github.com/thoughtbot/laptop/raw/master/mac )
 
 Ubuntu
 ------
+
+First, install [Ubuntu](http://www.ubuntu.com/download).
+
+Then, run this one-liner:
 
     bash < <( curl https://github.com/thoughtbot/laptop/raw/master/ubuntu )
