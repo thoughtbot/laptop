@@ -8,16 +8,16 @@ puts "Installing Ruby 1.9 and making it the default Ruby ..."
   `rvm use 1.9.2-p180 --default`
 
 puts "Installing Bundler for managing Ruby libraries ..."
-  `gem install bundler`
+  `gem install bundler --no-rdoc --no-ri`
 
 puts "Installing Rails to write and run web applications ..."
-  `gem install rails`
+  `gem install rails --no-rdoc --no-ri`
 
 puts "Installing the Heroku gem to interact with the http://heroku.com API ..."
-  `gem install heroku`
+  `gem install heroku --no-rdoc --no-ri`
 
-puts "Installing the Taps gem to push and pull SQL databases between development, staging, and production environments"
-  `gem install taps`
+puts "Installing the Taps gem to push and pull SQL databases between development, staging, and production environments ..."
+  `gem install taps --no-rdoc --no-ri`
 
 puts "Installing Homebrew, a great OS X package manager ..."
   `ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"`

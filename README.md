@@ -13,4 +13,4 @@ First, install XCode. It comes with your OS X CD or you can [download it](http:/
 Ubuntu
 ------
 
-Coming soon.
+    bash < <( curl https://github.com/thoughtbot/laptop/raw/master/ubuntu )

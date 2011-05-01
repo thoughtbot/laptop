@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+if [[ ! -d "$HOME/dev" ]]; then
+  mkdir -p "$HOME/dev"
+fi
+
+cd "$HOME/dev"
+
+printf "Installing OS packages. You will be prompted for your password ..."
+  sudo apt-get update
+  sudo apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev
+
+printf "Installing RVM (Ruby Version Manager) ..."
+  curl -s -O -L -B https://rvm.beginrescueend.com/releases/rvm-install-head
+  chmod +x rvm-install-head
+  "$PWD/rvm-install-head"
+  [[ -f rvm-install-head ]] && rm -f rvm-install-head
+
+printf "Setting up RVM to load with new shells ..."
+  echo  '[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # Load RVM into a shell session *as a function*' >> "$HOME/.bash_profile"
+  source ~/.bash_profile
+  source ~/.rvm/scripts/rvm
+
+printf "Installing Bundler for managing Ruby libraries ..."
+  gem install bundler --no-rdoc --no-ri
+
+printf "Installing Rails to write and run web applications ..."
+  gem install rails --no-rdoc --no-ri
+
+printf "Installing the Heroku gem to interact with the http://heroku.com API ..."
+  gem install heroku --no-rdoc --no-ri
+
+printf "Installing the Taps gem to push and pull SQL databases between development, staging, and production environments ..."
+  gem install taps --no-rdoc --no-ri
+
+printf "Installing the sqlite3 gem ..."
+  gem install sqlite3 --no-rdoc --no-ri
+
+printf "Install Postgres, a great open source relational database ..."
+  sudo apt-get libpq-dev postgresql
+
+printf "Installing ImageMagick, good for cropping and re-sizing images ..."
+  sudo apt-get install imagemagick --fix-missing
+
+printf "Setting up SSH keys. Press enter at each prompt ..."
+  ssh-keygen
+
+printf "This is your public key. Copy and paste it into your Github account ..."
+  cat ~/.ssh/id_rsa.pub
+
