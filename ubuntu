@@ -6,8 +6,10 @@ fi
 
 cd "$HOME/dev"
 
-echo "Installing OS packages. You will be prompted for your password ..."
+echo "Using apt-get to install OS packages so let's update it first ..."
   sudo apt-get update
+
+echo "Installing OS packages. You will be prompted for your password ..."
   sudo apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev
 
 echo "Install Postgres, a great open source relational database ..."

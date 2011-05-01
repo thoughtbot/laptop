@@ -10,7 +10,7 @@ First, install [XCode](http://developer.apple.com/technologies/tools/xcode.html)
 
 Then, run this one-liner:
 
-    bash < <( https://github.com/thoughtbot/laptop/raw/master/mac )
+    bash < <( curl -s https://github.com/thoughtbot/laptop/raw/master/mac )
 
 Ubuntu
 ------
@@ -19,4 +19,4 @@ First, install [Ubuntu](http://www.ubuntu.com/download).
 
 Then, run this one-liner:
 
-    bash < <( curl https://github.com/thoughtbot/laptop/raw/master/ubuntu )
+    bash < <( curl -s https://github.com/thoughtbot/laptop/raw/master/ubuntu )
