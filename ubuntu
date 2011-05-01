@@ -11,7 +11,13 @@ printf "Installing OS packages. You will be prompted for your password ..."
   sudo apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev
 
 printf "Install Postgres, a great open source relational database ..."
-  sudo apt-get libpq-dev postgresql
+  sudo apt-get install libpq-dev postgresql
+
+printf "Install Redis, a key-value database ..."
+  sudo apt-get install redis-server
+
+printf "Installing ack, a good way to search through files ..."
+  sudo apt-get install ack
 
 printf "Installing ImageMagick, good for cropping and re-sizing images ..."
   sudo apt-get install imagemagick --fix-missing

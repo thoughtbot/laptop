@@ -4,13 +4,16 @@ printf "Installing Homebrew, a great OS X package manager ..."
   ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
 
 printf "Installing git for version control ..."
-  brew git
+  brew install git
 
 printf "Installing Postgres, a great open source relational database ..."
   brew install postgres --no-python
 
 printf "Installing Redis, a key-value database ..."
   brew install redis
+
+printf "Installing ack, a good way to search through files ..."
+  brew install ack
 
 printf "Installing ImageMagick, good for cropping and re-sizing images ..."
   brew install imagemagick
