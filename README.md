@@ -24,13 +24,19 @@ Then, run this one-liner:
 What it sets up
 ---------------
 
-* package manager (Homebrew on OS X, apt-get on Ubuntu)
-* git
-* ack
-* Postgres
-* Redis
-* ImageMagick
-* RVM (Ruby Version Manager)
-* Ruby 1.9.2-p180
-* Gems: bundler, rails, heroku, taps, sqlite3 pg
-* ssh public keys
+* SSH public keys (for authenticating with services like Github and Heroku)
+* Homebrew or apt-get (for managing operating system libraries)
+* Git (for managing versions of code)
+* Ack (for finding things in files)
+* Postgres (for storing relational data)
+* Redis (for storing key-value data)
+* ImageMagick (for cropping and resizing images)
+* RVM (for managing versions of the Ruby programming language)
+* Ruby 1.9.2 stable (for writing general-purpose code)
+* Bundler gem (for managing Ruby libraries)
+* Rails gem (for writing web applications)
+* Heroku gem (for interacting with the Heroku API)
+* Taps gem (for pushing and pulling SQL databases between environments)
+* SQLite and PG gems (for making Ruby talk to SQL databases)
+
+It should take between 20-60 minutes for everything to install.

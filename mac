@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+echo "Setting up SSH keys. Press enter at each prompt ..."
+  ssh-keygen -t rsa
+
+echo "Copying public key to clipboard. Paste it into your Github account ..."
+  cat ~/.ssh/id_rsa.pub | pbcopy
+  open https://github.com/account/ssh
+
 echo "Installing Homebrew, a great OS X package manager ..."
   ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
 
@@ -42,11 +49,4 @@ echo "Installing the Taps gem to push and pull SQL databases between development
 
 echo "Installing Ruby gems to talk to the databases ..."
   gem install sqlite3 pg --no-rdoc --no-ri
-
-echo "Setting up SSH keys. Press enter at each prompt ..."
-  ssh-keygen -t rsa
-
-echo "Copying public key to clipboard. Paste it into your Github account ..."
-  cat ~/.ssh/id_rsa.pub | pbcopy
-  open https://github.com/account/ssh
 

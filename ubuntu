@@ -6,6 +6,13 @@ fi
 
 cd "$HOME/dev"
 
+echo "Setting up SSH keys. Press enter at each prompt ..."
+  ssh-keygen -t rsa
+
+echo "This is your public key. Copy and paste it into your Github account ..."
+  cat ~/.ssh/id_rsa.pub
+  open https://github.com/account/ssh
+
 echo "Using apt-get to install OS packages so let's update it first ..."
   sudo apt-get update
 
@@ -48,11 +55,4 @@ echo "Installing the Taps gem to push and pull SQL databases between development
 
 echo "Installing Ruby gems to talk to the databases ..."
   gem install sqlite3 pg --no-rdoc --no-ri
-
-echo "Setting up SSH keys. Press enter at each prompt ..."
-  ssh-keygen -t rsa
-
-echo "This is your public key. Copy and paste it into your Github account ..."
-  cat ~/.ssh/id_rsa.pub
-  open https://github.com/account/ssh
 
