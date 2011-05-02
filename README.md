@@ -6,7 +6,7 @@ Laptop is a set of scripts to get your laptop set up as a development machine.
 Mac OS X
 --------
 
-First, install [XCode](http://developer.apple.com/technologies/tools/xcode.html).
+First, install [XCode](http://developer.apple.com/devcenter/mac/index.action).
 
 Then, run this one-liner:
 
