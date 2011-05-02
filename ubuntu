@@ -1,40 +1,34 @@
 #!/usr/bin/env bash
 
-if [[ ! -d "$HOME/dev" ]]; then
-  mkdir -p "$HOME/dev"
-fi
-
-cd "$HOME/dev"
-
 echo "Setting up SSH keys. Press enter at each prompt ..."
   ssh-keygen -t rsa
 
-echo "This is your public key. Copy and paste it into your Github account ..."
-  cat ~/.ssh/id_rsa.pub
+echo "Copying public key to clipboard. Paste it into your Github account ..."
+  cat ~/.ssh/id_rsa.pub | xclip
   open https://github.com/account/ssh
 
 echo "Using apt-get to install OS packages so let's update it first ..."
-  sudo apt-get update
+  sudo apt-get update -y
 
 echo "Installing OS packages. You will be prompted for your password ..."
-  sudo apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev
+  sudo apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev -y
 
 echo "Install Postgres, a great open source relational database ..."
-  sudo apt-get install libpq5 libpq-dev postgresql
+  sudo apt-get install libpq5 libpq-dev postgresql -y
 
 echo "Install Redis, a key-value database ..."
-  sudo apt-get install redis-server
+  sudo apt-get install redis-server -y
 
 echo "Installing ack, a good way to search through files ..."
-  sudo apt-get install ack
+  sudo apt-get install ack -y
 
 echo "Installing ImageMagick, good for cropping and re-sizing images ..."
-  sudo apt-get install imagemagick --fix-missing
+  sudo apt-get install imagemagick --fix-missing -y
 
 echo "Installing RVM (Ruby Version Manager) ..."
   bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
   echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"' >> ~/.bash_profile
-  source ~/.bash_profile
+  source ~/.rvm/scripts/rvm
 
 echo "Installing Ruby 1.9 and making it the default Ruby ..."
   rvm install 1.9.2-p180
