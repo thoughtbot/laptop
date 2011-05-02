@@ -34,7 +34,6 @@ echo "Installing ImageMagick, good for cropping and re-sizing images ..."
 echo "Installing RVM (Ruby Version Manager) ..."
   bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
   echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"' >> ~/.bash_profile
-  source ~/.rvm/scripts/rvm
   source ~/.bash_profile
 
 echo "Installing Ruby 1.9 and making it the default Ruby ..."

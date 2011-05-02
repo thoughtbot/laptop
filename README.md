@@ -39,4 +39,4 @@ What it sets up
 * Taps gem (for pushing and pulling SQL databases between environments)
 * SQLite and PG gems (for making Ruby talk to SQL databases)
 
-It should take between 20-60 minutes for everything to install.
+It should take between 20-60 minutes for everything to install. (depends on your machine)
