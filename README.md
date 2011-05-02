@@ -36,6 +36,7 @@ Set your postgres password:
     <Ctrl+D>
 
 Give your user a postgres role:
+
     sudo -u postgres createuser --no-superuser --createdb --no-createrole --login --pwprompt --encrypted -h 127.0.0.1 -p 5432 `whoami`
 
 
