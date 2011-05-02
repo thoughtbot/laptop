@@ -23,9 +23,8 @@ echo "Installing ImageMagick, good for cropping and re-sizing images ..."
   sudo apt-get install imagemagick --fix-missing -y
 
 echo "Installing RVM (Ruby Version Manager) ..."
-  bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
-  echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"' >> ~/.bash_profile
-  source ~/.rvm/scripts/rvm
+  curl -s https://rvm.beginrescueend.com/install/rvm -o rvm-installer ; chmod +x rvm-installer ; ./rvm-installer latest
+  source .bash_profile
 
 echo "Installing Ruby 1.9 and making it the default Ruby ..."
   rvm install 1.9.2-p180
@@ -45,4 +44,3 @@ echo "Installing the Taps gem to push and pull SQL databases between development
 
 echo "Installing Ruby gems to talk to the databases ..."
   gem install sqlite3 pg --no-rdoc --no-ri
-
