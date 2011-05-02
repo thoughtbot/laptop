@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Setting up SSH keys. Press enter at each prompt ..."
-  ssh-keygen -t rsa
-
 echo "Copying public key to clipboard. Paste it into your Github account ..."
   cat ~/.ssh/id_rsa.pub | xclip
   open https://github.com/account/ssh

@@ -8,6 +8,10 @@ Mac OS X
 
 First, install [XCode](http://itunes.apple.com/us/app/xcode/id422352214?mt=12&ls=1). ($4.99, requires OS X 10.6.6 or higher)
 
+Set up your SSH key if you haven't yet:
+
+    ssh-keygen -t rsa
+
 Then, run this one-liner:
 
     bash < <( curl -s https://github.com/thoughtbot/laptop/raw/master/mac )
@@ -16,6 +20,10 @@ Ubuntu
 ------
 
 First, install [Ubuntu](http://www.ubuntu.com/download).
+
+Set up your SSH key if you haven't yet:
+
+    ssh-keygen -t rsa
 
 Then, run this one-liner:
 
