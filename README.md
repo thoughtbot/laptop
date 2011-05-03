@@ -16,7 +16,10 @@ Then, run this one-liner:
 
     bash < <( curl -s https://github.com/thoughtbot/laptop/raw/master/mac )
 
-Follow the on-screen instructions to load RVM in your shell, and make sure you can run the rvm command.
+Then:
+
+    echo '[[ -s "/Users/`whoami`/.rvm/scripts/rvm" ]] && source "/Users/`whoami`/.rvm/scripts/rvm"' >> ~/.bash_profile
+    source ~/.bash_profile
 
 Install the latest version of Ruby and some useful gems:
 
