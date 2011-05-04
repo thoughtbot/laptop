@@ -44,16 +44,7 @@ Install the latest version of Ruby and some useful gems:
 
     bash < <( curl -s https://github.com/thoughtbot/laptop/raw/master/ruby )
 
-Set your postgres password:
-
-    sudo -u postgres psql postgres
-    \password postgres
-    <Ctrl+D>
-
-Give your user a postgres role:
-
-    sudo -u postgres createuser --no-superuser --createdb --no-createrole --login --pwprompt --encrypted -h 127.0.0.1 -p 5432 `whoami`
-
+Use gEdit for your text editor. You can [customize it with these instructions](http://blog.sudobits.com/2011/04/02/textmate-for-ubuntu-linux/).
 
 What it sets up
 ---------------
