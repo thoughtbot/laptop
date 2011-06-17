@@ -14,7 +14,7 @@ Set up your SSH key if you haven't yet:
 
 Then, run this one-liner:
 
-    bash < <( curl -s https://github.com/thoughtbot/laptop/raw/master/mac )
+    bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
 
 Then:
 
@@ -23,7 +23,7 @@ Then:
 
 Install the latest version of Ruby and some useful gems:
 
-    bash < <( curl -s https://github.com/thoughtbot/laptop/raw/master/ruby )
+    bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/ruby)
 
 Ubuntu
 ------
