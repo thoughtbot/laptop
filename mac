@@ -8,17 +8,14 @@ echo "Copying public key to clipboard. Paste it into your Github account ..."
   [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
   open https://github.com/account/ssh
 
-echo "Installing Homebrew, a great OS X package manager ..."
+echo "Installing Homebrew, a good OS X package manager ..."
   ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
   brew update
 
-echo "Installing git for version control ..."
-  brew install git
-
-echo "Installing Postgres, a great open source relational database ..."
+echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
 
-echo "Installing Redis, a key-value database ..."
+echo "Installing Redis, a good key-value database ..."
   brew install redis
 
 echo "Installing ack, a good way to search through files ..."

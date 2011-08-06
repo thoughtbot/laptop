@@ -15,4 +15,4 @@ echo "Installing the Taps gem to push and pull SQL databases between development
   gem install taps --no-rdoc --no-ri
 
 echo "Installing Ruby gems to talk to the databases ..."
-  gem install sqlite3 pg --no-rdoc --no-ri
+  gem install pg --no-rdoc --no-ri
