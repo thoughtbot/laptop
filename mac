@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 echo "Checking for SSH key, generating one if it exists ..."
-  [[ -f ~/.ssh/id_rsa.pub || -f ~/.ssh/id_dsa.pub ]] || ssh-keygen -t rsa
+  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
 echo "Copying public key to clipboard. Paste it into your Github account ..."
-  [[ -f ~/.ssh/id_dsa.pub ]] && cat ~/.ssh/id_dsa.pub | pbcopy
   [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
   open https://github.com/account/ssh
 
@@ -29,3 +28,4 @@ echo "Installing RVM (Ruby Version Manager) ..."
   echo "\n# RVM\n[[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshrc
   source ~/.zshrc
 
+bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/ruby)

@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 echo "Checking for SSH key, generating one if it exists ..."
-  [[ -f ~/.ssh/id_rsa.pub || -f ~/.ssh/id_dsa.pub ]] || ssh-keygen -t rsa
+  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
 echo "Copying public key to clipboard. Paste it into your Github account ..."
-  [[ -f ~/.ssh/id_dsa.pub ]] && cat ~/.ssh/id_dsa.pub | xclip
   [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | xclip
   open https://github.com/account/ssh
 
@@ -28,3 +27,5 @@ echo "Installing ImageMagick, good for cropping and re-sizing images ..."
 
 echo "Installing RVM (Ruby Version Manager) ..."
   curl -s https://rvm.beginrescueend.com/install/rvm -o rvm-installer ; chmod +x rvm-installer ; ./rvm-installer --version latest
+
+bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/ruby)
