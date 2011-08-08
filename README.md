@@ -41,4 +41,4 @@ What it sets up
 * Taps gem (for pushing and pulling SQL databases between environments)
 * Postgres gem (for making Ruby talk to SQL databases)
 
-It should take between 30 minutes for everything to install, depending on your machine.
+It should take about 30 minutes for everything to install, depending on your machine.
