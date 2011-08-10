@@ -8,7 +8,7 @@ echo "Copying public key to clipboard. Paste it into your Github account ..."
   open https://github.com/account/ssh
 
 echo "Installing Homebrew, a good OS X package manager ..."
-  ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.github.com/gist/323731)"
   brew update
 
 echo "Installing Postgres, a good open source relational database ..."
