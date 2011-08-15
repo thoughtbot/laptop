@@ -19,7 +19,7 @@ First, install [Ubuntu](http://www.ubuntu.com/download).
 
 Then, run this one-liner:
 
-    bash < <(curl -s https://github.com/thoughtbot/laptop/raw/master/ubuntu)
+    bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/ubuntu)
 
 If you're setting up Ubuntu for one of our workshops, we recommend you also install gEdit for your text editor.
 You can [customize it with these instructions](http://blog.sudobits.com/2011/04/02/textmate-for-ubuntu-linux/).
