@@ -11,6 +11,12 @@ echo "Installing Homebrew, a good OS X package manager ..."
   /usr/bin/ruby -e "$(curl -fsSL https://raw.github.com/gist/323731)"
   brew update
 
+echo "Put Homebrew location earlier in PATH ..."
+  echo "
+# recommended by brew doctor
+export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
+  source ~/.zshrc
+
 echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
 
