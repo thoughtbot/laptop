@@ -32,6 +32,9 @@ echo "Installing tmux, a good way to save project state and switch between proje
 echo "Installing ImageMagick, good for cropping and re-sizing images ..."
   brew install imagemagick
 
+echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
+  brew install qt
+
 echo "Installing RVM (Ruby Version Manager) ..."
   curl -s https://rvm.beginrescueend.com/install/rvm -o rvm-installer ; chmod +x rvm-installer ; ./rvm-installer --version latest
   echo "
