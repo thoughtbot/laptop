@@ -44,5 +44,7 @@ What it sets up
 * Postgres gem (for making Ruby talk to SQL databases)
 * Foreman gem (for serving your Rails app locally)
 * Git Remote Branch gem (for faster git branch creation and deletion)
+* Heroku accounts plugin (for using multiple Heroku accounts like a client's account)
+* Heroku config plugin (for pulling config variables locally to be used as ENV variables)
 
 It should take about 30 minutes for everything to install, depending on your machine.

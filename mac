@@ -43,3 +43,4 @@ echo "Installing RVM (Ruby Version Manager) ..."
   source ~/.zshrc
 
 bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/ruby)
+bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/heroku)
