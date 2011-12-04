@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a set of scripts to get your laptop set up as a development machine.
+Laptop is a set of scripts to get your laptop set up as a Rails development machine.
 
 Mac OS X
 --------
@@ -42,6 +42,7 @@ What it sets up
 * Heroku gem (for interacting with the Heroku API)
 * Taps gem (for pushing and pulling SQL databases between environments)
 * Postgres gem (for making Ruby talk to SQL databases)
+* Foreman gem (for serving your Rails app locally)
 * Git Remote Branch gem (for faster git branch creation and deletion)
 
 It should take about 30 minutes for everything to install, depending on your machine.
