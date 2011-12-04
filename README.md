@@ -41,5 +41,6 @@ What it sets up
 * Heroku gem (for interacting with the Heroku API)
 * Taps gem (for pushing and pulling SQL databases between environments)
 * Postgres gem (for making Ruby talk to SQL databases)
+* Git Remote Branch gem (for faster git branch creation and deletion)
 
 It should take about 30 minutes for everything to install, depending on your machine.

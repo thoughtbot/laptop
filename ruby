@@ -13,3 +13,6 @@ echo "Installing the Taps gem to push and pull SQL databases between development
 
 echo "Installing the pg gem to talk to Postgres databases ..."
   gem install pg --no-rdoc --no-ri
+
+echo "Installing the git_remote_branch gem for fast feature branch creating and deleting ..."
+  gem install git_remote_branch --no-rdoc --no-ri
