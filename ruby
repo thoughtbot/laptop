@@ -1,5 +1,5 @@
 echo "Installing Ruby 1.9.3 stable and making it the default Ruby ..."
-  rvm install 1.9.3-0
+  rvm install 1.9.3
   rvm use 1.9.3 --default
 
 echo "Installing Rails to write and run web applications ..."
