@@ -3,3 +3,6 @@ echo "Installing the heroku-accounts plugin for using multiple Heroku accounts..
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   heroku plugins:install git://github.com/ddollar/heroku-config.git
+
+echo "Installing the heroku-labs plugin for using config variables during assets precompile and for using Ruby 1.9.3 ..."
+  heroku plugins:install http://github.com/heroku/heroku-labs.git

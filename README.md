@@ -15,8 +15,8 @@ Then, run this one-liner:
 What it sets up
 ---------------
 
-* SSH public keys (for authenticating with services like Github and Heroku)
-* Homebrew or apt-get (for managing operating system libraries)
+* SSH public key (for authenticating with services like Github and Heroku)
+* Homebrew (for managing operating system libraries)
 * QT (used by Capybara Webkit for headless Javascript testing)
 * Ack (for finding things in files)
 * Tmux (for saving project state and switching between projects)
@@ -34,5 +34,6 @@ What it sets up
 * Git Remote Branch gem (for faster git branch creation and deletion)
 * Heroku accounts plugin (for using multiple Heroku accounts like a client's account)
 * Heroku config plugin (for pulling config variables locally to be used as ENV variables)
+* Heroku labs plugin (for using config variables during assets precompile and for using Ruby 1.9.3)
 
 It should take about 30 minutes for everything to install, depending on your machine.
