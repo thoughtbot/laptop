@@ -24,7 +24,7 @@ What it sets up
 * Redis (for storing key-value data)
 * ImageMagick (for cropping and resizing images)
 * RVM (for managing versions of the Ruby programming language)
-* Ruby 1.9.2 stable (for writing general-purpose code)
+* Ruby 1.9.3 stable (for writing general-purpose code)
 * Bundler gem (for managing Ruby libraries)
 * Rails gem (for writing web applications)
 * Heroku gem (for interacting with the Heroku API)
