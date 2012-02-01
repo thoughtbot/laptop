@@ -36,7 +36,7 @@ echo "Installing QT, used by Capybara Webkit for headless Javascript integration
   brew install qt
 
 echo "Installing RVM (Ruby Version Manager) ..."
-  curl -s https://rvm.beginrescueend.com/install/rvm -o rvm-installer ; chmod +x rvm-installer ; ./rvm-installer --version latest
+  bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)
   echo "
 # RVM
 [[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshrc
