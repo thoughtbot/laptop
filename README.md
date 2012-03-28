@@ -17,7 +17,7 @@ What it sets up
 
 * SSH public key (for authenticating with services like Github and Heroku)
 * Homebrew (for managing operating system libraries)
-* QT (used by Capybara Webkit for headless Javascript testing)
+* Qt (used by Capybara Webkit for headless Javascript testing)
 * Ack (for finding things in files)
 * Tmux (for saving project state and switching between projects)
 * Postgres (for storing relational data)
