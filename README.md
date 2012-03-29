@@ -38,6 +38,5 @@ What it sets up
 * Git Remote Branch gem (for faster git branch creation and deletion)
 * Heroku accounts plugin (for using multiple Heroku accounts like a client's account)
 * Heroku config plugin (for pulling config variables locally to be used as ENV variables)
-* Heroku labs plugin (for using config variables during assets precompile and for using Ruby 1.9.3)
 
 It should take about 30 minutes for everything to install, depending on your machine.
