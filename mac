@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
@@ -42,5 +42,5 @@ echo "Installing RVM (Ruby Version Manager) ..."
 [[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshrc
   source ~/.zshrc
 
-bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/ruby)
-bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/heroku)
+zsh < <(curl -s https://raw.github.com/thoughtbot/laptop/master/ruby)
+zsh < <(curl -s https://raw.github.com/thoughtbot/laptop/master/heroku)
