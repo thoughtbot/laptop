@@ -15,7 +15,7 @@ if you're on Lion (OS X 10.7).
 
 Run the script:
 
-    bash < <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
+    zsh < <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
 
 What it sets up
 ---------------
