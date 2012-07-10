@@ -3,15 +3,21 @@ Laptop
 
 Laptop is a script to set up your Max OS X laptop as a Rails development machine.
 
+Requirements
+------------
+
+* A C compiler, such as GCC, LLVM, or Clang.
+
+Download a compiler from [OS X GCC Installer](https://github.com/kennethreitz/osx-gcc-installer/) if you're on Snow Leopard (OS X 10.6) or [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action) if you're on Lion (OS X 10.7).
+
+* zsh as your login shell.
+
+To change your login shell run this from a Terminal:
+
+    chsh -s /bin/zsh
+
 Install
 -------
-
-Before you run this script, you need compilers like GCC, LLVM, and Clang.
-
-Get them via [OS X GCC Installer](https://github.com/kennethreitz/osx-gcc-installer/)
-if you're on Snow Leopard (OS X 10.6) or
-[Command Line Tools for XCode](https://developer.apple.com/downloads/index.action)
-if you're on Lion (OS X 10.7).
 
 Run the script:
 
