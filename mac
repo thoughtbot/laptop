@@ -20,9 +20,6 @@ export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
 echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
 
-echo "Installing Redis, a good key-value database ..."
-  brew install redis
-
 echo "Installing ack, a good way to search through files ..."
   brew install ack
 

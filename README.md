@@ -29,9 +29,7 @@ What it sets up
 * Ack for finding things in files
 * Bundler gem for managing Ruby libraries
 * Foreman gem for serving Rails apps locally
-* Git Remote Branch gem for faster git branch creation and deletion
 * Heroku gem for interacting with the Heroku API
-* Heroku Accounts plugin for using a client's account
 * Heroku Config plugin for local `ENV` variables
 * Homebrew for managing operating system libraries
 * ImageMagick for cropping and resizing images
@@ -39,7 +37,6 @@ What it sets up
 * Postgres gem for talking to Postgres from Ruby
 * Qt for headless JavaScript testing via Capybara Webkit
 * Rails gem for writing web applications
-* Redis for storing key-value data
 * Ruby 1.9.2 stable for writing general-purpose code
 * RVM for managing versions of the Ruby programming language
 * SSH public key for authenticating with Github and Heroku

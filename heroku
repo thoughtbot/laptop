@@ -1,7 +1,4 @@
-#!/bin/sh
-
-echo "Installing the heroku-accounts plugin for using multiple Heroku accounts..."
-  heroku plugins:install git://github.com/ddollar/heroku-accounts.git
+#!/usr/bin/env zsh
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   heroku plugins:install git://github.com/ddollar/heroku-config.git
