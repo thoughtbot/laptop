@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a script to set up a Max OS X laptop for Rails development.
+Laptop is a script to set up a Mac OS X laptop for Rails development.
 
 Requirements
 ------------
