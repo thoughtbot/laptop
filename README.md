@@ -6,11 +6,11 @@ Laptop is a script to set up a Mac OS X laptop for Rails development.
 Requirements
 ------------
 
-* A C compiler, such as GCC, LLVM, or Clang.
+* Install a C compiler, such as GCC, LLVM, or Clang.
 
-Download a compiler from [OS X GCC Installer](https://github.com/kennethreitz/osx-gcc-installer/) if you're on Snow Leopard (OS X 10.6) or [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action) if you're on Lion (OS X 10.7).
+Download a compiler from the [OS X GCC Installer](https://github.com/kennethreitz/osx-gcc-installer/) if you're on Snow Leopard (OS X 10.6) or use the [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action) for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
 
-* zsh as your login shell.
+* Set zsh as your login shell.
 
 To change your login shell run this from a Terminal:
 
