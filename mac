@@ -1,47 +1,69 @@
 #!/usr/bin/env zsh
 
+successfully() {
+  $* || (echo "failed" 1>&2 && exit 1)
+}
+
 echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
 echo "Copying public key to clipboard. Paste it into your Github account ..."
   [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
-  open https://github.com/account/ssh
+  successfully open https://github.com/account/ssh
 
 echo "Installing RVM (Ruby Version Manager) ..."
-  curl -L https://get.rvm.io | bash -s stable --ruby
-  echo "
+  successfully curl -L https://get.rvm.io | bash -s stable --ruby
+  successfully echo "
 # RVM
 [[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshrc
-  source ~/.zshrc
+  successfully source ~/.zshrc
 
-zsh < <(curl -s https://raw.github.com/thoughtbot/laptop/master/ruby)
+echo "Installing Ruby 1.9.3 stable and making it the default Ruby ..."
+  successfully rvm install 1.9.3 --with-gcc=clang
+  successfully rvm use 1.9.3 --default
+
+echo "Installing Bundler to build gem dependencies ..."
+  successfully gem install bundler -v '~> 1.2.0.rc.2' --no-rdoc --no-ri
+
+echo "Installing Rails to write and run web applications ..."
+  successfully gem install rails --no-rdoc --no-ri
+
+echo "Installing the Heroku gem to interact with the http://heroku.com API ..."
+  successfully gem install heroku --no-rdoc --no-ri
+
+echo "Installing the pg gem to talk to Postgres databases ..."
+  successfully gem install pg --no-rdoc --no-ri
+
+echo "Installing the foreman gem for serving your Rails apps in development mode ..."
+  successfully gem install foreman --no-rdoc --no-ri
 
 echo "Installing Homebrew, a good OS X package manager ..."
-  ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
-  brew update
+  successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+  successfully brew update
 
 echo "Put Homebrew location earlier in PATH ..."
-  echo "
+  successfully echo "
 # recommended by brew doctor
 export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
-  source ~/.zshrc
+  successfully source ~/.zshrc
 
 echo "Installing Postgres, a good open source relational database ..."
-  brew install postgres --no-python
+  successfully brew install postgres --no-python
 
 echo "Installing ack, a good way to search through files ..."
-  brew install ack
+  successfully brew install ack
 
 echo "Installing tmux, a good way to save project state and switch between projects ..."
-  brew install tmux
+  successfully brew install tmux
 
 echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  brew install reattach-to-user-namespace
+  successfully brew install reattach-to-user-namespace
 
 echo "Installing ImageMagick, good for cropping and re-sizing images ..."
-  brew install imagemagick
+  successfully brew install imagemagick
 
 echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew install qt
+  successfully brew install qt
 
-zsh < <(curl -s https://raw.github.com/thoughtbot/laptop/master/heroku)
+echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
+  successfully heroku plugins:install git://github.com/ddollar/heroku-config.git

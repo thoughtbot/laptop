@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
