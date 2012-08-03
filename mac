@@ -17,7 +17,7 @@ echo "Installing RVM (Ruby Version Manager) ..."
 zsh < <(curl -s https://raw.github.com/thoughtbot/laptop/master/ruby)
 
 echo "Installing Homebrew, a good OS X package manager ..."
-  ruby -e "$(/usr/bin/curl -fksSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"
+  ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
   brew update
 
 echo "Put Homebrew location earlier in PATH ..."
