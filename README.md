@@ -37,7 +37,7 @@ What it sets up
 * Postgres gem for talking to Postgres from Ruby
 * Qt for headless JavaScript testing via Capybara Webkit
 * Rails gem for writing web applications
-* Ruby 1.9.3 stable for writing general-purpose code
+* Ruby stable for writing general-purpose code
 * RVM for managing versions of the Ruby programming language
 * SSH public key for authenticating with Github and Heroku
 * Tmux for saving project state and switching between projects
