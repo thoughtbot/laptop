@@ -43,3 +43,19 @@ What it sets up
 * Tmux for saving project state and switching between projects
 
 It should take less than 30 minutes to install (depends on your machine).
+
+Credits
+-------
+
+![thoughtbot](http://thoughtbot.com/images/tm/logo.png)
+
+Laptop is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community)
+
+Thank you to all [the contributors](https://github.com/thoughtbot/laptop/contributors)!
+
+The names and logos for thoughtbot are trademarks of thoughtbot, inc.
+
+License
+-------
+
+Laptop is Copyright © 2011-2012 thoughtbot, inc. It is free software, and may be redistributed under the terms specified in the LICENSE file.
