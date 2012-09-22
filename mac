@@ -35,6 +35,9 @@ echo "Installing ack, a good way to search through files ..."
 echo "Installing tmux, a good way to save project state and switch between projects ..."
   brew install tmux
 
+echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
+  brew install reattach-to-user-namespace
+
 echo "Installing ImageMagick, good for cropping and re-sizing images ..."
   brew install imagemagick
 
