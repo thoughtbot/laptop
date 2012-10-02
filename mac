@@ -21,8 +21,8 @@ echo "Installing Homebrew, a good OS X package manager ..."
 echo "Putting Homebrew location earlier in PATH ..."
   successfully echo "
 # recommended by brew doctor
-export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
-  successfully source ~/.zshrc
+export PATH='/usr/local/bin:$PATH'" >> ~/.zshenv
+  successfully source ~/.zshenv
 
 echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
@@ -53,8 +53,8 @@ echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3, which becomes the de
   successfully curl -L https://get.rvm.io | bash -s -- --version 1.15.10 --ruby
   successfully echo "
 # RVM
-[[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshrc
-  successfully source ~/.zshrc
+[[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshenv
+  successfully source ~/.zshenv
 
 echo "Installing Bundler to build gem dependencies ..."
   successfully gem install bundler -v '~> 1.2.0.rc.2' --no-rdoc --no-ri
