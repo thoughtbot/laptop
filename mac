@@ -56,20 +56,8 @@ echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3, which becomes the de
 [[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshenv
   successfully source ~/.zshenv
 
-echo "Installing Bundler to build gem dependencies ..."
-  successfully gem install bundler --no-rdoc --no-ri
-
-echo "Installing Rails to write and run web applications ..."
-  successfully gem install rails --no-rdoc --no-ri
-
-echo "Installing the Heroku gem to interact with the http://heroku.com API ..."
-  successfully gem install heroku --no-rdoc --no-ri
-
-echo "Installing the pg gem to talk to Postgres databases ..."
-  successfully gem install pg --no-rdoc --no-ri
-
-echo "Installing the foreman gem for serving your Rails apps in development mode ..."
-  successfully gem install foreman --no-rdoc --no-ri
+echo "Installing critical Ruby gems for Rails development ..."
+  successfully gem install bundler rails heroku pg foreman thin --no-rdoc --no-ri
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
