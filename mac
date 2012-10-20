@@ -34,16 +34,19 @@ echo "Installing libksba, recommended for Ruby 1.9.3 ..."
 echo "Installing Postgres, a good open source relational database ..."
   successfully brew install postgres --no-python
 
-echo "Installing ack, a good way to search through files ..."
+echo "Installing ack, for searching the contents of files ..."
   successfully brew install ack
 
-echo "Installing tmux, a good way to save project state and switch between projects ..."
+echo "Installing ctags, for indexing files for vim tab completion of methods, classes, variables ..."
+  successfully brew install ctags
+
+echo "Installing tmux, for saving project state and switching between projects ..."
   successfully brew install tmux
 
 echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
   successfully brew install reattach-to-user-namespace
 
-echo "Installing ImageMagick, good for cropping and re-sizing images ..."
+echo "Installing ImageMagick, for cropping and re-sizing images ..."
   successfully brew install imagemagick
 
 echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
