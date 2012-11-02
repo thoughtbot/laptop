@@ -63,4 +63,4 @@ echo "Installing standalone Heroku CLI client. You'll need administrative rights
   successfully curl -s https://toolbelt.heroku.com/install.sh | sh
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
-  successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
+  successfully /usr/local/heroku/bin/heroku plugins:install git://github.com/ddollar/heroku-config.git

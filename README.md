@@ -31,7 +31,7 @@ What it sets up
 * Ack for finding things in files
 * Bundler gem for managing Ruby libraries
 * Foreman gem for serving Rails apps locally
-* Heroku gem for interacting with the Heroku API
+* Heroku Toolbelt for interacting with the Heroku API
 * Heroku Config plugin for local `ENV` variables
 * Homebrew for managing operating system libraries
 * ImageMagick for cropping and resizing images
