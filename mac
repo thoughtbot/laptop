@@ -63,7 +63,9 @@ echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler rails pg foreman thin --no-rdoc --no-ri
 
 echo "Installing standalone Heroku CLI client. You'll need administrative rights on your machine ..."
-  successfully curl -s https://toolbelt.heroku.com/install.sh | sh
+  # if https://github.com/heroku/toolbelt/pull/35 gets merged, remove wget, use curl -s
+  brew install wget
+  successfully wget -qO- https://toolbelt.heroku.com/install.sh | sh
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully /usr/local/heroku/bin/heroku plugins:install git://github.com/ddollar/heroku-config.git
