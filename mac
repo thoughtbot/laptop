@@ -52,12 +52,12 @@ echo "Installing ImageMagick, for cropping and re-sizing images ..."
 echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
   successfully brew install qt
 
-echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3, which becomes the default ..."
-  successfully curl -L https://get.rvm.io | bash -s -- --version 1.15.10 --ruby
+echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes the default ..."
+  successfully curl -L https://get.rvm.io | bash -s stable --ruby
   successfully echo "
 # RVM
 [[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshenv
-  successfully source ~/.zshenv
+  successfully source ~/.rvm/scripts/rvm
 
 echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler rails pg foreman thin --no-rdoc --no-ri
