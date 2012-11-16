@@ -33,6 +33,7 @@ echo "Installing libksba, recommended for Ruby 1.9.3 ..."
 
 echo "Installing Postgres, a good open source relational database ..."
   successfully brew install postgres --no-python
+  successfully initdb /usr/local/var/postgres -E utf8
 
 echo "Installing ack, for searching the contents of files ..."
   successfully brew install ack
