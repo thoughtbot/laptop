@@ -56,6 +56,9 @@ echo "Installing ImageMagick, for cropping and re-sizing images ..."
 echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
   successfully brew install qt
 
+echo "Installing watch, used to execute a program periodically and show the output ..."
+  successfully brew install watch
+
 echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes the default ..."
   successfully curl -L https://get.rvm.io | bash -s stable --ruby
   successfully echo "
