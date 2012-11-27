@@ -38,6 +38,7 @@ What it sets up
 * Postgres for storing relational data
 * Postgres gem for talking to Postgres from Ruby
 * Qt for headless JavaScript testing via Capybara Webkit
+* Watch for periodically executing a program and displaying the output
 * Rails gem for writing web applications
 * Redis for storing key-value data
 * Ruby stable for writing general-purpose code
