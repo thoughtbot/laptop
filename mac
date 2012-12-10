@@ -28,8 +28,8 @@ echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
   successfully brew install autoconf automake apple-gcc42
 
-echo "Installing libksba, recommended for Ruby 1.9.3 ..."
-  successfully brew install libksba
+echo "Installing system libraries recommended for Ruby ..."
+  successfully brew install gdbm libffi libksba libyaml
 
 echo "Installing Postgres, a good open source relational database ..."
   successfully brew install postgres --no-python
@@ -56,12 +56,20 @@ echo "Installing ImageMagick, for cropping and re-sizing images ..."
 echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
   successfully brew install qt
 
-echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes the default ..."
-  successfully curl -L https://get.rvm.io | bash -s stable --ruby
+echo "Installing Ruby 1.9.3-p327 ..."
+  successfully curl -s http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p327.tar.gz
+  successfully tar -xzvf ruby-1.9.3-p327.tar.gz
+  successfully cd ruby-1.9.3-p327
+  successfully ./configure --prefix=/usr/local/ruby-1.9.3-p327
+  successfully make
+  successfully sudo make install
+
+echo "Installing chruby for changing Ruby versions ..."
+  successfully brew install https://raw.github.com/postmodern/chruby/master/homebrew/chruby.rb
   successfully echo "
-# RVM
-[[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshenv
-  successfully source ~/.rvm/scripts/rvm
+. /usr/local/share/chruby/chruby.sh
+RUBIES=(/usr/local/{ruby,jruby,rubinius}*)" >> ~/.zlogin
+  successfully source ~/.zlogin
 
 echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler rails pg foreman thin --no-rdoc --no-ri
