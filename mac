@@ -56,13 +56,17 @@ echo "Installing ImageMagick, for cropping and re-sizing images ..."
 echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
   successfully brew install qt
 
-echo "Installing Ruby 1.9.3-p327 ..."
-  successfully curl -s http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p327.tar.gz
-  successfully tar -xzvf ruby-1.9.3-p327.tar.gz
-  successfully cd ruby-1.9.3-p327
-  successfully ./configure --prefix=/opt/rubies/ruby-1.9.3-p327
-  successfully make
-  successfully sudo make install
+echo "Making ~/dev directory to provide a common home for development work ..."
+  successfully mkdir ~/dev
+
+echo "Installing ruby-build for installing Rubies ..."
+  successfully cd ~/dev
+  successfully git clone git://github.com/sstephenson/ruby-build.git
+  successfully cd ruby-build
+  successfully ./install.sh
+
+echo "Installing Ruby 1.9.3-p362 ..."
+  successfully /usr/local/bin/ruby-build 1.9.3-p362 /opt/rubies/ruby-1.9.3-p362
 
 echo "Installing chruby for changing Ruby versions ..."
   successfully brew install chruby
@@ -76,7 +80,7 @@ RUBIES=(/opt/rubies/*)" >> ~/.zlogin
 echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler rails pg foreman thin --no-rdoc --no-ri
 
-echo "Installing standalone Heroku CLI client. You'll need administrative rights on your machine ..."
+echo "Installing standalone Heroku CLI client ..."
   successfully curl -s https://toolbelt.heroku.com/install.sh | sh
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
