@@ -51,7 +51,7 @@ It should take less than 15 minutes to install (depends on your machine).
 Credits
 -------
 
-![thoughtbot](http://thoughtbot.com/images/tm/logo.png)
+![thoughtbot](http://thoughtbot.com/assets/tm/logo.png)
 
 Laptop is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
