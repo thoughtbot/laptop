@@ -61,5 +61,5 @@ Thank you, [contributors](/thoughtbot/laptop/graphs/contributors)!
 License
 -------
 
-Laptop is © 2011-2012 thoughtbot, inc. It is free software, and may be
+Laptop is © 2011-2013 thoughtbot, inc. It is free software, and may be
 redistributed under the terms specified in the LICENSE file.
