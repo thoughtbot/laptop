@@ -23,7 +23,7 @@ Install
 
 Run the script:
 
-    zsh < <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
+    zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
 
 What it sets up
 ---------------
