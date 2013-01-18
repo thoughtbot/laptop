@@ -74,3 +74,6 @@ echo "Installing standalone Heroku CLI client. You'll need administrative rights
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully /usr/local/heroku/bin/heroku plugins:install git://github.com/ddollar/heroku-config.git
+
+echo "Your shell will now restart in order for changes to apply."
+  exec $SHELL -l
