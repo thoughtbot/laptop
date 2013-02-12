@@ -69,11 +69,11 @@ echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes t
 echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler rails pg foreman thin --no-rdoc --no-ri
 
-echo "Installing standalone Heroku CLI client. You'll need administrative rights on your machine ..."
-  successfully curl -s https://toolbelt.heroku.com/install.sh | sh
+echo "Installing standalone Heroku CLI client."
+  successfully brew install heroku-toolbelt
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
-  successfully /usr/local/heroku/bin/heroku plugins:install git://github.com/ddollar/heroku-config.git
+  successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
 
 echo "Your shell will now restart in order for changes to apply."
   exec $SHELL -l
