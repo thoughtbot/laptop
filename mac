@@ -34,9 +34,6 @@ echo "Installing git ..."
 echo "Installing libksba, recommended for Ruby 1.9.3 ..."
   successfully brew install libksba
 
-echo "Installing MySQL, a good open source relational database ..."
-  successfully brew install mysql
-
 echo "Installing node.js, a good JavaScript application framework ..."
   successfully brew install node
 
