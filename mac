@@ -28,36 +28,29 @@ echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
   successfully brew install autoconf automake apple-gcc42
 
+echo "Installing git ..."
+  successfully brew install git
+
 echo "Installing libksba, recommended for Ruby 1.9.3 ..."
   successfully brew install libksba
 
-echo "Installing Postgres, a good open source relational database ..."
-  successfully brew install postgres --no-python
-  successfully initdb /usr/local/var/postgres -E utf8
+echo "Installing MySQL, a good open source relational database ..."
+  successfully brew install mysql
 
-echo "Installing Redis, a good key-value database ..."
-  successfully brew install redis
+echo "Installing node.js, a good JavaScript application framework ..."
+  successfully brew install node
+
+echo "Installing Z Script, for quick access to recently used projects from the terminal ..."
+  successfully brew install z
 
 echo "Installing ack, for searching the contents of files ..."
   successfully brew install ack
 
-echo "Installing ctags, for indexing files for vim tab completion of methods, classes, variables ..."
-  successfully brew install ctags
+echo "Installing JSHint, a good JavaScript Code Quality Tool ..."
+  successfully npm install -g jshint
 
-echo "Installing tmux, for saving project state and switching between projects ..."
-  successfully brew install tmux
-
-echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  successfully brew install reattach-to-user-namespace
-
-echo "Installing ImageMagick, for cropping and re-sizing images ..."
-  successfully brew install imagemagick
-
-echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  successfully brew install qt
-
-echo "Installing watch, used to execute a program periodically and show the output ..."
-  successfully brew install watch
+echo "Installing Grunt, because you need it ..."
+  successfully npm install -g grunt
 
 echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes the default ..."
   successfully curl -L https://get.rvm.io | bash -s stable --ruby
@@ -67,13 +60,7 @@ echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes t
   successfully source ~/.rvm/scripts/rvm
 
 echo "Installing critical Ruby gems for Rails development ..."
-  successfully gem install bundler rails pg foreman thin --no-rdoc --no-ri
-
-echo "Installing standalone Heroku CLI client. You'll need administrative rights on your machine ..."
-  successfully curl -s https://toolbelt.heroku.com/install.sh | sh
-
-echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
-  successfully /usr/local/heroku/bin/heroku plugins:install git://github.com/ddollar/heroku-config.git
+  successfully gem install bundler rails compass --no-rdoc --no-ri
 
 echo "Your shell will now restart in order for changes to apply."
   exec $SHELL -l

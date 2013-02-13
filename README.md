@@ -30,21 +30,16 @@ What it sets up
 
 * Ack for finding things in files
 * Bundler gem for managing Ruby libraries
-* Foreman gem for serving Rails apps locally
-* Heroku Toolbelt for interacting with the Heroku API
-* Heroku Config plugin for local `ENV` variables
 * Homebrew for managing operating system libraries
-* ImageMagick for cropping and resizing images
-* Postgres for storing relational data
-* Postgres gem for talking to Postgres from Ruby
-* Qt for headless JavaScript testing via Capybara Webkit
-* Watch for periodically executing a program and displaying the output
+* Git, because you need version control, homie
+* Grunt for all of its awesomeness
+* JSHint for checking syntax on JavaScript files
+* Node for running a JS based server
 * Rails gem for writing web applications
-* Redis for storing key-value data
 * Ruby stable for writing general-purpose code
 * RVM for managing versions of the Ruby programming language
-* SSH public key for authenticating with Github and Heroku
-* Tmux for saving project state and switching between projects
+* SSH public key for authenticating with Github
+* Z Script for quick access to previous projects/folders
 
 It should take less than 15 minutes to install (depends on your machine).
 
