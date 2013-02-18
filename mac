@@ -46,11 +46,8 @@ echo "Installing Z Script, for quick access to recently used projects from the t
 echo "Installing ack, for searching the contents of files ..."
   successfully brew install ack
 
-echo "Installing JSHint, a good JavaScript Code Quality Tool ..."
-  successfully npm install -g jshint
-
 echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
-  successfully npm install -g yo grunt-cli bower
+  successfully npm install -g yo grunt-cli bower jshint
 
 echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes the default ..."
   successfully curl -L https://get.rvm.io | bash -s stable --ruby
