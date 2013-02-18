@@ -50,7 +50,7 @@ echo "Installing JSHint, a good JavaScript Code Quality Tool ..."
   successfully npm install -g jshint
 
 echo "Installing Grunt, because you need it ..."
-  successfully npm install -g grunt
+  successfully npm install -g grunt-cli
 
 echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes the default ..."
   successfully curl -L https://get.rvm.io | bash -s stable --ruby
