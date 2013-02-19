@@ -12,6 +12,7 @@ echo "Copying public key to clipboard. Paste it into your Github account ..."
   successfully open https://github.com/account/ssh
 
 echo "Fixing permissions ..."
+  successfully sudo mkdir -p /usr/local
   successfully sudo chown -R `whoami` /usr/local
 
 echo "Installing Homebrew, a good OS X package manager ..."
