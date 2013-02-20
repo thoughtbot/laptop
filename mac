@@ -26,7 +26,7 @@ export PATH='/usr/local/bin:$PATH'" >> ~/.zshenv
 
 echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
-  successfully brew install autoconf automake apple-gcc42
+  successfully brew install coreutils autoconf automake apple-gcc42
 
 echo "Installing git ..."
   successfully brew install git
