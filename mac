@@ -70,6 +70,9 @@ echo "Installing ruby-build for installing Rubies ..."
 
 echo "Installing Ruby 2.0.0-p0 ..."
   successfully rbenv install 2.0.0-p0
+
+echo "Setting Ruby 2.0.0-p0 as global default Ruby ..."
+  successfully rbenv global 2.0.0-p0
   successfully rbenv rehash
 
 echo "Update to latest Rubygems version ..."
