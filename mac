@@ -79,8 +79,8 @@ echo "Update to latest Rubygems version ..."
   successfully gem update --system
 
 echo "Installing critical Ruby gems for Rails development ..."
-  successfully gem install bundler --pre --no-rdoc --no-ri
-  successfully gem install rails pg foreman thin --no-rdoc --no-ri
+  successfully gem install bundler --pre --no-document
+  successfully gem install rails pg foreman thin --no-document
 
 echo "Installing standalone Heroku CLI client."
   successfully brew install heroku-toolbelt
