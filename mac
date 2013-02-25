@@ -62,11 +62,11 @@ echo "Installing watch, used to execute a program periodically and show the outp
 
 echo "Installing rbenv for changing Ruby versions ..."
   successfully brew install rbenv
+  successfully echo 'eval "$(rbenv init -)"' >> ~/.zlogin
+  successfully source ~/.zlogin
 
 echo "Installing ruby-build for installing Rubies ..."
   successfully brew install ruby-build
-  successfully echo 'eval "$(rbenv init -)"' >> ~/.zlogin
-  successfully source ~/.zlogin
 
 echo "Installing Ruby 2.0.0-p0 ..."
   successfully rbenv install 2.0.0-p0
