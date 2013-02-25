@@ -29,8 +29,8 @@ echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
   successfully brew install autoconf automake apple-gcc42
 
-echo "Installing libksba, recommended for Ruby 1.9.3 ..."
-  successfully brew install libksba
+echo "Installing system libraries recommended for Ruby ..."
+  successfully brew install gdbm libffi libksba libyaml
 
 echo "Installing Postgres, a good open source relational database ..."
   successfully brew install postgres --no-python
@@ -60,15 +60,28 @@ echo "Installing QT, used by Capybara Webkit for headless Javascript integration
 echo "Installing watch, used to execute a program periodically and show the output ..."
   successfully brew install watch
 
-echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes the default ..."
-  successfully curl -L https://get.rvm.io | bash -s stable --ruby
-  successfully echo "
-# RVM
-[[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshenv
-  successfully source ~/.rvm/scripts/rvm
+echo "Installing rbenv for changing Ruby versions ..."
+  successfully brew install rbenv
+  successfully echo 'eval "$(rbenv init -)"' >> ~/.zlogin
+  successfully source ~/.zlogin
+
+echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
+  successfully brew install rbenv-gem-rehash
+
+echo "Installing ruby-build for installing Rubies ..."
+  successfully brew install ruby-build
+
+echo "Installing Ruby 1.9.3-p392 ..."
+  successfully rbenv install 1.9.3-p392
+
+echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
+  successfully rbenv global 1.9.3-p392
+
+echo "Update to latest Rubygems version ..."
+  successfully gem update --system
 
 echo "Installing critical Ruby gems for Rails development ..."
-  successfully gem install bundler rails pg foreman thin --no-rdoc --no-ri
+  successfully gem install bundler foreman pg rails thin --no-document
 
 echo "Installing standalone Heroku CLI client."
   successfully brew install heroku-toolbelt
