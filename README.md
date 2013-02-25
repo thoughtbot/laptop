@@ -40,13 +40,13 @@ What it sets up
 * Postgres gem for talking to Postgres from Ruby
 * Qt for headless JavaScript testing via Capybara Webkit
 * Rails gem for writing web applications
+* Rbenv for managing versions of the Ruby programming language
 * Redis for storing key-value data
+* Ruby Build for installing Rubies
 * Ruby stable for writing general-purpose code
 * SSH public key for authenticating with Github and Heroku
 * Tmux for saving project state and switching between projects
 * Watch for periodically executing a program and displaying the output
-* Rbenv for managing versions of the Ruby programming language
-* Ruby Build for installing Rubies
 
 It should take less than 15 minutes to install (depends on your machine).
 
