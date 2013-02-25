@@ -65,7 +65,7 @@ echo "Installing rbenv for changing Ruby versions ..."
   successfully echo 'eval "$(rbenv init -)"' >> ~/.zlogin
   successfully source ~/.zlogin
 
-echo "Installing rbenv-gem-rehash so the shell automatically picks up binareis after installing gems with binaries..."
+echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully brew install rbenv-gem-rehash
 
 echo "Installing ruby-build for installing Rubies ..."
