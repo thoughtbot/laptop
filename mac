@@ -72,7 +72,7 @@ echo "Installing ruby-build for installing Rubies ..."
   successfully brew install ruby-build
 
 echo "Installing Ruby 1.9.3-p392 ..."
-  successfully rbenv install 1.9.3-p392
+  successfully CC=gcc-4.2 rbenv install 1.9.3-p392
 
 echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
   successfully rbenv global 1.9.3-p392
