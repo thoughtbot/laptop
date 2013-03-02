@@ -34,6 +34,7 @@ What it sets up
 * Foreman gem for serving Rails apps locally
 * Heroku Config plugin for local `ENV` variables
 * Heroku Toolbelt for interacting with the Heroku API
+* Hub gem for interacting with the GitHub API
 * Homebrew for managing operating system libraries
 * ImageMagick for cropping and resizing images
 * Postgres for storing relational data

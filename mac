@@ -83,7 +83,10 @@ echo "Update to latest Rubygems version ..."
 echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler foreman pg rails thin --no-rdoc --no-ri
 
-echo "Installing standalone Heroku CLI client."
+echo "Installing GitHub CLI client ..."
+  successfully gem install hub
+
+echo "Installing Heroku CLI client ..."
   successfully brew install heroku-toolbelt
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
