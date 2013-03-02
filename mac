@@ -39,8 +39,8 @@ echo "Installing Postgres, a good open source relational database ..."
 echo "Installing Redis, a good key-value database ..."
   successfully brew install redis
 
-echo "Installing ack, for searching the contents of files ..."
-  successfully brew install ack
+echo "Installing The Silver Searcher (better than ack or grep) for searching the contents of files ..."
+  successfully brew install the_silver_searcher
 
 echo "Installing ctags, for indexing files for vim tab completion of methods, classes, variables ..."
   successfully brew install ctags
