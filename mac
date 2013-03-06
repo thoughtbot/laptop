@@ -71,8 +71,8 @@ echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries a
 echo "Installing ruby-build for installing Rubies ..."
   successfully brew install ruby-build --HEAD
 
-echo "Installing Ruby 1.9.3-p392 ..."
-  successfully CC=gcc-4.2 rbenv install 1.9.3-p392
+echo "Installing Ruby 2.0.0-p0 ..."
+  successfully CC=gcc-4.2 rbenv install 2.0.0-p0
 
 echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
   successfully rbenv global 2.0.0-p0
