@@ -26,16 +26,13 @@ export PATH='/usr/local/bin:$PATH'" >> ~/.zshenv
 
 echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
-  successfully brew install coreutils autoconf automake apple-gcc42
+  successfully brew install coreutils autoconf automake apple-gcc42 libtool pkg-config openssl readline libyaml sqlite libxml2 libxslt libksba
 
 echo "Installing git ..."
   successfully brew install git
 
 echo "Installing MySQL, a good open source relational database ..."
   successfully brew install mysql
-
-echo "Installing libksba, recommended for Ruby 1.9.3 ..."
-  successfully brew install libksba
 
 echo "Installing node.js, a good JavaScript application framework ..."
   successfully brew install node
