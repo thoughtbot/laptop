@@ -33,6 +33,16 @@ echo "Installing Postgres, a good open source relational database ..."
 echo "Installing Redis, a good key-value database ..."
   successfully sudo apt-get install -y redis-server
 
+echo "Installing The Silver Searcher (better than ack or grep) for searching the contents of files ..."
+  successfully git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
+  successfully sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev
+  successfully sh /tmp/the_silver_searcher/build.sh
+  successfully cd /tmp/the_silver_searcher
+  successfully sh build.sh
+  successfully sudo make install
+  successfully cd ~
+  successfully rm -rf /tmp/the_silver_searcher
+
 echo "Installing ctags, for indexing files for vim tab completion of methods, classes, variables ..."
   successfully sudo apt-get install -y vim exuberant-ctags
 

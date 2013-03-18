@@ -61,7 +61,7 @@ What it sets up
 * Ruby Build for installing Rubies
 * Ruby stable for writing general-purpose code
 * SSH public key for authenticating with Github and Heroku
-* The Silver Searcher for finding things in files _(Mac OS X only)_
+* The Silver Searcher for finding things in files
 * Tmux for saving project state and switching between projects
 * Watch for periodically executing a program and displaying the output
 
@@ -75,7 +75,7 @@ Credits
 Laptop for Mac OS X is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
 
-Loptop for Ubuntu is maintained by the community.
+Laptop for Ubuntu is maintained by the community.
 
 Thank you, [contributors](/thoughtbot/laptop/graphs/contributors)!
 
