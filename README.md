@@ -1,10 +1,12 @@
 Laptop
 ======
 
-Laptop is a script to set up a Mac OS X laptop for Rails development.
+Laptop is a script to set up a Mac OS X or Ubuntu laptop for Rails development.
 
 Requirements
 ------------
+
+### Mac OS X
 
 1) Install a C compiler.
 
@@ -18,12 +20,26 @@ for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
 
     chsh -s /bin/zsh
 
+### Ubuntu
+
+1) Install zsh and set it as your login shell. To quickly do this, run the script:
+
+    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/ubuntu-prerequisites)
+
 Install
 -------
+
+### Mac OS X
 
 Run the script:
 
     zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
+
+### Ubuntu
+
+Run the script:
+
+    zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/ubuntu)
 
 What it sets up
 ---------------
@@ -56,8 +72,10 @@ Credits
 
 ![thoughtbot](http://thoughtbot.com/assets/tm/logo.png)
 
-Laptop is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
+Laptop for Mac OS X is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
+
+Laptop for Ubuntu is maintained by the community.
 
 Thank you, [contributors](/thoughtbot/laptop/graphs/contributors)!
 
