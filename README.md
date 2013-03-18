@@ -24,7 +24,7 @@ for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
 
 Run the script:
 
-    bash <(curl -s https://raw.github.com/Kerrick/laptop/master/ubuntu)
+    bash <(curl -s https://raw.github.com/Kerrick/laptop/master/ubuntu-prerequisites)
 
 Install
 -------

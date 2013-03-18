@@ -4,75 +4,64 @@ successfully() {
   $* || (echo "failed" 1>&2 && exit 1)
 }
 
+echo "Updating system packages ..."
+  successfully sudo apt-get update
+  successfully sudo apt-get -y upgrade
+
+echo "Installing xclip for clipboard integration with your terminal ..."
+  successfully sudo apt-get install -y xclip
+
+echo "Installing git, for source control management ..."
+  successfully sudo apt-get install -y git
+
 echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
 echo "Copying public key to clipboard. Paste it into your Github account ..."
-  [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
-  successfully open https://github.com/account/ssh
-
-echo "Fixing permissions ..."
-  successfully sudo mkdir -p /usr/local
-  successfully sudo chown -R `whoami` /usr/local
-
-echo "Installing Homebrew, a good OS X package manager ..."
-  successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
-  successfully brew update
-
-echo "Putting Homebrew location earlier in PATH ..."
-  successfully echo "
-# recommended by brew doctor
-export PATH='/usr/local/bin:$PATH'" >> ~/.zshenv
-  successfully source ~/.zshenv
+  [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | xclip -selection clipboard
+  successfully x-www-browser https://github.com/account/ssh
 
 echo "Installing GNU Compiler Collection and dependencies ..."
-  successfully brew tap homebrew/dupes
-  successfully brew install autoconf automake apple-gcc42
+  successfully sudo apt-get install -y autoconf automake gcc
 
 echo "Installing system libraries recommended for Ruby ..."
-  successfully brew install gdbm libffi libksba libyaml
+  successfully sudo apt-get install -y libgdbm3 libgdbm-dev libffi6 libffi-dev libksba8 libksba-dev libyaml-0-2 libyaml-dev
 
 echo "Installing Postgres, a good open source relational database ..."
-  successfully brew install postgres --no-python
-  successfully initdb /usr/local/var/postgres -E utf8
+  successfully sudo apt-get install -y postgresql postgresql-server-dev-all
 
 echo "Installing Redis, a good key-value database ..."
-  successfully brew install redis
-
-echo "Installing The Silver Searcher (better than ack or grep) for searching the contents of files ..."
-  successfully brew install the_silver_searcher
+  successfully sudo apt-get install -y redis-server
 
 echo "Installing ctags, for indexing files for vim tab completion of methods, classes, variables ..."
-  successfully brew install ctags
+  successfully sudo apt-get install -y vim exuberant-ctags
 
 echo "Installing tmux, for saving project state and switching between projects ..."
-  successfully brew install tmux
-
-echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  successfully brew install reattach-to-user-namespace
+  successfully sudo apt-get install -y tmux
 
 echo "Installing ImageMagick, for cropping and re-sizing images ..."
-  successfully brew install imagemagick
+  successfully sudo apt-get install -y imagemagick
 
 echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  successfully brew install qt
+  successfully sudo apt-get install -y libqtwebkit-dev
 
 echo "Installing watch, used to execute a program periodically and show the output ..."
-  successfully brew install watch
+  successfully sudo apt-get install -y watch
 
 echo "Installing rbenv for changing Ruby versions ..."
-  successfully brew install rbenv
-  successfully echo 'eval "$(rbenv init -)"' >> ~/.zlogin
-  successfully source ~/.zlogin
+  successfully git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+  successfully echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+  successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+  successfully source ~/.zshrc
 
 echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  successfully brew install rbenv-gem-rehash
+  successfully git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 
 echo "Installing ruby-build for installing Rubies ..."
-  successfully brew install ruby-build
+  successfully git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
 echo "Installing Ruby 1.9.3-p392 ..."
-  CC=gcc-4.2 successfully rbenv install 1.9.3-p392
+  successfully rbenv install 1.9.3-p392
 
 echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
   successfully rbenv global 1.9.3-p392
@@ -88,10 +77,10 @@ echo "Installing GitHub CLI client ..."
   successfully gem install hub --no-document
 
 echo "Installing Heroku CLI client ..."
-  successfully brew install heroku-toolbelt
+  successfully wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
 
 echo "Your shell will now restart in order for changes to apply."
-  exec $SHELL -l
+  exec `which zsh` -l
