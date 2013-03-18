@@ -50,6 +50,7 @@ echo "Installing watch, used to execute a program periodically and show the outp
 
 echo "Installing rbenv for changing Ruby versions ..."
   successfully git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+  successfully echo "export SHELL=$(which zsh)" >> ~/.zshrc
   successfully echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
   successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
   successfully source ~/.zshrc

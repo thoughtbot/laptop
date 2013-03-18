@@ -6,8 +6,8 @@ successfully() {
 
 echo "Installing zsh ..."
   successfully sudo apt-get install -y zsh
-  successfully sudo chmod -R 755 /usr/local/share/zsh/site-functions # Fix an odd zsh permissions bug
-  successfully echo "export SHELL=$(which zsh)" >> $HOME/.zshrc
+  successfully sudo chmod -R 755 /usr/local/share/zsh/site-functions # Fix a zsh permissions bug
 
 echo "Changing your shell to zsh ..."
   successfully chsh -s `which zsh`
+
