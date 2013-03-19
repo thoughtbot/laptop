@@ -24,7 +24,7 @@ for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
 
 1) Install zsh and set it as your login shell. To quickly do this, run the script:
 
-    bash <(curl -s https://raw.github.com/Kerrick/laptop/master/ubuntu-prerequisites)
+    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/ubuntu-prerequisites)
 
 Install
 -------
@@ -39,7 +39,7 @@ Run the script:
 
 Run the script:
 
-    zsh <(curl -s https://raw.github.com/Kerrick/laptop/master/ubuntu)
+    zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/ubuntu)
 
 What it sets up
 ---------------
