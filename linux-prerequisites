@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+CLEAR="\033[0m"
+ORANGE="\033[33m"
+
+successfully() {
+  $* || (echo "failed" 1>&2 && exit 1)
+}
+
+fancy_echo() {
+  echo -e ${ORANGE}$1${CLEAR}
+  echo
+}
+
+if lsb_release -c | grep -qEv 'precise|quantal|wheezy'
+then
+  fancy_echo "Sorry! we don't currently support that distro."
+  exit;
+fi
+
+fancy_echo "Updating system packages ..."
+  successfully sudo aptitude update
+  successfully sudo aptitude -y dist-upgrade
+
+fancy_echo "Installing zsh ..."
+  successfully sudo aptitude install -y zsh
+
+fancy_echo "Changing your shell to zsh ..."
+  successfully chsh -s `which zsh`
+
+fancy_echo "Your shell will now restart to apply changes."
+  exec `which zsh` -l

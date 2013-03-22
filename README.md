@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a script to set up a Mac OS X or Ubuntu laptop for Rails development.
+Laptop is a script to set up a Mac OS X or Linux laptop for Rails development.
 
 Requirements
 ------------
@@ -20,11 +20,17 @@ for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
 
     chsh -s /bin/zsh
 
-### Ubuntu
+### Linux
 
-1) Install zsh and set it as your login shell. To quickly do this, run the script:
+We support:
 
-    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/ubuntu-prerequisites)
+* The latest Ubuntu LTS release (currently [precise](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes)),
+* The latest Ubuntu non-LTS release (currently [quantal](https://wiki.ubuntu.com/QuantalQuetzal/ReleaseNotes)), and
+* Debian testing (currently [wheezy](http://www.debian.org/releases/testing/)).
+
+1) Install zsh and set it as your login shell. Run the script:
+
+    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/linux-prerequisites)
 
 Install
 -------
@@ -35,11 +41,11 @@ Run the script:
 
     zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
 
-### Ubuntu
+### Linux
 
 Run the script:
 
-    zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/ubuntu)
+    zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/linux)
 
 What it sets up
 ---------------
@@ -50,7 +56,7 @@ What it sets up
 * Heroku Config plugin for local `ENV` variables
 * Heroku Toolbelt for interacting with the Heroku API
 * Hub gem for interacting with the GitHub API
-* Homebrew for managing operating system libraries
+* Homebrew for managing operating system libraries (OS X only)
 * ImageMagick for cropping and resizing images
 * Postgres for storing relational data
 * Postgres gem for talking to Postgres from Ruby
@@ -72,10 +78,8 @@ Credits
 
 ![thoughtbot](http://thoughtbot.com/assets/tm/logo.png)
 
-Laptop for Mac OS X is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
+Laptop is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
-
-Laptop for Ubuntu is maintained by the community.
 
 Thank you, [contributors](/thoughtbot/laptop/graphs/contributors)!
 
