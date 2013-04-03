@@ -1,10 +1,12 @@
 Laptop
 ======
 
-Laptop is a script to set up a Mac OS X laptop for Rails development.
+Laptop is a script to set up a Mac OS X or Linux laptop for Rails development.
 
 Requirements
 ------------
+
+### Mac OS X
 
 1) Install a C compiler.
 
@@ -18,12 +20,32 @@ for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
 
     chsh -s /bin/zsh
 
+### Linux
+
+We support:
+
+* The latest Ubuntu LTS release (currently [precise](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes)),
+* The latest Ubuntu non-LTS release (currently [quantal](https://wiki.ubuntu.com/QuantalQuetzal/ReleaseNotes)), and
+* Debian testing (currently [wheezy](http://www.debian.org/releases/testing/)).
+
+1) Install zsh and set it as your login shell. Run the script:
+
+    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/linux-prerequisites)
+
 Install
 -------
+
+### Mac OS X
 
 Run the script:
 
     zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
+
+### Linux
+
+Run the script:
+
+    zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/linux)
 
 What it sets up
 ---------------
@@ -34,7 +56,7 @@ What it sets up
 * Heroku Config plugin for local `ENV` variables
 * Heroku Toolbelt for interacting with the Heroku API
 * Hub gem for interacting with the GitHub API
-* Homebrew for managing operating system libraries
+* Homebrew for managing operating system libraries (OS X only)
 * ImageMagick for cropping and resizing images
 * Postgres for storing relational data
 * Postgres gem for talking to Postgres from Ruby
