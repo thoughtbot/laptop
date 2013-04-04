@@ -1,97 +1,102 @@
 #!/usr/bin/env zsh
 
 successfully() {
-  $* || (echo "failed" 1>&2 && exit 1)
+  $* || (echo "\nfailed" 1>&2 && exit 1)
 }
 
-echo "Fixing OSX zsh environment bug ..."
-  successfully sudo mv /etc/{zshenv,zshrc}
+fancy_echo() {
+  echo "\n$1"
+}
 
-echo "Fixing permissions ..."
-  successfully sudo mkdir -p /usr/local
-  successfully sudo chown -R `whoami` /usr/local
+if -f /etc/zshenv; then
+  fancy_echo "Fix OSX zsh environment bug ..."
+    successfully sudo mv /etc/{zshenv,zshrc}
+fi
 
-echo "Installing Homebrew, a good OS X package manager ..."
+fancy_echo "Install Homebrew, a good OS X package manager ..."
   successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
   successfully brew update
 
 if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
-  echo "Putting Homebrew location earlier in PATH ..."
-    successfully echo "
-  # recommended by brew doctor
-  export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
+  fancy_echo "Put Homebrew location earlier in PATH ..."
+    successfully echo "\n# recommended by brew doctor" >> ~/.zshrc
+    successfully echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
     successfully source ~/.zshrc
 fi
 
-echo "Installing GNU Compiler Collection and dependencies ..."
-  successfully brew tap homebrew/dupes
-  successfully brew install autoconf automake apple-gcc42
-
-echo "Installing system libraries recommended for Ruby ..."
-  successfully brew install gdbm libffi libksba libyaml
-
-echo "Installing Postgres, a good open source relational database ..."
+fancy_echo "Install Postgres, a good open source relational database ..."
   successfully brew install postgres --no-python
   successfully initdb /usr/local/var/postgres -E utf8
 
-echo "Installing Redis, a good key-value database ..."
+fancy_echo "Install Redis, a good key-value database ..."
   successfully brew install redis
 
-echo "Installing The Silver Searcher (better than ack or grep) for searching the contents of files ..."
+fancy_echo "Install The Silver Searcher (better than ack or grep) for searching the contents of files ..."
   successfully brew install the_silver_searcher
 
-echo "Installing ctags, for indexing files for vim tab completion of methods, classes, variables ..."
+fancy_echo "Install ctags, for indexing files for vim tab completion of methods, classes, variables ..."
   successfully brew install ctags
 
-echo "Installing tmux, for saving project state and switching between projects ..."
+fancy_echo "Install tmux, for saving project state and switching between projects ..."
   successfully brew install tmux
 
-echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
+fancy_echo "Install reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
   successfully brew install reattach-to-user-namespace
 
-echo "Installing ImageMagick, for cropping and re-sizing images ..."
+fancy_echo "Install ImageMagick, for cropping and re-sizing images ..."
   successfully brew install imagemagick
 
-echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
+fancy_echo "Install QT, used by Capybara Webkit for headless Javascript integration testing ..."
   successfully brew install qt
 
-echo "Installing watch, used to execute a program periodically and show the output ..."
+fancy_echo "Install watch, used to execute a program periodically and show the output ..."
   successfully brew install watch
 
-echo "Installing rbenv for changing Ruby versions ..."
+fancy_echo "Install rbenv for changing Ruby versions ..."
   successfully brew install rbenv
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
     successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+
+    fancy_echo "Enable shims and autocompletion ..."
+      successfully eval "$(rbenv init -)"
   fi
 
-echo "Restarting shell as a login shell so path changes take effect to begin using rbenv ..."
-  exec $SHELL -l
+  source ~/.zshrc
 
-echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
+fancy_echo "Install rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully brew install rbenv-gem-rehash
 
-echo "Installing ruby-build for installing Rubies ..."
+fancy_echo "Install ruby-build for installing Rubies ..."
   successfully brew install ruby-build
 
-echo "Installing Ruby 1.9.3-p392 ..."
+fancy_echo "Install GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
+  successfully brew tap homebrew/dupes
+  successfully brew install apple-gcc42
+
+fancy_echo "Install Ruby 1.9.3-p392 ..."
   CC=gcc-4.2 successfully rbenv install 1.9.3-p392
 
-echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
+fancy_echo "Set Ruby 1.9.3-p392 as global default Ruby ..."
   successfully rbenv global 1.9.3-p392
   successfully rbenv shell 1.9.3-p392
 
-echo "Update to latest Rubygems version ..."
+fancy_echo "Update to latest Rubygems version ..."
   successfully gem update --system
 
-echo "Installing critical Ruby gems for Rails development ..."
+fancy_echo "Install critical Ruby gems for Rails development ..."
   successfully gem install bundler foreman pg rails thin --no-document
 
-echo "Installing GitHub CLI client ..."
+fancy_echo "Install GitHub CLI client ..."
   successfully gem install hub --no-document
 
-echo "Installing Heroku CLI client ..."
+fancy_echo "Install Heroku CLI client ..."
   successfully brew install heroku-toolbelt
 
-echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
+fancy_echo "Install the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
+
+if ! grep -qs "DO NOT EDIT BELOW THIS LINE" ~/.zshrc; then
+  fancy_echo "Prepare ~/.zshrc for http://github.com/thoughtbot/dotfiles ..."
+    successfully echo "DO NOT EDIT BELOW THIS LINE\n" >> ~/.zshrc
+fi
