@@ -4,6 +4,9 @@ successfully() {
   $* || (echo "failed" 1>&2 && exit 1)
 }
 
+echo "Fix OSX zsh environment bug"
+  successfully sudo mv /etc/{zshenv,zprofile}
+
 echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
