@@ -5,7 +5,7 @@ successfully() {
 }
 
 echo "Fix OSX zsh environment bug"
-  successfully sudo mv /etc/{zshenv,zprofile}
+  successfully sudo mv /etc/{zshenv,zshrc}
 
 echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
@@ -65,8 +65,8 @@ echo "Installing watch, used to execute a program periodically and show the outp
 
 echo "Installing rbenv for changing Ruby versions ..."
   successfully brew install rbenv
-  successfully echo 'eval "$(rbenv init -)"' >> ~/.zlogin
-  successfully source ~/.zlogin
+  successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+  successfully source ~/.zshrc
 
 echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully brew install rbenv-gem-rehash
