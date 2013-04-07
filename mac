@@ -9,10 +9,6 @@ if ! [ -f ~/.ssh/id_rsa.pub ]; then
   ssh-keygen -t rsa
 fi
 
-# Copy public key to clipboard.
-successfully cat ~/.ssh/id_rsa.pub | pbcopy
-successfully open https://github.com/account/ssh
-
 # Fix permissions.
 successfully sudo mkdir -p /usr/local
 successfully sudo chown -R `whoami` /usr/local
