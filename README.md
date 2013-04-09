@@ -28,9 +28,9 @@ We support:
 * The latest Ubuntu non-LTS release (currently [quantal](https://wiki.ubuntu.com/QuantalQuetzal/ReleaseNotes)), and
 * Debian testing (currently [wheezy](http://www.debian.org/releases/testing/)).
 
-1) Install zsh and set it as your login shell. Run the script:
+1) Install zsh and set it as your login shell. To do this easily, run the script:
 
-    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/linux-prerequisites)
+    bash <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux-prerequisites)
 
 Install
 -------
@@ -45,7 +45,7 @@ Run the script:
 
 Run the script:
 
-    zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/linux)
+    zsh <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux)
 
 What it sets up
 ---------------
