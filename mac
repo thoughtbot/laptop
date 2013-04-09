@@ -66,7 +66,9 @@ echo "Installing watch, used to execute a program periodically and show the outp
 echo "Installing rbenv for changing Ruby versions ..."
   successfully brew install rbenv
   successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
-  successfully source ~/.zshrc
+
+echo "Restarting shell as a login shell so path changes take effect to begin using rbenv ..."
+  exec $SHELL -l
 
 echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully brew install rbenv-gem-rehash
@@ -95,6 +97,3 @@ echo "Installing Heroku CLI client ..."
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
-
-echo "Your shell will now restart in order for changes to apply."
-  exec $SHELL -l
