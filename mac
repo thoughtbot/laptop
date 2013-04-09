@@ -43,7 +43,7 @@ successfully brew install redis
 # files.
 successfully brew install the_silver_searcher
 
-# Instal ctags to index files for vim tab completion of methods, classes,
+# Install ctags to index files for vim tab completion of methods, classes,
 # variables.
 successfully brew install ctags
 
