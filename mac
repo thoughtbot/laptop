@@ -4,94 +4,102 @@ successfully() {
   $* || (echo "failed" 1>&2 && exit 1)
 }
 
-echo "Checking for SSH key, generating one if it doesn't exist ..."
-  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
+if ! [ -f ~/.ssh/id_rsa.pub ]; then
+  # Generate SSH key.
+  ssh-keygen -t rsa
+fi
 
-echo "Copying public key to clipboard. Paste it into your Github account ..."
-  [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
-  successfully open https://github.com/account/ssh
+# Fix permissions.
+successfully sudo mkdir -p /usr/local
+successfully sudo chown -R `whoami` /usr/local
 
-echo "Fixing permissions ..."
-  successfully sudo mkdir -p /usr/local
-  successfully sudo chown -R `whoami` /usr/local
+# Install Homebrew, a good OS X package manager.
+successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+successfully brew update
 
-echo "Installing Homebrew, a good OS X package manager ..."
-  successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
-  successfully brew update
-
-echo "Putting Homebrew location earlier in PATH ..."
-  successfully echo "
-# recommended by brew doctor
-export PATH='/usr/local/bin:$PATH'" >> ~/.zshenv
+if ! grep -qs "recommended by brew doctor" ~/.zshenv; then
+  # Put Homebrew location earlier in PATH.
+  successfully echo '
+  # recommended by brew doctor
+  export PATH="/usr/local/bin:$PATH"' >> ~/.zshenv
   successfully source ~/.zshenv
+fi
 
-echo "Installing GNU Compiler Collection and dependencies ..."
-  successfully brew tap homebrew/dupes
-  successfully brew install autoconf automake apple-gcc42
+# Install GNU Compiler Collection and dependencies.
+successfully brew tap homebrew/dupes
+successfully brew install autoconf automake apple-gcc42
 
-echo "Installing system libraries recommended for Ruby ..."
-  successfully brew install gdbm libffi libksba libyaml
+# Install system libraries recommended for Ruby.
+successfully brew install gdbm libffi libksba libyaml
 
-echo "Installing Postgres, a good open source relational database ..."
-  successfully brew install postgres --no-python
-  successfully initdb /usr/local/var/postgres -E utf8
+# Install Postgres, a good open source relational database.
+successfully brew install postgres --no-python
+successfully initdb /usr/local/var/postgres -E utf8
 
-echo "Installing Redis, a good key-value database ..."
-  successfully brew install redis
+# Install Redis, a good key-value database.
+successfully brew install redis
 
-echo "Installing The Silver Searcher (better than ack or grep) for searching the contents of files ..."
-  successfully brew install the_silver_searcher
+# Install Silver Searcher (better than ack or grep) to search the contents of
+# files.
+successfully brew install the_silver_searcher
 
-echo "Installing ctags, for indexing files for vim tab completion of methods, classes, variables ..."
-  successfully brew install ctags
+# Install ctags to index files for vim tab completion of methods, classes,
+# variables.
+successfully brew install ctags
 
-echo "Installing tmux, for saving project state and switching between projects ..."
-  successfully brew install tmux
+# Install tmux, for saving project state and switching between projects.
+successfully brew install tmux
 
-echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  successfully brew install reattach-to-user-namespace
+# Install reattach-to-user-namespace for copy-paste with tmux.
+successfully brew install reattach-to-user-namespace
 
-echo "Installing ImageMagick, for cropping and re-sizing images ..."
-  successfully brew install imagemagick
+# Install ImageMagick to crop and resize images.
+successfully brew install imagemagick
 
-echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  successfully brew install qt
+# Install QT, used by Capybara Webkit for headless Javascript integration
+# testing.
+successfully brew install qt
 
-echo "Installing watch, used to execute a program periodically and show the output ..."
-  successfully brew install watch
+# Install watch, used to execute a program periodically and show the output.
+successfully brew install watch
 
-echo "Installing rbenv for changing Ruby versions ..."
-  successfully brew install rbenv
+# Install rbenv for changing Ruby versions.
+successfully brew install rbenv
+
+if ! [ grep -qs "rbenv init" ~/.zlogin ]; then
+  # Set up rbenv to be used by default in ZSH sessions.
   successfully echo 'eval "$(rbenv init -)"' >> ~/.zlogin
-  successfully source ~/.zlogin
 
-echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  successfully brew install rbenv-gem-rehash
-
-echo "Installing ruby-build for installing Rubies ..."
-  successfully brew install ruby-build
-
-echo "Installing Ruby 1.9.3-p392 ..."
-  CC=gcc-4.2 successfully rbenv install 1.9.3-p392
-
-echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
-  successfully rbenv global 1.9.3-p392
-  successfully rbenv shell 1.9.3-p392
-
-echo "Update to latest Rubygems version ..."
-  successfully gem update --system
-
-echo "Installing critical Ruby gems for Rails development ..."
-  successfully gem install bundler foreman pg rails thin --no-document
-
-echo "Installing GitHub CLI client ..."
-  successfully gem install hub --no-document
-
-echo "Installing Heroku CLI client ..."
-  successfully brew install heroku-toolbelt
-
-echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
-  successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
-
-echo "Your shell will now restart in order for changes to apply."
+  # Restart the shell to apply changes.
   exec $SHELL -l
+fi
+
+# Install rbenv-gem-rehash so the shell picks up binaries after installing gems
+# with binaries.
+successfully brew install rbenv-gem-rehash
+
+# Install ruby-build for installing Rubies.
+successfully brew install ruby-build
+
+# Install Ruby 1.9.3-p392.
+CC=gcc-4.2 successfully rbenv install 1.9.3-p392
+
+# Set Ruby 1.9.3-p392 as global default Ruby.
+successfully rbenv global 1.9.3-p392
+successfully rbenv shell 1.9.3-p392
+
+# Update to latest Rubygems version.
+successfully gem update --system
+
+# Install critical Ruby gems for Rails development.
+successfully gem install bundler foreman pg rails thin --no-document
+
+# Install GitHub CLI client.
+successfully gem install hub --no-document
+
+# Install Heroku CLI client.
+successfully brew install heroku-toolbelt
+
+# Install the heroku-config plugin for pulling config variables locally to be
+# used as ENV variables.
+successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
