@@ -32,7 +32,7 @@ We support:
 
 1) Install zsh and set it as your login shell:
 
-    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/linux-prerequisites)
+    bash <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux-prerequisites)
 
 Install
 -------
@@ -47,7 +47,7 @@ Read, then run the script:
 
 Read, then run the script:
 
-    zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/linux)
+    zsh <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux)
 
 What it sets up
 ---------------
