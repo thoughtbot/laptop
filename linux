@@ -27,6 +27,9 @@ fancy_echo "Updating system packages ..."
   successfully sudo aptitude update
   successfully sudo aptitude -y dist-upgrade
 
+fancy_echo "Installing curl for transferring data with URL syntax ..."
+  successfully sudo aptitude -y curl
+
 fancy_echo "Installing xclip for clipboard integration with your terminal ..."
   successfully sudo aptitude install -y xclip
 
