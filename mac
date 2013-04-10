@@ -67,7 +67,7 @@ echo "\nInstalling rbenv-gem-rehash so the shell automatically picks up binaries
 echo "\nInstalling ruby-build for installing Rubies ..."
   successfully brew install ruby-build
 
-echo "\nInstalling GNU Compiler Collection and dependencies ..."
+echo "\nInstalling GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
   successfully brew tap homebrew/dupes
   successfully brew install apple-gcc42
 
