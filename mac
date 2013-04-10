@@ -1,86 +1,86 @@
 #!/usr/bin/env zsh
 
 successfully() {
-  $* || (echo "failed" 1>&2 && exit 1)
+  $* || (echo "\nfailed\n" 1>&2 && exit 1)
 }
 
-echo "Fixing OSX zsh environment bug ..."
+echo "\nFixing OSX zsh environment bug ..."
   successfully sudo mv /etc/{zshenv,zshrc}
 
-echo "Installing Homebrew, a good OS X package manager ..."
+echo "\nInstalling Homebrew, a good OS X package manager ..."
   successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
   successfully brew update
 
 if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
-  echo "Putting Homebrew location earlier in PATH ..."
+  echo "\nPutting Homebrew location earlier in PATH ..."
     successfully echo "
   # recommended by brew doctor
   export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
     successfully source ~/.zshrc
 fi
 
-echo "Installing Postgres, a good open source relational database ..."
+echo "\nInstalling Postgres, a good open source relational database ..."
   successfully brew install postgres --no-python
   successfully initdb /usr/local/var/postgres -E utf8
 
-echo "Installing Redis, a good key-value database ..."
+echo "\nInstalling Redis, a good key-value database ..."
   successfully brew install redis
 
-echo "Installing The Silver Searcher (better than ack or grep) for searching the contents of files ..."
+echo "\nInstalling The Silver Searcher (better than ack or grep) for searching the contents of files ..."
   successfully brew install the_silver_searcher
 
-echo "Installing ctags, for indexing files for vim tab completion of methods, classes, variables ..."
+echo "\nInstalling ctags, for indexing files for vim tab completion of methods, classes, variables ..."
   successfully brew install ctags
 
-echo "Installing tmux, for saving project state and switching between projects ..."
+echo "\nInstalling tmux, for saving project state and switching between projects ..."
   successfully brew install tmux
 
-echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
+echo "\nInstalling reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
   successfully brew install reattach-to-user-namespace
 
-echo "Installing ImageMagick, for cropping and re-sizing images ..."
+echo "\nInstalling ImageMagick, for cropping and re-sizing images ..."
   successfully brew install imagemagick
 
-echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
+echo "\nInstalling QT, used by Capybara Webkit for headless Javascript integration testing ..."
   successfully brew install qt
 
-echo "Installing watch, used to execute a program periodically and show the output ..."
+echo "\nInstalling watch, used to execute a program periodically and show the output ..."
   successfully brew install watch
 
-echo "Installing rbenv for changing Ruby versions ..."
+echo "\nInstalling rbenv for changing Ruby versions ..."
   successfully brew install rbenv
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
     successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
   fi
 
-echo "Restarting shell as a login shell so path changes take effect to begin using rbenv ..."
+echo "\nRestarting shell as a login shell so path changes take effect to begin using rbenv ..."
   exec $SHELL -l
 
-echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
+echo "\nInstalling rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully brew install rbenv-gem-rehash
 
-echo "Installing ruby-build for installing Rubies ..."
+echo "\nInstalling ruby-build for installing Rubies ..."
   successfully brew install ruby-build
 
-echo "Installing Ruby 1.9.3-p392 ..."
+echo "\nInstalling Ruby 1.9.3-p392 ..."
   CC=gcc-4.2 successfully rbenv install 1.9.3-p392
 
-echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
+echo "\nSetting Ruby 1.9.3-p392 as global default Ruby ..."
   successfully rbenv global 1.9.3-p392
   successfully rbenv shell 1.9.3-p392
 
-echo "Update to latest Rubygems version ..."
+echo "\nUpdate to latest Rubygems version ..."
   successfully gem update --system
 
-echo "Installing critical Ruby gems for Rails development ..."
+echo "\nInstalling critical Ruby gems for Rails development ..."
   successfully gem install bundler foreman pg rails thin --no-document
 
-echo "Installing GitHub CLI client ..."
+echo "\nInstalling GitHub CLI client ..."
   successfully gem install hub --no-document
 
-echo "Installing Heroku CLI client ..."
+echo "\nInstalling Heroku CLI client ..."
   successfully brew install heroku-toolbelt
 
-echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
+echo "\nInstalling the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
