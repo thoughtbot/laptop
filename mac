@@ -91,3 +91,8 @@ echo "\nInstalling Heroku CLI client ..."
 
 echo "\nInstalling the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
+
+if ! grep -qs "DO NOT EDIT BELOW THIS LINE" ~/.zshrc; then
+  echo "\nPrepare ~/.zshrc for http://github.com/thoughtbot/dotfiles ..."
+    echo "DO NOT EDIT BELOW THIS LINE\n" >> ~/.zshrc
+fi
