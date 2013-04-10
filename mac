@@ -4,7 +4,7 @@ successfully() {
   $* || (echo "\nfailed" 1>&2 && exit 1)
 }
 
-if ! [ -S /etc/zshenv ]; then
+if -f /etc/zshenv; then
   echo "\nFixing OSX zsh environment bug ..."
     successfully sudo mv /etc/{zshenv,zshrc}
 fi
@@ -94,5 +94,5 @@ echo "\nInstalling the heroku-config plugin for pulling config variables locally
 
 if ! grep -qs "DO NOT EDIT BELOW THIS LINE" ~/.zshrc; then
   echo "\nPrepare ~/.zshrc for http://github.com/thoughtbot/dotfiles ..."
-    echo "DO NOT EDIT BELOW THIS LINE\n" >> ~/.zshrc
+    successfully echo "DO NOT EDIT BELOW THIS LINE\n" >> ~/.zshrc
 fi
