@@ -15,11 +15,13 @@ echo "Installing Homebrew, a good OS X package manager ..."
   successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
   successfully brew update
 
-echo "Putting Homebrew location earlier in PATH ..."
-  successfully echo "
-# recommended by brew doctor
-export PATH='/usr/local/bin:$PATH'" >> ~/.zshenv
-  successfully source ~/.zshenv
+if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
+  echo "Putting Homebrew location earlier in PATH ..."
+    successfully echo "
+  # recommended by brew doctor
+  export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
+    successfully source ~/.zshrc
+fi
 
 echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
@@ -58,7 +60,10 @@ echo "Installing watch, used to execute a program periodically and show the outp
 
 echo "Installing rbenv for changing Ruby versions ..."
   successfully brew install rbenv
-  successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+
+  if ! grep -qs "rbenv init" ~/.zshrc; then
+    successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+  fi
 
 echo "Restarting shell as a login shell so path changes take effect to begin using rbenv ..."
   exec $SHELL -l
