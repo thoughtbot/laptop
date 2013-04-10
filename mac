@@ -7,6 +7,9 @@ successfully() {
 echo "Fixing OSX zsh environment bug ..."
   successfully sudo mv /etc/{zshenv,zshrc}
 
+echo "Setting shell to print commands as they execute ..."
+set -x
+
 echo "Fixing permissions ..."
   successfully sudo mkdir -p /usr/local
   successfully sudo chown -R `whoami` /usr/local
@@ -18,8 +21,8 @@ echo "Installing Homebrew, a good OS X package manager ..."
 echo "Putting Homebrew location earlier in PATH ..."
   successfully echo "
 # recommended by brew doctor
-export PATH='/usr/local/bin:$PATH'" >> ~/.zshenv
-  successfully source ~/.zshenv
+export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
+  successfully source ~/.zshrc
 
 echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
@@ -62,6 +65,7 @@ echo "Installing rbenv for changing Ruby versions ..."
 
 echo "Restarting shell as a login shell so path changes take effect to begin using rbenv ..."
   exec $SHELL -l
+  set -x
 
 echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully brew install rbenv-gem-rehash
@@ -90,3 +94,6 @@ echo "Installing Heroku CLI client ..."
 
 echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
+
+echo "Setting shell back to normal; don't print future commands as they execute ..."
+set +x
