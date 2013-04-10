@@ -4,8 +4,10 @@ successfully() {
   $* || (echo "\nfailed" 1>&2 && exit 1)
 }
 
-echo "\nFixing OSX zsh environment bug ..."
-  successfully sudo mv /etc/{zshenv,zshrc}
+if ! [ -S /etc/zshenv ]; then
+  echo "\nFixing OSX zsh environment bug ..."
+    successfully sudo mv /etc/{zshenv,zshrc}
+fi
 
 echo "\nInstalling Homebrew, a good OS X package manager ..."
   successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
