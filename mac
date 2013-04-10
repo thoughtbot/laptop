@@ -15,9 +15,8 @@ echo "\nInstalling Homebrew, a good OS X package manager ..."
 
 if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
   echo "\nPutting Homebrew location earlier in PATH ..."
-    successfully echo "
-  # recommended by brew doctor
-  export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
+    successfully echo "\n# recommended by brew doctor" >> ~/.zshrc
+    successfully echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
     successfully source ~/.zshrc
 fi
 
