@@ -68,7 +68,6 @@ What it sets up
 * Redis for storing key-value data
 * Ruby Build for installing Rubies
 * Ruby stable for writing general-purpose code
-* SSH public key for authenticating with Github and Heroku
 * The Silver Searcher for finding things in files
 * Tmux for saving project state and switching between projects
 * Watch for periodically executing a program and displaying the output
