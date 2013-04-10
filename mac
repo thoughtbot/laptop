@@ -21,8 +21,8 @@ echo "Installing Homebrew, a good OS X package manager ..."
 echo "Putting Homebrew location earlier in PATH ..."
   successfully echo "
 # recommended by brew doctor
-export PATH='/usr/local/bin:$PATH'" >> ~/.zshenv
-  successfully source ~/.zshenv
+export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
+  successfully source ~/.zshrc
 
 echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
