@@ -52,10 +52,12 @@ echo "\nInstalling rbenv for changing Ruby versions ..."
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
     successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+
+    echo "\nEnable shims and autocompletion ..."
+      successfully eval "$(rbenv init -)"
   fi
 
-echo "\nRestarting shell as a login shell so path changes take effect to begin using rbenv ..."
-  exec $SHELL -l
+  source ~/.zshrc
 
 echo "\nInstalling rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully brew install rbenv-gem-rehash
