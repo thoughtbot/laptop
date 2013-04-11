@@ -28,7 +28,7 @@ fancy_echo "Updating system packages ..."
   successfully sudo aptitude -y dist-upgrade
 
 fancy_echo "Installing curl for transferring data with URL syntax ..."
-  successfully sudo aptitude -y curl
+  successfully sudo aptitude install -y curl
 
 fancy_echo "Installing xclip for clipboard integration with your terminal ..."
   successfully sudo aptitude install -y xclip
@@ -36,19 +36,10 @@ fancy_echo "Installing xclip for clipboard integration with your terminal ..."
 fancy_echo "Installing git, for source control management ..."
   successfully sudo aptitude install -y git
 
-fancy_echo "Checking for SSH key, generating one if it doesn't exist ..."
-  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
-
-fancy_echo "Copying public key to clipboard. Paste it into your Github account ..."
-  [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | xclip -selection clipboard
-  successfully x-www-browser https://github.com/account/ssh
-
 fancy_echo "Installing base ruby build dependencies ..."
   successfully sudo aptitude build-dep -y ruby1.9.3
 
 fancy_echo "Installing libraries for common gem dependencies ..."
-# libxslt1-dev for nokogiri, libcurl4-openssl-dev for passenger standalone,
-# libksba8 for encryption, libqtwebkit-dev for capybara-webkit
   successfully sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
@@ -84,10 +75,14 @@ fancy_echo "Installing watch, used to execute a program periodically and show th
 
 fancy_echo "Installing rbenv for changing Ruby versions ..."
   successfully git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
-  successfully echo "export SHELL=$(which zsh)" >> ~/.zshrc
-  successfully echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
-  successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
-  successfully source ~/.zshrc
+
+  if ! grep -qs "rbenv init" ~/.zshrc; then
+    successfully echo 'export PATH="$HOME/bin:$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+
+    successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+  fi
+
+  source ~/.zshrc
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
@@ -117,5 +112,7 @@ fancy_echo "Installing Heroku CLI client ..."
 fancy_echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
 
-fancy_echo "Your shell will now restart in order for changes to apply."
-  exec `which zsh` -l
+if ! grep -qs "DO NOT EDIT BELOW THIS LINE" ~/.zshrc; then
+  fancy_echo "Prepare ~/.zshrc for http://github.com/thoughtbot/dotfiles ..."
+  successfully echo "# DO NOT EDIT BELOW THIS LINE\n" >> ~/.zshrc
+fi
