@@ -3,7 +3,7 @@ CLEAR="\033[0m"
 ORANGE="\033[33m"
 
 successfully() {
-  $* || (echo "failed" 1>&2 && exit 1)
+  $* || (echo "\nfailed" 1>&2 && exit 1)
 }
 
 fancy_echo() {
@@ -14,7 +14,7 @@ fancy_echo() {
 if lsb_release -c | grep -qEv 'precise|quantal|wheezy'
 then
   fancy_echo "Sorry! we don't currently support that distro."
-  exit;
+  exit 1;
 fi
 
 fancy_echo "Updating system packages ..."

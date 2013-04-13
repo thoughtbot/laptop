@@ -1,12 +1,18 @@
 #!/usr/bin/env zsh
+CLEAR="\033[0m"
+ORANGE="\033[33m"
 
 successfully() {
   $* || (echo "\nfailed" 1>&2 && exit 1)
 }
 
 fancy_echo() {
-  echo "\n$1"
+  echo -e ${ORANGE}$1${CLEAR}
+  echo
 }
+
+
+# Mac Specific
 
 if -f /etc/zshenv; then
   fancy_echo "Fix OSX zsh environment bug ..."
@@ -24,6 +30,16 @@ if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     successfully source ~/.zshrc
 fi
 
+fancy_echo "Install GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
+  successfully brew tap homebrew/dupes
+  successfully brew install apple-gcc42
+
+fancy_echo "Install reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
+  successfully brew install reattach-to-user-namespace
+
+
+# Cross platform
+
 fancy_echo "Install Postgres, a good open source relational database ..."
   successfully brew install postgres --no-python
   successfully initdb /usr/local/var/postgres -E utf8
@@ -39,9 +55,6 @@ fancy_echo "Install ctags, for indexing files for vim tab completion of methods,
 
 fancy_echo "Install tmux, for saving project state and switching between projects ..."
   successfully brew install tmux
-
-fancy_echo "Install reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  successfully brew install reattach-to-user-namespace
 
 fancy_echo "Install ImageMagick, for cropping and re-sizing images ..."
   successfully brew install imagemagick
@@ -69,10 +82,6 @@ fancy_echo "Install rbenv-gem-rehash so the shell automatically picks up binarie
 
 fancy_echo "Install ruby-build for installing Rubies ..."
   successfully brew install ruby-build
-
-fancy_echo "Install GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
-  successfully brew tap homebrew/dupes
-  successfully brew install apple-gcc42
 
 fancy_echo "Install Ruby 1.9.3-p392 ..."
   CC=gcc-4.2 successfully rbenv install 1.9.3-p392
