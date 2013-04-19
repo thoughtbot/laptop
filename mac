@@ -9,11 +9,11 @@ fancy_echo() {
 }
 
 if -f /etc/zshenv; then
-  fancy_echo "Fix OSX zsh environment bug ..."
+  fancy_echo "Fixing OSX zsh environment bug ..."
     successfully sudo mv /etc/{zshenv,zshrc}
 fi
 
-fancy_echo "Install Homebrew, a good OS X package manager ..."
+fancy_echo "Installing Homebrew, a good OS X package manager ..."
   successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
   successfully brew update
 
@@ -24,35 +24,35 @@ if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     successfully source ~/.zshrc
 fi
 
-fancy_echo "Install Postgres, a good open source relational database ..."
+fancy_echo "Installing Postgres, a good open source relational database ..."
   successfully brew install postgres --no-python
   successfully initdb /usr/local/var/postgres -E utf8
 
-fancy_echo "Install Redis, a good key-value database ..."
+fancy_echo "Installing Redis, a good key-value database ..."
   successfully brew install redis
 
-fancy_echo "Install The Silver Searcher (better than ack or grep) for searching the contents of files ..."
+fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
   successfully brew install the_silver_searcher
 
-fancy_echo "Install ctags, for indexing files for vim tab completion of methods, classes, variables ..."
+fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
   successfully brew install ctags
 
-fancy_echo "Install tmux, for saving project state and switching between projects ..."
+fancy_echo "Installing tmux, to save project state and switch between projects ..."
   successfully brew install tmux
 
-fancy_echo "Install reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
+fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
   successfully brew install reattach-to-user-namespace
 
-fancy_echo "Install ImageMagick, for cropping and re-sizing images ..."
+fancy_echo "Installing ImageMagick, to crop and resize images ..."
   successfully brew install imagemagick
 
-fancy_echo "Install QT, used by Capybara Webkit for headless Javascript integration testing ..."
+fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
   successfully brew install qt
 
-fancy_echo "Install watch, used to execute a program periodically and show the output ..."
+fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   successfully brew install watch
 
-fancy_echo "Install rbenv for changing Ruby versions ..."
+fancy_echo "Installing rbenv, to change Ruby versions ..."
   successfully brew install rbenv
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
@@ -64,36 +64,36 @@ fancy_echo "Install rbenv for changing Ruby versions ..."
 
   source ~/.zshrc
 
-fancy_echo "Install rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
+fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully brew install rbenv-gem-rehash
 
-fancy_echo "Install ruby-build for installing Rubies ..."
+fancy_echo "Installing ruby-build, to install Rubies ..."
   successfully brew install ruby-build
 
-fancy_echo "Install GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
+fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
   successfully brew tap homebrew/dupes
   successfully brew install apple-gcc42
 
-fancy_echo "Install Ruby 1.9.3-p392 ..."
+fancy_echo "Installing Ruby 1.9.3-p392 ..."
   CC=gcc-4.2 successfully rbenv install 1.9.3-p392
 
-fancy_echo "Set Ruby 1.9.3-p392 as global default Ruby ..."
+fancy_echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
   successfully rbenv global 1.9.3-p392
   successfully rbenv shell 1.9.3-p392
 
-fancy_echo "Update to latest Rubygems version ..."
+fancy_echo "Updating to latest Rubygems version ..."
   successfully gem update --system
 
-fancy_echo "Install critical Ruby gems for Rails development ..."
+fancy_echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler foreman pg rails thin --no-document
 
-fancy_echo "Install GitHub CLI client ..."
+fancy_echo "Installing GitHub CLI client ..."
   successfully gem install hub --no-document
 
-fancy_echo "Install Heroku CLI client ..."
+fancy_echo "Installing Heroku CLI client ..."
   successfully brew install heroku-toolbelt
 
-fancy_echo "Install the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
+fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
 
 if ! grep -qs "DO NOT EDIT BELOW THIS LINE" ~/.zshrc; then

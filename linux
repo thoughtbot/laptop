@@ -27,12 +27,6 @@ fancy_echo "Updating system packages ..."
   successfully sudo aptitude update
   successfully sudo aptitude -y dist-upgrade
 
-fancy_echo "Installing curl for transferring data with URL syntax ..."
-  successfully sudo aptitude install -y curl
-
-fancy_echo "Installing xclip for clipboard integration with your terminal ..."
-  successfully sudo aptitude install -y xclip
-
 fancy_echo "Installing git, for source control management ..."
   successfully sudo aptitude install -y git
 
@@ -48,7 +42,7 @@ fancy_echo "Installing Postgres, a good open source relational database ..."
 fancy_echo "Installing Redis, a good key-value database ..."
   successfully sudo aptitude install -y redis-server
 
-fancy_echo "Installing The Silver Searcher (better than ack or grep) for searching the contents of files ..."
+fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
   successfully git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
   successfully sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev
   successfully sh /tmp/the_silver_searcher/build.sh
@@ -58,22 +52,22 @@ fancy_echo "Installing The Silver Searcher (better than ack or grep) for searchi
   successfully cd ~
   successfully rm -rf /tmp/the_silver_searcher
 
-fancy_echo "Installing ctags, for indexing files for vim tab completion of methods, classes, variables ..."
+fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
   successfully sudo aptitude install -y exuberant-ctags
 
 fancy_echo "Installing vim ..."
   successfully sudo aptitude install -y vim-gtk
 
-fancy_echo "Installing tmux, for saving project state and switching between projects ..."
+fancy_echo "Installing tmux, to save project state and switch between projects ..."
   successfully sudo aptitude install -y tmux
 
-fancy_echo "Installing ImageMagick, for cropping and re-sizing images ..."
+fancy_echo "Installing ImageMagick, to crop and resize images ..."
   successfully sudo aptitude install -y imagemagick
 
-fancy_echo "Installing watch, used to execute a program periodically and show the output ..."
+fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   successfully sudo aptitude install -y watch
 
-fancy_echo "Installing rbenv for changing Ruby versions ..."
+fancy_echo "Installing rbenv, to change Ruby versions ..."
   successfully git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
@@ -87,7 +81,7 @@ fancy_echo "Installing rbenv for changing Ruby versions ..."
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   successfully git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 
-fancy_echo "Installing ruby-build for installing Rubies ..."
+fancy_echo "Installing ruby-build, to install Rubies ..."
   successfully git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
 fancy_echo "Installing Ruby 1.9.3-p392 ..."
@@ -97,7 +91,7 @@ fancy_echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
   successfully rbenv global 1.9.3-p392
   successfully rbenv shell 1.9.3-p392
 
-fancy_echo "Update to latest Rubygems version ..."
+fancy_echo "Updating to latest Rubygems version ..."
   successfully gem update --system
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
@@ -109,7 +103,7 @@ fancy_echo "Installing GitHub CLI client ..."
 fancy_echo "Installing Heroku CLI client ..."
   successfully wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
-fancy_echo "Installing the heroku-config plugin for pulling config variables locally to be used as ENV variables ..."
+fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
 
 if ! grep -qs "DO NOT EDIT BELOW THIS LINE" ~/.zshrc; then
