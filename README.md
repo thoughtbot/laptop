@@ -82,7 +82,7 @@ Credits
 Laptop is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
 
-Thank you, [contributors](/thoughtbot/laptop/graphs/contributors)!
+Thank you, [contributors](https://github.com/thoughtbot/laptop/graphs/contributors)!
 
 License
 -------
