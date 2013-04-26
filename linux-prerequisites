@@ -11,7 +11,7 @@ fancy_echo() {
   echo
 }
 
-if lsb_release -c | grep -qEv 'precise|quantal|wheezy'
+if lsb_release -c | grep -qEv 'precise|quantal|wheezy|raring'
 then
   fancy_echo "Sorry! we don't currently support that distro."
   exit;
