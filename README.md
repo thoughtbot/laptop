@@ -24,10 +24,11 @@ for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
 
 We support:
 
-* [12.04 LTS: Precise Pangolin](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes),
 * [13.04: Raring Ringtail](https://wiki.ubuntu.com/RaringRingtail/ReleaseNotes),
 * [12.10: Quantal Quetzal](https://wiki.ubuntu.com/QuantalQuetzal/ReleaseNotes), and
-* Debian testing (currently [wheezy](http://www.debian.org/releases/testing/)).
+* [12.04 LTS: Precise Pangolin](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes),
+* Debian stable (currently [wheezy](http://www.debian.org/releases/stable/)).
+* Debian testing (currently [jessie](http://www.debian.org/releases/testing/)).
 
 1) Install zsh and set it as your login shell:
 
