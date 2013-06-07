@@ -74,12 +74,12 @@ fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to inst
   successfully brew tap homebrew/dupes
   successfully brew install apple-gcc42
 
-fancy_echo "Installing Ruby 1.9.3-p392 ..."
-  CC=gcc-4.2 successfully rbenv install 1.9.3-p392
+fancy_echo "Installing Ruby 2.0.0-p195 ..."
+  CC=gcc-4.2 successfully rbenv install 2.0.0-p195
 
-fancy_echo "Setting Ruby 1.9.3-p392 as global default Ruby ..."
-  successfully rbenv global 1.9.3-p392
-  successfully rbenv shell 1.9.3-p392
+fancy_echo "Setting Ruby 2.0.0-p195 as global default Ruby ..."
+  successfully rbenv global 2.0.0-p195
+  successfully rbenv shell 2.0.0-p195
 
 fancy_echo "Updating to latest Rubygems version ..."
   successfully gem update --system
