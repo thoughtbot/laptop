@@ -44,7 +44,7 @@ fancy_echo "Installing Redis, a good key-value database ..."
 
 fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
   successfully git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-  successfully sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev
+  successfully sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
   successfully sh /tmp/the_silver_searcher/build.sh
   successfully cd /tmp/the_silver_searcher
   successfully sh build.sh
