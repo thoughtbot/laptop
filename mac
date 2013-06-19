@@ -46,12 +46,12 @@ echo "Installing ack, for searching the contents of files ..."
 echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   successfully npm install -g yo grunt-cli bower
 
-echo "Installing RVM (Ruby Version Manager) and Ruby 1.9.3-p327, which becomes the default ..."
-  successfully curl -L https://get.rvm.io | bash -s stable --ruby
-  successfully echo "
-# RVM
-[[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshenv
-  successfully source ~/.rvm/scripts/rvm
+# echo "Installing RVM (Ruby Version Manager) and Ruby 2.0.0-p195, which becomes the default ..."
+#   successfully curl -L https://get.rvm.io | bash -s stable --ruby
+#   successfully echo "
+# # RVM
+# [[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshenv
+#   successfully source ~/.rvm/scripts/rvm
 
 echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler rails compass --no-rdoc --no-ri
