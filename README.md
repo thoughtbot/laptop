@@ -13,7 +13,7 @@ Requirements
 Use [OS X GCC Installer](https://github.com/kennethreitz/osx-gcc-installer/) for
 Snow Leopard (OS X 10.6).
 
-Use [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action)
+Use [XCode](https://developer.apple.com/xcode/) & Use [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action)
 for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
 
 2) Set zsh as your login shell:
