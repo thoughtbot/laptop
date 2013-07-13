@@ -98,7 +98,8 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler foreman pg rails unicorn --no-document
 
 fancy_echo "Installing GitHub CLI client ..."
-  successfully gem install hub --no-document
+  successfully curl http://hub.github.com/standalone -sLo ~/.bin/hub
+  successfully chmod +x ~/.bin/hub
 
 fancy_echo "Installing Heroku CLI client ..."
   successfully wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
