@@ -106,8 +106,3 @@ fancy_echo "Installing Heroku CLI client ..."
 
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
-
-if ! grep -qs "DO NOT EDIT BELOW THIS LINE" ~/.zshrc; then
-  fancy_echo "Prepare ~/.zshrc for http://github.com/thoughtbot/dotfiles ..."
-  successfully echo "# DO NOT EDIT BELOW THIS LINE\n" >> ~/.zshrc
-fi
