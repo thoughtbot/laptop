@@ -27,6 +27,9 @@ fancy_echo "Updating system packages ..."
   successfully sudo aptitude update
   successfully sudo aptitude -y dist-upgrade
 
+fancy_echo "Installing curl ..."
+  successfully sudo aptitude install -y curl
+
 fancy_echo "Installing zsh ..."
   successfully sudo aptitude install -y zsh
 
