@@ -95,7 +95,7 @@ fancy_echo "Updating to latest Rubygems version ..."
   successfully gem update --system
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
-  successfully gem install bundler foreman pg rails unicorn --no-document
+  successfully gem install bundler pg rails unicorn --no-document
 
 fancy_echo "Installing GitHub CLI client ..."
   successfully curl http://hub.github.com/standalone -sLo ~/.bin/hub
