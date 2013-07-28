@@ -7,10 +7,6 @@ successfully() {
 echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
-echo "Copying public key to clipboard. Paste it into your Github account ..."
-  [[ -f ~/.ssh/id_rsa.pub ]] && cat ~/.ssh/id_rsa.pub | pbcopy
-  successfully open https://github.com/account/ssh
-
 echo "Fixing permissions ..."
   successfully sudo chown -R `whoami` /usr/local
 
@@ -26,13 +22,10 @@ export PATH='/usr/local/bin:$PATH'" >> ~/.zshenv
 
 echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
-  successfully brew install coreutils autoconf automake apple-gcc42 libtool pkg-config openssl readline libyaml sqlite libxml2 libxslt libksba
+  successfully brew install coreutils
 
 echo "Installing git ..."
   successfully brew install git
-
-echo "Installing MySQL, a good open source relational database ..."
-  successfully brew install mysql
 
 echo "Installing node.js, a good JavaScript application framework ..."
   successfully brew install node
@@ -46,18 +39,11 @@ echo "Installing ack, for searching the contents of files ..."
 echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   successfully npm install -g yo grunt-cli bower
 
-echo "Installing RVM (Ruby Version Manager) and Ruby 2.0.0-p195, which becomes the default ..."
-  successfully curl -L https://get.rvm.io | bash -s stable --ruby
-  successfully echo "
-# RVM
-[[ -s '/Users/`whoami`/.rvm/scripts/rvm' ]] && source '/Users/`whoami`/.rvm/scripts/rvm'" >> ~/.zshenv
-  successfully source ~/.rvm/scripts/rvm
-
 echo "Installing critical Ruby gems for Rails development ..."
   successfully gem install bundler rails compass --no-rdoc --no-ri
 
-echo "Installing WP-CLI, to manage WordPress development environments on the command line ..."
-  successfully curl https://raw.github.com/wp-cli/wp-cli.github.com/master/installer.sh | bash
+echo "Install Vagrant PHP/WordPress Development Box to ~/vmdevbox"
+  successfully git clone git@github.com:mattbanks/vagrant-dev-box.git ~/vmdevbox
 
 echo "Your shell will now restart in order for changes to apply."
   exec $SHELL -l
