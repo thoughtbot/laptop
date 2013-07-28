@@ -33,11 +33,8 @@ What it sets up
 * Homebrew for managing operating system libraries
 * Git, because you need version control, homie
 * Grunt for all of its awesomeness
-* JSHint for checking syntax on JavaScript files
 * Node for running a JS based server
 * Rails gem for writing web applications
-* Ruby stable for writing general-purpose code
-* RVM for managing versions of the Ruby programming language
 * SSH public key for authenticating with Github
 * Z Script for quick access to previous projects/folders
 
