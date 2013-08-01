@@ -1,0 +1,8 @@
+fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
+  successfully brew tap homebrew/dupes
+  successfully brew install apple-gcc42
+
+fancy_echo "Upgrading and linking OpenSSL ..."
+  successfully brew install openssl
+
+export CC=gcc-4.2

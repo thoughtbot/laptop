@@ -1,0 +1,11 @@
+fancy_echo "Installing Homebrew, a good OS X package manager ..."
+  successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+  successfully brew update
+
+if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
+  fancy_echo "Put Homebrew location earlier in PATH ..."
+    successfully echo "\n# recommended by brew doctor" >> ~/.zshrc
+    successfully echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
+    successfully source ~/.zshrc
+fi
+
