@@ -11,10 +11,10 @@ fancy_echo() {
   echo
 }
 
-if lsb_release -c | grep -qEv 'precise|quantal|wheezy|raring|jessie'
+if ! grep -qiE 'precise|quantal|wheezy|raring|jessie' /etc/os-release
 then
   fancy_echo "Sorry! we don't currently support that distro."
-  exit;
+  exit 1;
 fi
 
 fancy_echo "Updating system packages ..."
