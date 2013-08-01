@@ -1,0 +1,11 @@
+fancy_echo "Installing curl ..."
+  successfully sudo aptitude install -y curl
+
+fancy_echo "Installing zsh ..."
+  successfully sudo aptitude install -y zsh
+
+fancy_echo "Changing your shell to zsh ..."
+  successfully chsh -s `which zsh`
+
+fancy_echo "Your shell will now restart to apply changes."
+  exec `which zsh` -l

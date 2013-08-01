@@ -1,0 +1,7 @@
+successfully() {
+  $* || (echo "\nfailed" 1>&2 && exit 1)
+}
+
+fancy_echo() {
+  echo "\n$1"
+}

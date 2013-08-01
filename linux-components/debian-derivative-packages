@@ -1,0 +1,29 @@
+fancy_echo "Installing git, for source control management ..."
+  successfully sudo aptitude install -y git
+
+fancy_echo "Installing base ruby build dependencies ..."
+  successfully sudo aptitude build-dep -y ruby1.9.3
+
+fancy_echo "Installing libraries for common gem dependencies ..."
+  successfully sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev
+
+fancy_echo "Installing Postgres, a good open source relational database ..."
+  successfully sudo aptitude install -y postgresql postgresql-server-dev-all
+
+fancy_echo "Installing Redis, a good key-value database ..."
+  successfully sudo aptitude install -y redis-server
+
+fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
+  successfully sudo aptitude install -y exuberant-ctags
+
+fancy_echo "Installing vim ..."
+  successfully sudo aptitude install -y vim-gtk
+
+fancy_echo "Installing tmux, to save project state and switch between projects ..."
+  successfully sudo aptitude install -y tmux
+
+fancy_echo "Installing ImageMagick, to crop and resize images ..."
+  successfully sudo aptitude install -y imagemagick
+
+fancy_echo "Installing watch, to execute a program periodically and show the output ..."
+  successfully sudo aptitude install -y watch
