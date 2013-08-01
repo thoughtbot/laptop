@@ -1,0 +1,30 @@
+fancy_echo "Installing Postgres, a good open source relational database ..."
+  successfully brew install postgres --no-python
+  successfully initdb /usr/local/var/postgres -E utf8
+
+fancy_echo "Installing Redis, a good key-value database ..."
+  successfully brew install redis
+
+fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
+  successfully brew install the_silver_searcher
+
+fancy_echo "Installing vim from Homebrew to get the latest version ..."
+  successfully brew install vim
+
+fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
+  successfully brew install ctags
+
+fancy_echo "Installing tmux, to save project state and switch between projects ..."
+  successfully brew install tmux
+
+fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
+  successfully brew install reattach-to-user-namespace
+
+fancy_echo "Installing ImageMagick, to crop and resize images ..."
+  successfully brew install imagemagick
+
+fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
+  successfully brew install qt
+
+fancy_echo "Installing watch, to execute a program periodically and show the output ..."
+  successfully brew install watch

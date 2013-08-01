@@ -1,0 +1,10 @@
+common-components/zsh-shebang
+common-components/header
+common-components/shared-functions
+mac-components/zsh-fix
+mac-components/homebrew
+mac-components/packages
+mac-components/rbenv
+mac-components/compiler-and-libraries
+common-components/ruby-environment
+mac-components/heroku

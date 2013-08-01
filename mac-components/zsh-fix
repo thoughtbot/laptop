@@ -1,0 +1,4 @@
+if -f /etc/zshenv; then
+  fancy_echo "Fixing OSX zsh environment bug ..."
+    successfully sudo mv /etc/{zshenv,zshrc}
+fi
