@@ -14,4 +14,3 @@ fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up bina
 
 fancy_echo "Installing ruby-build, to install Rubies ..."
   successfully git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-

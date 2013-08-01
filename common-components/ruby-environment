@@ -14,4 +14,3 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
 fancy_echo "Installing GitHub CLI client ..."
   successfully curl http://hub.github.com/standalone -sLo ~/.bin/hub
   successfully chmod +x ~/.bin/hub
-
