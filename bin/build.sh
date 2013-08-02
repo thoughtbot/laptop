@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/sh
 
 for MANIFEST in Manifest.*; do
   FILENAME=`echo -n "$MANIFEST" | sed s/Manifest\.//`

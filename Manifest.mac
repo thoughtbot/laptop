@@ -1,3 +1,4 @@
+common-components/zsh-shebang
 common-components/header
 common-components/shared-functions
 mac-components/zsh-fix
