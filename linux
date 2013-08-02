@@ -73,7 +73,7 @@ fancy_echo "Installing The Silver Searcher (better than ack or grep) to search t
   successfully cd /tmp/the_silver_searcher
   successfully sh build.sh
   successfully sudo make install
-  successfully cd ~
+  successfully cd
   successfully rm -rf /tmp/the_silver_searcher
 ### end linux-components/silver-searcher-from-source
 
