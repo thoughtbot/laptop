@@ -1,0 +1,6 @@
+NAME="Ubuntu"
+VERSION="12.10, Quantal Quetzal"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu quantal (12.10)"
+VERSION_ID="12.10"
