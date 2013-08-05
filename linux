@@ -11,7 +11,7 @@ fancy_echo() {
   echo
 }
 
-if lsb_release -c | grep -qEv 'precise|quantal|wheezy|raring|jessie'
+if lsb_release -c | grep -qEv 'precise|quantal|wheezy|raring|jessie|saucy'
 then
   fancy_echo "Sorry! we don't currently support that distro."
   exit 1;
@@ -29,9 +29,6 @@ fancy_echo "Updating system packages ..."
 
 fancy_echo "Installing git, for source control management ..."
   successfully sudo aptitude install -y git
-
-fancy_echo "Installing base ruby build dependencies ..."
-  successfully sudo aptitude build-dep -y ruby1.9.3
 
 fancy_echo "Installing libraries for common gem dependencies ..."
   successfully sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev
@@ -67,35 +64,32 @@ fancy_echo "Installing ImageMagick, to crop and resize images ..."
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   successfully sudo aptitude install -y watch
 
-fancy_echo "Installing rbenv, to change Ruby versions ..."
-  successfully git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+fancy_echo "Installing curl"
+  successfully sudo apt-get install curl
 
-  if ! grep -qs "rbenv init" ~/.zshrc; then
-    successfully echo 'export PATH="$HOME/bin:$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+fancy_echo "Setting up rvm"
+  successfully curl -L get.rvm.io | bash -s stable --auto
 
-    successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
-  fi
+fancy_echo "Sourcing bash profile"
+  successfully source ~/.bash_profile
 
-  source ~/.zshrc
+fancy_echo "Installing rvm requirements . . . hold your breath....."
+  successfully rvm requirements run
 
-fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  successfully git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+fancy_echo "Installing ruby 2"
+  successfully rvm install 2.0
 
-fancy_echo "Installing ruby-build, to install Rubies ..."
-  successfully git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+fancy_echo "Now also installing ruby 1.9.3 so be happy . . . "
+  successfully rvm install 1.9.3
 
-fancy_echo "Installing Ruby 2.0.0-p247 ..."
-  successfully rbenv install 2.0.0-p247
+fancy_echo "Making 1.9.3 as default . . . "
+  successfully rvm use --default 1.9.3
 
-fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
-  successfully rbenv global 2.0.0-p247
-  successfully rbenv shell 2.0.0-p247
+fancy_echo "Checking ruby version"
+  successfully ruby -v
 
-fancy_echo "Updating to latest Rubygems version ..."
-  successfully gem update --system
-
-fancy_echo "Installing critical Ruby gems for Rails development ..."
-  successfully gem install bundler foreman pg rails unicorn --no-document
+fancy_echo "Installing Rails"
+  successfully gem install rails # -v 'version' If specific version is required use this for installing that specific version.
 
 fancy_echo "Installing GitHub CLI client ..."
   successfully curl http://hub.github.com/standalone -sLo ~/.bin/hub
