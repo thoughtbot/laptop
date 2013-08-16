@@ -84,6 +84,11 @@ The names and logos for thoughtbot are trademarks of thoughtbot, inc.
 
 Thank you, [contributors](https://github.com/thoughtbot/laptop/graphs/contributors)!
 
+Contributing
+------------
+
+Please see [CONTRIBUTING.md](https://github.com/thoughtbot/laptop/blob/master/CONTRIBUTING.md).
+
 License
 -------
 

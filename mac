@@ -1,4 +1,12 @@
 #!/usr/bin/env zsh
+### end common-components/zsh-shebang
+
+# Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
+# desktop, no haters here) into an awesome development machine.
+
+# This file is auto-generated. Do not edit it by hand unless you know what
+# you're doing. Please see 'CONTRIBUTING.md' for more information.
+### end common-components/header
 
 successfully() {
   $* || (echo "\nfailed" 1>&2 && exit 1)
@@ -7,11 +15,13 @@ successfully() {
 fancy_echo() {
   echo "\n$1"
 }
+### end common-components/shared-functions
 
 if -f /etc/zshenv; then
   fancy_echo "Fixing OSX zsh environment bug ..."
     successfully sudo mv /etc/{zshenv,zshrc}
 fi
+### end mac-components/zsh-fix
 
 fancy_echo "Installing Homebrew, a good OS X package manager ..."
   successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
@@ -23,6 +33,8 @@ if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     successfully echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
     successfully source ~/.zshrc
 fi
+
+### end mac-components/homebrew
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
   successfully brew install postgres --no-python
@@ -54,6 +66,7 @@ fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integ
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   successfully brew install watch
+### end mac-components/packages
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   successfully brew install rbenv
@@ -72,6 +85,7 @@ fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up bina
 
 fancy_echo "Installing ruby-build, to install Rubies ..."
   successfully brew install ruby-build
+### end mac-components/rbenv
 
 fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
   successfully brew tap homebrew/dupes
@@ -80,8 +94,11 @@ fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to inst
 fancy_echo "Upgrading and linking OpenSSL ..."
   successfully brew install openssl
 
+export CC=gcc-4.2
+### end mac-components/compiler-and-libraries
+
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
-  CC=gcc-4.2 successfully rbenv install 2.0.0-p247
+  successfully rbenv install 2.0.0-p247
 
 fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
   successfully rbenv global 2.0.0-p247
@@ -96,9 +113,12 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
 fancy_echo "Installing GitHub CLI client ..."
   successfully curl http://hub.github.com/standalone -sLo ~/.bin/hub
   successfully chmod +x ~/.bin/hub
+### end common-components/ruby-environment
 
 fancy_echo "Installing Heroku CLI client ..."
   successfully brew install heroku-toolbelt
 
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
+### end mac-components/heroku
+

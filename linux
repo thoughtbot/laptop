@@ -1,21 +1,28 @@
 #!/usr/bin/env zsh
-CLEAR="\033[0m"
-ORANGE="\033[33m"
+### end common-components/zsh-shebang
+
+# Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
+# desktop, no haters here) into an awesome development machine.
+
+# This file is auto-generated. Do not edit it by hand unless you know what
+# you're doing. Please see 'CONTRIBUTING.md' for more information.
+### end common-components/header
 
 successfully() {
-  $* || (echo "failed" 1>&2 && exit 1)
+  $* || (echo "\nfailed" 1>&2 && exit 1)
 }
 
 fancy_echo() {
-  echo -e ${ORANGE}$1${CLEAR}
-  echo
+  echo "\n$1"
 }
+### end common-components/shared-functions
 
-if lsb_release -c | grep -qEv 'precise|quantal|wheezy|raring|jessie'
+if ! grep -qiE 'precise|quantal|wheezy|raring|jessie' /etc/os-release
 then
   fancy_echo "Sorry! we don't currently support that distro."
-  exit 1;
+  exit 1
 fi
+### end linux-components/distro-check
 
 fancy_echo "Updating system packages ..."
   if command -v aptitude >/dev/null; then
@@ -26,6 +33,7 @@ fancy_echo "Updating system packages ..."
   fi
   successfully sudo aptitude update
   successfully sudo aptitude -y dist-upgrade
+### end linux-components/debian-package-update
 
 fancy_echo "Installing git, for source control management ..."
   successfully sudo aptitude install -y git
@@ -42,16 +50,6 @@ fancy_echo "Installing Postgres, a good open source relational database ..."
 fancy_echo "Installing Redis, a good key-value database ..."
   successfully sudo aptitude install -y redis-server
 
-fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  successfully git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-  successfully sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
-  successfully sh /tmp/the_silver_searcher/build.sh
-  successfully cd /tmp/the_silver_searcher
-  successfully sh build.sh
-  successfully sudo make install
-  successfully cd ~
-  successfully rm -rf /tmp/the_silver_searcher
-
 fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
   successfully sudo aptitude install -y exuberant-ctags
 
@@ -66,6 +64,18 @@ fancy_echo "Installing ImageMagick, to crop and resize images ..."
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   successfully sudo aptitude install -y watch
+### end linux-components/debian-derivative-packages
+
+fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
+  successfully git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
+  successfully sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+  successfully sh /tmp/the_silver_searcher/build.sh
+  successfully cd /tmp/the_silver_searcher
+  successfully sh build.sh
+  successfully sudo make install
+  successfully cd
+  successfully rm -rf /tmp/the_silver_searcher
+### end linux-components/silver-searcher-from-source
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   successfully git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -83,6 +93,7 @@ fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up bina
 
 fancy_echo "Installing ruby-build, to install Rubies ..."
   successfully git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+### end linux-components/rbenv
 
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
   successfully rbenv install 2.0.0-p247
@@ -100,9 +111,12 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
 fancy_echo "Installing GitHub CLI client ..."
   successfully curl http://hub.github.com/standalone -sLo ~/.bin/hub
   successfully chmod +x ~/.bin/hub
+### end common-components/ruby-environment
 
 fancy_echo "Installing Heroku CLI client ..."
   successfully wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
+### end linux-components/heroku
+
