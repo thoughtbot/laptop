@@ -2,13 +2,13 @@
 
 testSupportedDistros() {
   for RELEASE_FILE in files/os-release*; do
-    RELEASE_FILE=$RELEASE_FILE zsh ../linux-components/distro-check
+    RELEASE_FILE=$RELEASE_FILE zsh ../linux-components/distro-check &> /dev/null
     assertEquals 0 $?
   done
 }
 
 testRejectedDistros(){
-  RELEASE_FILE=files/bad-os-release zsh ../linux-components/distro-check
+  RELEASE_FILE=files/bad-os-release zsh ../linux-components/distro-check &> /dev/null
   assertEquals 1 $?
 }
 
