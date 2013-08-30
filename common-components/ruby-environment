@@ -1,16 +1,16 @@
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
-  successfully rbenv install 2.0.0-p247
+  rbenv install 2.0.0-p247
 
 fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
-  successfully rbenv global 2.0.0-p247
-  successfully rbenv rehash
+  rbenv global 2.0.0-p247
+  rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
-  successfully gem update --system
+  gem update --system
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
-  successfully gem install bundler pg rails unicorn --no-document
+  gem install bundler pg rails unicorn --no-document
 
 fancy_echo "Installing GitHub CLI client ..."
-  successfully curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  successfully chmod +x ~/.bin/hub
+  curl http://hub.github.com/standalone -sLo ~/.bin/hub
+  chmod +x ~/.bin/hub

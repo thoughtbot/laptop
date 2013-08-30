@@ -1,16 +1,16 @@
 fancy_echo "Installing rbenv, to change Ruby versions ..."
-  successfully git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+  git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
-    successfully echo 'export PATH="$HOME/bin:$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+    echo 'export PATH="$HOME/bin:$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
 
-    successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+    echo 'eval "$(rbenv init -)"' >> ~/.zshrc
   fi
 
   source ~/.zshrc
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  successfully git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+  git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 
 fancy_echo "Installing ruby-build, to install Rubies ..."
-  successfully git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build

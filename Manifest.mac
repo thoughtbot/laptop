@@ -1,5 +1,6 @@
 common-components/zsh-shebang
 common-components/header
+common-components/exit-trap
 common-components/shared-functions
 mac-components/zsh-fix
 mac-components/homebrew
