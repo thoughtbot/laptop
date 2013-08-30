@@ -1,18 +1,16 @@
 #!/bin/sh
 
 for MANIFEST in Manifest.*; do
-  FILENAME=`echo -n "$MANIFEST" | sed s/Manifest\.//`
-  rm -f $FILENAME
+  FILENAME=$(printf "$MANIFEST" | sed s/Manifest\.//)
+  rm -f "$FILENAME"
 
-  echo "\nBuilding $MANIFEST into $FILENAME"
+  printf "\nBuilding $MANIFEST into $FILENAME\n"
 
-  for file in `cat $MANIFEST`; do
-    echo "Including: $file"
+  while read file; do
+    printf "Including: $file\n"
 
-    cat $file >> $FILENAME
+    cat "$file" >> "$FILENAME"
 
-    echo "### end $file\n" >> $FILENAME
-  done
-
-  chmod 755 $FILENAME
+    printf "### end $file\n\n" >> "$FILENAME"
+  done < "$MANIFEST"
 done
