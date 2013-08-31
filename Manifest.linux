@@ -1,5 +1,6 @@
 common-components/zsh-shebang
 common-components/header
+common-components/exit-trap
 common-components/shared-functions
 linux-components/distro-check
 linux-components/debian-package-update

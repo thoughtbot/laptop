@@ -8,9 +8,10 @@
 # you're doing. Please see 'CONTRIBUTING.md' for more information.
 ### end common-components/header
 
-successfully() {
-  $* || (echo "\nfailed" 1>&2 && exit 1)
-}
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+set -e
+### end common-components/exit-trap
 
 fancy_echo() {
   echo "\n$1"
@@ -19,106 +20,106 @@ fancy_echo() {
 
 if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
-    successfully sudo mv /etc/{zshenv,zshrc}
+    sudo mv /etc/{zshenv,zshrc}
 fi
 ### end mac-components/zsh-fix
 
 fancy_echo "Installing Homebrew, a good OS X package manager ..."
-  successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
-  successfully brew update
+  ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+  brew update
 
 if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
   fancy_echo "Put Homebrew location earlier in PATH ..."
-    successfully echo "\n# recommended by brew doctor" >> ~/.zshrc
-    successfully echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
-    successfully source ~/.zshrc
+    echo "\n# recommended by brew doctor" >> ~/.zshrc
+    echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
+    source ~/.zshrc
 fi
 
 ### end mac-components/homebrew
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  successfully brew install postgres --no-python
-  successfully initdb /usr/local/var/postgres -E utf8
+  brew install postgres --no-python
+  initdb /usr/local/var/postgres -E utf8
 
 fancy_echo "Installing Redis, a good key-value database ..."
-  successfully brew install redis
+  brew install redis
 
 fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  successfully brew install the_silver_searcher
+  brew install the_silver_searcher
 
 fancy_echo "Installing vim from Homebrew to get the latest version ..."
-  successfully brew install vim
+  brew install vim
 
 fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  successfully brew install ctags
+  brew install ctags
 
 fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  successfully brew install tmux
+  brew install tmux
 
 fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  successfully brew install reattach-to-user-namespace
+  brew install reattach-to-user-namespace
 
 fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  successfully brew install imagemagick
+  brew install imagemagick
 
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  successfully brew install qt
+  brew install qt
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  successfully brew install watch
+  brew install watch
 ### end mac-components/packages
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
-  successfully brew install rbenv
+  brew install rbenv
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
-    successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+    echo 'eval "$(rbenv init -)"' >> ~/.zshrc
 
     fancy_echo "Enable shims and autocompletion ..."
-      successfully eval "$(rbenv init -)"
+      eval "$(rbenv init -)"
   fi
 
   source ~/.zshrc
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  successfully brew install rbenv-gem-rehash
+  brew install rbenv-gem-rehash
 
 fancy_echo "Installing ruby-build, to install Rubies ..."
-  successfully brew install ruby-build
+  brew install ruby-build
 ### end mac-components/rbenv
 
 fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
-  successfully brew tap homebrew/dupes
-  successfully brew install apple-gcc42
+  brew tap homebrew/dupes
+  brew install apple-gcc42
 
 fancy_echo "Upgrading and linking OpenSSL ..."
-  successfully brew install openssl
+  brew install openssl
 
 export CC=gcc-4.2
 ### end mac-components/compiler-and-libraries
 
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
-  successfully rbenv install 2.0.0-p247
+  rbenv install 2.0.0-p247
 
 fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
-  successfully rbenv global 2.0.0-p247
-  successfully rbenv rehash
+  rbenv global 2.0.0-p247
+  rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
-  successfully gem update --system
+  gem update --system
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
-  successfully gem install bundler pg rails unicorn --no-document
+  gem install bundler pg rails unicorn --no-document
 
 fancy_echo "Installing GitHub CLI client ..."
-  successfully curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  successfully chmod +x ~/.bin/hub
+  curl http://hub.github.com/standalone -sLo ~/.bin/hub
+  chmod +x ~/.bin/hub
 ### end common-components/ruby-environment
 
 fancy_echo "Installing Heroku CLI client ..."
-  successfully brew install heroku-toolbelt
+  brew install heroku-toolbelt
 
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  successfully heroku plugins:install git://github.com/ddollar/heroku-config.git
+  heroku plugins:install git://github.com/ddollar/heroku-config.git
 ### end mac-components/heroku
 
