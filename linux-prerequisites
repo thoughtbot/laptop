@@ -8,9 +8,10 @@
 # you're doing. Please see 'CONTRIBUTING.md' for more information.
 ### end common-components/header
 
-successfully() {
-  $* || (echo "\nfailed" 1>&2 && exit 1)
-}
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+set -e
+### end common-components/exit-trap
 
 fancy_echo() {
   echo "\n$1"
@@ -29,20 +30,20 @@ fancy_echo "Updating system packages ..."
     fancy_echo "Using aptitude ..."
   else
     fancy_echo "Installing aptitude ..."
-    successfully sudo apt-get install -y aptitude
+    sudo apt-get install -y aptitude
   fi
-  successfully sudo aptitude update
-  successfully sudo aptitude -y dist-upgrade
+  sudo aptitude update
+  sudo aptitude -y dist-upgrade
 ### end linux-components/debian-package-update
 
 fancy_echo "Installing curl ..."
-  successfully sudo aptitude install -y curl
+  sudo aptitude install -y curl
 
 fancy_echo "Installing zsh ..."
-  successfully sudo aptitude install -y zsh
+  sudo aptitude install -y zsh
 
 fancy_echo "Changing your shell to zsh ..."
-  successfully chsh -s `which zsh`
+  chsh -s `which zsh`
 
 fancy_echo "Your shell will now restart to apply changes."
   exec `which zsh` -l
