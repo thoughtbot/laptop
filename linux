@@ -17,8 +17,10 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
-echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
+if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
+    echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
+    source ~/.zshrc
+fi
 ### end common-components/check-home-bin
 
 fancy_echo() {
