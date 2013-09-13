@@ -6,4 +6,3 @@ fancy_echo "Updating system packages ..."
     sudo apt-get install -y aptitude
   fi
   sudo aptitude update
-  sudo aptitude -y dist-upgrade
