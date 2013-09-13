@@ -2,7 +2,7 @@ fancy_echo "Installing rbenv, to change Ruby versions ..."
   git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
-    echo 'export PATH="$HOME/bin:$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
 
     echo 'eval "$(rbenv init -)"' >> ~/.zshrc
   fi

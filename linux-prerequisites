@@ -14,7 +14,12 @@ set -e
 ### end common-components/exit-trap
 
 if [ ! -d "$HOME/.bin/" ]; then
-    mkdir "$HOME/.bin"
+  mkdir "$HOME/.bin"
+fi
+
+if [ $(echo "$PATH" | grep -c "$HOME/.bin") -eq 0 ]; then
+  echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
+  source ~/.zshrc
 fi
 ### end common-components/check-home-bin
 
