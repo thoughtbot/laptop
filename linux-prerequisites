@@ -13,16 +13,6 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 ### end common-components/exit-trap
 
-if [ ! -d "$HOME/.bin/" ]; then
-  mkdir "$HOME/.bin"
-fi
-
-if [ $(echo "$PATH" | grep -c "$HOME/.bin") -eq 0 ]; then
-  echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
-  source ~/.zshrc
-fi
-### end common-components/check-home-bin
-
 fancy_echo() {
   echo "\n$1"
 }
