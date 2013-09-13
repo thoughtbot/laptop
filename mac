@@ -18,8 +18,8 @@ if [ ! -d "$HOME/.bin/" ]; then
 fi
 
 if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
-    echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
-    source ~/.zshrc
+  echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
+  source ~/.zshrc
 fi
 ### end common-components/check-home-bin
 
