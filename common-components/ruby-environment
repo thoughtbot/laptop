@@ -12,5 +12,5 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
   gem install bundler pg rails unicorn --no-document
 
 fancy_echo "Installing GitHub CLI client ..."
-  curl http://hub.github.com/standalone -sLo ~/bin/hub
-  chmod +x ~/bin/hub
+  curl http://hub.github.com/standalone -sLo ~/.bin/hub
+  chmod +x ~/.bin/hub
