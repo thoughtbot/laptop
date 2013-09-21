@@ -33,17 +33,11 @@ echo "Installing node.js, a good JavaScript application framework ..."
 echo "Installing Z Script, for quick access to recently used projects from the terminal ..."
   successfully brew install z
 
-echo "Installing ack, for searching the contents of files ..."
-  successfully brew install ack
-
 echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   successfully npm install -g yo grunt-cli bower
 
-echo "Installing critical Ruby gems for Rails development ..."
+echo "Installing critical Ruby gems for development ..."
   successfully gem install bundler rails compass --no-rdoc --no-ri
-
-echo "Install Vagrant PHP/WordPress Development Box to ~/vmdevbox"
-  successfully git clone git@github.com:mattbanks/vagrant-dev-box.git ~/vmdevbox
 
 echo "Your shell will now restart in order for changes to apply."
   exec $SHELL -l
