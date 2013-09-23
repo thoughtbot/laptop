@@ -24,7 +24,7 @@ fi
 ### end common-components/check-home-bin
 
 fancy_echo() {
-  echo "\n$1"
+  printf "\n%b\n" "$1"
 }
 ### end common-components/shared-functions
 
