@@ -1,0 +1,3 @@
+if [ ! -d "/usr/local/bin/" ]; then
+  sudo mkdir "/usr/local/bin"
+fi

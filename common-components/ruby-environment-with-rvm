@@ -1,0 +1,12 @@
+fancy_echo "Preparing ruby environments"
+  rvm requirements
+
+fancy_echo "Installing Ruby 2.0.0-p247 ..."
+  rvm install 2.0.0-p247
+
+fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
+  rvm use 2.0.0-p247 --default
+
+fancy_echo "Installing critical Ruby gems for Rails development ..."
+  gem install bundler pg rails unicorn --no-ri --no-doc
+
