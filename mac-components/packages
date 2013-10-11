@@ -1,15 +1,19 @@
-fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew install postgres --no-python
-  initdb /usr/local/var/postgres -E utf8
-  fancy_echo "Launch Postgres with system start..."
-    ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
-    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+if ! which -s psql; then
+  fancy_echo "Installing Postgres, a good open source relational database ..."
+    brew install postgres --no-python
+    initdb /usr/local/var/postgres -E utf8
+    fancy_echo "Launch Postgres with system start..."
+      ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+      launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+fi
 
-fancy_echo "Installing MySQL, another good open source relational database ..."
-  brew install mysql
-  fancy_echo "Launch MySQL with system start..."
-    ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
-    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+if ! which -s mysql; then
+  fancy_echo "Installing MySQL, another good open source relational database ..."
+    brew install mysql
+    fancy_echo "Launch MySQL with system start..."
+      ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+      launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+fi
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew install redis

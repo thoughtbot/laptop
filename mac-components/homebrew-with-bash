@@ -1,6 +1,8 @@
-fancy_echo "Installing Homebrew, a good OS X package manager ..."
-  ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
-  brew update
+if ! which -s brew; then
+  fancy_echo "Installing Homebrew, a good OS X package manager ..."
+    ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+    brew update
+fi
 
 if ! grep -qs "recommended by brew doctor" ~/.bashrc; then
   fancy_echo "Put Homebrew location earlier in PATH ..."

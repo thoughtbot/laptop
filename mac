@@ -23,9 +23,11 @@ fancy_echo() {
 }
 ### end common-components/shared-functions
 
-fancy_echo "Installing Homebrew, a good OS X package manager ..."
-  ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
-  brew update
+if ! which -s brew; then
+  fancy_echo "Installing Homebrew, a good OS X package manager ..."
+    ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+    brew update
+fi
 
 if ! grep -qs "recommended by brew doctor" ~/.bashrc; then
   fancy_echo "Put Homebrew location earlier in PATH ..."
@@ -35,18 +37,22 @@ if ! grep -qs "recommended by brew doctor" ~/.bashrc; then
 fi
 ### end mac-components/homebrew-with-bash
 
-fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew install postgres --no-python
-  initdb /usr/local/var/postgres -E utf8
-  fancy_echo "Launch Postgres with system start..."
-    ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
-    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+if ! which -s psql; then
+  fancy_echo "Installing Postgres, a good open source relational database ..."
+    brew install postgres --no-python
+    initdb /usr/local/var/postgres -E utf8
+    fancy_echo "Launch Postgres with system start..."
+      ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+      launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+fi
 
-fancy_echo "Installing MySQL, another good open source relational database ..."
-  brew install mysql
-  fancy_echo "Launch MySQL with system start..."
-    ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
-    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+if ! which -s mysql; then
+  fancy_echo "Installing MySQL, another good open source relational database ..."
+    brew install mysql
+    fancy_echo "Launch MySQL with system start..."
+      ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+      launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+fi
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew install redis
@@ -76,33 +82,35 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
   brew install watch
 ### end mac-components/packages
 
-fancy_echo "Installing RVM, to change Ruby versions ..."
-  \curl -L https://get.rvm.io | bash -s stable
+if ! which -s rvm; then
+  fancy_echo "Installing RVM, to change Ruby versions ..."
+    \curl -L https://get.rvm.io | bash -s stable
 
-  if ! grep -qs "Load RVM with bash login" ~/.bash_profile; then
-    fancy_echo "Put RVM related path in bash_profile"
-      echo -e "\n# Load RVM with bash login" >> ~/.bash_profile
-      echo 'if [[ -d $HOME/.rvm/bin ]]; then' >> ~/.bash_profile
-      echo ' export PATH=$HOME/.rvm/bin:$PATH' >> ~/.bash_profile
-      echo ' if [[ -n "$PS1" ]]; then' >> ~/.bash_profile
-      echo '    export rvm_pretty_print_flag=1' >> ~/.bash_profile
-      echo '    source $HOME/.rvm/scripts/rvm' >> ~/.bash_profile
-      echo '    [[ -r $rvm_path/scripts/completion ]] && source $rvm_path/scripts/completion' >> ~/.bash_profile
-      echo '  fi' >> ~/.bash_profile
-      echo 'fi' >> ~/.bash_profile
-      if ! grep -qs "Load bash_profile" ~/.bashrc; then
-        echo -e "\n# Load bash_profile" >> ~/.bashrc
-        echo '[[ -d $HOME/.bash_profile ]] && source $HOME/.bash_profile' >> ~/.bashrc
-        if [[ -d $HOME/.profile ]]; then
-          echo "source $HOME/.profile" >> ~/.bashrc
+    if ! grep -qs "Load RVM with bash login" ~/.bash_profile; then
+      fancy_echo "Put RVM related path in bash_profile"
+        echo -e "\n# Load RVM with bash login" >> ~/.bash_profile
+        echo 'if [[ -d $HOME/.rvm/bin ]]; then' >> ~/.bash_profile
+        echo ' export PATH=$HOME/.rvm/bin:$PATH' >> ~/.bash_profile
+        echo ' if [[ -n "$PS1" ]]; then' >> ~/.bash_profile
+        echo '    export rvm_pretty_print_flag=1' >> ~/.bash_profile
+        echo '    source $HOME/.rvm/scripts/rvm' >> ~/.bash_profile
+        echo '    [[ -r $rvm_path/scripts/completion ]] && source $rvm_path/scripts/completion' >> ~/.bash_profile
+        echo '  fi' >> ~/.bash_profile
+        echo 'fi' >> ~/.bash_profile
+        if ! grep -qs "Load bash_profile" ~/.bashrc; then
+          echo -e "\n# Load bash_profile" >> ~/.bashrc
+          echo '[[ -d $HOME/.bash_profile ]] && source $HOME/.bash_profile' >> ~/.bashrc
+          if [[ -d $HOME/.profile ]]; then
+            echo "source $HOME/.profile" >> ~/.bashrc
+          fi
         fi
-      fi
-      source ~/.bashrc
-  fi
+        source ~/.bashrc
+    fi
 
-  if type rvm | head -n 1 | grep -qs 'rvm is a function'; then
-    echo 'RVM is installed successfully'
-  fi
+    if type rvm | head -n 1 | grep -qs 'rvm is a function'; then
+      echo 'RVM is installed successfully'
+    fi
+fi
 ### end mac-components/rvm
 
 fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
