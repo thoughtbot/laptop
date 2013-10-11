@@ -6,7 +6,7 @@ fancy_echo "Installing RVM, to change Ruby versions ..."
       echo -e "\n# Load RVM with bash login" >> ~/.bash_profile
       echo 'if [[ -d $HOME/.rvm/bin ]]; then' >> ~/.bash_profile
       echo ' export PATH=$HOME/.rvm/bin:$PATH' >> ~/.bash_profile
-      echo ' if [[ -n "$PS1" ]]'; then >> ~/.bash_profile
+      echo ' if [[ -n "$PS1" ]]; then' >> ~/.bash_profile
       echo '    export rvm_pretty_print_flag=1' >> ~/.bash_profile
       echo '    source $HOME/.rvm/scripts/rvm' >> ~/.bash_profile
       echo '    [[ -r $rvm_path/scripts/completion ]] && source $rvm_path/scripts/completion' >> ~/.bash_profile
