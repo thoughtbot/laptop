@@ -144,3 +144,8 @@ fancy_echo "Installing the heroku-config plugin to pull config variables locally
   heroku plugins:install git://github.com/ddollar/heroku-config.git
 ### end mac-components/heroku
 
+fancy_echo "Installing rcm, to manage your dotfiles ..."
+  brew tap mike-burns/rcm
+  brew install rcm
+### end mac-components/rcm
+
