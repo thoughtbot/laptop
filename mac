@@ -14,7 +14,7 @@ set -e
 ### end common-components/exit-trap
 
 if [ ! -d "/usr/local/bin/" ]; then
-  sudo mkdir "/usr/local/bin"
+  sudo mkdir -p "/usr/local/bin"
 fi
 ### end common-components/check-usr-local-bin
 
@@ -43,7 +43,7 @@ fancy_echo "Installing Postgres, a good open source relational database ..."
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 
 fancy_echo "Installing MySQL, another good open source relational database ..."
-  brew install mysqlbash
+  brew install mysql
   fancy_echo "Launch MySQL with system start..."
     ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
@@ -84,14 +84,14 @@ fancy_echo "Installing RVM, to change Ruby versions ..."
       echo -e "\n# Load RVM with bash login" >> ~/.bash_profile
       echo 'if [[ -d $HOME/.rvm/bin ]]; then' >> ~/.bash_profile
       echo ' export PATH=$HOME/.rvm/bin:$PATH' >> ~/.bash_profile
-      echo ' if [[ -n "$PS1" ]]'; then >> ~/.bash_profile
+      echo ' if [[ -n "$PS1" ]]; then' >> ~/.bash_profile
       echo '    export rvm_pretty_print_flag=1' >> ~/.bash_profile
       echo '    source $HOME/.rvm/scripts/rvm' >> ~/.bash_profile
       echo '    [[ -r $rvm_path/scripts/completion ]] && source $rvm_path/scripts/completion' >> ~/.bash_profile
       echo '  fi' >> ~/.bash_profile
       echo 'fi' >> ~/.bash_profile
       if ! grep -qs "Load bash_profile" ~/.bashrc; then
-        echo -e "\n Load bash_profile" >> ~/.bashrc
+        echo -e "\n# Load bash_profile" >> ~/.bashrc
         echo '[[ -d $HOME/.bash_profile ]] && source $HOME/.bash_profile' >> ~/.bashrc
         if [[ -d $HOME/.profile ]]; then
           echo "source $HOME/.profile" >> ~/.bashrc
