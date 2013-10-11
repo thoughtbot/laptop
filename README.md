@@ -1,5 +1,9 @@
+----------------------------------------------------------------
+
 I customize this script to fit my need.
+
 You don't need to change your sh to zsh, just play with bash.
+
 But pre-requirements are still needed.
 
 Requirements
@@ -24,7 +28,7 @@ Read, then run the script:
 
     bash <(curl -s https://raw.github.com/lyfeyaj/laptop/master/mac)
 
-------------
+----------------------------------------------------------------
 
 Laptop
 ======
