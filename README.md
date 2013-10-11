@@ -1,3 +1,31 @@
+I customize this script to fit my need.
+You don't need to change your sh to zsh, just play with bash.
+But pre-requirements are still needed.
+
+Requirements
+------------
+
+### Mac OS X
+
+Install a C compiler.
+
+Use [OS X GCC Installer](https://github.com/kennethreitz/osx-gcc-installer/) for
+Snow Leopard (OS X 10.6).
+
+Use [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action)
+for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
+
+Install
+-------
+
+### Mac OS X
+
+Read, then run the script:
+
+    bash <(curl -s https://raw.github.com/lyfeyaj/laptop/master/mac)
+
+------------
+
 Laptop
 ======
 
