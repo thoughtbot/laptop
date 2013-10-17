@@ -2,3 +2,6 @@ if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
     sudo mv /etc/{zshenv,zshrc}
 fi
+
+fancy_echo "Reloading shell ..."
+  exec $SHELL -l

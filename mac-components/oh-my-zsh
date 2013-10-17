@@ -1,0 +1,16 @@
+fancy_echo "Installilng Zsh 5.0.2 ..."
+  brew install --disable-etcdir zsh
+
+fancy_echo "Adding /usr/local/bin/zsh to /etc/shells (Will require administrative password)"
+  echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
+
+fancy_echo "Changing default login shell to /usr/local/bin/zsh (Will require administrative password)"
+  chsh -s /usr/local/bin/zsh
+
+fancy_echo "Enabling access to zsh online help"
+  echo "autoload run-help" >> $HOME/.zshrc
+  echo "HELPDIR=/usr/local/share/zsh/helpfiles" >> $HOME/.zshrc
+
+fancy_echo "Installing Oh-My-Zsh, some terrific extensions to zsh ... "
+  curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+  

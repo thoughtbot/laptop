@@ -1,0 +1,9 @@
+fancy_echo "Installing Python 2.7.5 ..."
+  brew install python
+
+fancy_echo "Updating setup tools ..."
+  pip install --upgrade setuptools
+  pip install --upgrade pip
+
+fancy_echo "Linking 'Build Applet', Idle', and 'Python Launcher' to ~/Applications"
+  brew linkapps

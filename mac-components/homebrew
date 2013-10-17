@@ -1,5 +1,9 @@
-fancy_echo "Installing Homebrew, a good OS X package manager ..."
-  ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+if [[ ! -f /usr/local/bin/brew ]]; then
+  fancy_echo "Installing Homebrew, a good OS X package manager ..."
+    ruby <(curl -fsSL https://raw.github.com/mxcl/homebrew/go)
+fi
+
+fancy_echo "Updating Homebrew ..."
   brew update
 
 if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
@@ -8,4 +12,3 @@ if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
     source ~/.zshrc
 fi
-

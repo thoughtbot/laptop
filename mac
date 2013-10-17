@@ -122,8 +122,7 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
   gem install bundler pg rails unicorn --no-document
 
 fancy_echo "Installing GitHub CLI client ..."
-  curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  chmod +x ~/.bin/hub
+  brew install hub
 ### end common-components/ruby-environment
 
 fancy_echo "Installing Heroku CLI client ..."
@@ -133,3 +132,5 @@ fancy_echo "Installing the heroku-config plugin to pull config variables locally
   heroku plugins:install git://github.com/ddollar/heroku-config.git
 ### end mac-components/heroku
 
+brew install graphviz | sudo aptitude install graphviz
+brew install npm --deps
