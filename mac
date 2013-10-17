@@ -70,7 +70,7 @@ fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion
   brew install reattach-to-user-namespace
 
 fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew install imagemagick
+  brew install ghostscript imagemagick
 
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
   brew install qt
@@ -115,11 +115,19 @@ fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
   rbenv global 2.0.0-p247
   rbenv rehash
 
+echo 'gem: ---no-ri --no-rdoc' >> ~/.gemrc
+
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
-  gem install bundler pg rails unicorn --no-document
+  gem install bundler --no-ri --no-rdoc
+  ARCHFLAGS=-arch x86_64" gem install  pg --no-ri --no-rdoc 
+  gem install rails --no-ri --no-rdoc
+  unicorn --no-document
+  gem install heroku --no-ri --no-rdoc
+  gem install taps --no-rdoc -no-ri
+
 
 fancy_echo "Installing GitHub CLI client ..."
   brew install hub
@@ -134,3 +142,6 @@ fancy_echo "Installing the heroku-config plugin to pull config variables locally
 
 brew install graphviz | sudo aptitude install graphviz
 brew install npm --deps
+
+curl get.pow.cx | sh
+
