@@ -1,0 +1,32 @@
+fancy_echo "Installing git, for source control management ..."
+  sudo apt-get install -y git git-core
+
+fancy_echo "Installing libraries for common gem dependencies ..."
+  sudo apt-get install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev
+
+fancy_echo "Installing Postgres, a good open source relational database ..."
+  sudo apt-get install -y postgresql postgresql-server-dev-all
+
+fancy_echo "Installing Redis, a good key-value database ..."
+  sudo apt-get install -y redis-server
+
+fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
+  sudo apt-get install -y exuberant-ctags
+
+fancy_echo "Installing vim ..."
+  sudo apt-get install -y vim-gtk
+
+fancy_echo "Installing tmux, to save project state and switch between projects ..."
+  sudo apt-get install -y tmux
+
+fancy_echo "Installing ImageMagick, to crop and resize images ..."
+  sudo apt-get install -y imagemagick
+
+fancy_echo "Installing watch, to execute a program periodically and show the output ..."
+  sudo apt-get install -y watch
+
+fancy_echo "Installing memcached, a high performance cache system ..."
+  sudo apt-get install -y memcached
+
+fancy_echo "Installing silversearcher-ag, very fast grep-like program ..."
+  sudo apt-get install -y silversearcher-ag

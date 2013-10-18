@@ -1,0 +1,2 @@
+fancy_echo "Installing curl ..."
+  sudo aptitude install -y curl
