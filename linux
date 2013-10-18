@@ -33,7 +33,7 @@ fancy_echo "Updating system packages ..."
 ### end linux-components/ubuntu-package-update
 
 fancy_echo "Installing curl ..."
-  sudo aptitude install -y curl
+  sudo apt-get install -y curl
 ### end linux-components/ubuntu-prerequisites
 
 fancy_echo "Installing git, for source control management ..."
