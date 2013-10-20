@@ -1,6 +1,6 @@
 fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
   brew tap homebrew/dupes
-  brew install coreutils autoconf
+  brew install coreutils autoconf apple-gcc42
 
 fancy_echo "Upgrading and linking OpenSSL ..."
   brew install openssl

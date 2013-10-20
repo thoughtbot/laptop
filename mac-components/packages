@@ -28,3 +28,9 @@ fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integ
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew install watch
+
+fancy_echo "Installing graphviz, npm, and pow! Trust me, you want them ..."
+  brew install graphviz
+  brew install npm --deps
+  curl get.pow.cx | sh
+

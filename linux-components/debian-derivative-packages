@@ -1,5 +1,12 @@
-fancy_echo "Installing git, for source control management ..."
-  sudo aptitude install -y git
+fancy_echo "Installing python, because snakes are fun ..."
+  sudo apttitude install -y python
+
+fancy_echo "Updating setup tools  ..."
+  pip install --upgrade setuptools
+  pip install --upgrade pip
+
+fancy_echo "Installing git, MySQL, Node.js, Z Scriopt ..."
+  sudo aptitude install -y git nodejs nodejs-dev
 
 fancy_echo "Installing base ruby build dependencies ..."
   sudo aptitude build-dep -y ruby1.9.3
@@ -27,3 +34,8 @@ fancy_echo "Installing ImageMagick, to crop and resize images ..."
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   sudo aptitude install -y watch
+
+
+  sudo aptitude install -y graphviz graphviz-dev
+  sudo aptitude install -y npm
+
