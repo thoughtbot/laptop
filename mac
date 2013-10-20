@@ -70,7 +70,7 @@ fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion
   brew install reattach-to-user-namespace
 
 fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew install ghostscript imagemagick
+  brew install ghostscript libxml2 imagemagick
 
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
   brew install qt
