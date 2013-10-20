@@ -49,9 +49,11 @@ if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
     sudo mv /etc/{zshenv,zshrc}
 fi
+### end mac-components/zsh-fix
 
-fancy_echo "Reloading shell ..."
-  exec $SHELL -l### end mac-components/zsh-fix
+fancy_echo "Checking for SSH key, generating one if it doesn't exist ..."
+  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
+  ### end mac-components/ssh-key
 
 if [[ ! -f /usr/local/bin/brew ]]; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
@@ -89,7 +91,7 @@ fancy_echo "Linking 'Build Applet', Idle', and 'Python Launcher' to ~/Applicatio
 ### end mac-components/python
 
 fancy_echo "Installing git, MySQL, Node.js, Z Script ..."
-  brew install git mysql node z
+  brew install git git-extras git-flow mysql node z
 ### end mac-components/git
 
 fancy_echo "Installing Postgres, a good open source relational database ..."

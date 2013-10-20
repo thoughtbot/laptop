@@ -5,6 +5,7 @@ common-components/check-home-bin
 common-components/shared-functions
 mac-components/oh-my-zsh
 mac-components/zsh-fix
+mac-components/ssh-key
 mac-components/homebrew
 mac-components/compiler-and-libraries
 mac-components/python
