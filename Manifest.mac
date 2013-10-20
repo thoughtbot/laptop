@@ -13,4 +13,6 @@ mac-components/git
 mac-components/packages
 mac-components/rbenv
 common-components/ruby-environment
+mac-components/pg
 mac-components/heroku
+mac-components/npm-environment

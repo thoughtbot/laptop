@@ -1,0 +1,2 @@
+fancy_echo "Installing pg gem with arch flags ..."
+  ARCHFLAGS="-arch x86_64" gem install pg
