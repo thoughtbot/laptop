@@ -162,12 +162,16 @@ fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
-  gem install bundler pg rails unicorn --no-document
+  gem install bundler rails compass bourbon neat unicorn --no-document
 
 fancy_echo "Installing GitHub CLI client ..."
   curl http://hub.github.com/standalone -sLo ~/.bin/hub
   chmod +x ~/.bin/hub
 ### end common-components/ruby-environment
+
+fancy_echo "Installing pg gem with arch flags ..."
+  ARCHFLAGS="-arch x86_64" gem install pg
+### end mac-components/pg
 
 fancy_echo "Installing Heroku CLI client ..."
   brew install heroku-toolbelt
@@ -175,4 +179,7 @@ fancy_echo "Installing Heroku CLI client ..."
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   heroku plugins:install git://github.com/ddollar/heroku-config.git
 ### end mac-components/heroku
+
+fancy_echo "Installing essential NPM packages - Grunt, Yeoman, and Bower, because you need them ..."
+  npm install -g yo grunt-cli bower npm-check-updates### end mac-components/npm-environment
 

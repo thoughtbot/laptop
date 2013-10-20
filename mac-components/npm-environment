@@ -1,0 +1,2 @@
+fancy_echo "Installing essential NPM packages - Grunt, Yeoman, and Bower, because you need them ..."
+  npm install -g yo grunt-cli bower npm-check-updates
