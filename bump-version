@@ -1,0 +1,18 @@
+#!/bin/sh
+usage() {
+  echo "usage: bump-version <version-id>"
+}
+
+if [ $# -ne 1 ]; then
+  usage
+  exit 1
+fi
+
+if ! sed 's/^LAPTOP_VERSION=.$/LAPTOP_VERSION='$1'/g' laptop-version > .laptop-version.new; then
+  echo "Could not replace LAPTOP_VERSION variable." >&2
+  exit 2
+fi
+
+mv .laptop-version.new laptop-version
+git add laptop-version
+git commit -m "Bumped version number to $1" laptop-version

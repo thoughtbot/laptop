@@ -3,10 +3,16 @@ common-components/header
 common-components/exit-trap
 common-components/check-home-bin
 common-components/shared-functions
+mac-components/oh-my-zsh
 mac-components/zsh-fix
+mac-components/ssh-key
 mac-components/homebrew
+mac-components/compiler-and-libraries
+mac-components/python
+mac-components/git
 mac-components/packages
 mac-components/rbenv
-mac-components/compiler-and-libraries
 common-components/ruby-environment
+mac-components/pg
 mac-components/heroku
+mac-components/npm-environment

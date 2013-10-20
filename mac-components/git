@@ -1,0 +1,2 @@
+fancy_echo "Installing git, MySQL, Node.js, Z Script ..."
+  brew install git git-extras git-flow mysql node z

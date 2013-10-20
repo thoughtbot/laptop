@@ -28,14 +28,39 @@ fancy_echo() {
 }
 ### end common-components/shared-functions
 
+fancy_echo "Installilng Zsh 5.0.2 ..."
+  brew install --disable-etcdir zsh
+
+fancy_echo "Adding /usr/local/bin/zsh to /etc/shells (Will require administrative password)"
+  echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
+
+fancy_echo "Changing default login shell to /usr/local/bin/zsh (Will require administrative password)"
+  chsh -s /usr/local/bin/zsh
+
+fancy_echo "Enabling access to zsh online help"
+  echo "autoload run-help" >> $HOME/.zshrc
+  echo "HELPDIR=/usr/local/share/zsh/helpfiles" >> $HOME/.zshrc
+
+fancy_echo "Installing Oh-My-Zsh, some terrific extensions to zsh ... "
+  curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+  ### end mac-components/oh-my-zsh
+
 if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
     sudo mv /etc/{zshenv,zshrc}
 fi
 ### end mac-components/zsh-fix
 
-fancy_echo "Installing Homebrew, a good OS X package manager ..."
-  ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+fancy_echo "Checking for SSH key, generating one if it doesn't exist ..."
+  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
+  ### end mac-components/ssh-key
+
+if [[ ! -f /usr/local/bin/brew ]]; then
+  fancy_echo "Installing Homebrew, a good OS X package manager ..."
+    ruby <(curl -fsSL https://raw.github.com/mxcl/homebrew/go)
+fi
+
+fancy_echo "Updating Homebrew ..."
   brew update
 
 if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
@@ -44,8 +69,30 @@ if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
     source ~/.zshrc
 fi
-
 ### end mac-components/homebrew
+
+fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
+  brew tap homebrew/dupes
+  brew install coreutils autoconf apple-gcc42
+
+fancy_echo "Upgrading and linking OpenSSL ..."
+  brew install openssl
+### end mac-components/compiler-and-libraries
+
+fancy_echo "Installing Python 2.7.5 ..."
+  brew install python
+
+fancy_echo "Updating setup tools ..."
+  pip install --upgrade setuptools
+  pip install --upgrade pip
+
+fancy_echo "Linking 'Build Applet', Idle', and 'Python Launcher' to ~/Applications"
+  brew linkapps
+### end mac-components/python
+
+fancy_echo "Installing git, MySQL, Node.js, Z Script ..."
+  brew install git git-extras git-flow mysql node z
+### end mac-components/git
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
@@ -77,6 +124,12 @@ fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integ
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew install watch
+
+fancy_echo "Installing graphviz, npm, and pow! Trust me, you want them ..."
+  brew install graphviz
+  brew install npm --deps
+  curl get.pow.cx | sh
+
 ### end mac-components/packages
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
@@ -98,16 +151,6 @@ fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
 ### end mac-components/rbenv
 
-fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
-  brew tap homebrew/dupes
-  brew install apple-gcc42
-
-fancy_echo "Upgrading and linking OpenSSL ..."
-  brew install openssl
-
-export CC=gcc-4.2
-### end mac-components/compiler-and-libraries
-
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
   rbenv install 2.0.0-p247
 
@@ -119,12 +162,16 @@ fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
-  gem install bundler pg rails unicorn --no-document
+  gem install bundler rails compass bourbon neat unicorn --no-document
 
 fancy_echo "Installing GitHub CLI client ..."
   curl http://hub.github.com/standalone -sLo ~/.bin/hub
   chmod +x ~/.bin/hub
 ### end common-components/ruby-environment
+
+fancy_echo "Installing pg gem with arch flags ..."
+  ARCHFLAGS="-arch x86_64" gem install pg
+### end mac-components/pg
 
 fancy_echo "Installing Heroku CLI client ..."
   brew install heroku-toolbelt
@@ -132,4 +179,7 @@ fancy_echo "Installing Heroku CLI client ..."
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   heroku plugins:install git://github.com/ddollar/heroku-config.git
 ### end mac-components/heroku
+
+fancy_echo "Installing essential NPM packages - Grunt, Yeoman, and Bower, because you need them ..."
+  npm install -g yo grunt-cli bower npm-check-updates### end mac-components/npm-environment
 
