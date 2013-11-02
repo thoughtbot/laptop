@@ -28,5 +28,5 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
 fancy_echo "Installing memcached, a high performance cache system ..."
   sudo apt-get install -y memcached
 
-fancy_echo "Installing silversearcher-ag, very fast grep-like program ..."
-  sudo apt-get install -y silversearcher-ag
+fancy_echo "Installing ack-grep, very fast grep-like program ..."
+  sudo apt-get install -y ack-grep
