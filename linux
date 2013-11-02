@@ -62,7 +62,8 @@ fancy_echo "Installing memcached, a high performance cache system ..."
   sudo apt-get install -y memcached
 
 fancy_echo "Installing silversearcher-ag, very fast grep-like program ..."
-  sudo apt-get install -y silversearcher-ag### end linux-components/ubuntu-derivative-packages
+  sudo apt-get install -y silversearcher-ag
+### end linux-components/ubuntu-derivative-packages
 
 fancy_echo "Installing rvm, a ruby version management tool ..."
   \curl -L https://get.rvm.io | bash
