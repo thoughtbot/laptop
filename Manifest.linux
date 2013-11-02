@@ -1,7 +1,7 @@
 common-components/sh-shebang
 common-components/header
 common-components/exit-trap
-common-components/check-home-bin
+common-components/check-usr-local-bin
 common-components/shared-functions
 linux-components/ubuntu-package-update
 linux-components/ubuntu-prerequisites
