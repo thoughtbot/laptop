@@ -28,6 +28,12 @@ Read, then run the script:
 
     bash <(curl -s https://raw.github.com/lyfeyaj/laptop/master/mac)
 
+### Linux
+
+Read, then run the script:
+
+    bash <(curl -s https://raw.github.com/lyfeyaj/laptop/master/linux)
+
 ----------------------------------------------------------------
 
 Laptop
