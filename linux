@@ -67,7 +67,9 @@ fancy_echo "Installing ack-grep, very fast grep-like program ..."
 
 fancy_echo "Installing rvm, a ruby version management tool ..."
   \curl -L https://get.rvm.io | bash
-  source /etc/profile
+  echo -e "\n# Load RVM"
+  echo "[[ -d $HOME/.bash_profile ]] && source $HOME/.bash_profile" >> ~/.bashrc
+  source ~/.bashrc
 
 if type rvm | head -n 1 | grep -qs 'rvm is a function'; then
   fancy_echo 'RVM is installed successfully'
