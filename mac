@@ -35,7 +35,12 @@ fi
 ### end mac-components/zsh-fix
 
 fancy_echo "Installing Homebrew, a good OS X package manager ..."
-  ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+  fancy_echo "Checking for existing Homebrew"
+  which brew 2> /dev/null
+  if [ $? -eq 1 ]; then
+    fancy_echo "Homebrew not found - installing"
+    ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+  fi
   brew update
 
 if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
