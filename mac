@@ -36,10 +36,12 @@ fi
 
 fancy_echo "Installing Homebrew, a good OS X package manager ..."
   fancy_echo "Checking for existing Homebrew"
-  which brew 2> /dev/null
+  which brew 2> /dev/null > /dev/null
   if [ $? -eq 1 ]; then
     fancy_echo "Homebrew not found - installing"
     ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+  else 
+    fancy_echo "Homebrew found - skipping install"
   fi
   brew update
 
