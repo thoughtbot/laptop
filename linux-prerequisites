@@ -41,10 +41,16 @@ fancy_echo "Installing curl ..."
 fancy_echo "Installing zsh ..."
   sudo aptitude install -y zsh
 
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s `which zsh`
+ZSH_PATH=`which zsh`
 
-fancy_echo "Your shell will now restart to apply changes."
-  exec `which zsh` -l
+if [[ $SHELL == $ZSH_PATH ]]; then
+  fancy_echo "Already using zsh as your login shell. Huzzah!"
+else
+  fancy_echo "Changing your shell to zsh ..."
+    chsh -s $ZSH_PATH
+
+  fancy_echo "Your shell will now restart to apply changes."
+    exec $ZSH_PATH -l
+fi
 ### end linux-components/debian-prerequisites
 
