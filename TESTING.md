@@ -35,6 +35,11 @@ The following are the assertions:
 3. The VM reports the correct `$SHELL`
 4. The VM reports the correct ruby
 
+You can test idempotency (allowing you to run the script multiple times in the
+same environment) by exporting `KEEP_VM` before running `./test/runner.sh` thusly:
+
+  KEEP_VM=1 ./test/runner.sh
+
 ## OSX Testing
 
 Adding additional linux tests via this framework should be easy: simply 
