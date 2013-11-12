@@ -34,17 +34,20 @@ if [[ -f /etc/zshenv ]]; then
 fi
 ### end mac-components/zsh-fix
 
-fancy_echo "Installing Homebrew, a good OS X package manager ..."
-  ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go/install)
-  brew update
+if (( $+commands[brew] )); then
+  fancy_echo "Installing Homebrew, a good OS X package manager ..."
+    ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go/install)
+    brew update
 
-if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
-  fancy_echo "Put Homebrew location earlier in PATH ..."
-    echo "\n# recommended by brew doctor" >> ~/.zshrc
-    echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
-    source ~/.zshrc
+  if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
+    fancy_echo "Put Homebrew location earlier in PATH ..."
+      echo "\n# recommended by brew doctor" >> ~/.zshrc
+      echo "export PATH=\"/usr/local/bin:\$PATH\"\n" >> ~/.zshrc
+      source ~/.zshrc
+  fi
+else
+  fancy_echo "Homebrew already installed. Skipping ..."
 fi
-
 ### end mac-components/homebrew
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
