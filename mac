@@ -52,7 +52,9 @@ fi
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
-  initdb /usr/local/var/postgres -E utf8
+  if [ ! -f /usr/local/var/postgres/pg_hba.conf ]; then
+    initdb /usr/local/var/postgres -E utf8
+  fi
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew install redis
