@@ -22,7 +22,8 @@ rendered `linux`, `linux-preqrequisites`, or `mac` files. `git diff` is your
 friend - check the output. If it looks as expected, commit the rendered
 installation files.
 
-4) A reminder: be extra sure to render the installation files before issuing a pull request.
+4) A reminder: be extra sure to render the installation files before issuing a
+pull request.
 
 Supporting additional distros or operating systems
 ==================================================

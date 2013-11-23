@@ -1,0 +1,3 @@
+fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
+  number_of_cores=`nproc`
+  bundle config --global jobs `expr $number_of_cores - 1`

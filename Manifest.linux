@@ -9,4 +9,5 @@ linux-components/debian-derivative-packages
 linux-components/silver-searcher-from-source
 linux-components/rbenv
 common-components/ruby-environment
+linux-components/bundler
 linux-components/heroku
