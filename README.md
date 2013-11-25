@@ -48,11 +48,11 @@ Requirements
 
 1) Install a C compiler.
 
-Use [OS X GCC Installer](https://github.com/kennethreitz/osx-gcc-installer/) for
-Snow Leopard (OS X 10.6).
+For Snow Leopard (10.6): use [OS X GCC Installer](https://github.com/kennethreitz/osx-gcc-installer/)
 
-Use [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action)
-for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
+For Lion (10.7) or Mountain Lion (10.8): use [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action)
+
+For Mavericks (10.9): run `xcode-select --install` in your terminal and then click "Install".
 
 2) Set zsh as your login shell:
 
@@ -62,6 +62,7 @@ for Lion (OS X 10.7) or Mountain Lion (OS X 10.8).
 
 We support:
 
+* [13.10: Saucy Salamander](https://wiki.ubuntu.com/SaucySalamander/ReleaseNotes),
 * [13.04: Raring Ringtail](https://wiki.ubuntu.com/RaringRingtail/ReleaseNotes),
 * [12.10: Quantal Quetzal](https://wiki.ubuntu.com/QuantalQuetzal/ReleaseNotes), and
 * [12.04 LTS: Precise Pangolin](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes),
