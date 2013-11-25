@@ -1,0 +1,2 @@
+fancy_echo "Updating system packages ..."
+  sudo apt-get update

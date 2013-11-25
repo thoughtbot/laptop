@@ -1,0 +1,2 @@
+fancy_echo "Installing curl ..."
+  sudo apt-get install -y curl

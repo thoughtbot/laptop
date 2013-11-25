@@ -1,0 +1,15 @@
+fancy_echo "Installing rvm, a ruby version management tool ..."
+  \curl -L https://get.rvm.io | bash
+  echo -e "\n# Load RVM"
+  echo "[[ -d $HOME/.bash_profile ]] && source $HOME/.bash_profile" >> ~/.bashrc
+  source ~/.bashrc
+
+if type rvm | head -n 1 | grep -qs 'rvm is a function'; then
+  fancy_echo 'RVM is installed successfully'
+fi
+
+fancy_echo "Installing Ruby 2.0.0..."
+  rvm install 2.0.0
+
+fancy_echo "Using Ruby 2.0.0 as default..."
+  rvm use 2.0.0 --default

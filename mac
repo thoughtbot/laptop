@@ -1,5 +1,5 @@
-#!/usr/bin/env zsh
-### end common-components/zsh-shebang
+#!/bin/sh
+### end common-components/sh-shebang
 
 # Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
 # desktop, no haters here) into an awesome development machine.
@@ -13,46 +13,48 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 ### end common-components/exit-trap
 
-if [ ! -d "$HOME/.bin/" ]; then
-  mkdir "$HOME/.bin"
+if [ ! -d "/usr/local/bin/" ]; then
+  sudo mkdir -p "/usr/local/bin"
 fi
-
-if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
-  echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
-  source ~/.zshrc
-fi
-### end common-components/check-home-bin
+### end common-components/check-usr-local-bin
 
 fancy_echo() {
   printf "\n%b\n" "$1"
 }
 ### end common-components/shared-functions
 
-if [[ -f /etc/zshenv ]]; then
-  fancy_echo "Fixing OSX zsh environment bug ..."
-    sudo mv /etc/{zshenv,zshrc}
-fi
-### end mac-components/zsh-fix
-
-if (( $+commands[brew] )); then
+if ! which -s brew; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go/install)
     brew update
 
-  if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
+  if ! grep -qs "recommended by brew doctor" ~/.bashrc; then
     fancy_echo "Put Homebrew location earlier in PATH ..."
-      echo "\n# recommended by brew doctor" >> ~/.zshrc
-      echo "export PATH=\"/usr/local/bin:\$PATH\"\n" >> ~/.zshrc
-      source ~/.zshrc
+      echo -e "\n# recommended by brew doctor" >> ~/.bashrc
+      echo -e "export PATH='/usr/local/bin:$PATH'\n" >> ~/.bashrc
+      source ~/.bashrc
   fi
 else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
-### end mac-components/homebrew
+### end mac-components/homebrew-with-bash
 
-fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew install postgres --no-python
-  initdb /usr/local/var/postgres -E utf8
+if ! which -s psql; then
+  fancy_echo "Installing Postgres, a good open source relational database ..."
+    brew install postgres --no-python
+    initdb /usr/local/var/postgres -E utf8
+    fancy_echo "Launch Postgres with system start..."
+      ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+      launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+fi
+
+if ! which -s mysql; then
+  fancy_echo "Installing MySQL, another good open source relational database ..."
+    brew install mysql
+    fancy_echo "Launch MySQL with system start..."
+      ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+      launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+fi
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew install redis
@@ -82,24 +84,36 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
   brew install watch
 ### end mac-components/packages
 
-fancy_echo "Installing rbenv, to change Ruby versions ..."
-  brew install rbenv
+if ! which -s rvm; then
+  fancy_echo "Installing RVM, to change Ruby versions ..."
+    \curl -L https://get.rvm.io | bash -s stable
 
-  if ! grep -qs "rbenv init" ~/.zshrc; then
-    echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
+    if ! grep -qs "Load RVM with bash login" ~/.bash_profile; then
+      fancy_echo "Put RVM related path in bash_profile"
+        echo -e "\n# Load RVM with bash login" >> ~/.bash_profile
+        echo 'if [[ -d $HOME/.rvm/bin ]]; then' >> ~/.bash_profile
+        echo ' export PATH=$HOME/.rvm/bin:$PATH' >> ~/.bash_profile
+        echo ' if [[ -n "$PS1" ]]; then' >> ~/.bash_profile
+        echo '    export rvm_pretty_print_flag=1' >> ~/.bash_profile
+        echo '    source $HOME/.rvm/scripts/rvm' >> ~/.bash_profile
+        echo '    [[ -r $rvm_path/scripts/completion ]] && source $rvm_path/scripts/completion' >> ~/.bash_profile
+        echo '  fi' >> ~/.bash_profile
+        echo 'fi' >> ~/.bash_profile
+        if ! grep -qs "Load bash_profile" ~/.bashrc; then
+          echo -e "\n# Load bash_profile" >> ~/.bashrc
+          echo '[[ -d $HOME/.bash_profile ]] && source $HOME/.bash_profile' >> ~/.bashrc
+          if [[ -d $HOME/.profile ]]; then
+            echo "source $HOME/.profile" >> ~/.bashrc
+          fi
+        fi
+        source ~/.bashrc
+    fi
 
-    fancy_echo "Enable shims and autocompletion ..."
-      eval "$(rbenv init -)"
-  fi
-
-  source ~/.zshrc
-
-fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  brew install rbenv-gem-rehash
-
-fancy_echo "Installing ruby-build, to install Rubies ..."
-  brew install ruby-build
-### end mac-components/rbenv
+    if type rvm | head -n 1 | grep -qs 'rvm is a function'; then
+      echo 'RVM is installed successfully'
+    fi
+fi
+### end mac-components/rvm
 
 fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
   brew tap homebrew/dupes
@@ -111,28 +125,17 @@ fancy_echo "Upgrading and linking OpenSSL ..."
 export CC=gcc-4.2
 ### end mac-components/compiler-and-libraries
 
+fancy_echo "Preparing ruby environments"
+  rvm requirements
+
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
-  rbenv install 2.0.0-p247
+  rvm install 2.0.0-p247
 
 fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
-  rbenv global 2.0.0-p247
-  rbenv rehash
-
-fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
+  rvm use 2.0.0-p247 --default
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
-  gem install bundler pg rails unicorn --no-document
+  gem install bundler pg rails unicorn --no-ri --no-doc
 
-fancy_echo "Installing GitHub CLI client ..."
-  curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  chmod +x ~/.bin/hub
-### end common-components/ruby-environment
-
-fancy_echo "Installing Heroku CLI client ..."
-  brew install heroku-toolbelt
-
-fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
-### end mac-components/heroku
+### end common-components/ruby-environment-with-rvm
 
