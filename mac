@@ -25,15 +25,17 @@ fancy_echo() {
 
 if ! which -s brew; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
-    ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+    ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go/install)
     brew update
-fi
 
-if ! grep -qs "recommended by brew doctor" ~/.bashrc; then
-  fancy_echo "Put Homebrew location earlier in PATH ..."
-    echo -e "\n# recommended by brew doctor" >> ~/.bashrc
-    echo -e "export PATH='/usr/local/bin:$PATH'\n" >> ~/.bashrc
-    source ~/.bashrc
+  if ! grep -qs "recommended by brew doctor" ~/.bashrc; then
+    fancy_echo "Put Homebrew location earlier in PATH ..."
+      echo -e "\n# recommended by brew doctor" >> ~/.bashrc
+      echo -e "export PATH='/usr/local/bin:$PATH'\n" >> ~/.bashrc
+      source ~/.bashrc
+  fi
+else
+  fancy_echo "Homebrew already installed. Skipping ..."
 fi
 ### end mac-components/homebrew-with-bash
 
