@@ -27,3 +27,9 @@ fancy_echo "Installing ImageMagick, to crop and resize images ..."
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   sudo aptitude install -y watch
+
+fancy_echo "Installing curl ..."
+  sudo aptitude install -y curl
+
+fancy_echo "Installing zsh ..."
+  sudo aptitude install -y zsh

@@ -5,4 +5,5 @@ fancy_echo "Updating system packages ..."
     fancy_echo "Installing aptitude ..."
     sudo apt-get install -y aptitude
   fi
+
   sudo aptitude update

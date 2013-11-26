@@ -1,0 +1,2 @@
+fancy_echo "Changing your shell to zsh ..."
+  chsh -s $(which zsh)
