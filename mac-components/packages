@@ -24,7 +24,7 @@ fancy_echo "Installing ImageMagick, to crop and resize images ..."
   brew install imagemagick
 
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew install qt --HEAD
+  brew install qt
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew install watch
