@@ -8,8 +8,11 @@ fancy_echo "Setting Ruby 2.0.0-p353 as global default Ruby ..."
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
-fancy_echo "Installing critical Ruby gems for Rails development ..."
-  gem install bundler pg rails unicorn --no-document
+fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
+  gem install bundler --no-document --pre
+
+fancy_echo "Installing Rails ..."
+  gem install rails --no-document
 
 fancy_echo "Installing GitHub CLI client ..."
   curl http://hub.github.com/standalone -sLo ~/.bin/hub
