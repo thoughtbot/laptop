@@ -111,11 +111,11 @@ fancy_echo "Upgrading and linking OpenSSL ..."
 export CC=gcc-4.2
 ### end mac-components/compiler-and-libraries
 
-fancy_echo "Installing Ruby 2.0.0-p247 ..."
-  rbenv install 2.0.0-p247
+fancy_echo "Installing Ruby 2.0.0-p353 ..."
+  rbenv install 2.0.0-p353
 
-fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
-  rbenv global 2.0.0-p247
+fancy_echo "Setting Ruby 2.0.0-p353 as global default Ruby ..."
+  rbenv global 2.0.0-p353
   rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
