@@ -144,6 +144,23 @@ fancy_echo "Installing the heroku-config plugin to pull config variables locally
   heroku plugins:install git://github.com/ddollar/heroku-config.git
 ### end mac-components/heroku
 
+fancy_echo "Installing Node.js ..."
+  brew install node
+
+fancy_echo "Installing Express, a web application framework for Node.js  ..."
+  npm install -g express
+
+fancy_echo "Installing Grunt, a JavaScript Task Runner ..."
+  npm install -g grunt
+  npm install -g grunt-cli
+
+fancy_echo "Installing Bower, a package manager for the web ..."
+  npm install -g bower
+
+fancy_echo "Installing Mongoose, MongoDB object modeling for Node.js ..."
+  npm install -g mongoose
+### end mac-components/node
+
 fancy_echo "Installing rcm, to manage your dotfiles ..."
   brew tap mike-burns/rcm
   brew install rcm
