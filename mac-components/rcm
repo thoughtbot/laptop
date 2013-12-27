@@ -1,3 +1,3 @@
 fancy_echo "Installing rcm, to manage your dotfiles ..."
-  brew tap mike-burns/rcm
+  brew tap thoughtbot/rcm
   brew install rcm
