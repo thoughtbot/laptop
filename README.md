@@ -10,11 +10,15 @@ Requirements
 
 1) Install a C compiler.
 
-For Snow Leopard (10.6): use [OS X GCC Installer](https://github.com/kennethreitz/osx-gcc-installer/)
+For Snow Leopard (10.6): use [OS X GCC
+Installer](https://github.com/kennethreitz/osx-gcc-installer/).
 
-For Lion (10.7) or Mountain Lion (10.8): use [Command Line Tools for XCode](https://developer.apple.com/downloads/index.action)
+For Lion (10.7) or Mountain Lion (10.8): use [Command Line Tools for
+XCode](https://developer.apple.com/downloads/index.action).
 
-For Mavericks (10.9): run `sudo xcodebuild -license` and follow the instructions to accept the XCode agreement.  Then run `xcode-select --install` in your terminal and then click "Install".
+For Mavericks (10.9): run `sudo xcodebuild -license` and follow the instructions
+to accept the XCode agreement.  Then run `xcode-select --install` in your
+terminal and then click "Install".
 
 2) Set zsh as your login shell:
 

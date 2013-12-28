@@ -105,11 +105,13 @@ fancy_echo "Installing ruby-build, to install Rubies ..."
   git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 ### end linux-components/rbenv
 
-fancy_echo "Installing Ruby 2.0.0-p353 ..."
-  rbenv install 2.0.0-p353
+RUBY_VERSION="2.1.0"
 
-fancy_echo "Setting Ruby 2.0.0-p353 as global default Ruby ..."
-  rbenv global 2.0.0-p353
+fancy_echo "Installing Ruby $RUBY_VERSION ..."
+  rbenv install $RUBY_VERSION
+
+fancy_echo "Setting $RUBY_VERSION as global default Ruby ..."
+  rbenv global $RUBY_VERSION
   rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
