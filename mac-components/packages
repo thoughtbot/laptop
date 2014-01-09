@@ -1,6 +1,5 @@
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
-  initdb /usr/local/var/postgres -E utf8
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew install redis
