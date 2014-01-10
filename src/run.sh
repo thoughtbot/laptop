@@ -12,8 +12,8 @@ run_step install_postgresql 'Installing Postgres, a good open source relational 
 run_step install_rbenv 'Installing rbenv, to change Ruby versions'
 run_step install_gem_rehash 'Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries'
 run_step install_ruby_build 'Installing ruby-build, to install Rubies'
-run_step ruby_prerequisites 'Installing Ruby dependencies'
-run_step install_ruby 'Installing Ruby $ruby_version and setting as global'
+run_step install_ruby_prerequisites 'Installing Ruby dependencies'
+run_step install_ruby "Installing Ruby $ruby_version and setting as global"
 run_step install_gems 'Installing Bundler and Rails'
 run_step configure_bundler 'Configuring Bundler for faster, parallel gem installation'
 run_step install_hub 'Installing GitHub CLI client'

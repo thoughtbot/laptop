@@ -49,7 +49,7 @@ install_silversearcher() {
   cd && rm -rf /tmp/the_silver_searcher
 }
 
-ruby_prerequisites() {
+install_ruby_prerequisites() {
   sudo aptitude build-dep -y ruby1.9.3
 }
 

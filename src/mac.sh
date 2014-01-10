@@ -45,7 +45,7 @@ install_silversearcher() {
   install the_silver_searcher
 }
 
-ruby_prerequisites() {
+install_ruby_prerequisites() {
   brew tap homebrew/dupes
   install apple-gcc42
   install openssl
