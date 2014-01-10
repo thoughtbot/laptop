@@ -1,34 +1,23 @@
 Contributing
 ============
 
-Laptop is broken into components to maximize sharing between operating systems
-and linux distros, while retaining the easy hackability of a "single file"
-installation.
+Laptop is broken into separate script files under `./src`:
+
+1. base.sh - functions and variables shareable across Linux and OSX.
+2. mac.sh - functions and variables specific to OSX.
+3. linux.sh - functions and variables specific to Linux.
+4. run.sh - execution of functions to complete the install.
+
+Three of these files are concatenated into `./linux` or `./mac` via the 
+`./bin/build` script. As may be obvious, building `./linux` will build 
+with `linux.sh` and without `mac.sh` and building `./mac` will do the 
+opposite. You may pass an argument of `linux` or `mac` to `./bin/build` 
+to only build a single script. Passing no arguments builds both.
 
 To extend / modify laptop:
 
-1) Find a component that most closely fits what you want to change. If nothing
-seems appropriate, create a new one. The best way to learn about how the
-components are split is to read the `manifests` and look at the contents of the
-files they reference. It is ultimately pretty simple.
-
-2) Make your changes within the component, prioritizing "common-components"
-that can be shared easily amongst manifests.  OS / distro-specific components
-are fine, but be sure they are necessary first.
-
-3) Render the installation files from the manifests via the `./bin/build.sh`
-script, run from the repo root. You should see your changes reflected in the
-rendered `linux`, `linux-preqrequisites`, or `mac` files. `git diff` is your
-friend - check the output. If it looks as expected, commit the rendered
-installation files.
-
-4) A reminder: be extra sure to render the installation files before
-issuing a pull request.
-
-Supporting additional distros or operating systems
-==================================================
-
-See above.  Ideally, you can mix-and-match existing components to do most of
-the work, replacing only the `debian-package-update` and
-`debian-derivative-packages` components with your distro-specific files. It
-will probably be more work than that, but not much.
+1. Make a change in the appropriate place under `./src`.
+2. Commit your actual change.
+3. Run `./bin/build`.
+4. Confirm the scripts were built as expected and commit this 
+   compilation step separately.
