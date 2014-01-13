@@ -53,19 +53,17 @@ install_gems() {
 }
 
 install_hub() {
-  local bin="$HOME/.bin"
-
-  if [ ! -d "$bin" ]; then
-    mkdir "$bin"
+  if [ ! -d "$local_bin" ]; then
+    mkdir "$local_bin"
   fi
 
-  if ! echo ":${PATH}:" | grep -Fq ":${bin}:"; then
-    write_to_file ~/.zshrc "export PATH=\"${bin}:\$PATH\""
-    export PATH="${bin}:$PATH"
+  if ! echo ":${PATH}:" | grep -Fq ":${local_bin}:"; then
+    write_to_file ~/.zshrc "export PATH=\"${local_bin}:\$PATH\""
+    export PATH="${local_bin}:$PATH"
   fi
 
-  curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  chmod +x ~/.bin/hub
+  curl http://hub.github.com/standalone -sLo "$local_bin"/hub
+  chmod +x "$local_bin"/hub
 }
 
 configure_bundler() {

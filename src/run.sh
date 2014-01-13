@@ -1,3 +1,4 @@
+local_bin="$HOME/.bin"
 ruby_version="${RUBY_VERSION:-2.1.0}"
 
 # Shared Installation steps
