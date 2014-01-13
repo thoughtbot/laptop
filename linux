@@ -53,19 +53,17 @@ install_gems() {
 }
 
 install_hub() {
-  local bin="$HOME/.bin"
-
-  if [ ! -d "$bin" ]; then
-    mkdir "$bin"
+  if [ ! -d "$local_bin" ]; then
+    mkdir "$local_bin"
   fi
 
-  if ! echo ":${PATH}:" | grep -Fq ":${bin}:"; then
-    write_to_file ~/.zshrc "export PATH=\"${bin}:\$PATH\""
-    export PATH="${bin}:$PATH"
+  if ! echo ":${PATH}:" | grep -Fq ":${local_bin}:"; then
+    write_to_file ~/.zshrc "export PATH=\"${local_bin}:\$PATH\""
+    export PATH="${local_bin}:$PATH"
   fi
 
-  curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  chmod +x ~/.bin/hub
+  curl http://hub.github.com/standalone -sLo "$local_bin"/hub
+  chmod +x "$local_bin"/hub
 }
 
 configure_bundler() {
@@ -121,15 +119,15 @@ install_system_packages() {
 
 install_silversearcher() {
   git clone 'git://github.com/ggreer/the_silver_searcher.git' /tmp/the_silver_searcher
-  install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
-  sh /tmp/the_silver_searcher/build.sh
+  install automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
   cd /tmp/the_silver_searcher
   sh build.sh
   sudo make install
-  cd && rm -rf /tmp/the_silver_searcher
+  cd
+  rm -rf /tmp/the_silver_searcher
 }
 
-ruby_prerequisites() {
+install_ruby_prerequisites() {
   sudo aptitude build-dep -y ruby1.9.3
 }
 
@@ -147,13 +145,13 @@ install_rbenv() {
 }
 
 install_ruby_build() {
-  git clone 'https://github.com/sstephenson/rbenv-gem-rehash.git' \
-    ~/.rbenv/plugins/rbenv-gem-rehash
+  git clone 'git://github.com/sstephenson/ruby-build.git' \
+    ~/.rbenv/plugins/ruby-build
 }
 
 install_gem_rehash() {
-  git clone 'git://github.com/sstephenson/ruby-build.git' \
-    ~/.rbenv/plugins/ruby-build
+  git clone 'https://github.com/sstephenson/rbenv-gem-rehash.git' \
+    ~/.rbenv/plugins/rbenv-gem-rehash
 }
 
 install_heroku_toolbelt() {
@@ -167,6 +165,7 @@ install_rcm() {
 }
 
 number_of_cores=$(nproc)
+local_bin="$HOME/.bin"
 ruby_version="${RUBY_VERSION:-2.1.0}"
 
 # Shared Installation steps
@@ -181,8 +180,8 @@ run_step install_postgresql 'Installing Postgres, a good open source relational 
 run_step install_rbenv 'Installing rbenv, to change Ruby versions'
 run_step install_gem_rehash 'Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries'
 run_step install_ruby_build 'Installing ruby-build, to install Rubies'
-run_step ruby_prerequisites 'Installing Ruby dependencies'
-run_step install_ruby 'Installing Ruby $ruby_version and setting as global'
+run_step install_ruby_prerequisites 'Installing Ruby dependencies'
+run_step install_ruby "Installing Ruby $ruby_version and setting as global"
 run_step install_gems 'Installing Bundler and Rails'
 run_step configure_bundler 'Configuring Bundler for faster, parallel gem installation'
 run_step install_hub 'Installing GitHub CLI client'
