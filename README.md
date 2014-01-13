@@ -20,10 +20,6 @@ For Mavericks (10.9): run `sudo xcodebuild -license` and follow the instructions
 to accept the XCode agreement.  Then run `xcode-select --install` in your
 terminal and then click "Install".
 
-2) Set zsh as your login shell:
-
-    chsh -s /bin/zsh
-
 ### Linux
 
 We support:
@@ -35,10 +31,6 @@ We support:
 * Debian stable (currently [wheezy](http://www.debian.org/releases/stable/)).
 * Debian testing (currently [jessie](http://www.debian.org/releases/testing/)).
 
-1) Install zsh and set it as your login shell:
-
-    bash <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux-prerequisites)
-
 Install
 -------
 
@@ -46,17 +38,18 @@ Install
 
 Read, then run the script:
 
-    zsh <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
+    sh <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
 
 ### Linux
 
 Read, then run the script:
 
-    zsh <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux)
+    sh <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux)
 
 What it sets up
 ---------------
 
+* Sets ZSH as your shell
 * Bundler gem for managing Ruby libraries
 * Exuberant Ctags for indexing files for vim tab completion
 * Foreman gem for serving Rails apps locally

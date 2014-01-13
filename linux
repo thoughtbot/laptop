@@ -1,148 +1,191 @@
-#!/usr/bin/env zsh
-### end common-components/zsh-shebang
-
-# Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
-# desktop, no haters here) into an awesome development machine.
-
-# This file is auto-generated. Do not edit it by hand unless you know what
-# you're doing. Please see 'CONTRIBUTING.md' for more information.
-### end common-components/header
-
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
-
+#!/usr/bin/env sh
+#
+# Laptop by thoughtbot
+#
+###
 set -e
-### end common-components/exit-trap
 
-if [ ! -d "$HOME/.bin/" ]; then
-  mkdir "$HOME/.bin"
-fi
-
-if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
-  echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
-  source ~/.zshrc
-fi
-### end common-components/check-home-bin
-
-fancy_echo() {
-  printf "\n%b\n" "$1"
+# UI
+################################################################################
+info() {
+  local fmt="$1"; shift
+  printf ":: $fmt\n" "$@"
 }
-### end common-components/shared-functions
 
-if ! grep -qiE 'precise|quantal|wheezy|raring|jessie|saucy' /etc/os-release
-then
-  fancy_echo "Sorry! we don't currently support that distro."
-  exit 1
-fi
-### end linux-components/distro-check
+error() {
+  local fmt="$1"; shift
+  printf "ERROR: $fmt\n" "$@"
+}
 
-fancy_echo "Updating system packages ..."
-  if command -v aptitude >/dev/null; then
-    fancy_echo "Using aptitude ..."
-  else
-    fancy_echo "Installing aptitude ..."
+# Support
+################################################################################
+die() { error "$@"; exit 1; }
+
+write_to_file() {
+  local file="$1"; shift
+
+  printf "%s\n" "$@" >> "$file"
+}
+
+run_step() {
+  local function="$1" description="$2"; shift 2
+
+  info "%s..." "$description"
+  $function "$@" || die "Failure in %s" "$function"
+}
+
+# Shared commands
+################################################################################
+set_shell() {
+  chsh -s $(which zsh)
+}
+
+install_ruby() {
+  rbenv install "$ruby_version"
+  rbenv global "$ruby_version"
+  rbenv rehash
+}
+
+install_gems() {
+  gem update --system
+  gem install bundler --no-document --pre
+  gem install rails --no-document
+}
+
+install_hub() {
+  if [ ! -d "$local_bin" ]; then
+    mkdir "$local_bin"
+  fi
+
+  if ! echo ":${PATH}:" | grep -Fq ":${local_bin}:"; then
+    write_to_file ~/.zshrc "export PATH=\"${local_bin}:\$PATH\""
+    export PATH="${local_bin}:$PATH"
+  fi
+
+  curl http://hub.github.com/standalone -sLo "$local_bin"/hub
+  chmod +x "$local_bin"/hub
+}
+
+configure_bundler() {
+  bundle config --global jobs $((number_of_cores - 1))
+}
+
+install_heroku_config() {
+  heroku plugins:install git://github.com/ddollar/heroku-config.git
+}
+
+# OS-specific commands
+################################################################################
+install() { sudo aptitude install -y "$@"; }
+
+supported() {
+  grep -iq 'precise\|quantal\|wheezy\|raring\|jessie\|saucy' /etc/os-release
+}
+
+update() {
+  if ! command -v aptitude >/dev/null; then
     sudo apt-get install -y aptitude
   fi
+
   sudo aptitude update
-### end linux-components/debian-package-update
+}
 
-fancy_echo "Installing git, for source control management ..."
-  sudo aptitude install -y git
+setup() {
+  install \
+    curl \
+    zsh \
+    libcurl4-openssl-dev \
+    libksba-dev \
+    libksba8 \
+    libqtwebkit-dev \
+    libreadline-dev \
+    libxslt1-dev
+}
 
-fancy_echo "Installing base ruby build dependencies ..."
-  sudo aptitude build-dep -y ruby1.9.3
+install_postgresql() {
+  install postgresql postgresql-server-dev-all
+}
 
-fancy_echo "Installing libraries for common gem dependencies ..."
-  sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
+install_system_packages() {
+  install \
+    exuberant-ctags \
+    git \
+    imagemagick \
+    redis-server \
+    tmux \
+    vim-gtk \
+    watch
+}
 
-fancy_echo "Installing Postgres, a good open source relational database ..."
-  sudo aptitude install -y postgresql postgresql-server-dev-all
-
-fancy_echo "Installing Redis, a good key-value database ..."
-  sudo aptitude install -y redis-server
-
-fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  sudo aptitude install -y exuberant-ctags
-
-fancy_echo "Installing vim ..."
-  sudo aptitude install -y vim-gtk
-
-fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  sudo aptitude install -y tmux
-
-fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  sudo aptitude install -y imagemagick
-
-fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  sudo aptitude install -y watch
-### end linux-components/debian-derivative-packages
-
-fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-  sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
-  sh /tmp/the_silver_searcher/build.sh
+install_silversearcher() {
+  git clone 'git://github.com/ggreer/the_silver_searcher.git' /tmp/the_silver_searcher
+  install automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
   cd /tmp/the_silver_searcher
   sh build.sh
   sudo make install
   cd
   rm -rf /tmp/the_silver_searcher
-### end linux-components/silver-searcher-from-source
+}
 
-fancy_echo "Installing rbenv, to change Ruby versions ..."
+install_ruby_prerequisites() {
+  sudo aptitude build-dep -y ruby1.9.3
+}
+
+install_rbenv() {
   git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
 
-  if ! grep -qs "rbenv init" ~/.zshrc; then
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+  if ! grep -Fsq 'rbenv init' ~/.zshrc; then
+    write_to_file ~/.zshrc \
+      'export PATH="$HOME/.rbenv/bin:$PATH"' \
+      'eval "$(rbenv init - --no-rehash)"'
 
-    echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init - --no-rehash)"
   fi
+}
 
-  source ~/.zshrc
+install_ruby_build() {
+  git clone 'git://github.com/sstephenson/ruby-build.git' \
+    ~/.rbenv/plugins/ruby-build
+}
 
-fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+install_gem_rehash() {
+  git clone 'https://github.com/sstephenson/rbenv-gem-rehash.git' \
+    ~/.rbenv/plugins/rbenv-gem-rehash
+}
 
-fancy_echo "Installing ruby-build, to install Rubies ..."
-  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-### end linux-components/rbenv
-
-RUBY_VERSION="2.1.0"
-
-fancy_echo "Installing Ruby $RUBY_VERSION ..."
-  rbenv install $RUBY_VERSION
-
-fancy_echo "Setting $RUBY_VERSION as global default Ruby ..."
-  rbenv global $RUBY_VERSION
-  rbenv rehash
-
-fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
-
-fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
-  gem install bundler --no-document --pre
-
-fancy_echo "Installing Rails ..."
-  gem install rails --no-document
-
-fancy_echo "Installing GitHub CLI client ..."
-  curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  chmod +x ~/.bin/hub
-### end common-components/ruby-environment
-
-fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
-  number_of_cores=`nproc`
-  bundle config --global jobs `expr $number_of_cores - 1`
-### end linux-components/bundler
-
-fancy_echo "Installing Heroku CLI client ..."
+install_heroku_toolbelt() {
   wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+}
 
-fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
-### end linux-components/heroku
-
-fancy_echo "Installing rcm, to manage your dotfiles ..."
+install_rcm() {
   wget -O /tmp/rcm_1.1.0_all.deb http://mike-burns.com/project/rcm/rcm_1.1.0_all.deb
   sudo dpkg -i /tmp/rcm_1.1.0_all.deb
   rm -f /tmp/rcm_1.1.0_all.deb
-### end linux-components/rcm
+}
 
+number_of_cores=$(nproc)
+local_bin="$HOME/.bin"
+ruby_version="${RUBY_VERSION:-2.1.0}"
+
+# Shared Installation steps
+################################################################################
+supported || die 'Your OS is not supported by laptop'
+
+run_step update 'Updating the system'
+run_step setup 'Preparing the system'
+run_step install_system_packages 'Installing useful system packages'
+run_step install_silversearcher 'Installing The Silver Searcher (better than ack or grep) to search the contents of files'
+run_step install_postgresql 'Installing Postgres, a good open source relational database'
+run_step install_rbenv 'Installing rbenv, to change Ruby versions'
+run_step install_gem_rehash 'Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries'
+run_step install_ruby_build 'Installing ruby-build, to install Rubies'
+run_step install_ruby_prerequisites 'Installing Ruby dependencies'
+run_step install_ruby "Installing Ruby $ruby_version and setting as global"
+run_step install_gems 'Installing Bundler and Rails'
+run_step configure_bundler 'Configuring Bundler for faster, parallel gem installation'
+run_step install_hub 'Installing GitHub CLI client'
+run_step install_heroku_toolbelt 'Installing Heroku CLI client'
+run_step install_heroku_config 'Installing the heroku-config plugin to pull config variables locally to be used as ENV variables'
+run_step install_rcm 'Installing rcm, to manage your dotfiles'
+run_step set_shell 'Setting ZSH as your login shell'

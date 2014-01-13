@@ -17,7 +17,7 @@ testing.
 
 ## Running the tests
 
-1. From the repository root, execute `./test/runner.sh`
+1. From the repository root, execute `./test/run`
 
 ## Details
 

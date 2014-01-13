@@ -1,0 +1,9 @@
+#!/bin/sh
+
+[ $# -eq 0 ] && set -- linux mac
+
+for os; do
+  cat src/base.sh \
+      src/"${os}.sh" \
+      src/run.sh > ./"$os"
+done
