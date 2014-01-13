@@ -67,13 +67,13 @@ install_rbenv() {
 }
 
 install_ruby_build() {
-  git clone 'https://github.com/sstephenson/rbenv-gem-rehash.git' \
-    ~/.rbenv/plugins/rbenv-gem-rehash
+  git clone 'git://github.com/sstephenson/ruby-build.git' \
+    ~/.rbenv/plugins/ruby-build
 }
 
 install_gem_rehash() {
-  git clone 'git://github.com/sstephenson/ruby-build.git' \
-    ~/.rbenv/plugins/ruby-build
+  git clone 'https://github.com/sstephenson/rbenv-gem-rehash.git' \
+    ~/.rbenv/plugins/rbenv-gem-rehash
 }
 
 install_heroku_toolbelt() {
