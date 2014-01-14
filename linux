@@ -120,9 +120,6 @@ fancy_echo "Updating to latest Rubygems version ..."
 fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
   gem install bundler --no-document --pre
 
-fancy_echo "Installing Rails ..."
-  gem install rails --no-document
-
 fancy_echo "Installing GitHub CLI client ..."
   curl http://hub.github.com/standalone -sLo ~/.bin/hub
   chmod +x ~/.bin/hub
@@ -132,6 +129,10 @@ fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
   number_of_cores=`nproc`
   bundle config --global jobs `expr $number_of_cores - 1`
 ### end linux-components/bundler
+
+fancy_echo "Installing Rails ..."
+  gem install rails --no-document
+### end common-components/default-gems
 
 fancy_echo "Installing Heroku CLI client ..."
   wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
