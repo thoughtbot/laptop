@@ -8,7 +8,7 @@ fancy_echo "Installing libraries for common gem dependencies ..."
   sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  sudo aptitude install -y postgresql postgresql-server-dev-all
+  sudo aptitude install -y postgresql postgresql-server-dev-all pgadmin3
 
 fancy_echo "Installing Redis, a good key-value database ..."
   sudo aptitude install -y redis-server
