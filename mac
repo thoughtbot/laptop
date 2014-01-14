@@ -45,6 +45,10 @@ brew_install_or_upgrade() {
 }
 ### end mac-components/mac-functions
 
+fancy_echo "Installing oh-my-zsh ..."
+  curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+### end common-components/oh-my-zsh
+
 if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
     sudo mv /etc/{zshenv,zshrc}
