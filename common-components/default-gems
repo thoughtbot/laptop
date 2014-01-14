@@ -1,0 +1,2 @@
+fancy_echo "Installing Rails ..."
+  gem install rails --no-document
