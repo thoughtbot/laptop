@@ -7,6 +7,11 @@ fancy_echo "Installing base ruby build dependencies ..."
 fancy_echo "Installing libraries for common gem dependencies ..."
   sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
 
+fancy_echo "Changing to official Postgres packages..."
+  echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > sudo tee /etc/apt/sources.list.d/pgdg.list
+  wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+  sudo aptitude update
+
 fancy_echo "Installing Postgres, a good open source relational database ..."
   sudo aptitude install -y postgresql postgresql-server-dev-all pgadmin3
 
