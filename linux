@@ -17,6 +17,10 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
+if [ ! -f "$HOME/.zshrc" ]; then
+  touch $HOME/.zshrc
+fi
+
 if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
   echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
   source ~/.zshrc
@@ -76,33 +80,41 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
   sudo aptitude install -y watch
 ### end linux-components/debian-derivative-packages
 
-fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-  sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
-  sh /tmp/the_silver_searcher/build.sh
-  cd /tmp/the_silver_searcher
-  sh build.sh
-  sudo make install
-  cd
-  rm -rf /tmp/the_silver_searcher
+if [[ $+commands[ag] -ne 1 ]]; then
+  fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
+    git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
+    sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+    sh /tmp/the_silver_searcher/build.sh
+    cd /tmp/the_silver_searcher
+    sh build.sh
+    sudo make install
+    cd
+    rm -rf /tmp/the_silver_searcher
+fi
 ### end linux-components/silver-searcher-from-source
 
-fancy_echo "Installing rbenv, to change Ruby versions ..."
-  git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+if [[ ! -d "$HOME/.rbenv" ]]; then
+  fancy_echo "Installing rbenv, to change Ruby versions ..."
+    git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
 
-  if ! grep -qs "rbenv init" ~/.zshrc; then
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+    if ! grep -qs "rbenv init" ~/.zshrc; then
+      echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
 
-    echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
-  fi
+      echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
+    fi
 
-  source ~/.zshrc
+    source ~/.zshrc
+fi
 
-fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+if [[ ! -d "$HOME/.rbenv/plugins/rbenv-gem-rehash" ]]; then
+  fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
+    git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+fi
 
-fancy_echo "Installing ruby-build, to install Rubies ..."
-  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
+  fancy_echo "Installing ruby-build, to install Rubies ..."
+    git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+fi
 ### end linux-components/rbenv
 
 RUBY_VERSION="2.1.0"

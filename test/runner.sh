@@ -9,7 +9,9 @@ failure() {
 }
 
 vagrant_destroy() {
-  vagrant destroy --force &>/dev/null
+  if [ -z "$KEEP_VM" ]; then
+    vagrant destroy --force &>/dev/null
+  fi
 }
 
 message "Building latest scripts"
