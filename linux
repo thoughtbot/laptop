@@ -60,7 +60,7 @@ fancy_echo "Changing to official Postgres packages..."
   sudo aptitude update
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  sudo aptitude install -y postgresql postgresql-server-dev-all pgadmin3
+  sudo aptitude install -y postgresql postgresql-contrib postgresql-server-dev-all pgadmin3
 
 fancy_echo "Installing Redis, a good key-value database ..."
   sudo aptitude install -y redis-server
