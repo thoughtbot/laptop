@@ -96,5 +96,5 @@ Please see [CONTRIBUTING.md](https://github.com/thoughtbot/laptop/blob/master/CO
 License
 -------
 
-Laptop is © 2011-2013 thoughtbot, inc. It is free software, and may be
+Laptop is © 2011-2014 thoughtbot, inc. It is free software, and may be
 redistributed under the terms specified in the LICENSE file.
