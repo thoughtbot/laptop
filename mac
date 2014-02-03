@@ -150,7 +150,7 @@ fancy_echo "Installing the heroku-config plugin to pull config variables locally
 ### end mac-components/heroku
 
 fancy_echo "Installing rcm, to manage your dotfiles ..."
-  brew tap thoughtbot/rcm
+  brew tap thoughtbot/formulae
   brew install rcm
 ### end mac-components/rcm
 
