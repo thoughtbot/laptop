@@ -58,8 +58,23 @@ fancy_echo "Installing base ruby build dependencies ..."
 fancy_echo "Installing libraries for common gem dependencies ..."
   sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
 
+fancy_echo "Trying to find official Postgres package repository..."
+    codename="$(lsb_release -c | cut -f 2)"
+
+    case "$codename" in
+        precise|quantal|raring|saucy) postgres_codename=precise;;
+        wheezy) postgres_codename=wheezy;;
+        *) fancy_echo "Official Postgres package repository for codename '$codename' not found."
+    esac
+
+    if [ -n "$postgres_codename" ]; then
+        echo "deb http://apt.postgresql.org/pub/repos/apt/ $postgres_codename-pgdg main" | sudo tee /etc/apt/sources.list.d/postgres_official_releases.list > /dev/null
+        wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+        sudo aptitude update
+    fi
+
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  sudo aptitude install -y postgresql postgresql-server-dev-all
+  sudo aptitude install -y postgresql postgresql-contrib postgresql-server-dev-all
 
 fancy_echo "Installing Redis, a good key-value database ..."
   sudo aptitude install -y redis-server
