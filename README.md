@@ -8,21 +8,29 @@ Requirements
 
 ### Mac OS X
 
-1) Install a C compiler.
+1) Install XCode. This provides header files which are necessary for installing
+certain Ruby gems. You can do this from the App Store. Make sure you open XCode
+once to install any additional components.
 
-For Snow Leopard (10.6): use [OS X GCC
-Installer](https://github.com/kennethreitz/osx-gcc-installer/).
+2) Install a C compiler.
 
-For Lion (10.7) or Mountain Lion (10.8): use [Command Line Tools for
-XCode](https://developer.apple.com/downloads/index.action).
+For Lion (10.7) or Mountain Lion (10.8): Go to the [list of downloads listed on
+Apple's developer site](https://developer.apple.com/downloads/index.action) and
+look for the latest version of "Command Line Tools (OS X Lion) for XCode" or
+"Command Line Tools (OS X Mountain Lion) for XCode". Download and run.
 
 For Mavericks (10.9): run `sudo xcodebuild -license` and follow the instructions
 to accept the XCode agreement.  Then run `xcode-select --install` in your
-terminal and then click "Install".
+terminal and then click "Install". If this does not work, you can always
+download the Command Line Tools manually as instructed above (just look for the
+Mavericks version).
 
-2) Set zsh as your login shell:
+3) Set zsh as your login shell:
 
     chsh -s /bin/zsh
+
+Make sure to open a new tab in your terminal before proceeding or else the
+laptop script will fail.
 
 ### Linux
 
