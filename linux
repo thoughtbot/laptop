@@ -1,5 +1,5 @@
-#!/usr/bin/env zsh
-### end common-components/zsh-shebang
+#!/usr/bin/env bash
+### end common-components/bash-shebang
 
 # Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
 # desktop, no haters here) into an awesome development machine.
@@ -13,7 +13,7 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 ### end common-components/exit-trap
 
-if [ ! -d "$HOME/.bin/" ]; then
+if [[ ! -d "$HOME/.bin/" ]]; then
   mkdir "$HOME/.bin"
 fi
 
@@ -23,7 +23,7 @@ fi
 
 if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
   echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
-  source ~/.zshrc
+  export PATH="$HOME/.bin:$PATH"
 fi
 ### end common-components/check-home-bin
 
@@ -32,8 +32,7 @@ fancy_echo() {
 }
 ### end common-components/shared-functions
 
-if ! grep -qiE 'precise|quantal|wheezy|raring|jessie|saucy' /etc/os-release
-then
+if ! grep -qiE 'precise|quantal|wheezy|raring|jessie|saucy' /etc/os-release; then
   fancy_echo "Sorry! we don't currently support that distro."
   exit 1
 fi
@@ -46,6 +45,7 @@ fancy_echo "Updating system packages ..."
     fancy_echo "Installing aptitude ..."
     sudo apt-get install -y aptitude
   fi
+
   sudo aptitude update
 ### end linux-components/debian-package-update
 
@@ -78,9 +78,19 @@ fancy_echo "Installing ImageMagick, to crop and resize images ..."
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   sudo aptitude install -y watch
+
+fancy_echo "Installing curl ..."
+  sudo aptitude install -y curl
+
+fancy_echo "Installing zsh ..."
+  sudo aptitude install -y zsh
 ### end linux-components/debian-derivative-packages
 
-if [[ $+commands[ag] -ne 1 ]]; then
+fancy_echo "Changing your shell to zsh ..."
+  chsh -s $(which zsh)
+### end common-components/zsh
+
+if ! which ag &>/dev/null; then
   fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
     git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
     sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
@@ -103,7 +113,8 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
       echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
     fi
 
-    source ~/.zshrc
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
 fi
 
 if [[ ! -d "$HOME/.rbenv/plugins/rbenv-gem-rehash" ]]; then
@@ -138,8 +149,8 @@ fancy_echo "Installing GitHub CLI client ..."
 ### end common-components/ruby-environment
 
 fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
-  number_of_cores=`nproc`
-  bundle config --global jobs `expr $number_of_cores - 1`
+  number_of_cores=$(nproc)
+  bundle config --global jobs $((number_of_cores - 1))
 ### end linux-components/bundler
 
 fancy_echo "Installing Rails ..."
@@ -147,7 +158,7 @@ fancy_echo "Installing Rails ..."
 ### end common-components/default-gems
 
 fancy_echo "Installing Heroku CLI client ..."
-  wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   heroku plugins:install git://github.com/ddollar/heroku-config.git

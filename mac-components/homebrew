@@ -1,4 +1,4 @@
-if (( ! $+commands[brew] )); then
+if ! which brew &>/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.github.com/Homebrew/homebrew/go/install)
     brew update
@@ -7,7 +7,7 @@ if (( ! $+commands[brew] )); then
     fancy_echo "Put Homebrew location earlier in PATH ..."
       echo "\n# recommended by brew doctor" >> ~/.zshrc
       echo "export PATH=\"/usr/local/bin:\$PATH\"\n" >> ~/.zshrc
-      source ~/.zshrc
+      export PATH="/usr/local/bin:$PATH"
   fi
 else
   fancy_echo "Homebrew already installed. Skipping ..."

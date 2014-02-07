@@ -1,4 +1,4 @@
-if [ ! -d "$HOME/.bin/" ]; then
+if [[ ! -d "$HOME/.bin/" ]]; then
   mkdir "$HOME/.bin"
 fi
 
@@ -8,5 +8,5 @@ fi
 
 if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
   echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
-  source ~/.zshrc
+  export PATH="$HOME/.bin:$PATH"
 fi

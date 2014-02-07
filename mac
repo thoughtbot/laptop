@@ -1,5 +1,5 @@
-#!/usr/bin/env zsh
-### end common-components/zsh-shebang
+#!/usr/bin/env bash
+### end common-components/bash-shebang
 
 # Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
 # desktop, no haters here) into an awesome development machine.
@@ -13,7 +13,7 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 ### end common-components/exit-trap
 
-if [ ! -d "$HOME/.bin/" ]; then
+if [[ ! -d "$HOME/.bin/" ]]; then
   mkdir "$HOME/.bin"
 fi
 
@@ -23,7 +23,7 @@ fi
 
 if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
   echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
-  source ~/.zshrc
+  export PATH="$HOME/.bin:$PATH"
 fi
 ### end common-components/check-home-bin
 
@@ -32,13 +32,17 @@ fancy_echo() {
 }
 ### end common-components/shared-functions
 
+fancy_echo "Changing your shell to zsh ..."
+  chsh -s $(which zsh)
+### end common-components/zsh
+
 if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
     sudo mv /etc/{zshenv,zshrc}
 fi
 ### end mac-components/zsh-fix
 
-if (( ! $+commands[brew] )); then
+if ! which brew &>/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.github.com/Homebrew/homebrew/go/install)
     brew update
@@ -47,7 +51,7 @@ if (( ! $+commands[brew] )); then
     fancy_echo "Put Homebrew location earlier in PATH ..."
       echo "\n# recommended by brew doctor" >> ~/.zshrc
       echo "export PATH=\"/usr/local/bin:\$PATH\"\n" >> ~/.zshrc
-      source ~/.zshrc
+      export PATH="/usr/local/bin:$PATH"
   fi
 else
   fancy_echo "Homebrew already installed. Skipping ..."
@@ -89,13 +93,14 @@ fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
     echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
 
     fancy_echo "Enable shims and autocompletion ..."
       eval "$(rbenv init -)"
   fi
 
-  source ~/.zshrc
+  export PATH="$HOME/.rbenv/bin:$PATH"
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   brew install rbenv-gem-rehash
@@ -135,8 +140,8 @@ fancy_echo "Installing GitHub CLI client ..."
 ### end common-components/ruby-environment
 
 fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
-  number_of_cores=`sysctl -n hw.ncpu`
-  bundle config --global jobs `expr $number_of_cores - 1`
+  number_of_cores=$(sysctl -n hw.ncpu)
+  bundle config --global jobs $((number_of_cores - 1))
 ### end mac-components/bundler
 
 fancy_echo "Installing Rails ..."
