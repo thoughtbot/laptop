@@ -64,7 +64,7 @@ fancy_echo "Trying to find official Postgres package repository..."
     esac
 
     if [ -n "$postgres_codename" ]; then
-        echo "deb http://apt.postgresql.org/pub/repos/apt/ $postgres_codename-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list > /dev/null
+        echo "deb http://apt.postgresql.org/pub/repos/apt/ $postgres_codename-pgdg main" | sudo tee /etc/apt/sources.list.d/postgres_official_releases.list > /dev/null
         wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
         sudo aptitude update
     fi
