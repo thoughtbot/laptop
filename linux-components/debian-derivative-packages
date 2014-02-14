@@ -33,3 +33,6 @@ fancy_echo "Installing curl ..."
 
 fancy_echo "Installing zsh ..."
   sudo aptitude install -y zsh
+
+fancy_echo "Installing node, to render the rails asset pipeline ..."
+  sudo aptitude install -y nodejs
