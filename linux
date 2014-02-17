@@ -58,6 +58,9 @@ fancy_echo "Installing base ruby build dependencies ..."
 fancy_echo "Installing libraries for common gem dependencies ..."
   sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
 
+fancy_echo "Installing sqlite3, for prototyping database-backed rails apps"
+ sudo aptitude install -y libsqlite3-dev sqlite3
+
 fancy_echo "Installing Postgres, a good open source relational database ..."
   sudo aptitude install -y postgresql postgresql-server-dev-all
 
