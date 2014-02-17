@@ -10,7 +10,7 @@ failure() {
 
 vagrant_destroy() {
   if [ -z "$KEEP_VM" ]; then
-    vagrant destroy --force &>/dev/null
+    vagrant destroy --force
   fi
 }
 
@@ -41,9 +41,19 @@ for vagrantfile in test/Vagrantfile.*; do
   vagrant ssh -c 'zsh -i -l -c "ruby --version" | grep -Fq "ruby 2.1.1"' \
     || failure 'Installation did not install the correct ruby'
 
+  vagrant ssh -c 'zsh -i -l -c "rm -Rf ~/test_app && cd ~ && rails new test_app"' \
+    || failure 'Could not successfully create a rails app'
+
+  vagrant ssh -c 'zsh -i -l -c "cd ~/test_app && rails g scaffold post title:string"' \
+    || failure 'Could not successfully generate a scaffolded model'
+
+  vagrant ssh -c 'zsh -i -l -c "cd ~/test_app && rake db:create db:migrate db:test:prepare"' \
+    || failure 'Could not successfully initialize databases and migrate'
+
   message "$vagrantfile tested successfully, shutting down VM"
   vagrant halt
+  sleep 30
   vagrant_destroy
+  sleep 30
 done
 
-rm -f ./Vagrantfile
