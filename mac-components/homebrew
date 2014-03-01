@@ -1,7 +1,6 @@
 if ! which brew &>/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.github.com/Homebrew/homebrew/go/install)
-    brew update
 
   if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     fancy_echo "Put Homebrew location earlier in PATH ..."
@@ -12,3 +11,6 @@ if ! which brew &>/dev/null; then
 else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
+
+fancy_echo "Updating Homebrew formulas ..."
+brew update
