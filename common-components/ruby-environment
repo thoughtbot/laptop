@@ -1,4 +1,4 @@
-RUBY_VERSION="2.1.0"
+RUBY_VERSION="2.1.1"
 
 fancy_echo "Installing Ruby $RUBY_VERSION ..."
   rbenv install $RUBY_VERSION
