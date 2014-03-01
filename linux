@@ -159,8 +159,8 @@ fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
   bundle config --global jobs $((number_of_cores - 1))
 ### end linux-components/bundler
 
-fancy_echo "Installing Rails ..."
-  gem install rails --no-document
+fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
+  gem install suspenders --no-document
 ### end common-components/default-gems
 
 fancy_echo "Installing Heroku CLI client ..."

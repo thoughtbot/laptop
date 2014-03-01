@@ -1,2 +1,2 @@
-fancy_echo "Installing Rails ..."
-  gem install rails --no-document
+fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
+  gem install suspenders --no-document
