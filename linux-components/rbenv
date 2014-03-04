@@ -3,9 +3,8 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
     git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
 
     if ! grep -qs "rbenv init" ~/.zshrc; then
-      echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
-
-      echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
+      printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.zshrc
+      printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.zshrc
     fi
 
     export PATH="$HOME/.rbenv/bin:$PATH"

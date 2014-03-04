@@ -4,8 +4,8 @@ if ! which brew &>/dev/null; then
 
   if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     fancy_echo "Put Homebrew location earlier in PATH ..."
-      echo "\n# recommended by brew doctor" >> ~/.zshrc
-      echo "export PATH=\"/usr/local/bin:\$PATH\"\n" >> ~/.zshrc
+      printf '\n# recommended by brew doctor\n' >> ~/.zshrc
+      printf 'export PATH="/usr/local/bin:$PATH"\n' >> ~/.zshrc
       export PATH="/usr/local/bin:$PATH"
   fi
 else

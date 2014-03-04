@@ -22,7 +22,7 @@ if [ ! -f "$HOME/.zshrc" ]; then
 fi
 
 if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
-  echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
+  printf 'export PATH="$HOME/.bin:$PATH"\n' >> ~/.zshrc
   export PATH="$HOME/.bin:$PATH"
 fi
 ### end common-components/check-home-bin
@@ -48,8 +48,8 @@ if ! which brew &>/dev/null; then
 
   if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     fancy_echo "Put Homebrew location earlier in PATH ..."
-      echo "\n# recommended by brew doctor" >> ~/.zshrc
-      echo "export PATH=\"/usr/local/bin:\$PATH\"\n" >> ~/.zshrc
+      printf '\n# recommended by brew doctor\n' >> ~/.zshrc
+      printf 'export PATH="/usr/local/bin:$PATH"\n' >> ~/.zshrc
       export PATH="/usr/local/bin:$PATH"
   fi
 else
@@ -95,8 +95,8 @@ fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
-    echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
+    printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.zshrc
+    printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.zshrc
 
     fancy_echo "Enable shims and autocompletion ..."
       eval "$(rbenv init -)"
