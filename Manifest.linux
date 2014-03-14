@@ -13,4 +13,5 @@ common-components/ruby-environment
 linux-components/bundler
 common-components/default-gems
 linux-components/heroku
+linux-components/github
 linux-components/rcm

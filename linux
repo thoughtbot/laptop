@@ -147,10 +147,6 @@ fancy_echo "Updating to latest Rubygems version ..."
 
 fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
   gem install bundler --no-document --pre
-
-fancy_echo "Installing GitHub CLI client ..."
-  curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  chmod +x ~/.bin/hub
 ### end common-components/ruby-environment
 
 fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
@@ -168,6 +164,11 @@ fancy_echo "Installing Heroku CLI client ..."
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   heroku plugins:install git://github.com/ddollar/heroku-config.git
 ### end linux-components/heroku
+
+fancy_echo "Installing GitHub CLI client ..."
+  curl http://hub.github.com/standalone -sLo ~/.bin/hub
+  chmod +x ~/.bin/hub
+### end linux-components/github
 
 fancy_echo "Installing rcm, to manage your dotfiles ..."
   wget -O /tmp/rcm_1.1.0_all.deb http://mike-burns.com/project/rcm/rcm_1.1.0_all.deb
