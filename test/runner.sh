@@ -38,7 +38,7 @@ for vagrantfile in test/Vagrantfile.*; do
   vagrant ssh -c '[ "$SHELL" = "/usr/bin/zsh" ]' \
     || failure 'Installation did not set $SHELL to ZSH'
 
-  vagrant ssh -c 'zsh -i -l -c "ruby --version" | grep -Fq "ruby 2.1.0"' \
+  vagrant ssh -c 'zsh -i -l -c "ruby --version" | grep -Fq "ruby 2.1.1"' \
     || failure 'Installation did not install the correct ruby'
 
   message "$vagrantfile tested successfully, shutting down VM"
