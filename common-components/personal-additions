@@ -1,0 +1,2 @@
+fancy_echo "Installing your personal additions from ~/.laptop.local ..."
+  [[ -f ~/.laptop.local ]] && source ~/.laptop.local

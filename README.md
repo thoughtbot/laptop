@@ -71,6 +71,21 @@ What it sets up
 
 It should take less than 15 minutes to install (depends on your machine).
 
+Make your own customizations
+----------------------------
+
+Put your customizations in `~/.laptop.local`. For example, your
+`~/.laptop.local` might look like this:
+
+    #!/bin/sh
+
+    brew tap phinze/homebrew-cask
+    brew install brew-cask
+
+    brew cask install dropbox
+    brew cask install google-chrome
+    brew cask install rdio
+
 Credits
 -------
 
