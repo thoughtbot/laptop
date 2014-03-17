@@ -27,3 +27,18 @@ fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integ
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew install watch
+
+node_version = "0.10.28"
+
+if ! command -v nvm &>/dev/null; then
+  fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
+    brew install nvm
+    printf 'export PATH="$PATH:/usr/local/lib/node_modules"\n' >> ~/.zshrc
+    printf 'source $(brew --prefix nvm)/nvm.sh\n' >> ~/.zshrc
+
+    source ~/.zshrc
+    nvm install $node_version
+    printf "nvm use \"$node_version\" > /dev/null\n" >> ~/.zshrc
+else
+  fancy_echo "NVM already installed. Skipping ..."
+fi
