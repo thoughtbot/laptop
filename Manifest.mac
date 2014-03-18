@@ -9,6 +9,7 @@ mac-components/homebrew
 mac-components/packages
 mac-components/start-services
 mac-components/rbenv
+mac-components/rbenv-gemset
 mac-components/compiler-and-libraries
 common-components/ruby-environment
 mac-components/bundler
