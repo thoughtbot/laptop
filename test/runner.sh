@@ -38,7 +38,9 @@ for vagrantfile in test/Vagrantfile.*; do
   vagrant ssh -c '[ "$SHELL" = "/usr/bin/zsh" ]' \
     || failure 'Installation did not set $SHELL to ZSH'
 
-  vagrant ssh -c 'zsh -i -l -c "ruby --version" | grep -Fq "ruby 2.1.1"' \
+  ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+
+  vagrant ssh -c 'zsh -i -l -c "ruby --version" | grep -Fq "$ruby_version"' \
     || failure 'Installation did not install the correct ruby'
 
   vagrant ssh -c 'zsh -i -l -c "rm -Rf ~/test_app && cd ~ && rails new test_app"' \
