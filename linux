@@ -120,6 +120,11 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
 
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
+
+    fancy_echo "Installing rbenv-gemset to use gemsets with rbenv"
+    mkdir $HOME/.rbenv/plugins
+    cd  $HOME/.rbenv/plugins
+    git clone git://github.com/jf/rbenv-gemset.git
 fi
 
 if [[ ! -d "$HOME/.rbenv/plugins/rbenv-gem-rehash" ]]; then

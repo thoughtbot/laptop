@@ -9,6 +9,7 @@ linux-components/debian-derivative-packages
 common-components/zsh
 linux-components/silver-searcher-from-source
 linux-components/rbenv
+linux-components/rbenv-gemset
 common-components/ruby-environment
 linux-components/bundler
 common-components/default-gems
