@@ -166,3 +166,7 @@ fancy_echo "Installing rcm, to manage your dotfiles ..."
   brew install rcm
 ### end mac-components/rcm
 
+fancy_echo "Installing your personal additions from ~/.laptop.local ..."
+  [[ -f ~/.laptop.local ]] && source ~/.laptop.local
+### end common-components/personal-additions
+
