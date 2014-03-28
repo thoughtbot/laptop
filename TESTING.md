@@ -1,11 +1,10 @@
 # Testing
 
-Laptop is tested by using it to provision a fresh VM. The process is 
-lengthy but scripted, and relies on Vagrant.
+Laptop is tested by using it to provision a fresh VM. The process is lengthy
+but scripted, and relies on Vagrant.
 
-Currently, only the linux script is tested, and only on the precise 
-distribution. See the dedicated section for information about OSX 
-testing.
+Currently, only the linux script is tested. See the dedicated section for
+information about OSX testing.
 
 ## Prerequisites
 
@@ -34,16 +33,20 @@ The following are the assertions:
 2. The laptop script(s) ran successfully
 3. The VM reports the correct `$SHELL`
 4. The VM reports the correct ruby
+5. A rails app can be created successfully
+6. A scaffolded model can be created within that rails app
+7. A default sqlite development and test database can be created and migrations can be run
 
 You can test idempotency (allowing you to run the script multiple times in the
-same environment) by exporting `KEEP_VM` before running `./test/runner.sh` thusly:
+same environment) by exporting `KEEP_VM` before running `./test/runner.sh`
+thusly:
 
   KEEP_VM=1 ./test/runner.sh
 
 ## OSX Testing
 
-Adding additional linux tests via this framework should be easy: simply 
-add a new Vagrantfile under the test directory which uses a base box 
+Adding additional linux tests via this framework should be easy: simply
+add a new Vagrantfile under the test directory which uses a base box
 with the desired distribution.
 
 OSX will need to be handled specially:
@@ -53,3 +56,17 @@ OSX will need to be handled specially:
 3. The resulting test can only be run on an OSX host
 
 [VMware]: http://www.vmware.com/
+
+## Notes on creating vagrant base boxes
+
+The test script may fail when changing the vagrant user's shell to `zsh`. If
+this happens, you need to configure PAM to allow a user to change their shell
+without a password. Open '/etc/pam.d/chsh' and change the line:
+
+  auth		sufficient	pam_rootok.so
+
+to
+
+  auth		sufficient	pam_permit.so
+
+which will allow the vagrant user to change their shell without a password.
