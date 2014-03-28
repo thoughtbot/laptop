@@ -125,13 +125,13 @@ fancy_echo "Upgrading and linking OpenSSL ..."
 export CC=gcc-4.2
 ### end mac-components/compiler-and-libraries
 
-RUBY_VERSION="2.1.1"
+ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
-fancy_echo "Installing Ruby $RUBY_VERSION ..."
-  rbenv install $RUBY_VERSION
+fancy_echo "Installing Ruby $ruby_version ..."
+  rbenv install "$ruby_version"
 
-fancy_echo "Setting $RUBY_VERSION as global default Ruby ..."
-  rbenv global $RUBY_VERSION
+fancy_echo "Setting $ruby_version as global default Ruby ..."
+  rbenv global "$ruby_version"
   rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
