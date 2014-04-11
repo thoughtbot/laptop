@@ -1,4 +1,4 @@
-if ! which ag &>/dev/null; then
+if ! command -v ag &>/dev/null; then
   fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
     git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
     sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
