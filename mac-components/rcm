@@ -1,3 +1,7 @@
-fancy_echo "Installing rcm, to manage your dotfiles ..."
-  brew tap thoughtbot/formulae
-  brew install rcm
+if ! command -v rcup &>/dev/null; then
+  fancy_echo "Installing rcm, to manage your dotfiles ..."
+    brew tap thoughtbot/formulae
+    brew install rcm
+else
+  fancy_echo "rcm already installed. Skipping ..."
+fi

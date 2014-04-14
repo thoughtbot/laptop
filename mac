@@ -42,7 +42,7 @@ if [[ -f /etc/zshenv ]]; then
 fi
 ### end mac-components/zsh-fix
 
-if ! which brew &>/dev/null; then
+if ! command -v brew &>/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.github.com/Homebrew/homebrew/go/install)
 
@@ -115,16 +115,10 @@ fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
 ### end mac-components/rbenv
 
-fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
-  brew tap homebrew/dupes
-  brew install apple-gcc42
-
 fancy_echo "Upgrading and linking OpenSSL ..."
   brew install openssl
   brew link openssl --force
   brew install curl-ca-bundle
-
-export CC=gcc-4.2
 ### end mac-components/compiler-and-libraries
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
@@ -163,9 +157,13 @@ fancy_echo "Installing GitHub CLI client ..."
   brew install hub
 ### end mac-components/github
 
-fancy_echo "Installing rcm, to manage your dotfiles ..."
-  brew tap thoughtbot/formulae
-  brew install rcm
+if ! command -v rcup &>/dev/null; then
+  fancy_echo "Installing rcm, to manage your dotfiles ..."
+    brew tap thoughtbot/formulae
+    brew install rcm
+else
+  fancy_echo "rcm already installed. Skipping ..."
+fi
 ### end mac-components/rcm
 
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
