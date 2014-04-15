@@ -1,0 +1,9 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure('2') do |config|
+  name = 'debian-wheezy-64'
+  config.vm.box = "thoughtbot/#{name}"
+  config.vm.provider :virtualbox do |virtualbox|
+    virtualbox.name = "laptop-#{name}"
+  end
+end

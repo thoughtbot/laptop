@@ -1,0 +1,9 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure('2') do |config|
+  name = 'ubuntu-13-10-server'
+  config.vm.box = "thoughtbot/#{name}"
+  config.vm.provider :virtualbox do |virtualbox|
+    virtualbox.name = "laptop-#{name}"
+  end
+end

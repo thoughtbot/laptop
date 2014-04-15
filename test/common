@@ -1,0 +1,41 @@
+message() {
+  printf "\e[1;34m:: \e[1;37m%s\e[0m\n" "$*"
+}
+
+failure_message() {
+  printf "\n\e[1;31mFAILURE\e[0m: \e[1;37m%s\e[0m\n\n" "$*" >&2;
+}
+
+failure() {
+  FAILED=true
+  failure_message
+  continue
+}
+
+set_box_names() {
+  LAPTOP_BASENAME="$(echo "$vagrantfile" | cut -d'.' -f2-)";
+  VIRTUALBOX_NAME="laptop-$LAPTOP_BASENAME";
+  BOX_NAME="$LAPTOP_BASENAME-with-laptop.box"
+}
+
+create_test_success_tracker(){
+  touch "./test/succeeded.$LAPTOP_BASENAME"
+}
+
+package_box() {
+  set_box_names
+
+  rm -f "$BOX_NAME"
+
+  message "Creating $BOX_NAME from $VIRTUALBOX_NAME"
+  vagrant package --base "$VIRTUALBOX_NAME" --output "$BOX_NAME"
+  message "Done creating $BOX_NAME"
+  create_test_success_tracker
+}
+
+check_for_aws() {
+  if ! command -v aws &>/dev/null; then
+    failure_message 'You must install aws-cli to publish boxes'
+    exit 1
+  fi
+}
