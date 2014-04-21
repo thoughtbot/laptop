@@ -1,7 +1,11 @@
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
 fancy_echo "Installing Ruby $ruby_version ..."
-  rbenv install "$ruby_version"
+  if [ "$ruby_version" = "2.1.1" ]; then
+    curl -fsSL https://gist.github.com/mislav/a18b9d7f0dc5b9efc162.txt | rbenv install --patch 2.1.1
+  else
+    rbenv install "$ruby_version"
+  fi
 
 fancy_echo "Setting $ruby_version as global default Ruby ..."
   rbenv global "$ruby_version"
