@@ -24,6 +24,7 @@ terminal and then click "Install".
 
 We support:
 
+* [14.04: Trusty Tahr](https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes),
 * [13.10: Saucy Salamander](https://wiki.ubuntu.com/SaucySalamander/ReleaseNotes),
 * [12.04 LTS: Precise Pangolin](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes),
 * Debian stable (currently [wheezy](http://www.debian.org/releases/stable/)).
