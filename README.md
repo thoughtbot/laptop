@@ -25,8 +25,6 @@ terminal and then click "Install".
 We support:
 
 * [13.10: Saucy Salamander](https://wiki.ubuntu.com/SaucySalamander/ReleaseNotes),
-* [13.04: Raring Ringtail](https://wiki.ubuntu.com/RaringRingtail/ReleaseNotes),
-* [12.10: Quantal Quetzal](https://wiki.ubuntu.com/QuantalQuetzal/ReleaseNotes), and
 * [12.04 LTS: Precise Pangolin](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes),
 * Debian stable (currently [wheezy](http://www.debian.org/releases/stable/)).
 * Debian testing (currently [jessie](http://www.debian.org/releases/testing/)).
