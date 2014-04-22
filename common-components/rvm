@@ -1,0 +1,2 @@
+fancy_echo "Installing rvm, to change Ruby versions ..."
+  curl -sSL https://get.rvm.io | bash -s stable
