@@ -1,0 +1,6 @@
+fancy_echo "Checking SSH Keys"
+if [ ! -e ~/.ssh/id_rsa ]; then
+  fancy_echo "Run the following:"
+  echo "ssh-keygen -t rsa -b 4096 -C 'jkamenik@lgscout.com'"
+  exit 1
+fi
