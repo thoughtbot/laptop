@@ -1,0 +1,8 @@
+fancy_echo "Opening important links"
+
+# global wiki
+open https://github.com/Lookingglass/scoutvision/wiki
+
+# seting up your personal account
+open https://github.com/Lookingglass/scoutvision/wiki/Trailing%20White%20Space%20Must%20Die
+

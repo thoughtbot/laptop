@@ -1,0 +1,21 @@
+if [ ! -e ~/.aliases ]; then
+  fancy_echo 'Adding aliases'
+
+  echo """
+alias gc='git checkout'
+alias gm='git commit -m'
+alias gma='git commit -a -m'
+alias ga='git add'
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias grm='git rm'
+alias gpush='git push'
+alias gpull='git pull'
+alias ls='ls -la'
+""" > ~/.aliases
+  
+  echo "\nsource .aliases" >> ~/.bash_profile
+else
+  fancy_echo 'Aliases already exist'
+fi
