@@ -3,17 +3,18 @@ common-components/header
 common-components/exit-trap
 common-components/check-home-bin
 common-components/shared-functions
-common-components/zsh
-mac-components/zsh-fix
+common-components/aliases
+mac-components/check-xcode
+common-components/ssh-key
 mac-components/homebrew
 mac-components/packages
 mac-components/start-services
-mac-components/rbenv
 mac-components/compiler-and-libraries
-common-components/ruby-environment
+common-components/rvm
 mac-components/bundler
 common-components/default-gems
-mac-components/heroku
 mac-components/github
-mac-components/rcm
 common-components/personal-additions
+# this is done down here because postgresql takes a while to start
+common-components/lg-db-setup
+common-components/important-links
