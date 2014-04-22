@@ -125,18 +125,21 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
 
 fancy_echo "Installing Curl, a downloader..."
   brew install curl
-  
+
 fancy_echo "Installing GLib, a library..."
   brew install glib
-  
+
 fancy_echo "Installing LibYAML..."
   brew install libyaml
 
 fancy_echo "Installing Check..."
   brew install check
-  
+
 fancy_echo "Installing RabbitMQ, a message queue..."
   brew install rabbitmq-c
+
+fancy_echo "Installing Go..."
+  brew install go
 ### end mac-components/packages
 
 fancy_echo "Starting Postgres ..."
@@ -180,7 +183,7 @@ fancy_echo "Installing your personal additions from ~/.laptop.local ..."
 
 fancy_echo "Creating Database"
   (createdb fusebox)
-  
+
 fancy_echo "Creating user"
   (createuser -e -s fuse_fuse)
 ### end common-components/lg-db-setup
