@@ -3,3 +3,4 @@ fancy_echo "Creating Database"
 
 fancy_echo "Creating user"
   (createuser -e -s fuse_fuse)
+  (createuser -e -s postgres)
