@@ -8,6 +8,7 @@ mac-components/check-xcode
 common-components/ssh-key
 mac-components/homebrew
 mac-components/packages
+common-components/git-aliases
 mac-components/start-services
 mac-components/compiler-and-libraries
 common-components/rvm

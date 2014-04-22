@@ -48,8 +48,14 @@ alias gpush='git push'
 alias gpull='git pull'
 alias ls='ls -la'
 """ > ~/.aliases
-  
-  echo "\nsource .aliases" >> ~/.bash_profile
+
+  echo """
+source .aliases
+source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
+source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
+PS1='[$(date +%H:%M) \[\033[0;36m\]\u \[\033[0;33m\]\w \[\033[0;31m\]$(__git_ps1 "(%s)")\[\033[0m\]]\$ '
+""" >> ~/.bash_profile
+
 else
   fancy_echo 'Aliases already exist'
 fi
@@ -141,6 +147,12 @@ fancy_echo "Installing RabbitMQ, a message queue..."
 fancy_echo "Installing Go..."
   brew install go
 ### end mac-components/packages
+
+fancy_echo "Installing git aliases..."
+  git config --global alias.ci commit
+  git config --global alias.br branch
+  git config --global alias.st status
+### end common-components/git-aliases
 
 fancy_echo "Starting Postgres ..."
   # subscript this so the failure is ignored
