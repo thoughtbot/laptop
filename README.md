@@ -37,7 +37,7 @@ Install
 
 Read, then run the script:
 
-    curl -s https://raw.github.com/WaterfallFMS/laptop/master/mac | bash -l
+    curl -s https://raw.github.com/Lookingglass/laptop/master/mac | bash -l
 
 The "-l" is very important otherwise RVM will fail to install properly.
 
