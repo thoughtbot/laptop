@@ -1,0 +1,7 @@
+if [ -f /Applications/Xcode.app ]; then
+  fancy_echo "XCode is required"
+  fancy_echo "You will also need to run xcode-select --install"
+  
+  fancy_echo https://itunes.apple.com/us/app/xcode/id497799835?mt=12
+  exit 1
+fi
