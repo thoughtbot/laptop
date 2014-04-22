@@ -1,3 +1,6 @@
+fancy_echo "Installing Git, for source control..."
+  brew install git
+
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
 
@@ -27,3 +30,18 @@ fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integ
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew install watch
+
+fancy_echo "Installing Curl, a downloader..."
+  brew install curl
+  
+fancy_echo "Installing GLib, a library..."
+  brew install glib
+  
+fancy_echo "Installing LibYAML..."
+  brew install libyaml
+
+fancy_echo "Installing Check..."
+  brew install check
+  
+fancy_echo "Installing RabbitMQ, a message queue..."
+  brew install rabbitmq-c
