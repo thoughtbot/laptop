@@ -14,8 +14,14 @@ alias gpush='git push'
 alias gpull='git pull'
 alias ls='ls -la'
 """ > ~/.aliases
-  
-  echo "\nsource .aliases" >> ~/.bash_profile
+
+  echo """
+source .aliases
+source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
+source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
+PS1='[$(date +%H:%M) \[\033[0;36m\]\u \[\033[0;33m\]\w \[\033[0;31m\]$(__git_ps1 "(%s)")\[\033[0m\]]\$ '
+""" >> ~/.bash_profile
+
 else
   fancy_echo 'Aliases already exist'
 fi
