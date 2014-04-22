@@ -1,2 +1,3 @@
 fancy_echo "Starting Postgres ..."
-  brew services start postgres
+  # subscript this so the failure is ignored
+  (brew services start postgres)
