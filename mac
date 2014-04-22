@@ -32,20 +32,50 @@ fancy_echo() {
 }
 ### end common-components/shared-functions
 
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s $(which zsh)
-### end common-components/zsh
+if [ ! -e ~/.aliases ]; then
+  fancy_echo 'Adding aliases'
 
-if [[ -f /etc/zshenv ]]; then
-  fancy_echo "Fixing OSX zsh environment bug ..."
-    sudo mv /etc/{zshenv,zshrc}
+  echo """
+alias gc='git checkout'
+alias gm='git commit -m'
+alias gma='git commit -a -m'
+alias ga='git add'
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias grm='git rm'
+alias gpush='git push'
+alias gpull='git pull'
+alias ls='ls -la'
+""" > ~/.aliases
+  
+  echo "\nsource .aliases" >> ~/.bash_profile
+else
+  fancy_echo 'Aliases already exist'
 fi
-### end mac-components/zsh-fix
+### end common-components/aliases
+
+if [ -f /Applications/Xcode.app ]; then
+  fancy_echo "XCode is required"
+  fancy_echo "You will also need to run xcode-select --install"
+  
+  fancy_echo https://itunes.apple.com/us/app/xcode/id497799835?mt=12
+  exit 1
+fi
+### end mac-components/check-xcode
+
+fancy_echo "Checking SSH Keys"
+if [ ! -e ~/.ssh/id_rsa ]; then
+  fancy_echo "Run the following:"
+  echo "ssh-keygen -t rsa -b 4096 -C 'jkamenik@lgscout.com'"
+  exit 1
+fi
+### end common-components/ssh-key
 
 if ! command -v brew &>/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
-    ruby <(curl -fsS https://raw.github.com/Homebrew/homebrew/go/install)
-
+    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    
   if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     fancy_echo "Put Homebrew location earlier in PATH ..."
       printf '\n# recommended by brew doctor\n' >> ~/.zshrc
@@ -59,6 +89,9 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 ### end mac-components/homebrew
+
+fancy_echo "Installing Git, for source control..."
+  brew install git
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
@@ -89,31 +122,27 @@ fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integ
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew install watch
+
+fancy_echo "Installing Curl, a downloader..."
+  brew install curl
+  
+fancy_echo "Installing GLib, a library..."
+  brew install glib
+  
+fancy_echo "Installing LibYAML..."
+  brew install libyaml
+
+fancy_echo "Installing Check..."
+  brew install check
+  
+fancy_echo "Installing RabbitMQ, a message queue..."
+  brew install rabbitmq-c
 ### end mac-components/packages
 
 fancy_echo "Starting Postgres ..."
-  brew services start postgres
+  # subscript this so the failure is ignored
+  (brew services start postgres)
 ### end mac-components/start-services
-
-fancy_echo "Installing rbenv, to change Ruby versions ..."
-  brew install rbenv
-
-  if ! grep -qs "rbenv init" ~/.zshrc; then
-    printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.zshrc
-    printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.zshrc
-
-    fancy_echo "Enable shims and autocompletion ..."
-      eval "$(rbenv init -)"
-  fi
-
-  export PATH="$HOME/.rbenv/bin:$PATH"
-
-fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  brew install rbenv-gem-rehash
-
-fancy_echo "Installing ruby-build, to install Rubies ..."
-  brew install ruby-build
-### end mac-components/rbenv
 
 fancy_echo "Upgrading and linking OpenSSL ..."
   brew install openssl
@@ -121,58 +150,48 @@ fancy_echo "Upgrading and linking OpenSSL ..."
   brew install curl-ca-bundle
 ### end mac-components/compiler-and-libraries
 
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+fancy_echo "Installing rvm, to change Ruby versions ..."
+  curl -sSL https://get.rvm.io | bash -s stable
 
-fancy_echo "Installing Ruby $ruby_version ..."
-  if [ "$ruby_version" = "2.1.1" ]; then
-    curl -fsSL https://gist.github.com/mislav/a18b9d7f0dc5b9efc162.txt | rbenv install --patch 2.1.1
-  else
-    rbenv install "$ruby_version"
-  fi
+fancy_echo "Installing a default ruby..."
+  rvm install 2.1
+  rvm use 2.1 --default
+### end common-components/rvm
 
-fancy_echo "Setting $ruby_version as global default Ruby ..."
-  rbenv global "$ruby_version"
-  rbenv rehash
-
-fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
-
-fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
-  gem install bundler --no-document --pre
-### end common-components/ruby-environment
+fancy_echo "Installing bundler"
+  gem install bundler
 
 fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 ### end mac-components/bundler
 
-fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
-  gem install suspenders --no-document
 ### end common-components/default-gems
-
-fancy_echo "Installing Heroku CLI client ..."
-  brew install heroku-toolbelt
-
-fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
-### end mac-components/heroku
 
 fancy_echo "Installing GitHub CLI client ..."
   brew install hub
 ### end mac-components/github
-
-if ! command -v rcup &>/dev/null; then
-  fancy_echo "Installing rcm, to manage your dotfiles ..."
-    brew tap thoughtbot/formulae
-    brew install rcm
-else
-  fancy_echo "rcm already installed. Skipping ..."
-fi
-### end mac-components/rcm
 
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
     source ~/.laptop.local
   fi
 ### end common-components/personal-additions
+
+fancy_echo "Creating Database"
+  (createdb fusebox)
+  
+fancy_echo "Creating user"
+  (createuser -e -s fuse_fuse)
+### end common-components/lg-db-setup
+
+fancy_echo "Installation Complete"
+echo "###########################"
+echo
+echo "Global Wiki"
+echo https://github.com/Lookingglass/scoutvision/wiki
+echo
+echo "Setup your editor"
+echo https://github.com/Lookingglass/scoutvision/wiki/Trailing%20White%20Space%20Must%20Die
+### end common-components/important-links
 

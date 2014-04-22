@@ -32,6 +32,29 @@ fancy_echo() {
 }
 ### end common-components/shared-functions
 
+if [ ! -e ~/.aliases ]; then
+  fancy_echo 'Adding aliases'
+
+  echo """
+alias gc='git checkout'
+alias gm='git commit -m'
+alias gma='git commit -a -m'
+alias ga='git add'
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias grm='git rm'
+alias gpush='git push'
+alias gpull='git pull'
+alias ls='ls -la'
+""" > ~/.aliases
+  
+  echo "\nsource .aliases" >> ~/.bash_profile
+else
+  fancy_echo 'Aliases already exist'
+fi
+### end common-components/aliases
+
 if ! grep -qiE 'wheezy|jessie|precise|saucy|trusty' /etc/os-release; then
   fancy_echo "Sorry! we don't currently support that distro."
   exit 1
@@ -109,57 +132,19 @@ if ! command -v ag &>/dev/null; then
 fi
 ### end linux-components/silver-searcher-from-source
 
-if [[ ! -d "$HOME/.rbenv" ]]; then
-  fancy_echo "Installing rbenv, to change Ruby versions ..."
-    git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+fancy_echo "Installing rvm, to change Ruby versions ..."
+  curl -sSL https://get.rvm.io | bash -s stable
 
-    if ! grep -qs "rbenv init" ~/.zshrc; then
-      printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.zshrc
-      printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.zshrc
-    fi
-
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
-fi
-
-if [[ ! -d "$HOME/.rbenv/plugins/rbenv-gem-rehash" ]]; then
-  fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-    git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
-fi
-
-if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
-  fancy_echo "Installing ruby-build, to install Rubies ..."
-    git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-fi
-### end linux-components/rbenv
-
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-
-fancy_echo "Installing Ruby $ruby_version ..."
-  if [ "$ruby_version" = "2.1.1" ]; then
-    curl -fsSL https://gist.github.com/mislav/a18b9d7f0dc5b9efc162.txt | rbenv install --patch 2.1.1
-  else
-    rbenv install "$ruby_version"
-  fi
-
-fancy_echo "Setting $ruby_version as global default Ruby ..."
-  rbenv global "$ruby_version"
-  rbenv rehash
-
-fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
-
-fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
-  gem install bundler --no-document --pre
-### end common-components/ruby-environment
+fancy_echo "Installing a default ruby..."
+  rvm install 2.1
+  rvm use 2.1 --default
+### end common-components/rvm
 
 fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
   number_of_cores=$(nproc)
   bundle config --global jobs $((number_of_cores - 1))
 ### end linux-components/bundler
 
-fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
-  gem install suspenders --no-document
 ### end common-components/default-gems
 
 fancy_echo "Installing Heroku CLI client ..."
@@ -185,4 +170,14 @@ fancy_echo "Installing your personal additions from ~/.laptop.local ..."
     source ~/.laptop.local
   fi
 ### end common-components/personal-additions
+
+fancy_echo "Installation Complete"
+echo "###########################"
+echo
+echo "Global Wiki"
+echo https://github.com/Lookingglass/scoutvision/wiki
+echo
+echo "Setup your editor"
+echo https://github.com/Lookingglass/scoutvision/wiki/Trailing%20White%20Space%20Must%20Die
+### end common-components/important-links
 
