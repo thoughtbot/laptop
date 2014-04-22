@@ -1,5 +1,6 @@
 fancy_echo "Installing Git, for source control..."
   brew install git
+  brew install git-sh
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
