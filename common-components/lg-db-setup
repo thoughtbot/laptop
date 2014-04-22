@@ -1,0 +1,5 @@
+fancy_echo "Creating Database"
+  (createdb fusebox)
+
+fancy_echo "Creating user"
+  (createuser -e -s fuse_fuse)
