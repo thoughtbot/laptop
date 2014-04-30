@@ -37,13 +37,13 @@ Install
 
 Read, then run the script:
 
-    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
+    bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac)
 
 ### Linux
 
 Read, then run the script:
 
-    bash <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux)
+    bash <(wget -qO- https://raw.githubusercontent.com/thoughtbot/laptop/master/linux)
 
 What it sets up
 ---------------

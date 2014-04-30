@@ -1,6 +1,6 @@
 if ! command -v brew &>/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
-    ruby <(curl -fsS https://raw.github.com/Homebrew/homebrew/go/install)
+    ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/homebrew/go/install)
 
   if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     fancy_echo "Put Homebrew location earlier in PATH ..."
