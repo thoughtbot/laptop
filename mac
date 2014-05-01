@@ -98,6 +98,7 @@ brew update
 
 fancy_echo "Installing Git, for source control..."
   brew install git
+  brew install git-sh
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew install postgres --no-python
@@ -157,12 +158,14 @@ fancy_echo "Installing git aliases..."
 fancy_echo "Starting Postgres ..."
   # subscript this so the failure is ignored
   (brew services start postgres)
+
+fancy_echo "Starting Redis ..."
+  (brew services start redis)
 ### end mac-components/start-services
 
 fancy_echo "Upgrading and linking OpenSSL ..."
   brew install openssl
   brew link openssl --force
-  brew install curl-ca-bundle
 ### end mac-components/compiler-and-libraries
 
 fancy_echo "Installing rvm, to change Ruby versions ..."
@@ -198,6 +201,7 @@ fancy_echo "Creating Database"
 
 fancy_echo "Creating user"
   (createuser -e -s fuse_fuse)
+  (createuser -e -s postgres)
 ### end common-components/lg-db-setup
 
 fancy_echo "Installation Complete"
