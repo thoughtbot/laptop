@@ -1,7 +1,0 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-Vagrant.configure('2') do |config|
-  box_name = "precise32-desktop"
-  config.vm.box = box_name
-  config.vm.box_url = "https://laptop-boxes.s3.amazonaws.com/#{box_name}.box"
-end

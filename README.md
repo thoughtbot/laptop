@@ -85,6 +85,36 @@ Put your customizations in `~/.laptop.local`. For example, your
     brew cask install google-chrome
     brew cask install rdio
 
+Laptopped linux vagrant boxes
+-----------------------------------------------------------
+
+We now publish [vagrant](http://vagrantup.com) boxes for every supported linux
+distro. These boxes have the laptop script applied already and are ready to go.
+Getting started is as easy as creating a Vagrantfile that looks like:
+
+    Vagrant.configure('2') do
+      config.vm.box = 'thoughtbot/ubuntu-14-04-server-with-laptop'
+    end
+
+
+```sh
+# And then in the same directory as your Vagrantfile . . .
+vagrant up
+vagrant ssh
+
+```
+
+Laptopped vagrantcloud boxes currently available:
+
+* `thoughtbot/debian-wheezy-64-with-laptop`
+* `thoughtbot/debian-jessie-64-with-laptop`
+* `thoughtbot/ubuntu-14-04-server-with-laptop`
+* `thoughtbot/ubuntu-13-10-server-with-laptop`
+* `thoughtbot/ubuntu-12-04-server-with-laptop`
+
+See our [vagrantcloud profile](https://vagrantcloud.com/thoughtbot). You must
+have vagrant >= 1.5.0 to use vagrantcloud images directly.
+
 Credits
 -------
 
