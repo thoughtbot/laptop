@@ -30,6 +30,10 @@ fi
 fancy_echo() {
   printf "\n%b\n" "$1"
 }
+
+brew_install() {
+  brew install $1 || brew update $1
+}
 ### end common-components/shared-functions
 
 fancy_echo "Changing your shell to zsh ..."
@@ -89,6 +93,9 @@ fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integ
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew install watch
+
+fancy_echo "Installing Go..."
+  brew_install 'go'
 ### end mac-components/packages
 
 fancy_echo "Starting Postgres ..."
