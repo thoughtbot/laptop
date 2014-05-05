@@ -1,4 +1,3 @@
 fancy_echo "Upgrading and linking OpenSSL ..."
   brew install openssl
   brew link openssl --force
-  brew install curl-ca-bundle

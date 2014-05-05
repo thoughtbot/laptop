@@ -118,7 +118,6 @@ fancy_echo "Installing ruby-build, to install Rubies ..."
 fancy_echo "Upgrading and linking OpenSSL ..."
   brew install openssl
   brew link openssl --force
-  brew install curl-ca-bundle
 ### end mac-components/compiler-and-libraries
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
