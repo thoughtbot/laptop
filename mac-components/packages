@@ -1,51 +1,51 @@
 fancy_echo "Installing Git, for source control..."
-  brew install git
-  brew install git-sh
+  brew_install 'git'
+  brew_install 'git-sh'
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew install postgres --no-python
+  brew_install 'postgres --no-python'
 
 fancy_echo "Installing Redis, a good key-value database ..."
-  brew install redis
+  brew_install 'redis'
 
 fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  brew install the_silver_searcher
+  brew_install 'the_silver_searcher'
 
 fancy_echo "Installing vim from Homebrew to get the latest version ..."
-  brew install vim
+  brew_install 'vim'
 
 fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  brew install ctags
+  brew_install 'ctags'
 
 fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  brew install tmux
+  brew_install 'tmux'
 
 fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  brew install reattach-to-user-namespace
+  brew_install 'reattach-to-user-namespace'
 
 fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew install imagemagick
+  brew_install 'imagemagick'
 
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew install qt
+  brew_install 'qt'
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  brew install watch
+  brew_install 'watch'
 
 fancy_echo "Installing Curl, a downloader..."
-  brew install curl
+  brew_install 'curl'
 
 fancy_echo "Installing GLib, a library..."
-  brew install glib
+  brew_install 'glib'
 
 fancy_echo "Installing LibYAML..."
-  brew install libyaml
+  brew_install 'libyaml'
 
 fancy_echo "Installing Check..."
-  brew install check
+  brew_install 'check'
 
 fancy_echo "Installing RabbitMQ, a message queue..."
-  brew install rabbitmq-c
+  brew_install 'rabbitmq-c'
 
 fancy_echo "Installing Go..."
-  brew install go
+  brew_install 'go'

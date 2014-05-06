@@ -30,6 +30,10 @@ fi
 fancy_echo() {
   printf "\n%b\n" "$1"
 }
+
+brew_install() {
+  brew install $1 || brew upgrade $1
+}
 ### end common-components/shared-functions
 
 if [ ! -e ~/.aliases ]; then
@@ -146,6 +150,7 @@ fi
 
 fancy_echo "Installing rvm, to change Ruby versions ..."
   curl -sSL https://get.rvm.io | bash -s stable
+  rvm reload
 
 fancy_echo "Installing a default ruby..."
   rvm install 2.1
