@@ -18,5 +18,5 @@ for MANIFEST in Manifest.*; do
     printf "### end $file\n\n" >> "$FILENAME"
   done < "$MANIFEST"
 
-  chmod 755 $FILENAME
+  chmod 755 "$FILENAME"
 done
