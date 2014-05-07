@@ -169,6 +169,10 @@ else
 fi
 ### end mac-components/rcm
 
+fancy_echo "Map Caps Lock to Control ..."
+  /usr/bin/defaults -currentHost write -g "com.apple.keyboard.modifiermapping.1452-544-0" -array "<dict><key>HIDKeyboardModifierMappingDst</key><integer>2</integer><key>HIDKeyboardModifierMappingSrc</key><integer>0</integer></dict>"
+### end mac-components/keyboard
+
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
     source ~/.laptop.local
