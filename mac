@@ -30,15 +30,21 @@ fi
 fancy_echo() {
   printf "\n%b\n" "$1"
 }
-
-brew_install() {
-  brew install $1 || brew update $1
-}
 ### end common-components/shared-functions
 
 fancy_echo "Changing your shell to zsh ..."
   chsh -s $(which zsh)
 ### end common-components/zsh
+
+brew_install() {
+  if ! brew list -1 | grep -q '^'"$1"'\$'; then
+    echo "brew upgrade $@"
+    (brew upgrade $@) || echo ''
+  else
+    brew install $@
+  fi
+}
+### end mac-components/mac-functions
 
 if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
@@ -65,37 +71,34 @@ brew update
 ### end mac-components/homebrew
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew install postgres --no-python
+  brew_install 'postgres' '--no-python'
 
 fancy_echo "Installing Redis, a good key-value database ..."
-  brew install redis
+  brew_install 'redis'
 
 fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  brew install the_silver_searcher
+  brew_install 'the_silver_searcher'
 
 fancy_echo "Installing vim from Homebrew to get the latest version ..."
-  brew install vim
+  brew_install 'vim'
 
 fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  brew install ctags
+  brew_install 'ctags'
 
 fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  brew install tmux
+  brew_install 'tmux'
 
 fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  brew install reattach-to-user-namespace
+  brew_install 'reattach-to-user-namespace'
 
 fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew install imagemagick
+  brew_install 'imagemagick'
 
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew install qt
+  brew_install 'qt'
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  brew install watch
-
-fancy_echo "Installing Go..."
-  brew_install 'go'
+  brew_install 'watch'
 ### end mac-components/packages
 
 fancy_echo "Starting Postgres ..."

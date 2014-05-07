@@ -1,0 +1,7 @@
+brew_install() {
+  if ! brew list -1 | grep -q '^'"$1"'\$'; then
+    (brew upgrade $@) || echo ''
+  else
+    brew install $@
+  fi
+}
