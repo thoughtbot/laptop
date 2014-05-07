@@ -129,6 +129,7 @@ fancy_echo "Installing git aliases..."
   git config --global alias.ci commit
   git config --global alias.br branch
   git config --global alias.st status
+  git config --global alias.conflicted '!'"git status | grep 'both modified' | awk '{print \$3}' | xargs $EDITOR"
 ### end common-components/git-aliases
 
 fancy_echo "Changing your shell to zsh ..."
