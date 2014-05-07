@@ -153,6 +153,7 @@ fancy_echo "Installing git aliases..."
   git config --global alias.ci commit
   git config --global alias.br branch
   git config --global alias.st status
+  git config --global alias.conflicted '!'"git status | grep 'both modified' | awk '{print \$3}' | xargs $EDITOR"
 ### end common-components/git-aliases
 
 fancy_echo "Starting Postgres ..."
@@ -170,6 +171,7 @@ fancy_echo "Upgrading and linking OpenSSL ..."
 
 fancy_echo "Installing rvm, to change Ruby versions ..."
   curl -sSL https://get.rvm.io | bash -s stable
+  rvm reload
 
 fancy_echo "Installing a default ruby..."
   rvm install 2.1
