@@ -169,6 +169,10 @@ else
 fi
 ### end mac-components/rcm
 
+fancy_echo "Set key repeat to fastest setting ..."
+  defaults write NSGlobalDomain KeyRepeat -int 0
+### end mac-components/keyboard
+
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
     source ~/.laptop.local

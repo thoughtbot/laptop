@@ -1,0 +1,2 @@
+fancy_echo "Set key repeat to fastest setting ..."
+  defaults write NSGlobalDomain KeyRepeat -int 0
