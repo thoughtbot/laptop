@@ -40,6 +40,7 @@ if [ ! -e ~/.aliases ]; then
   fancy_echo 'Adding aliases'
 
   echo """
+alias gb='git branch'
 alias gc='git checkout'
 alias gm='git commit -m'
 alias gma='git commit -a -m'
@@ -50,7 +51,13 @@ alias gdc='git diff --cached'
 alias grm='git rm'
 alias gpush='git push'
 alias gpull='git pull'
+alias add='git add'
+alias push='git push'
+alias pull='git pull'
+alias status='git status'
+
 alias ls='ls -la'
+
 """ > ~/.aliases
 
   echo """
