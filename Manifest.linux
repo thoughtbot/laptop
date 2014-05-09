@@ -7,7 +7,7 @@ linux-components/distro-check
 linux-components/debian-package-update
 linux-components/debian-derivative-packages
 common-components/zsh
-linux-components/silver-searcher-from-source
+linux-components/silver-searcher
 linux-components/rbenv
 common-components/ruby-environment
 linux-components/bundler
