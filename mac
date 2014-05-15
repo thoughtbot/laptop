@@ -136,6 +136,9 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
 fancy_echo "Installing alfred"
   brew cask install alfred
   brew cask alfred link
+
+fancy_echo "Installing jumpcut"
+  brew cask install jumpcut
 ### end mac-components/packages
 
 fancy_echo "Starting MySQL ..."
