@@ -132,6 +132,10 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
 
   fancy_echo "Setting $node_version as the global default nodejs..."
   nvm alias default "$node_version"
+
+fancy_echo "Installing alfred"
+  brew cask install alfred
+  brew cask alfred link
 ### end mac-components/packages
 
 fancy_echo "Starting MySQL ..."
