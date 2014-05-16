@@ -1,16 +1,16 @@
 # Testing
 
 Laptop is tested by using it to provision a fresh VM. The process is lengthy
-but scripted, and relies on Vagrant.
+but scripted, and relies on Vagrant, ruby, and rspec.
 
-Currently, only the linux script is tested. See the dedicated section for
-information about OSX testing.
+Currently, only the linux script is tested.
 
 ## Prerequisites
 
 1. [VirtualBox][]
 2. [Vagrant][] - version >= 1.5.0
 3. [aws-cli][] - optional, for publishers only.
+4. A modern ruby that allows you to install gems.
 
 [VirtualBox]: https://www.virtualbox.org/
 [Vagrant]: http://www.vagrantup.com/
@@ -21,16 +21,29 @@ publish new "laptopped" boxes.
 
 ## Running the tests
 
-1. From the repository root, execute `./test/runner.sh`
+1. From the repository root:
+
+```sh
+bundle
+bundle exec rake
+```
 
 ## Details
 
-For each file found at `./test/Vagrantfile.*`:
+For each file found at `./spec/vagrantfiles/Vagrantfile.*`:
 
-1. Vagrant creates and starts a VM as described by the Vagrantfile
-2. The appropriate laptop script is run inside the VM
-3. Some assertions are made against the VMs state
-4. Vagrant stops and destroys the VM
+1. No specs are run if a rendered box already exists
+2. Vagrant creates and starts a VM as described by the Vagrantfile
+3. The appropriate laptop script is run inside the VM
+4. Some assertions are made against the VMs state
+5. If all specs pass, then a vagrant box is rendered to the filesystem, ready to be published to s3
+
+If you want to re-run specs (and therefore re-render new vagrant boxes with
+laptop freshly applied to them), simply `rm *.box` in the repository root and
+laptop will be re-run against all Vagrantfiles.
+
+The "render box when specs are successful" workflow allows you to focus on
+failing distros and re-run only those specs that've failed.
 
 The following are the assertions:
 
@@ -41,18 +54,14 @@ The following are the assertions:
 5. A rails app can be created successfully
 6. A scaffolded model can be created within that rails app
 7. A default sqlite development and test database can be created and migrations can be run
+8. `silver_searcher` (aka `ag`) is installed and available on `$PATH`.
 
-You can test idempotency (allowing you to run the script multiple times in the
-same environment) by exporting `KEEP_VM` before running `./test/runner.sh`
-thusly:
+Vagrant VMs are destroyed before specs are run for a specific Vagrantfile, so
+the last VM will be available until you re-run or explicitly `vagrant destroy`.
 
-    KEEP_VM=1 ./test/runner.sh
-
-## OSX Testing
-
-Adding additional linux tests via this framework should be easy: simply
-add a new Vagrantfile under the test directory which uses a base box
-with the desired distribution.
+Adding additional linux distros to test via this framework should be easy:
+simply add a new Vagrantfile in the `./spec/vagrantfiles/` directory which uses
+a base box with the desired distribution.
 
 OSX will need to be handled specially:
 
@@ -62,28 +71,30 @@ OSX will need to be handled specially:
 
 [VMware]: http://www.vmware.com/
 
-## Publishing
+## Publishing updated boxes to s3
 
 First, you'll need to install and configure [aws-cli].  When you're ready to
-publish a new set of boxes, run thusly:
+publish a new set of boxes:
 
-    PACKAGE_BOXES=1 ./test/runner.sh
+1. Run the specs as described above, which will render passing boxes to the filesystem.
+2. run `./bin/publish_laptopped_boxes.sh` to publish changed boxes to s3.
 
-This will package all successfully tested boxes.  You do not need to re-create
-or update the box config in vagrantcloud for an updated box, as long as the URL
-stays the same.
+You do not need to re-create or update the box config in vagrantcloud for an
+updated box, as long as the URL stays the same.
 
-Run:
+This will copy the new box to a temporary name, remove the original and move
+the temp into place to minimize downtime.
 
-    ./test/publish_laptopped_boxes.sh
-
-to actually publish the boxes to s3 after you've packaged the boxes above. This
-will copy the new box to a temporary name, remove the original and move the
-temp into place to minimize downtime.
+It only publishes boxes that have a different file size locally than what's on
+s3. Unfortunately, s3 does not return an md5sum for large files in a way that'd
+be easy to compare to a local copy without downloading the entire file. So -
+theoretically - if a new laptopped box had the same size as the immediately
+previous one, it would not get published to s3. This seems fairly unlikely,
+given that we're dealing with an entire operating system.
 
 ## Removing a deprecated release
 
-- Remove the vagrantfile under `test/`
+- Remove the vagrantfile under `spec/vagrantfiles`
 - Remove the files published to s3
 - Remove the box config in vagrantcloud
 - Update README.md
@@ -124,10 +135,10 @@ temp into place to minimize downtime.
     - Create a version (0.1.0) and a provider with the s3 URL you created above.
     - Release the config. It's OK if the box hasn't been uploaded to s3 yet,
       vagrantcloud issues a 302 when a box is requested.
-1. Create a Vagrantfile under `test/` that uses the vagrantcloud remote name.
-1. Run `PACKAGE_BOXES=1 test/runner.sh` and see if laptop applied successfully.
+1. Create a Vagrantfile under `spec/vagrantfiles` that uses the vagrantcloud remote name.
+1. Run the rspecs and see if the laptop tests succeed.
 1. If tests completed successfully, you'll have a `*-with-laptop.box` file.
-    Publish it via `./test/publish_laptopped_boxes.sh`.
+    Publish it via `./bin/publish_laptopped_boxes.sh` if you are a laptop maintainer.
 1. Create another vagrantcloud box config, this time linking to the
     `-with-laptop.box` image you uploaded to s3.
 

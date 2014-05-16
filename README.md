@@ -92,7 +92,7 @@ We now publish [vagrant](http://vagrantup.com) boxes for every supported linux
 distro. These boxes have the laptop script applied already and are ready to go.
 Getting started is as easy as creating a Vagrantfile that looks like:
 
-    Vagrant.configure('2') do
+    Vagrant.configure('2') do |config|
       config.vm.box = 'thoughtbot/ubuntu-14-04-server-with-laptop'
     end
 

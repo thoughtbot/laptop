@@ -25,6 +25,11 @@ installation files.
 4) A reminder: be extra sure to render the installation files before
 issuing a pull request.
 
+5) (Extra credit, linux only): run the vagrant-supplied automated test suite to
+test your changes on the supported linux distributions, as described in
+TESTING.md. You will need > 15gb of disk space, lots of bandwidth, and oodles
+of CPU and RAM.
+
 Supporting additional distros or operating systems
 ==================================================
 

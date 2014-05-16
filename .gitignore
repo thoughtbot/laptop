@@ -3,3 +3,4 @@
 Vagrantfile
 *.box
 test/succeeded*
+.bundle/
