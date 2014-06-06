@@ -92,7 +92,7 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
 ### end mac-components/packages
 
 fancy_echo "Starting Postgres ..."
-  brew services start postgres
+  brew services restart postgresql
 ### end mac-components/start-services
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
