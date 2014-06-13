@@ -78,7 +78,7 @@ Put your customizations in `~/.laptop.local`. For example, your
 
     #!/bin/sh
 
-    brew tap phinze/homebrew-cask
+    brew tap caskroom/cask
     brew install brew-cask
 
     brew cask install dropbox
