@@ -71,6 +71,10 @@ What it sets up
 
 It should take less than 15 minutes to install (depends on your machine).
 
+Laptop can be run multiple times on the same machine safely. It will upgrade
+already installed packages and install and activate a new version of ruby (if
+one is available).
+
 Make your own customizations
 ----------------------------
 
@@ -85,6 +89,9 @@ Put your customizations in `~/.laptop.local`. For example, your
     brew cask install dropbox
     brew cask install google-chrome
     brew cask install rdio
+
+You should write your customizations such that they can be run safely more than
+once. See the `mac` and `linux` scripts for examples.
 
 Laptopped linux vagrant boxes
 -----------------------------------------------------------

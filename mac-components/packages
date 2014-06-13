@@ -1,38 +1,38 @@
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew_install 'postgres' '--no-python'
+  brew_install_or_upgrade 'postgres' '--no-python'
 
 fancy_echo "Installing Redis, a good key-value database ..."
-  brew_install 'redis'
+  brew_install_or_upgrade 'redis'
 
 fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  brew_install 'the_silver_searcher'
+  brew_install_or_upgrade 'the_silver_searcher'
 
 fancy_echo "Installing vim from Homebrew to get the latest version ..."
-  brew_install 'vim'
+  brew_install_or_upgrade 'vim'
 
 fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  brew_install 'ctags'
+  brew_install_or_upgrade 'ctags'
 
 fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  brew_install 'tmux'
+  brew_install_or_upgrade 'tmux'
 
 fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  brew_install 'reattach-to-user-namespace'
+  brew_install_or_upgrade 'reattach-to-user-namespace'
 
 fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew_install 'imagemagick'
+  brew_install_or_upgrade 'imagemagick'
 
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew_install 'qt'
+  brew_install_or_upgrade 'qt'
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  brew_install watch
+  brew_install_or_upgrade 'watch'
 
 node_version="0.10.28"
 
 if ! command -v nvm &>/dev/null; then
   fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
-    brew install nvm
+    brew_install_or_upgrade 'nvm'
     printf 'export PATH="$PATH:/usr/local/lib/node_modules"\n' >> ~/.zshrc
     printf 'source $(brew --prefix nvm)/nvm.sh\n' >> ~/.zshrc
 

@@ -1,7 +1,7 @@
-brew_install() {
-  if ! brew list -1 | grep -q '^'"$1"'\$'; then
-    (brew upgrade $@) || echo ''
+brew_install_or_upgrade() {
+  if brew list -1 | grep -Fqx "$1"; then
+    (brew upgrade "$@") || true
   else
-    brew install $@
+    brew install "$@"
   fi
 }

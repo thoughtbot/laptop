@@ -36,12 +36,11 @@ fancy_echo "Changing your shell to zsh ..."
   chsh -s $(which zsh)
 ### end common-components/zsh
 
-brew_install() {
-  if ! brew list -1 | grep -q '^'"$1"'\$'; then
-    echo "brew upgrade $@"
-    (brew upgrade $@) || echo ''
+brew_install_or_upgrade() {
+  if brew list -1 | grep -Fqx "$1"; then
+    (brew upgrade "$@") || true
   else
-    brew install $@
+    brew install "$@"
   fi
 }
 ### end mac-components/mac-functions
@@ -71,40 +70,40 @@ brew update
 ### end mac-components/homebrew
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew_install 'postgres' '--no-python'
+  brew_install_or_upgrade 'postgres' '--no-python'
 
 fancy_echo "Installing Redis, a good key-value database ..."
-  brew_install 'redis'
+  brew_install_or_upgrade 'redis'
 
 fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  brew_install 'the_silver_searcher'
+  brew_install_or_upgrade 'the_silver_searcher'
 
 fancy_echo "Installing vim from Homebrew to get the latest version ..."
-  brew_install 'vim'
+  brew_install_or_upgrade 'vim'
 
 fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  brew_install 'ctags'
+  brew_install_or_upgrade 'ctags'
 
 fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  brew_install 'tmux'
+  brew_install_or_upgrade 'tmux'
 
 fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  brew_install 'reattach-to-user-namespace'
+  brew_install_or_upgrade 'reattach-to-user-namespace'
 
 fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew_install 'imagemagick'
+  brew_install_or_upgrade 'imagemagick'
 
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew_install 'qt'
+  brew_install_or_upgrade 'qt'
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  brew_install 'watch'
+  brew_install_or_upgrade 'watch'
 
 node_version="0.10.28"
 
 if ! command -v nvm &>/dev/null; then
   fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
-    brew install nvm
+    brew_install_or_upgrade 'nvm'
     printf 'export PATH="$PATH:/usr/local/lib/node_modules"\n' >> ~/.zshrc
     printf 'source $(brew --prefix nvm)/nvm.sh\n' >> ~/.zshrc
 
@@ -121,7 +120,7 @@ fancy_echo "Starting Postgres ..."
 ### end mac-components/start-services
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
-  brew install rbenv
+  brew_install_or_upgrade 'rbenv'
 
   if ! grep -qs "rbenv init" ~/.zshrc; then
     printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.zshrc
@@ -134,14 +133,14 @@ fancy_echo "Installing rbenv, to change Ruby versions ..."
   export PATH="$HOME/.rbenv/bin:$PATH"
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  brew install rbenv-gem-rehash
+  brew_install_or_upgrade 'rbenv-gem-rehash'
 
 fancy_echo "Installing ruby-build, to install Rubies ..."
-  brew install ruby-build
+  brew_install_or_upgrade 'ruby-build'
 ### end mac-components/rbenv
 
 fancy_echo "Upgrading and linking OpenSSL ..."
-  brew install openssl
+  brew_install_or_upgrade 'openssl'
   brew link openssl --force
 ### end mac-components/compiler-and-libraries
 
@@ -151,7 +150,7 @@ fancy_echo "Installing Ruby $ruby_version ..."
   if [ "$ruby_version" = "2.1.1" ]; then
     curl -fsSL https://gist.github.com/mislav/a18b9d7f0dc5b9efc162.txt | rbenv install --patch 2.1.1
   else
-    rbenv install "$ruby_version"
+    rbenv install -s "$ruby_version"
   fi
 
 fancy_echo "Setting $ruby_version as global default Ruby ..."
@@ -175,20 +174,20 @@ fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
 ### end common-components/default-gems
 
 fancy_echo "Installing Heroku CLI client ..."
-  brew install heroku-toolbelt
+  brew_install_or_upgrade 'heroku-toolbelt'
 
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   heroku plugins:install git://github.com/ddollar/heroku-config.git
 ### end mac-components/heroku
 
 fancy_echo "Installing GitHub CLI client ..."
-  brew install hub
+  brew_install_or_upgrade 'hub'
 ### end mac-components/github
 
 if ! command -v rcup &>/dev/null; then
   fancy_echo "Installing rcm, to manage your dotfiles ..."
     brew tap thoughtbot/formulae
-    brew install rcm
+    brew_install_or_upgrade 'rcm'
 else
   fancy_echo "rcm already installed. Skipping ..."
 fi
