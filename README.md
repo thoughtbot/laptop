@@ -105,6 +105,13 @@ vagrant ssh
 
 ```
 
+You can also use `vagrant init`:
+
+    # In your project directory
+    vagrant init thoughtbot/ubuntu-14-04-server-with-laptop
+    vagrant up
+    vagrant ssh
+
 Laptopped vagrantcloud boxes currently available:
 
 * `thoughtbot/debian-wheezy-64-with-laptop`
