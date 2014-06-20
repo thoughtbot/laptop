@@ -30,15 +30,16 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
 
 node_version="0.10.28"
 
-if ! command -v nvm &>/dev/null; then
-  fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
-    brew_install_or_upgrade 'nvm'
+fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
+  brew_install_or_upgrade 'nvm'
+
+  if ! grep -qs 'source $(brew --prefix nvm)/nvm.sh' ~/.zshrc; then
     printf 'export PATH="$PATH:/usr/local/lib/node_modules"\n' >> ~/.zshrc
     printf 'source $(brew --prefix nvm)/nvm.sh\n' >> ~/.zshrc
+  fi
 
-    source ~/.zshrc
-    nvm install $node_version
-    printf "nvm use \"$node_version\" > /dev/null\n" >> ~/.zshrc
-else
-  fancy_echo "NVM already installed. Skipping ..."
-fi
+  source ~/.zshrc
+  nvm install "$node_version"
+
+  fancy_echo "Setting $node_version as the global default nodejs..."
+  nvm alias default "$node_version"
