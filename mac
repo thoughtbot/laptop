@@ -109,7 +109,7 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
     printf 'source $(brew --prefix nvm)/nvm.sh\n' >> ~/.zshrc
   fi
 
-  source ~/.zshrc
+  source $(brew --prefix nvm)/nvm.sh
   nvm install "$node_version"
 
   fancy_echo "Setting $node_version as the global default nodejs..."
