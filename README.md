@@ -51,7 +51,7 @@ What it sets up
 * Zsh as your shell
 * Bundler gem for managing Ruby libraries
 * Exuberant Ctags for indexing files for vim tab completion
-* Foreman gem for serving Rails apps locally
+* Foreman for serving Rails apps locally
 * Heroku Config plugin for local `ENV` variables
 * Heroku Toolbelt for interacting with the Heroku API
 * Hub gem for interacting with the GitHub API
