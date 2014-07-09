@@ -58,6 +58,7 @@ What it sets up
 * Homebrew for managing operating system libraries (OS X only)
 * ImageMagick for cropping and resizing images
 * Node.js and NPM, for running apps and installing JavaScript packages
+* Parity for development, staging, and production parity
 * Postgres for storing relational data
 * Qt for headless JavaScript testing via Capybara Webkit
 * Rails gem for writing web applications

@@ -165,6 +165,10 @@ fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
 
 fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
   gem install suspenders --no-document
+
+fancy_echo "Installing Parity, shell commands for development, staging, and
+production parity ..."
+  gem install parity --no-document
 ### end common-components/default-gems
 
 fancy_echo "Installing Heroku CLI client ..."
