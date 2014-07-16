@@ -82,8 +82,8 @@ fancy_echo "Updating Homebrew formulas ..."
 brew update
 ### end mac-components/homebrew
 
-fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew_install_or_upgrade 'postgres' '--no-python'
+fancy_echo "Installing MySQL, a good relational database ..."
+  brew_install_or_upgrade install mysql
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew_install_or_upgrade 'redis'
@@ -129,8 +129,8 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
   nvm alias default "$node_version"
 ### end mac-components/packages
 
-fancy_echo "Starting Postgres ..."
-  brew services restart postgresql
+fancy_echo "Starting MySQL ..."
+  brew services restart mysql
 ### end mac-components/start-services
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
