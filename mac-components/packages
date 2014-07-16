@@ -50,3 +50,6 @@ fancy_echo "Installing alfred"
 
 fancy_echo "Installing jumpcut"
   brew cask install jumpcut
+
+fancy_echo "Installing spectacle"
+  brew cask install spectacle
