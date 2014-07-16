@@ -8,6 +8,7 @@ linux-components/debian-package-update
 linux-components/debian-derivative-packages
 common-components/zsh
 common-components/oh-my-zsh
+common-components/janus-vim
 linux-components/silver-searcher
 linux-components/rbenv
 common-components/ruby-environment

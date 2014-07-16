@@ -49,6 +49,15 @@ fancy_echo "Installing oh-my-zsh ..."
   curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 ### end common-components/oh-my-zsh
 
+fancy_echo "Installing janus (vim) ..."
+  if [ -d ~/.vim ]
+  then
+    echo "\033[0;33mYou already have One Vim Directory.\033[0m You'll need to remove  ~/.vim if you want to clone"
+  else
+    curl -Lo- https://bit.ly/janus-bootstrap | bash
+  fi
+### end common-components/janus-vim
+
 if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
     sudo mv /etc/{zshenv,zshrc}

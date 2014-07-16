@@ -100,6 +100,15 @@ fancy_echo "Installing oh-my-zsh ..."
   curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 ### end common-components/oh-my-zsh
 
+fancy_echo "Installing janus (vim) ..."
+  if [ -d ~/.vim ]
+  then
+    echo "\033[0;33mYou already have One Vim Directory.\033[0m You'll need to remove  ~/.vim if you want to clone"
+  else
+    curl -Lo- https://bit.ly/janus-bootstrap | bash
+  fi
+### end common-components/janus-vim
+
 silver_searcher_from_source() {
   git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
   sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev

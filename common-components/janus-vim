@@ -1,0 +1,7 @@
+fancy_echo "Installing janus (vim) ..."
+  if [ -d ~/.vim ]
+  then
+    echo "\033[0;33mYou already have One Vim Directory.\033[0m You'll need to remove  ~/.vim if you want to clone"
+  else
+    curl -Lo- https://bit.ly/janus-bootstrap | bash
+  fi
