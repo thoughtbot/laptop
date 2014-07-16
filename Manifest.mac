@@ -9,6 +9,7 @@ common-components/oh-my-zsh
 common-components/janus-vim
 mac-components/zsh-fix
 mac-components/homebrew
+mac-components/cask
 mac-components/packages
 mac-components/start-services
 mac-components/rbenv

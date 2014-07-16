@@ -1,0 +1,3 @@
+fancy_echo "Installing Cask, 'To install, drag this icon...' no more!"
+  brew tap caskroom/cask
+  brew install brew-cask

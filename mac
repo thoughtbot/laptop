@@ -82,6 +82,11 @@ fancy_echo "Updating Homebrew formulas ..."
 brew update
 ### end mac-components/homebrew
 
+fancy_echo "Installing Cask, 'To install, drag this icon...' no more!"
+  brew tap caskroom/cask
+  brew install brew-cask
+### end mac-components/cask
+
 fancy_echo "Installing MySQL, a good relational database ..."
   brew_install_or_upgrade install mysql
 
