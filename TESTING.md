@@ -99,6 +99,22 @@ given that we're dealing with an entire operating system.
 - Remove the box config in vagrantcloud
 - Update README.md
 
+## Repackaging base boxes
+
+You might want to repackage base boxes on occasion to make running the
+automated suite faster. There will be fewer updates to apply, and sometimes
+vendor-supplied updates do not apply cleanly in a non-interactive shell.
+
+```sh
+./bin/repackage_base_boxes.sh
+```
+This will iterate over `spec/vagrantfiles/Vagrantfile.*`, spin up a VM, drop
+you into an interactive shell and then give you the option to repackage
+afterwards.  It will skip any boxes that already exist in the project root,
+similar to behavior of the rspec suite.
+
+After repackaging, use `./bin/publish_laptopped_boxes.sh` to publish to aws.
+
 ## Creating new base boxes to test a new release
 
 1. Download a 64 bit minimal server ISO

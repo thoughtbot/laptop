@@ -1,6 +1,7 @@
-#!/usr/bin/env sh
+#!/bin/sh
+
 check_for_aws() {
-  if ! command -v aws &>/dev/null; then
+  if ! command -v aws >/dev/null; then
     failure_message 'You must install aws-cli to publish boxes'
     exit 1
   fi
@@ -34,10 +35,10 @@ publish_box(){
 }
 
 box_has_changed() {
-  local remote_size=$(aws s3 ls "laptop-boxes/$box" | cut -f 3 -d ' ')
+  local remote_size=$(aws s3 ls "laptop-boxes/$box" | sed "s/  / /" | cut -f 3 -d ' ')
   local local_size=$(stat -c %s "$box")
 
-  [ "$local_size" -ne "$remote_size" ]
+  [ "$local_size" != "$remote_size" ]
 }
 
 ###################################
