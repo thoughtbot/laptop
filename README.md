@@ -16,9 +16,8 @@ Installer](https://github.com/kennethreitz/osx-gcc-installer/).
 For Lion (10.7) or Mountain Lion (10.8): use [Command Line Tools for
 XCode](https://developer.apple.com/downloads/index.action).
 
-For Mavericks (10.9): run `sudo xcodebuild -license` and follow the instructions
-to accept the XCode agreement.  Then run `xcode-select --install` in your
-terminal and then click "Install".
+For Mavericks (10.9): run `xcode-select --install` in your terminal and then
+click "Install".
 
 ### Linux
 
