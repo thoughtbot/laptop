@@ -16,9 +16,7 @@ Installer](https://github.com/kennethreitz/osx-gcc-installer/).
 For Lion (10.7) or Mountain Lion (10.8): use [Command Line Tools for
 XCode](https://developer.apple.com/downloads/index.action).
 
-For Mavericks (10.9): run `sudo xcodebuild -license` and follow the instructions
-to accept the XCode agreement.  Then run `xcode-select --install` in your
-terminal and then click "Install".
+For Mavericks (10.9): installed with the script, no prerequisite.
 
 ### Linux
 
@@ -103,29 +101,18 @@ Put your customizations in `~/.laptop.local`. For example, your
 You should write your customizations such that they can be run safely more than
 once. See the `mac` and `linux` scripts for examples.
 
-Laptopped linux vagrant boxes
------------------------------------------------------------
+Laptopped Linux Vagrant boxes
+-----------------------------
 
-We now publish [vagrant](http://vagrantup.com) boxes for every supported linux
+We now publish [Vagrant](http://vagrantup.com) boxes for every supported Linux
 distro. These boxes have the laptop script applied already and are ready to go.
-Getting started is as easy as creating a Vagrantfile that looks like:
 
-    Vagrant.configure('2') do |config|
-      config.vm.box = 'thoughtbot/ubuntu-14-04-server-with-laptop'
-    end
+Create a Vagrantfile:
 
-
-```sh
-# And then in the same directory as your Vagrantfile . . .
-vagrant up
-vagrant ssh
-
-```
-
-You can also use `vagrant init`:
-
-    # In your project directory
     vagrant init thoughtbot/ubuntu-14-04-server-with-laptop
+
+In the same directory as your Vagrantfile:
+
     vagrant up
     vagrant ssh
 
@@ -138,7 +125,7 @@ Laptopped vagrantcloud boxes currently available:
 * `thoughtbot/ubuntu-12-04-server-with-laptop`
 
 See our [vagrantcloud profile](https://vagrantcloud.com/thoughtbot). You must
-have vagrant >= 1.5.0 to use vagrantcloud images directly.
+have Vagrant >= 1.5.0 to use vagrantcloud images directly.
 
 Credits
 -------
