@@ -37,13 +37,22 @@ Install
 
 Read, then run the script:
 
-    bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac)
+    bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) |& tee ~/laptop.log
 
 ### Linux
 
 Read, then run the script:
 
-    bash <(wget -qO- https://raw.githubusercontent.com/thoughtbot/laptop/master/linux)
+    bash <(wget -qO- https://raw.githubusercontent.com/thoughtbot/laptop/master/linux) |& tee ~/laptop.log
+
+Debugging
+---------
+
+Your last Laptop run will be saved to `~/laptop.log`. Read through it to see if
+you can debug the issue yourself. If not, copy the lines where the script
+failed into a [new GitHub
+Issue](https://github.com/thoughtbot/laptop/issues/new) for us. Or, attach the
+whole log file as an attachment.
 
 What it sets up
 ---------------
