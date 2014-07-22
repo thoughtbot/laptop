@@ -37,7 +37,9 @@ fancy_echo "Changing your shell to zsh ..."
 ### end common-components/zsh
 
 brew_install_or_upgrade() {
-  if brew list -1 | grep -Fqx "$1"; then
+  local NAME=$(brew_expand_alias "$1")
+
+  if brew list -1 | grep -Fqx $NAME; then
     if brew_is_upgradable "$1"; then
       brew upgrade "$@"
     fi
@@ -47,10 +49,16 @@ brew_install_or_upgrade() {
 }
 
 brew_is_upgradable() {
-  local INSTALLED=$(brew ls --versions "$1" | awk '{print $NF}')
-  local LATEST=$(brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/,/, ""); print $3}')
+  local NAME=$(brew_expand_alias "$1")
+
+  local INSTALLED=$(brew ls --versions "$NAME" | awk '{print $NF}')
+  local LATEST=$(brew info "$NAME" 2>/dev/null | head -1 | awk '{gsub(/,/, ""); print $3}')
 
   [ "$INSTALLED" != "$LATEST" ]
+}
+
+brew_expand_alias() {
+  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
 ### end mac-components/mac-functions
 
