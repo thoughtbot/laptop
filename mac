@@ -64,6 +64,20 @@ brew_is_upgradable() {
 brew_expand_alias() {
   brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
+
+brew_launchctl_restart() {
+  local NAME=$(brew_expand_alias "$1")
+  local DOMAIN="homebrew.mxcl.$NAME"
+  local PLIST="$DOMAIN.plist"
+
+  mkdir -p ~/Library/LaunchAgents
+  ln -sfv /usr/local/opt/$NAME/$PLIST ~/Library/LaunchAgents
+
+  if launchctl list | grep -q $DOMAIN; then
+    launchctl unload ~/Library/LaunchAgents/$PLIST >/dev/null
+  fi
+  launchctl load ~/Library/LaunchAgents/$PLIST >/dev/null
+}
 ### end mac-components/mac-functions
 
 if [[ -f /etc/zshenv ]]; then
@@ -137,13 +151,8 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
   nvm alias default "$node_version"
 ### end mac-components/packages
 
-fancy_echo "Ensure LaunchAgents exists ..."
-  mkdir -p ~/Library/LaunchAgents
-
 fancy_echo "Starting Postgres ..."
-  ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
-  launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist >/dev/null
-  launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist >/dev/null
+  brew_launchctl_restart postgresql
 ### end mac-components/start-services
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."

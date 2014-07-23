@@ -1,7 +1,2 @@
-fancy_echo "Ensure LaunchAgents exists ..."
-  mkdir -p ~/Library/LaunchAgents
-
 fancy_echo "Starting Postgres ..."
-  ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
-  launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist >/dev/null
-  launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist >/dev/null
+  brew_launchctl_restart postgresql

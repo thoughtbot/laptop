@@ -26,3 +26,17 @@ brew_is_upgradable() {
 brew_expand_alias() {
   brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
+
+brew_launchctl_restart() {
+  local NAME=$(brew_expand_alias "$1")
+  local DOMAIN="homebrew.mxcl.$NAME"
+  local PLIST="$DOMAIN.plist"
+
+  mkdir -p ~/Library/LaunchAgents
+  ln -sfv /usr/local/opt/$NAME/$PLIST ~/Library/LaunchAgents
+
+  if launchctl list | grep -q $DOMAIN; then
+    launchctl unload ~/Library/LaunchAgents/$PLIST >/dev/null
+  fi
+  launchctl load ~/Library/LaunchAgents/$PLIST >/dev/null
+}
