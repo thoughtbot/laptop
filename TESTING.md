@@ -17,7 +17,7 @@ Currently, only the linux script is tested.
 [aws-cli]: http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
 
 `aws-cli` is only necessary if you're one of the maintainers and want to
-publish new "laptopped" boxes.
+publish new "Laptop'ed" boxes.
 
 ## Running the tests
 
@@ -34,13 +34,13 @@ For each file found at `./spec/vagrantfiles/Vagrantfile.*`:
 
 1. No specs are run if a rendered box already exists
 2. Vagrant creates and starts a VM as described by the Vagrantfile
-3. The appropriate laptop script is run inside the VM
+3. The appropriate Laptop script is run inside the VM
 4. Some assertions are made against the VMs state
 5. If all specs pass, then a vagrant box is rendered to the filesystem, ready to be published to s3
 
 If you want to re-run specs (and therefore re-render new vagrant boxes with
-laptop freshly applied to them), simply `rm *.box` in the repository root and
-laptop will be re-run against all Vagrantfiles.
+laptop freshly applied to them), `rm *.box` in the repository root and Laptop
+will be re-run against all Vagrantfiles.
 
 The "render box when specs are successful" workflow allows you to focus on
 failing distros and re-run only those specs that've failed.
@@ -48,7 +48,7 @@ failing distros and re-run only those specs that've failed.
 The following are the assertions:
 
 1. The VM was brought up successfully
-2. The laptop script(s) ran successfully
+2. The Laptop script(s) ran successfully
 3. The VM reports the correct `$SHELL`
 4. The VM reports the correct ruby
 5. A rails app can be created successfully
@@ -86,10 +86,10 @@ This will copy the new box to a temporary name, remove the original and move
 the temp into place to minimize downtime.
 
 It only publishes boxes that have a different file size locally than what's on
-s3. Unfortunately, s3 does not return an md5sum for large files in a way that'd
+S3. Unfortunately, S3 does not return an md5sum for large files in a way that'd
 be easy to compare to a local copy without downloading the entire file. So -
-theoretically - if a new laptopped box had the same size as the immediately
-previous one, it would not get published to s3. This seems fairly unlikely,
+theoretically - if a new Laptop'ed box had the same size as the immediately
+previous one, it would not get published to S3. This seems fairly unlikely,
 given that we're dealing with an entire operating system.
 
 ## Removing a deprecated release
