@@ -8,15 +8,15 @@ Requirements
 
 ### Mac OS X
 
-Install a C compiler:
+We support:
 
-For Snow Leopard (10.6): use [OS X GCC
-Installer](https://github.com/kennethreitz/osx-gcc-installer/).
+* [10.7: Lion](http://store.apple.com/us/product/D6106Z/A/os-x-lion)
+* [10.8: Mountain Lion](http://store.apple.com/us/product/D6377Z/A/os-x-mountain-lion)
+* [10.9: Mavericks](https://itunes.apple.com/us/app/os-x-mavericks/id675248567)
 
-For Lion (10.7) or Mountain Lion (10.8): use [Command Line Tools for
+10.7 (Lion) and 10.8 (Mountain Lion) users: before running the Laptop script,
+install a C compiler by downloading and installing [Command Line Tools for
 XCode](https://developer.apple.com/downloads/index.action).
-
-For Mavericks (10.9): installed with the script, no prerequisite.
 
 ### Linux
 
