@@ -10,13 +10,10 @@ Requirements
 
 We support:
 
-* [10.7: Lion](http://store.apple.com/us/product/D6106Z/A/os-x-lion)
-* [10.8: Mountain Lion](http://store.apple.com/us/product/D6377Z/A/os-x-mountain-lion)
 * [10.9: Mavericks](https://itunes.apple.com/us/app/os-x-mavericks/id675248567)
 
-10.7 (Lion) and 10.8 (Mountain Lion) users: before running the Laptop script,
-install a C compiler by downloading and installing [Command Line Tools for
-XCode](https://developer.apple.com/downloads/index.action).
+Older versions may work but aren't regularly tested. Bug reports for older
+versions are welcome.
 
 ### Linux
 
