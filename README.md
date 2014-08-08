@@ -20,7 +20,6 @@ versions are welcome.
 We support:
 
 * [14.04: Trusty Tahr](https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes),
-* [13.10: Saucy Salamander](https://wiki.ubuntu.com/SaucySalamander/ReleaseNotes),
 * [12.04 LTS: Precise Pangolin](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes),
 * Debian stable (currently [wheezy](http://www.debian.org/releases/stable/)).
 * Debian testing (currently [jessie](http://www.debian.org/releases/testing/)).
@@ -143,7 +142,6 @@ Laptop'ed vagrantcloud boxes currently available:
 * `thoughtbot/debian-wheezy-64-with-laptop`
 * `thoughtbot/debian-jessie-64-with-laptop`
 * `thoughtbot/ubuntu-14-04-server-with-laptop`
-* `thoughtbot/ubuntu-13-10-server-with-laptop`
 * `thoughtbot/ubuntu-12-04-server-with-laptop`
 
 See our [vagrantcloud profile](https://vagrantcloud.com/thoughtbot). You must
