@@ -132,6 +132,9 @@ fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integ
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew_install_or_upgrade 'watch'
 
+fancy_echo "Installing GitHub CLI client ..."
+  brew_install_or_upgrade 'gh'
+
 node_version="0.10"
 
 fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
@@ -217,10 +220,6 @@ fancy_echo "Installing foreman ..."
   curl -sLo /tmp/foreman.pkg http://assets.foreman.io/foreman/foreman.pkg && \
   sudo installer -pkg /tmp/foreman.pkg -tgt /
 ### end mac-components/heroku
-
-fancy_echo "Installing GitHub CLI client ..."
-  brew_install_or_upgrade 'hub'
-### end mac-components/github
 
 if ! command -v rcup >/dev/null; then
   fancy_echo "Installing rcm, to manage your dotfiles ..."

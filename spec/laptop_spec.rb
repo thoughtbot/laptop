@@ -30,6 +30,7 @@ describe 'Laptop applied to a vagrant box' do
       expect { distro.scaffold_and_model_generation }.not_to raise_error
       expect { distro.database_migration }.not_to raise_error
       expect { distro.silver_searcher_test }.not_to raise_error
+      expect { distro.gh_test }.not_to raise_error
 
       puts "Packaging box for distribution"
 

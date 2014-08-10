@@ -28,6 +28,9 @@ fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integ
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew_install_or_upgrade 'watch'
 
+fancy_echo "Installing GitHub CLI client ..."
+  brew_install_or_upgrade 'gh'
+
 node_version="0.10"
 
 fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."

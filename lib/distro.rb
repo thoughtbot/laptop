@@ -63,6 +63,10 @@ class Distro
     run_vagrant_ssh_command('command -v ag')
   end
 
+  def gh_test
+    run_vagrant_ssh_command('command -v gh')
+  end
+
   def package
     run_vagrant_ssh_command('rm -Rf ~/test_app')
     run_vagrant_ssh_command('sudo aptitude clean')
