@@ -3,7 +3,7 @@ if [[ ! -d "$HOME/.bin/" ]]; then
 fi
 
 if [ ! -f "$HOME/.zshrc" ]; then
-  touch $HOME/.zshrc
+  touch "$HOME/.zshrc"
 fi
 
 if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
