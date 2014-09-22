@@ -84,7 +84,7 @@ if [[ -f /etc/zshenv ]]; then
 fi
 ### end mac-components/zsh-fix
 
-if ! command -v brew &>/dev/null; then
+if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/homebrew/go/install)
 
@@ -222,7 +222,7 @@ fancy_echo "Installing GitHub CLI client ..."
   brew_install_or_upgrade 'hub'
 ### end mac-components/github
 
-if ! command -v rcup &>/dev/null; then
+if ! command -v rcup >/dev/null; then
   fancy_echo "Installing rcm, to manage your dotfiles ..."
     brew tap thoughtbot/formulae
     brew_install_or_upgrade 'rcm'

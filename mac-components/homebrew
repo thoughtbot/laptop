@@ -1,4 +1,4 @@
-if ! command -v brew &>/dev/null; then
+if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/homebrew/go/install)
 
