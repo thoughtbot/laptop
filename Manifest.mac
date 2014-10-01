@@ -9,7 +9,7 @@ mac-components/zsh-fix
 mac-components/homebrew
 mac-components/packages
 mac-components/start-services
-mac-components/rbenv
+common-components/rbenv
 mac-components/compiler-and-libraries
 common-components/ruby-environment
 mac-components/bundler
