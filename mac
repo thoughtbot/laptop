@@ -103,7 +103,7 @@ brew update
 ### end mac-components/homebrew
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew_install_or_upgrade 'postgres' '--no-python'
+  brew_install_or_upgrade 'postgres'
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew_install_or_upgrade 'redis'
