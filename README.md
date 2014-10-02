@@ -1,16 +1,16 @@
 Laptop
 ======
 
-Laptop is a script to set up a Mac OS X or Linux laptop for Rails development.
+Laptop is a script to set up an OS X or Linux laptop for Rails development.
 
 Requirements
 ------------
 
-### Mac OS X
+### OS X
 
 We support:
 
-* [10.9: Mavericks](https://itunes.apple.com/us/app/os-x-mavericks/id675248567)
+* [OS X Mavericks (10.9)](https://itunes.apple.com/us/app/os-x-mavericks/id675248567)
 
 Older versions may work but aren't regularly tested. Bug reports for older
 versions are welcome.
@@ -27,7 +27,7 @@ We support:
 Install
 -------
 
-### Mac OS X
+### OS X
 
 Read, then run the script:
 
