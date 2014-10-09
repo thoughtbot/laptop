@@ -1,3 +1,17 @@
 fancy_echo() {
   printf "\n%b\n" "$1"
 }
+
+append_to_zshrc() {
+  local text="$1" zshrc
+
+  if [[ -w "$HOME/.zshrc.local" ]]; then
+    zshrc="$HOME/.zshrc.local"
+  else
+    zshrc="$HOME/.zshrc"
+  fi
+
+  if ! grep -Fqs "$text" "$zshrc"; then
+    printf "%s\n" "$text" >> "$zshrc"
+  fi
+}

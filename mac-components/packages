@@ -36,16 +36,8 @@ node_version="0.10"
 fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
   brew_install_or_upgrade 'nvm'
 
-  if [[ -w "$HOME/.zshrc.local" ]]; then
-    zshrc_to_append="$HOME/.zshrc.local"
-  else
-    zshrc_to_append="$HOME/.zshrc"
-  fi
-
-  if ! grep -qs 'source $(brew --prefix nvm)/nvm.sh' "$zshrc_to_append"; then
-    printf 'export PATH="$PATH:/usr/local/lib/node_modules"\n' >> "$zshrc_to_append"
-    printf 'source $(brew --prefix nvm)/nvm.sh\n' >> "$zshrc_to_append"
-  fi
+  append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"\n'
+  append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh\n'
 
   source $(brew --prefix nvm)/nvm.sh
   nvm install "$node_version"
