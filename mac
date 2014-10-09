@@ -1,3 +1,22 @@
+fancy_echo() {
+  printf "\n%b\n" "$1"
+}
+
+append_to_zshrc() {
+  local text="$1" zshrc
+
+  if [[ -w "$HOME/.zshrc.local" ]]; then
+    zshrc="$HOME/.zshrc.local"
+  else
+    zshrc="$HOME/.zshrc"
+  fi
+
+  if ! grep -Fqs "$text" "$zshrc"; then
+    printf "%s\n" "$text" >> "$zshrc"
+  fi
+}
+### end common-components/shared-functions
+
 #!/usr/bin/env bash
 ### end common-components/bash-shebang
 
@@ -23,25 +42,6 @@ fi
 
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"\n'
 ### end common-components/check-home-bin
-
-fancy_echo() {
-  printf "\n%b\n" "$1"
-}
-
-append_to_zshrc() {
-  local text="$1" zshrc
-
-  if [[ -w "$HOME/.zshrc.local" ]]; then
-    zshrc="$HOME/.zshrc.local"
-  else
-    zshrc="$HOME/.zshrc"
-  fi
-
-  if ! grep -Fqs "$text" "$zshrc"; then
-    printf "%s\n" "$text" >> "$zshrc"
-  fi
-}
-### end common-components/shared-functions
 
 fancy_echo "Changing your shell to zsh ..."
   chsh -s $(which zsh)

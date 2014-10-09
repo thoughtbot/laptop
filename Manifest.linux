@@ -1,8 +1,8 @@
+common-components/shared-functions
 common-components/bash-shebang
 common-components/header
 common-components/exit-trap
 common-components/check-home-bin
-common-components/shared-functions
 linux-components/distro-check
 linux-components/debian-package-update
 linux-components/debian-derivative-packages
