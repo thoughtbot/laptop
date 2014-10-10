@@ -4,6 +4,7 @@ fancy_echo() {
 
 append_to_zshrc() {
   local text="$1" zshrc
+  local skip_new_line="$2"
 
   if [[ -w "$HOME/.zshrc.local" ]]; then
     zshrc="$HOME/.zshrc.local"
@@ -12,7 +13,11 @@ append_to_zshrc() {
   fi
 
   if ! grep -Fqs "$text" "$zshrc"; then
-    printf "%s\n" "$text" >> "$zshrc"
+    if (( skip_new_line )); then
+      printf "%s\n" "$text" >> "$zshrc"
+    else
+      printf "\n%s\n" "$text" >> "$zshrc"
+    fi
   fi
 }
 ### end common-components/shared-functions
@@ -40,7 +45,7 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
 
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"\n'
+append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 ### end common-components/check-home-bin
 
 if ! grep -qiE 'wheezy|jessie|precise|trusty' /etc/os-release; then
@@ -133,8 +138,8 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
   fancy_echo "Installing rbenv, to change Ruby versions ..."
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 
-    append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"\n'
-    append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"\n'
+    append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
+    append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
 
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init - zsh)"

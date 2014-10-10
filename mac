@@ -4,6 +4,7 @@ fancy_echo() {
 
 append_to_zshrc() {
   local text="$1" zshrc
+  local skip_new_line="$2"
 
   if [[ -w "$HOME/.zshrc.local" ]]; then
     zshrc="$HOME/.zshrc.local"
@@ -12,7 +13,11 @@ append_to_zshrc() {
   fi
 
   if ! grep -Fqs "$text" "$zshrc"; then
-    printf "%s\n" "$text" >> "$zshrc"
+    if (( skip_new_line )); then
+      printf "%s\n" "$text" >> "$zshrc"
+    else
+      printf "\n%s\n" "$text" >> "$zshrc"
+    fi
   fi
 }
 ### end common-components/shared-functions
@@ -40,7 +45,7 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
 
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"\n'
+append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 ### end common-components/check-home-bin
 
 fancy_echo "Changing your shell to zsh ..."
@@ -99,8 +104,8 @@ if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/master/install)
 
-    append_to_zshrc '\n# recommended by brew doctor\n'
-    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"\n'
+    append_to_zshrc '# recommended by brew doctor'
+    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
     export PATH="/usr/local/bin:$PATH"
 else
   fancy_echo "Homebrew already installed. Skipping ..."
@@ -148,8 +153,8 @@ node_version="0.10"
 fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
   brew_install_or_upgrade 'nvm'
 
-  append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"\n'
-  append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh\n'
+  append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
+  append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh' 1
 
   source $(brew --prefix nvm)/nvm.sh
   nvm install "$node_version"
@@ -166,8 +171,8 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
   fancy_echo "Installing rbenv, to change Ruby versions ..."
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 
-    append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"\n'
-    append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"\n'
+    append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
+    append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
 
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init - zsh)"
