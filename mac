@@ -12,7 +12,7 @@ append_to_zshrc() {
   fi
 
   if ! grep -Fqs "$text" "$zshrc"; then
-    printf "%s\n" "$text" >> "$zshrc"
+    echo -e "$text\n" >> "$zshrc"
   fi
 }
 ### end common-components/shared-functions
