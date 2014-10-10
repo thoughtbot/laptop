@@ -1,4 +1,6 @@
+common-components/create-zsh-configs-dir
 common-components/shared-functions
+common-components/create-zsh-configs
 common-components/bash-shebang
 common-components/header
 common-components/exit-trap

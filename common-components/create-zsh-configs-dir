@@ -1,0 +1,4 @@
+if [[ ! -d "$HOME/.zsh/configs" ]]; then
+  fancy_echo "Creating zsh configs directory..."
+    mkdir "$HOME/.zsh/configs"
+fi

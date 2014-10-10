@@ -3,14 +3,14 @@ fancy_echo() {
 }
 
 append_to_zshrc() {
-  local text="$1" zshrc
+  local text="$1"
   local skip_new_line="$2"
 
-  if [[ -w "$HOME/.zshrc.local" ]]; then
-    zshrc="$HOME/.zshrc.local"
-  else
-    zshrc="$HOME/.zshrc"
+  if [[ ! -r "$HOME/.zsh/configs/laptop" ]]; then
+    touch "$HOME/.zsh/configs/laptop"
   fi
+
+  local zshrc="$HOME/.zsh/configs/laptop"
 
   if ! grep -Fqs "$text" "$zshrc"; then
     if (( skip_new_line )); then

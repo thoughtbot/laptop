@@ -1,16 +1,22 @@
+if [[ ! -d "$HOME/.zsh/configs" ]]; then
+  fancy_echo "Creating zsh configs directory..."
+    mkdir "$HOME/.zsh/configs"
+fi
+### end common-components/create-zsh-configs-dir
+
 fancy_echo() {
   printf "\n%b\n" "$1"
 }
 
 append_to_zshrc() {
-  local text="$1" zshrc
+  local text="$1"
   local skip_new_line="$2"
 
-  if [[ -w "$HOME/.zshrc.local" ]]; then
-    zshrc="$HOME/.zshrc.local"
-  else
-    zshrc="$HOME/.zshrc"
+  if [[ ! -r "$HOME/.zsh/configs/laptop" ]]; then
+    touch "$HOME/.zsh/configs/laptop"
   fi
+
+  local zshrc="$HOME/.zsh/configs/laptop"
 
   if ! grep -Fqs "$text" "$zshrc"; then
     if (( skip_new_line )); then
@@ -21,6 +27,47 @@ append_to_zshrc() {
   fi
 }
 ### end common-components/shared-functions
+
+zsh_load_settings() {
+  text="_load_settings() {
+    _dir='\$1'
+    if [ -d '\$_dir' ]; then
+      if [ -d '\$_dir/pre' ]; then
+        for config in '\$_dir'/pre/**/*(N-.); do
+          . \$config
+        done
+      fi
+
+      for config in '\$_dir'/**/*(N-.); do
+        case '\$config' in
+          '\$_dir'/pre/*)
+            :
+            ;;
+          '\$_dir'/post/*)
+            :
+            ;;
+          *)
+            if [ -f \$config ]; then
+              . \$config
+            fi
+            ;;
+        esac
+      done
+
+      if [ -d '\$_dir/post' ]; then
+        for config in '\$_dir'/post/**/*(N-.); do
+          . \$config
+        done
+      fi
+    fi
+  }
+  _load_settings '\$HOME/.zsh/configs'"
+
+  printf "$text"
+}
+
+append_to_zshrc $(zsh_load_settings)
+### end common-components/create-zsh-configs
 
 #!/usr/bin/env bash
 ### end common-components/bash-shebang
