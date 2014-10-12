@@ -1,9 +1,0 @@
-fancy_echo "Installing Heroku CLI client ..."
-  brew_install_or_upgrade 'heroku-toolbelt'
-
-fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
-
-fancy_echo "Installing foreman ..."
-  curl -sLo /tmp/foreman.pkg http://assets.foreman.io/foreman/foreman.pkg && \
-  sudo installer -pkg /tmp/foreman.pkg -tgt /
