@@ -105,7 +105,7 @@ fancy_echo "Updating Homebrew formulas ..."
 brew update
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew_install_or_upgrade 'postgres'
+  brew_install_or_upgrade 'postgres --no-tcl'
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew_install_or_upgrade 'redis'
