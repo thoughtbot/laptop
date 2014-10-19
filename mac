@@ -41,8 +41,12 @@ fi
 
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s $(which zsh)
+if [ $(eval '/usr/bin/dscl . -read /Users/`whoami` UserShell | cut -c 12-19') == "/bin/zsh" ]; then
+  fancy_echo "zsh is already your shell, great job!"
+else
+  fancy_echo "Changing your shell to zsh ..."
+    chsh -s $(which zsh)
+fi
 
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
