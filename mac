@@ -159,6 +159,7 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
     append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
 
     export PATH="$HOME/.rbenv/bin:$PATH"
+    export CC=/usr/bin/gcc
     eval "$(rbenv init - zsh)"
 fi
 
