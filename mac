@@ -175,7 +175,7 @@ if [[ -d "$ruby_build_path" ]]; then
   fancy_echo "Updating to latest ruby-build..."
   cd "$ruby_build_path" && git pull && cd -
 else
-  fanch_echo "Installing ruby-build..."
+  fancy_echo "Installing ruby-build..."
   git clone https://github.com/sstephenson/ruby-build.git "$ruby_build_path"
 fi
 
