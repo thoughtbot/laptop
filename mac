@@ -82,14 +82,22 @@ brew_launchctl_restart() {
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
 }
 
-if sudo fdesetup status | grep -q "is Off"; then
+if fdesetup status | grep -q "is Off"; then
   fancy_echo "Enabling FileVault. Please enter your password."
   sudo fdesetup enable -forcerestart
   fancy_echo "FileVault is enabled. Please restart and relaunch this script."
-end
+else
+  fancy_echo "FileVault is enabled. Continuing."
+fi
 
-fancy_echo "Installing Xcode commandline tools"
-xcode-select --install
+xcode-select -p 2> /dev/null 1> /dev/null
+if [ $? -eq "2" ]; then
+  fancy_echo "Installing Xcode commandline tools"
+  xcode-select --install
+  read -p "Press [Enter] once install is done."
+else
+  fancy_echo "Xcode commandline tools are installed. Continuing."
+fi
 
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
@@ -104,9 +112,11 @@ fi
 
 fancy_echo "Updating Homebrew formulas ..."
 brew update
+brew tap homebrew/dupes
 
 fancy_echo "Installing Zsh"
   brew_install_or_upgrade 'zsh'
+  sed -E 's|^/bin/zsh$|/usr/local/bin/zsh|' /etc/shells | sudo tee /etc/shells > /dev/null
 
 if [[ "$SHELL" != */zsh ]]; then
   fancy_echo "Changing your shell to zsh ..."
@@ -116,19 +126,23 @@ fi
 fancy_echo "Installing GNU core utilities (those that come with OS X are outdated)"
   brew_install_or_upgrade 'coreutils'
   append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
+  append_to_zshrc 'export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"'
   export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 
-fancy_echo "Installing some other useful utilities like `sponge`"
+fancy_echo "Installing some other useful utilities like sponge"
   brew_install_or_upgrade 'moreutils'
 
-fancy_echo "Installing GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed."
+fancy_echo "Installing GNU find, locate, updatedb, and xargs, g-prefixed."
   brew_install_or_upgrade 'findutils'
 
-fancy_echo "Installing GNU `sed`, overwriting the built-in `sed`."
-  brew_install_or_upgrade 'gnu-sed' --default-names
+fancy_echo "Installing GNU sed, overwriting the built-in sed."
+  brew_install_or_upgrade 'gnu-sed'
+  append_to_zshrc 'export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"'
+  append_to_zshrc 'export MANPATH="$(brew --prefix gnu-sed)/libexec/gnuman:$MANPATH"'
+  export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
 
 fancy_echo "Installing more recent versions of grep."
-  brew_install_or_upgrade 'homebrew/dupes/grep'
+  brew_install_or_upgrade 'homebrew/dupes/grep' --default-names
 
 fancy_echo "Installing more recent versions of screen."
   brew_install_or_upgrade 'homebrew/dupes/screen'
@@ -145,12 +159,16 @@ fancy_echo "Installing Wget with IRI support."
 fancy_echo "Installing Bash 4"
   brew_install_or_upgrade 'bash'
   brew_install_or_upgrade 'bash-completion'
+  sed -E 's|$/bin/bash$|/usr/local/bin/bash|' /etc/shells | sudo tee /etc/shells > /dev/null
+  # XXX change root shell
+  # XXX add completion to bashrc
 
 fancy_echo "Installing Tree"
   brew_install_or_upgrade 'tree'
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew_install_or_upgrade 'postgres'
+  # XXX add archflags
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew_install_or_upgrade 'redis'
@@ -185,13 +203,15 @@ fancy_echo "Installing GitHub CLI client ..."
 fancy_echo "Installing Node ..."
   brew_install_or_upgrade 'node'
 
-fancy_echo "Installing Ryby Build ..."
-  brew_install_or_upgrade 'ruby-build'
+fancy_echo "Installing Ryby Install ..."
+  brew_install_or_upgrade 'ruby-install'
 
 fancy_echo "Installing chruby ..."
   brew_install_or_upgrade 'chruby'
   append_to_zshrc 'source /usr/local/share/chruby/chruby.sh'
   append_to_zshrc 'source /usr/local/share/chruby/auto.sh'
+  source /usr/local/share/chruby/chruby.sh
+  source /usr/local/share/chruby/auto.sh
 
 fancy_echo "Starting Postgres ..."
   brew_launchctl_restart postgresql
@@ -205,7 +225,7 @@ fancy_echo "Upgrading and linking OpenSSL ..."
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 fancy_echo "Installing Ruby $ruby_version ..."
-  ruby-install ruby "$ruby_version"
+  ruby-install ruby "$ruby_version" # XXX instals everytime
   append_to_zshrc "chruby ruby-$ruby_version"
   chruby "ruby-$ruby_version"
 
