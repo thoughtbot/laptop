@@ -87,6 +87,12 @@ brew_launchctl_restart() {
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
 }
 
+if sudo fdesetup status | grep -q "is Off"; then
+  fancy_echo "Enabling FileVault. Please enter your password."
+  sudo fdesetup enable -forcerestart
+  fancy_echo "FileVault is enabled. Please restart and relaunch this script."
+end
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/master/install)
