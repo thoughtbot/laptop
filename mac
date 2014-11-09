@@ -31,6 +31,11 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+# Here we go.. ask for the administrator password upfront and run a
+# keep-alive to update existing `sudo` time stamp until script has finished
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 if [[ ! -d "$HOME/.bin/" ]]; then
   mkdir "$HOME/.bin"
 fi
@@ -120,7 +125,9 @@ fancy_echo "Installing Zsh"
 
 if [[ "$SHELL" != */zsh ]]; then
   fancy_echo "Changing your shell to zsh ..."
-    chsh -s $(which zsh)
+    chpass -s /usr/local/bin/zsh
+  fancy_echo "Changing root shell to zsh ..."
+    sudo chpass -s /usr/local/bin/zsh
 fi
 
 fancy_echo "Installing GNU core utilities (those that come with OS X are outdated)"
@@ -150,6 +157,9 @@ fancy_echo "Installing more recent versions of screen."
 fancy_echo "Installing Git"
   brew_install_or_upgrade 'git'
 
+fancy_echo "Installing Tig"
+  brew_install_or_upgrade 'tig'
+
 fancy_echo "Installing Ansible"
   brew_install_or_upgrade 'ansible'
 
@@ -160,7 +170,6 @@ fancy_echo "Installing Bash 4"
   brew_install_or_upgrade 'bash'
   brew_install_or_upgrade 'bash-completion'
   sed -E 's|$/bin/bash$|/usr/local/bin/bash|' /etc/shells | sudo tee /etc/shells > /dev/null
-  # XXX change root shell
   # XXX add completion to bashrc
 
 fancy_echo "Installing Tree"
@@ -168,7 +177,8 @@ fancy_echo "Installing Tree"
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew_install_or_upgrade 'postgres'
-  # XXX add archflags
+  export ARCHFLAGS="-arch x86_64"
+  append_to_zshrc 'export ARCHFLAGS="-arch x86_64"'
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew_install_or_upgrade 'redis'
@@ -203,6 +213,9 @@ fancy_echo "Installing GitHub CLI client ..."
 fancy_echo "Installing Node ..."
   brew_install_or_upgrade 'node'
 
+fancy_echo "Installing Android SDK ..."
+  brew_install_or_upgrade 'android-sdk'
+
 fancy_echo "Installing Ryby Install ..."
   brew_install_or_upgrade 'ruby-install'
 
@@ -224,10 +237,14 @@ fancy_echo "Upgrading and linking OpenSSL ..."
   brew unlink openssl && brew link openssl --force
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-fancy_echo "Installing Ruby $ruby_version ..."
-  ruby-install ruby "$ruby_version" # XXX instals everytime
-  append_to_zshrc "chruby ruby-$ruby_version"
-  chruby "ruby-$ruby_version"
+if ls /usr/local | grep -q "ruby-$ruby_version"; then
+  fancy_echo "Installing Ruby $ruby_version ..."
+    ruby-install --system ruby "$ruby_version"
+    append_to_zshrc "chruby ruby-$ruby_version"
+    chruby "ruby-$ruby_version"
+else
+  fancy_echo "Ruby $ruby_version is already installed"
+fi
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
@@ -245,6 +262,9 @@ fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
 fancy_echo "Installing Heroku CLI client ..."
   brew_install_or_upgrade 'heroku-toolbelt'
 
+fancy_echo "Installing Github Release ..."
+  brew_install_or_upgrade 'github-release'
+
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   heroku plugins:install https://github.com/ddollar/heroku-config.git
 
@@ -259,6 +279,86 @@ fancy_echo "Installing foreman ..."
 # else
 #   fancy_echo "rcm already installed. Skipping ..."
 # fi
+
+fancy_echo "Installing brew cask"
+  brew install caskroom/cask/brew-cask
+  brew tap caskroom/versions
+  brew tap caskroom/fonts
+  export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+  append_to_zshrc 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
+
+fancy_echo "Installing alfred"
+  brew cask install alfred
+
+fancy_echo "Installing flux"
+  brew cask install flux
+
+fancy_echo "Installing java6"
+  brew cask install java6
+
+fancy_echo "Installing vagrant"
+  brew cask install vagrant
+
+fancy_echo "Installing font-anonymous-pro"
+  brew cask install font-anonymous-pro
+
+fancy_echo "Installing skype"
+  brew cask install skype
+
+fancy_echo "Installing sublime-text3"
+  brew cask install sublime-text3
+
+fancy_echo "Installing virtualbox"
+  brew cask install virtualbox
+
+fancy_echo "Installing caffeine"
+  brew cask install caffeine
+
+fancy_echo "Installing google-drive"
+  brew cask install google-drive
+
+fancy_echo "Installing mou"
+  brew cask install mou
+
+fancy_echo "Installing slack"
+  brew cask install slack
+
+fancy_echo "Installing teamviewer"
+  brew cask install teamviewer
+
+fancy_echo "Installing viscosity"
+  brew cask install viscosity
+
+fancy_echo "Installing imagealpha"
+  brew cask install imagealpha
+
+fancy_echo "Installing the-unarchiver"
+  brew cask install the-unarchiver
+
+fancy_echo "Installing vlc"
+  brew cask install vlc
+
+fancy_echo "Installing dropbox"
+  brew cask install dropbox
+
+fancy_echo "Installing imageoptim"
+  brew cask install imageoptim
+
+fancy_echo "Installing packer"
+  brew cask install packer
+
+fancy_echo "Installing sourcetree"
+  brew cask install sourcetree
+
+fancy_echo "Installing vmware-fusion"
+  brew cask install vmware-fusion
+
+fancy_echo "Installing iterm2-beta"
+  brew cask install iterm2-beta
+
+fancy_echo "Installing pgadmin3"
+  brew cask install pgadmin3
+
 
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
