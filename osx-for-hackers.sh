@@ -26,35 +26,6 @@ cecho() {
   return
 }
 
-# Set continue to false by default
-CONTINUE=false
-
-echo ""
-cecho "###############################################" $red
-cecho "#        DO NOT RUN THIS SCRIPT BLINDLY       #" $red
-cecho "#         YOU'LL PROBABLY REGRET IT...        #" $red
-cecho "#                                             #" $red
-cecho "#              READ IT THOROUGHLY             #" $red
-cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" $red
-cecho "###############################################" $red
-echo ""
-
-echo ""
-cecho "Have you read through the script you're about to run and " $red
-cecho "understood that it will make changes to your computer? (y/n)" $red
-read -r response
-case $response in
-  [yY]) CONTINUE=true
-      break;;
-  *) break;;
-esac
-
-if ! $CONTINUE; then
-  # Check if we're continuing and output a message if not
-  cecho "Please go read the script, it only takes a few minutes" $red
-  exit
-fi
-
 # Here we go.. ask for the administrator password upfront and run a
 # keep-alive to update existing `sudo` time stamp until script has finished
 sudo -v
@@ -63,53 +34,6 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 ###############################################################################
 # General UI/UX
 ###############################################################################
-
-echo ""
-echo "Would you like to set your computer name (as done via System Preferences >> Sharing)?  (y/n)"
-read -r response
-case $response in
-  [yY])
-      echo "What would you like it to be?"
-      read COMPUTER_NAME
-      sudo scutil --set ComputerName $COMPUTER_NAME
-      sudo scutil --set HostName $COMPUTER_NAME
-      sudo scutil --set LocalHostName $COMPUTER_NAME
-      sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $COMPUTER_NAME
-      break;;
-  *) break;;
-esac
-
-echo ""
-echo "Hide the Time Machine, Volume, User, and Bluetooth icons?  (y/n)"
-read -r response
-case $response in
-  [yY])
-      # Get the system Hardware UUID and use it for the next menubar stuff
-      for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
-          defaults write "${domain}" dontAutoLoad -array \
-        "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
-        "/System/Library/CoreServices/Menu Extras/Volume.menu" \
-        "/System/Library/CoreServices/Menu Extras/User.menu"
-      done
-
-      defaults write com.apple.systemuiserver menuExtras -array \
-        "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
-        "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
-        "/System/Library/CoreServices/Menu Extras/Battery.menu" \
-        "/System/Library/CoreServices/Menu Extras/Clock.menu"
-      break;;
-  *) break;;
-esac
-
-echo ""
-echo "Hide the Spotlight icon? (y/n)"
-read -r response
-case $response in
-  [yY])
-      sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
-      break;;
-  *) break;;
-esac
 
 echo ""
 echo "Increasing the window resize speed for Cocoa applications"
@@ -131,14 +55,8 @@ echo "Displaying ASCII control characters using caret notation in standard text 
 defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
 
 echo ""
-echo "Save to disk, rather than iCloud, by default? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
-    break;;
-  *) break;;
-esac
+echo "Save to disk, rather than iCloud, by default"
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
 echo ""
 echo "Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window"
@@ -153,76 +71,17 @@ echo "Removing duplicates in the 'Open With' menu"
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
 
 echo ""
-echo "Disable smart quotes and smart dashes? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-    defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-    break;;
-  *) break;;
-esac
-
-echo ""
-echo "Add ability to toggle between Light and Dark mode in Yosemite using ctrl+opt+cmd+t? (y/n)"
-# http://www.reddit.com/r/apple/comments/2jr6s2/1010_i_found_a_way_to_dynamically_switch_between/
-read -r response
-case $response in
-  [yY])
-    sudo defaults write /Library/Preferences/.GlobalPreferences.plist _HIEnableThemeSwitchHotKey -bool true
-    break;;
-  *) break;;
-esac
-
+echo "Disable smart quotes and smart dashes"
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 ###############################################################################
 # General Power and Performance modifications
 ###############################################################################
 
 echo ""
-echo "Disable hibernation? (speeds up entering sleep mode) (y/n)"
-read -r response
-case $response in
-  [yY])
-    sudo pmset -a hibernatemode 0
-    break;;
-  *) break;;
-esac
-
-echo ""
-echo "Remove the sleep image file to save disk space? (y/n)"
-echo "(If you're on a <128GB SSD, this helps but can have adverse affects on performance. You've been warned.)"
-read -r response
-case $response in
-  [yY])
-    sudo rm /Private/var/vm/sleepimage
-    echo "Creating a zero-byte file instead"
-    sudo touch /Private/var/vm/sleepimage
-    echo "and make sure it can't be rewritten"
-    sudo chflags uchg /Private/var/vm/sleepimage
-    break;;
-  *) break;;
-esac
-
-echo ""
-echo "Disable the sudden motion sensor? (it's not useful for SSDs/current MacBooks) (y/n)"
-read -r response
-case $response in
-  [yY])
-    sudo pmset -a sms 0
-    break;;
-  *) break;;
-esac
-
-echo ""
-echo "Disable system-wide resume? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
-    break;;
-  *) break;;
-esac
+echo "Disable the sudden motion sensor (it's not useful for SSDs/current MacBooks)"
+sudo pmset -a sms 0
 
 echo ""
 echo "Speeding up wake from sleep to 24 hours from an hour"
@@ -232,7 +91,6 @@ sudo pmset -a standbydelay 86400
 echo ""
 echo "Disabling the annoying backswipe in Chrome"
 defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
-
 
 ################################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input
@@ -255,14 +113,8 @@ echo "Setting a blazingly fast keyboard repeat rate"
 defaults write NSGlobalDomain KeyRepeat -int 0
 
 echo ""
-echo "Disable auto-correct? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-    break;;
-  *) break;;
-esac
+echo "Disable auto-correct"
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 echo ""
 echo "Setting trackpad & mouse speed to a reasonable number"
@@ -272,26 +124,6 @@ defaults write -g com.apple.mouse.scaling 2.5
 echo ""
 echo "Turn off keyboard illumination when computer is not used for 5 minutes"
 defaults write com.apple.BezelServices kDimTime -int 300
-
-echo ""
-echo "Disable display from automatically adjusting brightness? (y/n)"
-read -r response
-case $response in
-  [yY])
-    sudo defaults write /Library/Preferences/com.apple.iokit.AmbientLightSensor "Automatic Display Enabled" -bool false
-    break;;
-  *) break;;
-esac
-
-echo ""
-echo "Disable keyboard from automatically adjusting backlight brightness in low light? (y/n)"
-read -r response
-case $response in
-  [yY])
-    sudo defaults write /Library/Preferences/com.apple.iokit.AmbientLightSensor "Automatic Keyboard Enabled" -bool false
-    break;;
-  *) break;;
-esac
 
 ###############################################################################
 # Screen
@@ -303,38 +135,8 @@ defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 echo ""
-echo "Where do you want screenshots to be stored? (hit ENTER if you want ~/Desktop as default)"
-# Thanks https://github.com/omgmog
-read screenshot_location
-echo ""
-if [ -z "${screenshot_location}" ]
-then
-  # If nothing specified, we default to ~/Desktop
-  screenshot_location="${HOME}/Desktop"
-else
-  # Otherwise we use input
-  if [[ "${screenshot_location:0:1}" != "/" ]]
-  then
-    # If input doesn't start with /, assume it's relative to home
-    screenshot_location="${HOME}/${screenshot_location}"
-  fi
-fi
-echo "Setting location to ${screenshot_location}"
-defaults write com.apple.screencapture location -string "${screenshot_location}"
-
-echo ""
-echo "What format should screenshots be saved as? (hit ENTER for PNG, options: BMP, GIF, JPG, PDF, TIFF) "
-read screenshot_format
-if [ -z "$1" ]
-then
-  echo ""
-  echo "Setting screenshot format to PNG"
-  defaults write com.apple.screencapture type -string "png"
-else
-  echo ""
-  echo "Setting screenshot format to $screenshot_format"
-  defaults write com.apple.screencapture type -string "$screenshot_format"
-fi
+echo "Setting screenshot format to PNG"
+defaults write com.apple.screencapture type -string "png"
 
 echo ""
 echo "Enabling subpixel font rendering on non-Apple LCDs"
@@ -349,105 +151,38 @@ sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutio
 ###############################################################################
 
 echo ""
-echo "Show icons for hard drives, servers, and removable media on the desktop? (y/n)"
-case $response in
-  [yY])
-    defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-    break;;
-  *) break;;
-esac
+echo "Show icons for hard drives, servers, and removable media on the desktop?"
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 
 echo ""
-echo "Show hidden files in Finder by default? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.Finder AppleShowAllFiles -bool true
-    break;;
-  *) break;;
-esac
+echo "Show all filename extensions in Finder by default"
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
 echo ""
-echo "Show dotfiles in Finder by default? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.finder AppleShowAllFiles TRUE
-    break;;
-  *) break;;
-esac
+echo "Show status bar in Finder by default"
+defaults write com.apple.finder ShowStatusBar -bool true
 
 echo ""
-echo "Show all filename extensions in Finder by default? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-    break;;
-  *) break;;
-esac
-
-echo ""
-echo "Show status bar in Finder by default? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.finder ShowStatusBar -bool true
-    break;;
-  *) break;;
-esac
-
-echo ""
-echo "Display full POSIX path as Finder window title? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
-    break;;
-  *) break;;
-esac
+echo "Display full POSIX path as Finder window title"
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
 echo ""
 echo "Disable the warning when changing a file extension? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-    break;;
-  *) break;;
-esac
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 echo ""
-echo "Use column view in all Finder windows by default? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.finder FXPreferredViewStyle Clmv
-    break;;
-  *) break;;
-esac
+echo "Use column view in all Finder windows by default"
+defaults write com.apple.finder FXPreferredViewStyle Clmv
 
 echo ""
-echo "Avoid creation of .DS_Store files on network volumes? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-    break;;
-  *) break;;
-esac
+echo "Avoid creation of .DS_Store files on network volumes"
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
 echo ""
-echo "Disable disk image verification? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.frameworks.diskimages skip-verify -bool true
-    defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
-    defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
-    break;;
-  *) break;;
-esac
+echo "Disable disk image verification"
+defaults write com.apple.frameworks.diskimages skip-verify -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
 echo ""
 echo "Allowing text selection in Quick Look/Preview in Finder by default"
@@ -464,15 +199,9 @@ echo "Enabling snap-to-grid for icons on the desktop and in other icon views"
 # Dock & Mission Control
 ###############################################################################
 
-echo "Wipe all (default) app icons from the Dock? (y/n)"
-echo "(This is only really useful when setting up a new Mac, or if you don't use the Dock to launch apps.)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.dock persistent-apps -array
-    break;;
-  *) break;;
-esac
+echo ""
+echo "Wipe all (default) app icons from the Dock"
+defaults write com.apple.dock persistent-apps -array
 
 echo ""
 echo "Setting the icon size of Dock items to 36 pixels for optimal size/screen-realestate"
@@ -484,16 +213,10 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock "expose-group-by-app" -bool true
 
 echo ""
-echo "Set Dock to auto-hide and remove the auto-hiding delay? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.dock autohide -bool true
-    defaults write com.apple.dock autohide-delay -float 0
-    defaults write com.apple.dock autohide-time-modifier -float 0
-    break;;
-  *) break;;
-esac
+echo "Set Dock to auto-hide and remove the auto-hiding delay"
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0
 
 
 ###############################################################################
@@ -564,117 +287,24 @@ defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
 ###############################################################################
 
 echo ""
-echo "Prevent Time Machine from prompting to use new hard drives as backup volume? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
-    break;;
-  *) break;;
-esac
+echo "Prevent Time Machine from prompting to use new hard drives as backup volume"
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 echo ""
-echo "Disable local Time Machine backups? (This can take up a ton of SSD space on <128GB SSDs) (y/n)"
-read -r response
-case $response in
-  [yY])
-    hash tmutil &> /dev/null && sudo tmutil disablelocal
-    break;;
-  *) break;;
-esac
-
+echo "Disable local Time Machine backups (This can take up a ton of SSD space on <128GB SSDs)"
+hash tmutil &> /dev/null && sudo tmutil disablelocal
 
 ###############################################################################
 # Messages                                                                    #
 ###############################################################################
 
 echo ""
-echo "Disable automatic emoji substitution in Messages.app? (i.e. use plain text smileys) (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
-    break;;
-  *) break;;
-esac
+echo "Disable smart quotes in Messages.app (it's annoying for messages that contain code)"
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
 
 echo ""
-echo "Disable smart quotes in Messages.app? (it's annoying for messages that contain code) (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
-    break;;
-  *) break;;
-esac
-
-echo ""
-echo "Disable continuous spell checking in Messages.app? (y/n)"
-read -r response
-case $response in
-  [yY])
-    defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
-    break;;
-  *) break;;
-esac
-
-
-###############################################################################
-# Transmission.app                                                            #
-###############################################################################
-
-
-echo ""
-echo "Do you use Transmission for torrenting? (y/n)"
-read -r response
-case $response in
-  [yY])
-    echo ""
-    echo "Use `~/Downloads/Incomplete` to store incomplete downloads"
-    defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
-    mkdir -p ~/Downloads/Incomplete
-    defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Downloads/Incomplete"
-
-    echo ""
-    echo "Don't prompt for confirmation before downloading"
-    defaults write org.m0k.transmission DownloadAsk -bool false
-
-    echo ""
-    echo "Trash original torrent files"
-    defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
-
-    echo ""
-    echo "Hide the donate message"
-    defaults write org.m0k.transmission WarningDonate -bool false
-
-    echo ""
-    echo "Hide the legal disclaimer"
-    defaults write org.m0k.transmission WarningLegal -bool false
-    break;;
-  *) break;;
-esac
-
-
-###############################################################################
-# Sublime Text
-###############################################################################
-echo ""
-echo "Do you use Sublime Text 3 as your editor of choice, and is it installed?"
-read -r response
-case $response in
-  [yY])
-    # Installing from homebrew cask does the following for you!
-    # echo ""
-    # echo "Linking Sublime Text for command line usage as subl"
-    # ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/subl
-
-    echo ""
-    echo "Setting Git to use Sublime Text as default editor"
-    git config --global core.editor "subl -n -w"
-    break;;
-  *) break;;
-esac
-
+echo "Disable continuous spell checking in Messages.app"
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
 ###############################################################################
 # Kill affected applications

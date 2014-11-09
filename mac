@@ -264,3 +264,6 @@ fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
     source ~/.laptop.local
   fi
+
+fancy_echo "Running osx for hackers ..."
+  source osx-for-hackers.sh
