@@ -198,6 +198,9 @@ fancy_echo "Installing ctags, to index files for vim tab completion of methods, 
 fancy_echo "Installing tmux, to save project state and switch between projects ..."
   brew_install_or_upgrade 'tmux'
 
+fancy_echo "Installing dockutil to manage the dock"
+  brew_install_or_upgrade 'dockutil'
+
 fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
   brew_install_or_upgrade 'reattach-to-user-namespace'
 
@@ -290,11 +293,17 @@ fancy_echo "Installing brew cask"
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
   append_to_zshrc 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
 
+echo ""
+echo "Wipe all (default) app icons from the Dock"
+defaults write com.apple.dock persistent-apps -array
+
 fancy_echo "Installing alfred"
   brew cask install alfred
+  open -a /Applications/Alfred\ 2.app
 
 fancy_echo "Installing flux"
   brew cask install flux
+  open -a /Applications/Flux.app
 
 fancy_echo "Installing java6"
   brew cask install java6
@@ -307,42 +316,53 @@ fancy_echo "Installing font-anonymous-pro"
 
 fancy_echo "Installing skype"
   brew cask install skype
+  dockutil --add /Applications/Skype.app
 
 fancy_echo "Installing sublime-text3"
   brew cask install sublime-text3
+  dockutil --add /Applications/Sublime\ Text.app
 
 fancy_echo "Installing virtualbox"
   brew cask install virtualbox
+  dockutil --add /Applications/VirtualBox.app
 
 fancy_echo "Installing caffeine"
   brew cask install caffeine
+  open -a /Applications/Caffeine.app
 
 fancy_echo "Installing google-drive"
   brew cask install google-drive
+  open -a /Applications/Google\ Drive.app
 
 fancy_echo "Installing mou"
   brew cask install mou
+  dockutil --add /Applications/Mou.app
 
 fancy_echo "Installing slack"
   brew cask install slack
+  dockutil --add /Applications/Slack.app
 
 fancy_echo "Installing teamviewer"
   brew cask install teamviewer
+  dockutil --add /Applications/TeamViewer.app
 
 fancy_echo "Installing viscosity"
   brew cask install viscosity
+  open -a /Applications/Viscosity.app
 
 fancy_echo "Installing imagealpha"
   brew cask install imagealpha
 
 fancy_echo "Installing the-unarchiver"
   brew cask install the-unarchiver
+  open -a /Applications/The\ Unarchiver.app
 
 fancy_echo "Installing vlc"
   brew cask install vlc
 
 fancy_echo "Installing dropbox"
   brew cask install dropbox
+  open -a /Applications/Dropbox.app
 
 fancy_echo "Installing imageoptim"
   brew cask install imageoptim
@@ -352,15 +372,19 @@ fancy_echo "Installing packer"
 
 fancy_echo "Installing sourcetree"
   brew cask install sourcetree
+  dockutil --add /Applications/SourceTree.app
 
 fancy_echo "Installing vmware-fusion"
   brew cask install vmware-fusion
+  dockutil --add /Applications/VMware\ Fusion.app
 
 fancy_echo "Installing iterm2-beta"
   brew cask install iterm2-beta
+  dockutil --add /Applications/iTerm.app
 
 fancy_echo "Installing pgadmin3"
   brew cask install pgadmin3
+  dockutil --add /Applications/pgAdmin3.app
 
 
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
@@ -549,10 +573,6 @@ echo "Enabling snap-to-grid for icons on the desktop and in other icon views"
 ###############################################################################
 
 echo ""
-echo "Wipe all (default) app icons from the Dock"
-defaults write com.apple.dock persistent-apps -array
-
-echo ""
 echo "Setting the icon size of Dock items to 36 pixels for optimal size/screen-realestate"
 defaults write com.apple.dock tilesize -int 36
 
@@ -561,11 +581,7 @@ echo "Speeding up Mission Control animations and grouping windows by application
 defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock "expose-group-by-app" -bool true
 
-echo ""
-echo "Set Dock to auto-hide and remove the auto-hiding delay"
-defaults write com.apple.dock autohide -bool true
-defaults write com.apple.dock autohide-delay -float 0
-defaults write com.apple.dock autohide-time-modifier -float 0
+
 
 
 ###############################################################################
