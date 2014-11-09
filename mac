@@ -448,6 +448,10 @@ echo "Disable smart quotes and smart dashes"
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
+echo ""
+echo "Always show scrollbars"
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+
 ###############################################################################
 # General Power and Performance modifications
 ###############################################################################
@@ -498,6 +502,25 @@ echo ""
 echo "Turn off keyboard illumination when computer is not used for 5 minutes"
 defaults write com.apple.BezelServices kDimTime -int 300
 
+echo ""
+echo "Trackpad: enable tap to click for this user and for the login screen"
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+echo ""
+echo "Disable “natural” (Lion-style) scrolling"
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+echo ""
+echo "Use scroll gesture with the Ctrl (^) modifier key to zoom"
+defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
+
+echo ""
+echo "Follow the keyboard focus while zoomed in"
+defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
+
 ###############################################################################
 # Screen
 ###############################################################################
@@ -536,6 +559,10 @@ echo "Show status bar in Finder by default"
 defaults write com.apple.finder ShowStatusBar -bool true
 
 echo ""
+echo "Show path bar"
+defaults write com.apple.finder ShowPathbar -bool true
+
+echo ""
 echo "Display full POSIX path as Finder window title"
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
@@ -567,6 +594,14 @@ echo "Enabling snap-to-grid for icons on the desktop and in other icon views"
 /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
+echo ""
+echo "Enable AirDrop over Ethernet and on unsupported Macs running Lion"
+defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+
+echo ""
+echo "Show the ~/Library folder"
+chflags nohidden ~/Library
+
 
 ###############################################################################
 # Dock & Mission Control
@@ -581,12 +616,36 @@ echo "Speeding up Mission Control animations and grouping windows by application
 defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock "expose-group-by-app" -bool true
 
+echo ""
+echo "Hot corners"
 
+echo ""
+echo "Top left screen corner → Start screen saver"
+defaults write com.apple.dock wvous-tl-corner -int 5
+defaults write com.apple.dock wvous-tl-modifier -int 0
 
+echo ""
+echo "Top right screen corner → Mission Control"
+defaults write com.apple.dock wvous-tr-corner -int 2
+defaults write com.apple.dock wvous-tr-modifier -int 0
+
+echo ""
+echo "Bottom right screen corner → Desktop"
+defaults write com.apple.dock wvous-br-corner -int 4
+defaults write com.apple.dock wvous-br-modifier -int 0
+
+echo ""
+echo "Bottom left screen corner → Application Windows"
+defaults write com.apple.dock wvous-bl-corner -int 4
+defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
 # Safari & WebKit
 ###############################################################################
+
+echo ""
+echo "Privacy: don’t send search queries to Apple"
+defaults write com.apple.Safari UniversalSearchEnabled -bool false
 
 echo ""
 echo "Hiding Safari's bookmarks bar by default"
