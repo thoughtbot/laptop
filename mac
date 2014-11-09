@@ -116,9 +116,24 @@ else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
 
+fancy_echo "Installing brew cask"
+  brew install caskroom/cask/brew-cask
+  brew tap caskroom/versions
+  brew tap caskroom/fonts
+  export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+  append_to_zshrc 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
+
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 brew tap homebrew/dupes
+
+fancy_echo "Fix homebrew permissions for multi-user"
+sudo chgrp -R admin /usr/local
+sudo chmod -R g+w /usr/local
+sudo chgrp -R admin /Library/Caches/Homebrew
+sudo chmod -R g+w /Library/Caches/Homebrew
+sudo chgrp -R admin /opt/homebrew-cask
+sudo chmod -R g+w /opt/homebrew-cask
 
 fancy_echo "Installing Zsh"
   brew_install_or_upgrade 'zsh'
@@ -290,13 +305,6 @@ fancy_echo "Installing foreman ..."
 # else
 #   fancy_echo "rcm already installed. Skipping ..."
 # fi
-
-fancy_echo "Installing brew cask"
-  brew install caskroom/cask/brew-cask
-  brew tap caskroom/versions
-  brew tap caskroom/fonts
-  export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-  append_to_zshrc 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
 
 echo ""
 echo "Wipe all (default) app icons from the Dock"
