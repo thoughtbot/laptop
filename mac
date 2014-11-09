@@ -45,6 +45,7 @@ if [[ ! -f "$HOME/.zshrc" ]]; then
 fi
 
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
+export PATH="$HOME/.bin:$PATH"
 
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
@@ -130,8 +131,12 @@ if [[ "$SHELL" != */zsh ]]; then
     sudo chpass -s /usr/local/bin/zsh
 fi
 
-fancy_echo "Installing oh-my-zsh"
-  curl -L http://install.ohmyz.sh | sh
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+  fancy_echo "Installing oh-my-zsh"
+    curl -L http://install.ohmyz.sh | sh
+else
+  fancy_echo "oh-my-zsh already installed"
+fi
 
 fancy_echo "Installing GNU core utilities (those that come with OS X are outdated)"
   brew_install_or_upgrade 'coreutils'
@@ -340,7 +345,7 @@ fancy_echo "Installing mou"
 
 fancy_echo "Installing slack"
   brew cask install slack
-  dockutil --add /Applications/Slack.app
+  dockutil --add /Applications/Slack\ 0.44.2.app
 
 fancy_echo "Installing teamviewer"
   brew cask install teamviewer
@@ -587,12 +592,6 @@ defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 echo ""
 echo "Allowing text selection in Quick Look/Preview in Finder by default"
 defaults write com.apple.finder QLEnableTextSelection -bool true
-
-echo ""
-echo "Enabling snap-to-grid for icons on the desktop and in other icon views"
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
 echo ""
 echo "Enable AirDrop over Ethernet and on unsupported Macs running Lion"
