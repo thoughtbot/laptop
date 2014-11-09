@@ -237,13 +237,13 @@ fancy_echo "Upgrading and linking OpenSSL ..."
   brew unlink openssl && brew link openssl --force
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-if ls /usr/local | grep -q "ruby-$ruby_version"; then
+if ls ~/.rubies | grep -q "ruby-$ruby_version"; then
+  fancy_echo "Ruby $ruby_version is already installed"
+else
   fancy_echo "Installing Ruby $ruby_version ..."
-    ruby-install --system ruby "$ruby_version"
+    ruby-install ruby "$ruby_version"
     append_to_zshrc "chruby ruby-$ruby_version"
     chruby "ruby-$ruby_version"
-else
-  fancy_echo "Ruby $ruby_version is already installed"
 fi
 
 fancy_echo "Updating to latest Rubygems version ..."
