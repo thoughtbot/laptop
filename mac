@@ -130,6 +130,9 @@ if [[ "$SHELL" != */zsh ]]; then
     sudo chpass -s /usr/local/bin/zsh
 fi
 
+fancy_echo "Installing oh-my-zsh"
+  curl -L http://install.ohmyz.sh | sh
+
 fancy_echo "Installing GNU core utilities (those that come with OS X are outdated)"
   brew_install_or_upgrade 'coreutils'
   append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
