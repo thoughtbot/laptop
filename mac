@@ -399,6 +399,16 @@ fancy_echo "Installing pgadmin3"
   brew cask install pgadmin3
   dockutil --add /Applications/pgAdmin3.app
 
+fancy_echo "Installing Google Chrome"
+  brew cask install google-chrome-beta
+  dockutil --add /Applications/Google\ Chrome.app
+
+fancy_echo "Installing Firefox"
+  brew cask install firefox-beta
+  dockutil --add /Applications/Firefox.app
+
+fancy_echo "Add safari to the dock"
+  dockutil --add /Applications/Safari.app
 
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
