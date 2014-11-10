@@ -324,7 +324,6 @@ fancy_echo "Installing caffeine"
 
 fancy_echo "Installing google-drive"
   brew cask install google-drive
-  open -a /Applications/Google\ Drive.app
 
 fancy_echo "Installing mou"
   brew cask install mou
@@ -354,7 +353,6 @@ fancy_echo "Installing vlc"
 
 fancy_echo "Installing dropbox"
   brew cask install dropbox
-  open -a /Applications/Dropbox.app
 
 fancy_echo "Installing imageoptim"
   brew cask install imageoptim
@@ -387,8 +385,10 @@ fancy_echo "Installing Firefox"
   brew cask install firefox-beta
   dockutil --add /Applications/Firefox.app
 
-fancy_echo "Add safari to the dock"
+fancy_echo "Add official apps to the dock"
   dockutil --add /Applications/Safari.app
+  dockutil --add /Applications/Xcode.app
+  dockutil --add /Applications/Wunderlist.app
 
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
