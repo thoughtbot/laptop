@@ -31,22 +31,6 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
-# Here we go.. ask for the administrator password upfront and run a
-# keep-alive to update existing `sudo` time stamp until script has finished
-sudo -v
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
-if [[ ! -d "$HOME/.bin/" ]]; then
-  mkdir "$HOME/.bin"
-fi
-
-if [[ ! -f "$HOME/.zshrc" ]]; then
-  touch "$HOME/.zshrc"
-fi
-
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-export PATH="$HOME/.bin:$PATH"
-
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then
@@ -88,6 +72,11 @@ brew_launchctl_restart() {
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
 }
 
+# Here we go.. ask for the administrator password upfront and run a
+# keep-alive to update existing `sudo` time stamp until script has finished
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 if fdesetup status | grep -q "is Off"; then
   fancy_echo "Enabling FileVault. Please enter your password."
   sudo fdesetup enable -forcerestart
@@ -103,6 +92,13 @@ if [ $? -eq "2" ]; then
   read -p "Press [Enter] once install is done."
 else
   fancy_echo "Xcode commandline tools are installed. Continuing."
+fi
+
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+  fancy_echo "Installing oh-my-zsh"
+    curl -L http://install.ohmyz.sh | sh
+else
+  fancy_echo "oh-my-zsh already installed"
 fi
 
 if ! command -v brew >/dev/null; then
@@ -125,24 +121,6 @@ sudo chgrp -R admin /usr/local
 sudo chmod -R g+w /usr/local
 sudo chgrp -R admin /Library/Caches/Homebrew
 sudo chmod -R g+w /Library/Caches/Homebrew
-
-fancy_echo "Installing Zsh"
-  brew_install_or_upgrade 'zsh'
-  sed -E 's|^/bin/zsh$|/usr/local/bin/zsh|' /etc/shells | sudo tee /etc/shells > /dev/null
-
-if [[ "$SHELL" != */zsh ]]; then
-  fancy_echo "Changing your shell to zsh ..."
-    chpass -s /usr/local/bin/zsh
-  fancy_echo "Changing root shell to zsh ..."
-    sudo chpass -s /usr/local/bin/zsh
-fi
-
-if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-  fancy_echo "Installing oh-my-zsh"
-    curl -L http://install.ohmyz.sh | sh
-else
-  fancy_echo "oh-my-zsh already installed"
-fi
 
 fancy_echo "Installing GNU core utilities (those that come with OS X are outdated)"
   brew_install_or_upgrade 'coreutils'
