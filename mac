@@ -260,7 +260,6 @@ else
   fancy_echo "Installing Ruby $ruby_version ..."
     ruby-install ruby "$ruby_version"
     append_to_zshrc "chruby ruby-$ruby_version"
-    chruby "ruby-$ruby_version"
 fi
 
 fancy_echo "Updating to latest Rubygems version ..."
@@ -404,6 +403,7 @@ fancy_echo "Installing pgadmin3"
 fancy_echo "Installing Google Chrome"
   brew cask install google-chrome-beta
   dockutil --add /Applications/Google\ Chrome.app
+  open -a /Applications/Google\ Chrome.app --args --make-default-browser
 
 fancy_echo "Installing Firefox"
   brew cask install firefox-beta
@@ -627,6 +627,9 @@ echo ""
 echo "Show the ~/Library folder"
 chflags nohidden ~/Library
 
+echo ""
+echo "When performing a search, search the current folder by default"
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 ###############################################################################
 # Dock & Mission Control
