@@ -19,7 +19,7 @@ Install
 
 Read, then run the script:
 
-    bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) 2>&1 | tee ~/laptop.log
+    bash <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/mac) 2>&1 | tee ~/laptop.log
 
 Debugging
 ---------

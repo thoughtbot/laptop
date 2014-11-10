@@ -31,21 +31,6 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
-if [[ ! -d "$HOME/.bin/" ]]; then
-  mkdir "$HOME/.bin"
-fi
-
-if [[ ! -f "$HOME/.zshrc" ]]; then
-  touch "$HOME/.zshrc"
-fi
-
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-
-if [[ "$SHELL" != */zsh ]]; then
-  fancy_echo "Changing your shell to zsh ..."
-    chsh -s $(which zsh)
-fi
-
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then
@@ -87,6 +72,35 @@ brew_launchctl_restart() {
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
 }
 
+# Here we go.. ask for the administrator password upfront and run a
+# keep-alive to update existing `sudo` time stamp until script has finished
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+if fdesetup status | grep -q "is Off"; then
+  fancy_echo "Enabling FileVault. Please enter your password."
+  sudo fdesetup enable -forcerestart
+  fancy_echo "FileVault is enabled. Please restart and relaunch this script."
+else
+  fancy_echo "FileVault is enabled. Continuing."
+fi
+
+xcode-select -p 2> /dev/null 1> /dev/null
+if [ $? -eq "2" ]; then
+  fancy_echo "Installing Xcode commandline tools"
+  xcode-select --install
+  read -p "Press [Enter] once install is done."
+else
+  fancy_echo "Xcode commandline tools are installed. Continuing."
+fi
+
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+  fancy_echo "Installing oh-my-zsh"
+    curl -L http://install.ohmyz.sh | sh
+else
+  fancy_echo "oh-my-zsh already installed"
+fi
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/master/install)
@@ -100,9 +114,63 @@ fi
 
 fancy_echo "Updating Homebrew formulas ..."
 brew update
+brew tap homebrew/dupes
+
+fancy_echo "Fix homebrew permissions for multi-user"
+sudo chgrp -R admin /usr/local
+sudo chmod -R g+w /usr/local
+sudo chgrp -R admin /Library/Caches/Homebrew
+sudo chmod -R g+w /Library/Caches/Homebrew
+
+fancy_echo "Installing GNU core utilities (those that come with OS X are outdated)"
+  brew_install_or_upgrade 'coreutils'
+  append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
+  append_to_zshrc 'export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"'
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+
+fancy_echo "Installing some other useful utilities like sponge"
+  brew_install_or_upgrade 'moreutils'
+
+fancy_echo "Installing GNU find, locate, updatedb, and xargs, g-prefixed."
+  brew_install_or_upgrade 'findutils'
+
+fancy_echo "Installing GNU sed, overwriting the built-in sed."
+  brew_install_or_upgrade 'gnu-sed'
+  append_to_zshrc 'export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"'
+  append_to_zshrc 'export MANPATH="$(brew --prefix gnu-sed)/libexec/gnuman:$MANPATH"'
+  export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
+
+fancy_echo "Installing more recent versions of grep."
+  brew_install_or_upgrade 'homebrew/dupes/grep' --default-names
+
+fancy_echo "Installing more recent versions of screen."
+  brew_install_or_upgrade 'homebrew/dupes/screen'
+
+fancy_echo "Installing Git"
+  brew_install_or_upgrade 'git'
+
+fancy_echo "Installing Tig"
+  brew_install_or_upgrade 'tig'
+
+fancy_echo "Installing Ansible"
+  brew_install_or_upgrade 'ansible'
+
+fancy_echo "Installing Wget with IRI support."
+  brew_install_or_upgrade 'wget' --with-iri
+
+fancy_echo "Installing Bash 4"
+  brew_install_or_upgrade 'bash'
+  brew_install_or_upgrade 'bash-completion'
+  sed -E 's|$/bin/bash$|/usr/local/bin/bash|' /etc/shells | sudo tee /etc/shells > /dev/null
+  # XXX add completion to bashrc
+
+fancy_echo "Installing Tree"
+  brew_install_or_upgrade 'tree'
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
   brew_install_or_upgrade 'postgres'
+  export ARCHFLAGS="-arch x86_64"
+  append_to_zshrc 'export ARCHFLAGS="-arch x86_64"'
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew_install_or_upgrade 'redis'
@@ -111,7 +179,7 @@ fancy_echo "Installing The Silver Searcher (better than ack or grep) to search t
   brew_install_or_upgrade 'the_silver_searcher'
 
 fancy_echo "Installing vim from Homebrew to get the latest version ..."
-  brew_install_or_upgrade 'vim'
+  brew_install_or_upgrade 'vim' --override-system-vi
 
 fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
   brew_install_or_upgrade 'ctags'
@@ -119,11 +187,14 @@ fancy_echo "Installing ctags, to index files for vim tab completion of methods, 
 fancy_echo "Installing tmux, to save project state and switch between projects ..."
   brew_install_or_upgrade 'tmux'
 
+fancy_echo "Installing dockutil to manage the dock"
+  brew_install_or_upgrade 'dockutil'
+
 fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
   brew_install_or_upgrade 'reattach-to-user-namespace'
 
 fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew_install_or_upgrade 'imagemagick'
+  brew_install_or_upgrade 'imagemagick' --with-webp
 
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
   brew_install_or_upgrade 'qt'
@@ -134,64 +205,40 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
 fancy_echo "Installing GitHub CLI client ..."
   brew_install_or_upgrade 'gh'
 
-node_version="0.10"
+fancy_echo "Installing Node ..."
+  brew_install_or_upgrade 'node'
 
-fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
-  brew_install_or_upgrade 'nvm'
+fancy_echo "Installing Android SDK ..."
+  brew_install_or_upgrade 'android-sdk'
 
-  append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
-  append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh' 1
+fancy_echo "Installing Ryby Install ..."
+  brew_install_or_upgrade 'ruby-install'
 
-  source $(brew --prefix nvm)/nvm.sh
-  nvm install "$node_version"
-
-  fancy_echo "Setting $node_version as the global default nodejs..."
-  nvm alias default "$node_version"
+fancy_echo "Installing chruby ..."
+  brew_install_or_upgrade 'chruby'
+  append_to_zshrc 'source /usr/local/share/chruby/chruby.sh'
+  append_to_zshrc 'source /usr/local/share/chruby/auto.sh'
+  source /usr/local/share/chruby/chruby.sh
+  source /usr/local/share/chruby/auto.sh
 
 fancy_echo "Starting Postgres ..."
   brew_launchctl_restart postgresql
 
-if [[ ! -d "$HOME/.rbenv" ]]; then
-  fancy_echo "Installing rbenv, to change Ruby versions ..."
-    git clone https://github.com/sstephenson/rbenv.git "$HOME/.rbenv"
-
-    append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
-    append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init - zsh)"
-fi
-
-rehash_path="$HOME/.rbenv/plugins/rbenv-gem-rehash"
-
-if [[ ! -d "$rehash_path" ]]; then
-  fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-    git clone https://github.com/sstephenson/rbenv-gem-rehash.git "$rehash_path"
-fi
-
-ruby_build_path="$HOME/.rbenv/plugins/ruby-build"
-
-if [[ -d "$ruby_build_path" ]]; then
-  fancy_echo "Updating to latest ruby-build..."
-  cd "$ruby_build_path" && git pull && cd -
-else
-  fancy_echo "Installing ruby-build..."
-  git clone https://github.com/sstephenson/ruby-build.git "$ruby_build_path"
-fi
+fancy_echo "Starting Redis ..."
+  brew_launchctl_restart redis
 
 fancy_echo "Upgrading and linking OpenSSL ..."
   brew_install_or_upgrade 'openssl'
   brew unlink openssl && brew link openssl --force
 
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-
-fancy_echo "Installing Ruby $ruby_version ..."
-  rbenv install -s "$ruby_version"
-
-fancy_echo "Setting $ruby_version as global default Ruby ..."
-  rbenv global "$ruby_version"
-  rbenv local "$ruby_version"
-  rbenv rehash
+ruby_version="2.1.4"
+if ls ~/.rubies | grep -q "ruby-$ruby_version"; then
+  fancy_echo "Ruby $ruby_version is already installed"
+else
+  fancy_echo "Installing Ruby $ruby_version ..."
+    ruby-install ruby "$ruby_version"
+    append_to_zshrc "chruby ruby-$ruby_version"
+fi
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
@@ -199,19 +246,18 @@ fancy_echo "Updating to latest Rubygems version ..."
 fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
   gem install bundler --no-document
 
+fancy_echo "Installing awesome_print ..."
+  gem install awesome_print --no-document
+
 fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
-  gem install suspenders --no-document
-
-fancy_echo "Installing Parity, shell commands for development, staging, and
-production parity ..."
-  gem install parity --no-document
-
 fancy_echo "Installing Heroku CLI client ..."
   brew_install_or_upgrade 'heroku-toolbelt'
+
+fancy_echo "Installing Github Release ..."
+  brew_install_or_upgrade 'github-release'
 
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   heroku plugins:install https://github.com/ddollar/heroku-config.git
@@ -220,15 +266,498 @@ fancy_echo "Installing foreman ..."
   curl -sLo /tmp/foreman.pkg http://assets.foreman.io/foreman/foreman.pkg && \
   sudo installer -pkg /tmp/foreman.pkg -tgt /
 
-if ! command -v rcup >/dev/null; then
-  fancy_echo "Installing rcm, to manage your dotfiles ..."
-    brew tap thoughtbot/formulae
-    brew_install_or_upgrade 'rcm'
-else
-  fancy_echo "rcm already installed. Skipping ..."
-fi
+# if ! command -v rcup >/dev/null; then
+#   fancy_echo "Installing rcm, to manage your dotfiles ..."
+#     brew tap thoughtbot/formulae
+#     brew_install_or_upgrade 'rcm'
+# else
+#   fancy_echo "rcm already installed. Skipping ..."
+# fi
+
+fancy_echo "Installing brew cask"
+  brew install caskroom/cask/brew-cask
+  brew tap caskroom/versions
+  brew tap caskroom/fonts
+  export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+  append_to_zshrc 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
+
+fancy_echo "Fix homebrew permissions for multi-user"
+sudo chgrp -R admin /opt/homebrew-cask
+sudo chmod -R g+w /opt/homebrew-cask
+
+echo ""
+echo "Wipe all (default) app icons from the Dock"
+defaults write com.apple.dock persistent-apps -array
+
+fancy_echo "Installing alfred"
+  brew cask install alfred
+  open -a /Applications/Alfred\ 2.app
+
+fancy_echo "Installing flux"
+  brew cask install flux
+  open -a /Applications/Flux.app
+
+fancy_echo "Installing java6"
+  brew cask install java6
+
+fancy_echo "Installing vagrant"
+  brew cask install vagrant
+
+fancy_echo "Installing font-anonymous-pro"
+  brew cask install font-anonymous-pro
+
+fancy_echo "Installing skype"
+  brew cask install skype
+  dockutil --add /Applications/Skype.app
+
+fancy_echo "Installing sublime-text3"
+  brew cask install sublime-text3
+  dockutil --add /Applications/Sublime\ Text.app
+
+fancy_echo "Installing virtualbox"
+  brew cask install virtualbox
+  dockutil --add /Applications/VirtualBox.app
+
+fancy_echo "Installing caffeine"
+  brew cask install caffeine
+  open -a /Applications/Caffeine.app
+
+fancy_echo "Installing google-drive"
+  brew cask install google-drive
+  open -a /Applications/Google\ Drive.app
+
+fancy_echo "Installing mou"
+  brew cask install mou
+  dockutil --add /Applications/Mou.app
+
+fancy_echo "Installing slack"
+  brew cask install slack
+  dockutil --add /Applications/Slack\ 0.44.2.app
+
+fancy_echo "Installing teamviewer"
+  brew cask install teamviewer
+  dockutil --add /Applications/TeamViewer.app
+
+fancy_echo "Installing viscosity"
+  brew cask install viscosity
+  open -a /Applications/Viscosity.app
+
+fancy_echo "Installing imagealpha"
+  brew cask install imagealpha
+
+fancy_echo "Installing the-unarchiver"
+  brew cask install the-unarchiver
+  open -a /Applications/The\ Unarchiver.app
+
+fancy_echo "Installing vlc"
+  brew cask install vlc
+
+fancy_echo "Installing dropbox"
+  brew cask install dropbox
+  open -a /Applications/Dropbox.app
+
+fancy_echo "Installing imageoptim"
+  brew cask install imageoptim
+
+fancy_echo "Installing packer"
+  brew cask install packer
+
+fancy_echo "Installing sourcetree"
+  brew cask install sourcetree
+  dockutil --add /Applications/SourceTree.app
+
+fancy_echo "Installing vmware-fusion"
+  brew cask install vmware-fusion
+  dockutil --add /Applications/VMware\ Fusion.app
+
+fancy_echo "Installing iterm2-beta"
+  brew cask install iterm2-beta
+  dockutil --add /Applications/iTerm.app
+
+fancy_echo "Installing pgadmin3"
+  brew cask install pgadmin3
+  dockutil --add /Applications/pgAdmin3.app
+
+fancy_echo "Installing Google Chrome"
+  brew cask install google-chrome-beta
+  dockutil --add /Applications/Google\ Chrome.app
+  open -a /Applications/Google\ Chrome.app --args --make-default-browser
+
+fancy_echo "Installing Firefox"
+  brew cask install firefox-beta
+  dockutil --add /Applications/Firefox.app
+
+fancy_echo "Add safari to the dock"
+  dockutil --add /Applications/Safari.app
 
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
     source ~/.laptop.local
   fi
+
+fancy_echo "Running osx for hackers ..."
+
+#!/bin/sh
+
+# Some things taken from here
+# https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+
+# Here we go.. ask for the administrator password upfront and run a
+# keep-alive to update existing `sudo` time stamp until script has finished
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+###############################################################################
+# General UI/UX
+###############################################################################
+
+echo ""
+echo "Increasing the window resize speed for Cocoa applications"
+defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+
+echo ""
+echo "Expanding the save panel by default"
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+echo ""
+echo "Automatically quit printer app once the print jobs complete"
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+# Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
+echo ""
+echo "Displaying ASCII control characters using caret notation in standard text views"
+defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
+
+echo ""
+echo "Save to disk, rather than iCloud, by default"
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+echo ""
+echo "Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window"
+sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+
+echo ""
+echo "Check for software updates daily, not just once per week"
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+echo ""
+echo "Removing duplicates in the 'Open With' menu"
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
+
+echo ""
+echo "Disable smart quotes and smart dashes"
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+echo ""
+echo "Always show scrollbars"
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+
+###############################################################################
+# General Power and Performance modifications
+###############################################################################
+
+echo ""
+echo "Disable the sudden motion sensor (it's not useful for SSDs/current MacBooks)"
+sudo pmset -a sms 0
+
+echo ""
+echo "Speeding up wake from sleep to 24 hours from an hour"
+# http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
+sudo pmset -a standbydelay 86400
+
+echo ""
+echo "Disabling the annoying backswipe in Chrome"
+defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
+
+################################################################################
+# Trackpad, mouse, keyboard, Bluetooth accessories, and input
+###############################################################################
+
+echo ""
+echo "Increasing sound quality for Bluetooth headphones/headsets"
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+
+echo ""
+echo "Enabling full keyboard access for all controls (enable Tab in modal dialogs, menu windows, etc.)"
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+echo ""
+echo "Disabling press-and-hold for special keys in favor of key repeat"
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+echo ""
+echo "Setting a blazingly fast keyboard repeat rate"
+defaults write NSGlobalDomain KeyRepeat -int 0
+
+echo ""
+echo "Disable auto-correct"
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+echo ""
+echo "Setting trackpad & mouse speed to a reasonable number"
+defaults write -g com.apple.trackpad.scaling 2
+defaults write -g com.apple.mouse.scaling 2.5
+
+echo ""
+echo "Turn off keyboard illumination when computer is not used for 5 minutes"
+defaults write com.apple.BezelServices kDimTime -int 300
+
+echo ""
+echo "Trackpad: enable tap to click for this user and for the login screen"
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+echo ""
+echo "Disable “natural” (Lion-style) scrolling"
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+echo ""
+echo "Use scroll gesture with the Ctrl (^) modifier key to zoom"
+defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
+
+echo ""
+echo "Follow the keyboard focus while zoomed in"
+defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
+
+###############################################################################
+# Screen
+###############################################################################
+
+echo ""
+echo "Requiring password immediately after sleep or screen saver begins"
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+echo ""
+echo "Setting screenshot format to PNG"
+defaults write com.apple.screencapture type -string "png"
+
+echo ""
+echo "Enabling subpixel font rendering on non-Apple LCDs"
+defaults write NSGlobalDomain AppleFontSmoothing -int 2
+
+echo ""
+echo "Enabling HiDPI display modes (requires restart)"
+sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+
+###############################################################################
+# Finder
+###############################################################################
+
+echo ""
+echo "Set Desktop as the default location for new Finder windows"
+# For other paths, use `PfLo` and `file:///full/path/here/`
+defaults write com.apple.finder NewWindowTarget -string "PfDe"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"
+
+echo ""
+echo "Show icons for hard drives, servers, and removable media on the desktop?"
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+
+echo ""
+echo "Show all filename extensions in Finder by default"
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+echo ""
+echo "Show status bar in Finder by default"
+defaults write com.apple.finder ShowStatusBar -bool true
+
+echo ""
+echo "Show path bar"
+defaults write com.apple.finder ShowPathbar -bool true
+
+echo ""
+echo "Display full POSIX path as Finder window title"
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+echo ""
+echo "Disable the warning when changing a file extension? (y/n)"
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+echo ""
+echo "Use column view in all Finder windows by default"
+defaults write com.apple.finder FXPreferredViewStyle Clmv
+
+echo ""
+echo "Avoid creation of .DS_Store files on network volumes"
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+echo ""
+echo "Disable disk image verification"
+defaults write com.apple.frameworks.diskimages skip-verify -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
+
+echo ""
+echo "Allowing text selection in Quick Look/Preview in Finder by default"
+defaults write com.apple.finder QLEnableTextSelection -bool true
+
+echo ""
+echo "Enable AirDrop over Ethernet and on unsupported Macs running Lion"
+defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+
+echo ""
+echo "Show the ~/Library folder"
+chflags nohidden ~/Library
+
+echo ""
+echo "When performing a search, search the current folder by default"
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+echo ""
+echo "Fix spotlight privacy"
+python <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/fix-spotlight-privacy.py) 2>&1
+
+###############################################################################
+# Dock & Mission Control
+###############################################################################
+
+echo ""
+echo "Setting the icon size of Dock items to 36 pixels for optimal size/screen-realestate"
+defaults write com.apple.dock tilesize -int 36
+
+echo ""
+echo "Speeding up Mission Control animations and grouping windows by application"
+defaults write com.apple.dock expose-animation-duration -float 0.1
+defaults write com.apple.dock "expose-group-by-app" -bool true
+
+echo ""
+echo "Hot corners"
+
+echo ""
+echo "Top left screen corner → Start screen saver"
+defaults write com.apple.dock wvous-tl-corner -int 5
+defaults write com.apple.dock wvous-tl-modifier -int 0
+
+echo ""
+echo "Top right screen corner → Mission Control"
+defaults write com.apple.dock wvous-tr-corner -int 2
+defaults write com.apple.dock wvous-tr-modifier -int 0
+
+echo ""
+echo "Bottom right screen corner → Desktop"
+defaults write com.apple.dock wvous-br-corner -int 4
+defaults write com.apple.dock wvous-br-modifier -int 0
+
+echo ""
+echo "Bottom left screen corner → Application Windows"
+defaults write com.apple.dock wvous-bl-corner -int 4
+defaults write com.apple.dock wvous-bl-modifier -int 0
+
+###############################################################################
+# Safari & WebKit
+###############################################################################
+
+echo ""
+echo "Privacy: don’t send search queries to Apple"
+defaults write com.apple.Safari UniversalSearchEnabled -bool false
+
+echo ""
+echo "Hiding Safari's bookmarks bar by default"
+defaults write com.apple.Safari ShowFavoritesBar -bool false
+
+echo ""
+echo "Hiding Safari's sidebar in Top Sites"
+defaults write com.apple.Safari ShowSidebarInTopSites -bool false
+
+echo ""
+echo "Disabling Safari's thumbnail cache for History and Top Sites"
+defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+
+echo ""
+echo "Enabling Safari's debug menu"
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+echo ""
+echo "Making Safari's search banners default to Contains instead of Starts With"
+defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
+
+echo ""
+echo "Removing useless icons from Safari's bookmarks bar"
+defaults write com.apple.Safari ProxiesInBookmarksBar "()"
+
+echo ""
+echo "Allow hitting the Backspace key to go to the previous page in history"
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+
+echo ""
+echo "Enabling the Develop menu and the Web Inspector in Safari"
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
+
+echo ""
+echo "Adding a context menu item for showing the Web Inspector in web views"
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+
+###############################################################################
+# Mail
+###############################################################################
+
+echo ""
+echo "Setting email addresses to copy as 'foo@example.com' instead of 'Foo Bar <foo@example.com>' in Mail.app"
+defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
+
+
+###############################################################################
+# Terminal
+###############################################################################
+
+echo ""
+echo "Enabling UTF-8 ONLY in Terminal.app and setting the Pro theme by default"
+defaults write com.apple.terminal StringEncodings -array 4
+defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
+defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
+
+
+###############################################################################
+# Time Machine
+###############################################################################
+
+echo ""
+echo "Prevent Time Machine from prompting to use new hard drives as backup volume"
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+echo ""
+echo "Disable local Time Machine backups (This can take up a ton of SSD space on <128GB SSDs)"
+hash tmutil &> /dev/null && sudo tmutil disablelocal
+
+###############################################################################
+# Messages                                                                    #
+###############################################################################
+
+echo ""
+echo "Disable smart quotes in Messages.app (it's annoying for messages that contain code)"
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
+
+echo ""
+echo "Disable continuous spell checking in Messages.app"
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
+
+###############################################################################
+# Kill affected applications
+###############################################################################
+
+echo ""
+echo "Done!"
+echo ""
+echo ""
+echo "################################################################################"
+echo ""
+echo ""
+echo "Note that some of these changes require a logout/restart to take effect."
+echo "Killing some open applications in order to take effect."
+echo ""
+
+find ~/Library/Application\ Support/Dock -name "*.db" -maxdepth 1 -delete
+for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
+  "Dock" "Finder" "Mail" "Messages" "Safari" "SystemUIServer" \
+  "Transmission"; do
+  killall "${app}" > /dev/null 2>&1
+done
