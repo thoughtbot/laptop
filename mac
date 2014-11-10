@@ -609,6 +609,10 @@ echo ""
 echo "When performing a search, search the current folder by default"
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
+echo ""
+echo "Fix spotlight privacy"
+python <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/fix-spotlight-privacy.py) 2>&1
+
 ###############################################################################
 # Dock & Mission Control
 ###############################################################################
