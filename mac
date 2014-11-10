@@ -122,6 +122,10 @@ sudo chmod -R g+w /usr/local
 sudo chgrp -R admin /Library/Caches/Homebrew
 sudo chmod -R g+w /Library/Caches/Homebrew
 
+fancy_echo "Upgrading and linking OpenSSL ..."
+  brew_install_or_upgrade 'openssl'
+  brew unlink openssl && brew link openssl --force
+
 fancy_echo "Installing GNU core utilities (those that come with OS X are outdated)"
   brew_install_or_upgrade 'coreutils'
   append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
@@ -226,10 +230,6 @@ fancy_echo "Starting Postgres ..."
 
 fancy_echo "Starting Redis ..."
   brew_launchctl_restart redis
-
-fancy_echo "Upgrading and linking OpenSSL ..."
-  brew_install_or_upgrade 'openssl'
-  brew unlink openssl && brew link openssl --force
 
 ruby_version="2.1.4"
 if ls ~/.rubies | grep -q "ruby-$ruby_version"; then
