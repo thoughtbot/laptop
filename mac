@@ -153,20 +153,11 @@ fancy_echo "Starting Postgres ..."
 
 if [[ ! -d "$HOME/.rbenv" ]]; then
   fancy_echo "Installing rbenv, to change Ruby versions ..."
-    git clone https://github.com/sstephenson/rbenv.git "$HOME/.rbenv"
-
-    append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
+    brew_install_or_upgrade 'rbenv'
     append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-fi
 
-ruby_build_path="$HOME/.rbenv/plugins/ruby-build"
-
-if [[ -d "$ruby_build_path" ]]; then
-  fancy_echo "Updating to latest ruby-build..."
-  cd "$ruby_build_path" && git pull && cd -
-else
-  fancy_echo "Installing ruby-build..."
-  git clone https://github.com/sstephenson/ruby-build.git "$ruby_build_path"
+  fancy_echo "Installing ruby-build, to install new Ruby versions ..."
+    brew_install_or_upgrade 'ruby-build'
 fi
 
 fancy_echo "Upgrading and linking OpenSSL ..."
@@ -175,7 +166,6 @@ fancy_echo "Upgrading and linking OpenSSL ..."
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
-export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh)"
 
 fancy_echo "Installing Ruby $ruby_version ..."
