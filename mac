@@ -394,6 +394,10 @@ fancy_echo "Add official apps to the dock"
   dockutil --add /Applications/Xcode.app
   dockutil --add /Applications/Wunderlist.app
 
+fancy_echo "Add other pre-installed apps to the dock"
+  dockutil --add /Applications/Transmit.app
+  dockutil --add /Applications/Parallels\ Desktop.app
+
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
     source ~/.laptop.local
