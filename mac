@@ -304,7 +304,7 @@ fancy_echo "Installing vagrant"
   brew cask install vagrant
   vagrant plugin install vagrant-cachier
   vagrant plugin install vagrant-bindfs
-  vagrant plugin install vagrant fs-notify
+  vagrant plugin install vagrant-fsnotify
   vagrant plugin install vagrant-parallels
 
 fancy_echo "Installing font-anonymous-pro"
