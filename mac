@@ -275,7 +275,7 @@ fancy_echo "Installing foreman ..."
 # fi
 
 fancy_echo "Installing brew cask"
-  brew install caskroom/cask/brew-cask
+  brew_install_or_upgrade 'caskroom/cask/brew-cask'
   brew tap caskroom/versions
   brew tap caskroom/fonts
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
