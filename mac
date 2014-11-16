@@ -114,6 +114,14 @@ else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
 
+if [[ ! -f ~/.ssh/id_rsa ]]; then
+  fancy_echo "Generating ssh key"
+  read -p "SSH email (eg: john@doe.com): " SSH_EMAIL
+  read -s -p "SSH passphrase (eg: p4ssw0rd): " SSH_PASSPHRASE
+  ssh-keygen -t rsa -N $SSH_PASSPHRASE -f ~/.ssh/id_rsa -C $SSH_EMAIL
+  ssh-add ~/.ssh/id_rsa
+fi
+
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 brew tap homebrew/dupes
@@ -430,8 +438,8 @@ fancy_echo "Installing dotfiles"
   rcup -f
 
   if cat "$HOME/.gitconfig.local" | grep -q "user"; then
-    read -s -p "Git user name (eg: John Doe): " GIT_USER
-    read -s -p "Git email (eg: john@doe.com): " GIT_EMAIL
+    read -p "Git user name (eg: John Doe): " GIT_USER
+    read -p "Git email (eg: john@doe.com): " GIT_EMAIL
     echo "[user]\n  name = $GIT_USER\n  email = $GIT_EMAIL" > "$HOME/.gitconfig.local"
   fi
 
