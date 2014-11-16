@@ -232,7 +232,7 @@ fancy_echo "Installing Android SDK ..."
   brew_install_or_upgrade 'android-sdk'
   append_to_zshrc 'export ANDROID_HOME="/usr/local/opt/android-sdk"'
   export ANDROID_HOME="/usr/local/opt/android-sdk"
-  sudo expect <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/android-accept-license.sh) "android update sdk --all --no-ui --filter platform-tool,android-21,build-tools-21.1.1" "android-sdk-license-5be876d5"
+  expect <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/android-accept-license.sh) "android update sdk --all --no-ui --filter platform-tool,android-21,build-tools-21.1.1" "android-sdk-license-5be876d5"
 
 fancy_echo "Installing Ant ..."
   brew_install_or_upgrade 'ant'
