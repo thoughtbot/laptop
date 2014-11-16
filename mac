@@ -128,9 +128,9 @@ brew tap homebrew/dupes
 
 fancy_echo "Fix homebrew permissions for multi-user"
 sudo chgrp -R admin /usr/local
-sudo chmod -R g+w /usr/local
+sudo chmod -R g+wx /usr/local
 sudo chgrp -R admin /Library/Caches/Homebrew
-sudo chmod -R g+w /Library/Caches/Homebrew
+sudo chmod -R g+wx /Library/Caches/Homebrew
 
 fancy_echo "Upgrading and linking OpenSSL ..."
   brew_install_or_upgrade 'openssl'
@@ -305,7 +305,7 @@ fancy_echo "Installing brew cask"
 
 fancy_echo "Fix homebrew permissions for multi-user"
 sudo chgrp -R admin /opt/homebrew-cask
-sudo chmod -R g+w /opt/homebrew-cask
+sudo chmod -R g+wx /opt/homebrew-cask
 
 echo ""
 echo "Wipe all (default) app icons from the Dock"
