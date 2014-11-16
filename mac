@@ -212,8 +212,18 @@ fancy_echo "Installing GitHub CLI client ..."
 fancy_echo "Installing Node ..."
   brew_install_or_upgrade 'node'
 
+fancy_echo "Installing SVGO for SVG minification..."
+  npm install -g svgo
+
 fancy_echo "Installing Android SDK ..."
   brew_install_or_upgrade 'android-sdk'
+  append_to_zshrc 'export ANDROID_HOME="/usr/local/opt/android-sdk"'
+  export ANDROID_HOME="/usr/local/opt/android-sdk"
+
+  # XXX install build-tools, actual SDK
+
+fancy_echo "Installing Ant ..."
+  brew_install_or_upgrade 'ant'
 
 fancy_echo "Installing Ryby Install ..."
   brew_install_or_upgrade 'ruby-install'
@@ -299,6 +309,8 @@ fancy_echo "Installing flux"
 
 fancy_echo "Installing java6"
   brew cask install java6
+  append_to_zshrc 'export JAVA_HOME="$(/usr/libexec/java_home -v 1.6)"'
+  export JAVA_HOME="$(/usr/libexec/java_home -v 1.6)"
 
 fancy_echo "Installing vagrant"
   brew cask install vagrant
@@ -531,6 +543,10 @@ defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
 echo ""
 echo "Follow the keyboard focus while zoomed in"
 defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
+
+echo ""
+echo "Enable Magic Mouse secondary click"
+defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode TwoButton
 
 ###############################################################################
 # Screen
