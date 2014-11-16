@@ -245,7 +245,7 @@ fancy_echo "Starting Postgres ..."
 fancy_echo "Starting Redis ..."
   brew_launchctl_restart redis
 
-ruby_version="2.1.4"
+ruby_version="2.1.5"
 if ls ~/.rubies | grep -q "ruby-$ruby_version"; then
   fancy_echo "Ruby $ruby_version is already installed"
 else
