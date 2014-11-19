@@ -149,7 +149,9 @@ fancy_echo "Installing dotfiles"
     cd -
   fi
 
+  cd "$HOME/.dotfiles"
   sh "$HOME/.dotfiles/install.sh"
+  cd -
 
   if ! cat "$HOME/.gitconfig.local" | grep -q "user"; then
     read -p "Git user name (eg: John Doe): " GIT_USER
