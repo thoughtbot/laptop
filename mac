@@ -431,18 +431,25 @@ fancy_echo "Installing dotfiles"
     cd -
   fi
 
-  rcup -f
+  sh "$HOME/.dotfiles/install.sh"
 
   if ! cat "$HOME/.gitconfig.local" | grep -q "user"; then
     read -p "Git user name (eg: John Doe): " GIT_USER
     read -p "Git email (eg: john@doe.com): " GIT_EMAIL
     echo "[user]\n  name = $GIT_USER\n  email = $GIT_EMAIL" > "$HOME/.gitconfig.local"
+    defaults write com.torusknot.SourceTreeNotMAS globalUserEmail -string "$GIT_EMAIL"
+    defaults write com.torusknot.SourceTreeNotMAS globalUserFullName -string "$GIT_USER"
+    killall cfprefsd
   fi
 
 fancy_echo "Installing your personal additions from ~/.laptop.local ..."
   if [[ -f ~/.laptop.local ]]; then
     source ~/.laptop.local
   fi
+
+
+fancy_echo "Installing sublime text package control"
+  curl https://sublime.wbond.net/Package%20Control.sublime-package -o "~/Library/Application Support/Sublime Text 3/Installed Packages"
 
 fancy_echo "Running osx for hackers ..."
 
