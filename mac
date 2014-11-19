@@ -800,6 +800,17 @@ echo ""
 echo "Disable continuous spell checking in Messages.app"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
+
+
+
+fancy_echo "Downloading dev box"
+if vagrant box list | grep -q sharette; then
+  vagrant box update sharette/dev
+else
+  vagrant box add http://box.sharette.fr --provider paralells
+fi
+
+
 ###############################################################################
 # Kill affected applications
 ###############################################################################
