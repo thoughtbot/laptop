@@ -137,8 +137,8 @@ fancy_echo "Installing rcm, to manage your dotfiles ..."
   brew_install_or_upgrade 'rcm'
 
 fancy_echo "Installing sublime text package control"
-  mkdir -p "~/Library/Application Support/Sublime Text 3/Installed Packages"
-  curl https://sublime.wbond.net/Package%20Control.sublime-package -o "~/Library/Application Support/Sublime Text 3/Installed Packages/Package Control.sublime-package"
+  mkdir -p "$HOME/Library/Application Support/Sublime Text 3/Installed Packages"
+  curl https://sublime.wbond.net/Package%20Control.sublime-package -o "$HOME/Library/Application Support/Sublime Text 3/Installed Packages/Package Control.sublime-package"
 
 fancy_echo "Installing dotfiles"
   if [[ ! -d "$HOME/.dotfiles" ]]; then
@@ -150,7 +150,7 @@ fancy_echo "Installing dotfiles"
   fi
 
   cd "$HOME/.dotfiles"
-  sh "$HOME/.dotfiles/install.sh"
+  sh "install.sh"
   cd -
 
   if ! cat "$HOME/.gitconfig.local" | grep -q "user"; then
