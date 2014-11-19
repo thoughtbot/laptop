@@ -166,6 +166,9 @@ fancy_echo "Installing Git"
 fancy_echo "Installing Tig"
   brew_install_or_upgrade 'tig'
 
+fancy_echo "Installing pip"
+  sudo easy_install pip
+
 fancy_echo "Installing Ansible"
   brew_install_or_upgrade 'ansible'
   sudo pip install boto
