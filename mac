@@ -292,14 +292,6 @@ fancy_echo "Installing foreman ..."
   curl -sLo /tmp/foreman.pkg http://assets.foreman.io/foreman/foreman.pkg && \
   sudo installer -pkg /tmp/foreman.pkg -tgt /
 
-# if ! command -v rcup >/dev/null; then
-#   fancy_echo "Installing rcm, to manage your dotfiles ..."
-#     brew tap thoughtbot/formulae
-#     brew_install_or_upgrade 'rcm'
-# else
-#   fancy_echo "rcm already installed. Skipping ..."
-# fi
-
 fancy_echo "Installing brew cask"
   brew_install_or_upgrade 'caskroom/cask/brew-cask'
   brew tap caskroom/versions
