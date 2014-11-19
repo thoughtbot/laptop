@@ -168,6 +168,7 @@ fancy_echo "Installing Tig"
 
 fancy_echo "Installing Ansible"
   brew_install_or_upgrade 'ansible'
+  sudo pip install boto
 
 fancy_echo "Installing Wget with IRI support."
   brew_install_or_upgrade 'wget' --with-iri
