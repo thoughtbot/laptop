@@ -157,9 +157,6 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
 
     append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
     append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init - zsh)"
 fi
 
 rehash_path="$HOME/.rbenv/plugins/rbenv-gem-rehash"
@@ -184,6 +181,9 @@ fancy_echo "Upgrading and linking OpenSSL ..."
   brew unlink openssl && brew link openssl --force
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - zsh)"
 
 fancy_echo "Installing Ruby $ruby_version ..."
   rbenv install -s "$ruby_version"
