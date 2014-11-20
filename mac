@@ -159,13 +159,6 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
     append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
 fi
 
-rehash_path="$HOME/.rbenv/plugins/rbenv-gem-rehash"
-
-if [[ ! -d "$rehash_path" ]]; then
-  fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-    git clone https://github.com/sstephenson/rbenv-gem-rehash.git "$rehash_path"
-fi
-
 ruby_build_path="$HOME/.rbenv/plugins/ruby-build"
 
 if [[ -d "$ruby_build_path" ]]; then
@@ -191,7 +184,6 @@ fancy_echo "Installing Ruby $ruby_version ..."
 fancy_echo "Setting $ruby_version as global default Ruby ..."
   rbenv global "$ruby_version"
   rbenv local "$ruby_version"
-  rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
