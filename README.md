@@ -37,7 +37,6 @@ What it sets up
 * [Exuberant Ctags] for indexing files for vim tab completion
 * [Foreman] for serving Rails apps locally
 * [gh] for interacting with the GitHub API
-* [Heroku Config] for local `ENV` variables
 * [Heroku Toolbelt] for interacting with the Heroku API
 * [Homebrew] for managing operating system libraries
 * [ImageMagick] for cropping and resizing images
@@ -60,7 +59,6 @@ What it sets up
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Foreman]: https://github.com/ddollar/foreman
 [gh]: https://github.com/jingweno/gh
-[Heroku Config]: https://github.com/ddollar/heroku-config
 [Heroku Toolbelt]: https://toolbelt.heroku.com/
 [Homebrew]: http://brew.sh/
 [ImageMagick]: http://www.imagemagick.org/

@@ -204,9 +204,6 @@ fancy_echo "Installing Parity, shell commands for development, staging, and prod
 fancy_echo "Installing Heroku CLI for managing Heroku apps and Foreman for managing app processes ..."
   brew_install_or_upgrade 'heroku-toolbelt'
 
-fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install https://github.com/ddollar/heroku-config.git
-
 if ! command -v rcup >/dev/null; then
   fancy_echo "Installing rcm, to manage your dotfiles ..."
     brew tap thoughtbot/formulae
