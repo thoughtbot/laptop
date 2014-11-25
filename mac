@@ -198,19 +198,14 @@ fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
 fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
   gem install suspenders --no-document
 
-fancy_echo "Installing Parity, shell commands for development, staging, and
-production parity ..."
+fancy_echo "Installing Parity, shell commands for development, staging, and production parity ..."
   gem install parity --no-document
 
-fancy_echo "Installing Heroku CLI client ..."
+fancy_echo "Installing Heroku CLI for managing Heroku apps and Foreman for managing app processes ..."
   brew_install_or_upgrade 'heroku-toolbelt'
 
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   heroku plugins:install https://github.com/ddollar/heroku-config.git
-
-fancy_echo "Installing foreman ..."
-  curl -sLo /tmp/foreman.pkg http://assets.foreman.io/foreman/foreman.pkg && \
-  sudo installer -pkg /tmp/foreman.pkg -tgt /
 
 if ! command -v rcup >/dev/null; then
   fancy_echo "Installing rcm, to manage your dotfiles ..."
