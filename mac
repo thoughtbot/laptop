@@ -357,8 +357,10 @@ fancy_echo "Installing vagrant"
   vagrant plugin install vagrant-fsnotify
   vagrant plugin install vagrant-parallels
 
-fancy_echo "Installing font-anonymous-pro"
-  brew cask install font-anonymous-pro
+fancy_echo "Installing fonts"
+  brew cask install caskroom/fonts/font-anonymous-pro
+  brew cask install caskroom/fonts/font-roboto
+  brew cask install caskroom/fonts/font-meslo-lg
 
 fancy_echo "Installing skype"
   brew cask install skype
