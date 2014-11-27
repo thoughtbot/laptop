@@ -125,8 +125,8 @@ fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion
 fancy_echo "Installing ImageMagick, to crop and resize images ..."
   brew_install_or_upgrade 'imagemagick'
 
-fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew_install_or_upgrade 'qt'
+fancy_echo "Installing PhantomJS, used by Poltergeist for headless Javascript integration testing ..."
+  brew_install_or_upgrade 'phantomjs'
 
 fancy_echo "Installing watch, to execute a program periodically and show the output ..."
   brew_install_or_upgrade 'watch'
