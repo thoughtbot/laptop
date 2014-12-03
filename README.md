@@ -17,10 +17,12 @@ versions are welcome.
 Install
 -------
 
-Read, then run the script:
+Download, review, then execute the script:
 
-```bash
-bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) 2>&1 | tee ~/laptop.log
+```sh
+curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+less mac
+bash mac 2>&1 | tee ~/laptop.log
 ```
 
 Debugging
