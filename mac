@@ -43,7 +43,7 @@ append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
 if [[ "$SHELL" != */zsh ]]; then
   fancy_echo "Changing your shell to zsh ..."
-    chsh -s $(which zsh)
+    chsh -s "$(which zsh)"
 fi
 
 brew_install_or_upgrade() {
@@ -142,7 +142,7 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
   append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
   append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh' 1
 
-  source $(brew --prefix nvm)/nvm.sh
+  source "$(brew --prefix nvm)/nvm.sh"
   nvm install "$node_version"
 
   fancy_echo "Setting $node_version as the global default nodejs..."

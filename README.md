@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a script to set up an OS X laptop for Rails development.
+Laptop is a script to set up an OS X laptop for web development.
 
 Requirements
 ------------
@@ -19,7 +19,9 @@ Install
 
 Read, then run the script:
 
-    bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) 2>&1 | tee ~/laptop.log
+```bash
+bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) 2>&1 | tee ~/laptop.log
+```
 
 Debugging
 ---------
@@ -35,7 +37,7 @@ What it sets up
 
 * [Bundler] for managing Ruby libraries
 * [Exuberant Ctags] for indexing files for vim tab completion
-* [Foreman] for serving Rails apps locally
+* [Foreman] for managing web processes
 * [gh] for interacting with the GitHub API
 * [Heroku Toolbelt] for interacting with the Heroku API
 * [Homebrew] for managing operating system libraries
@@ -90,14 +92,16 @@ Make your own customizations
 Put your customizations in `~/.laptop.local`. For example, your
 `~/.laptop.local` might look like this:
 
-    #!/bin/sh
+```sh
+#!/bin/sh
 
-    brew tap caskroom/cask
-    brew install brew-cask
+brew tap caskroom/cask
+brew install brew-cask
 
-    brew cask install dropbox
-    brew cask install google-chrome
-    brew cask install rdio
+brew cask install dropbox
+brew cask install google-chrome
+brew cask install rdio
+```
 
 You should write your customizations such that they can be run safely more than
 once. See the `mac` script for examples.
@@ -116,6 +120,15 @@ Contributing
 ------------
 
 Edit the `mac` file.
+Document in the `README.md` file.
+Follow shell style guidelines by using [ShellCheck] and [Syntastic].
+
+```bash
+brew install shellcheck
+```
+
+[ShellCheck]: http://www.shellcheck.net/about.html
+[Syntastic]: https://github.com/scrooloose/syntastic
 
 License
 -------
