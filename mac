@@ -160,9 +160,10 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
     brew_install_or_upgrade 'ruby-build'
 fi
 
-fancy_echo "Upgrading and linking OpenSSL ..."
+fancy_echo "Installing sytem dependencies for Ruby builds ..."
   brew_install_or_upgrade 'openssl'
   brew unlink openssl && brew link openssl --force
+  brew_install_or_upgrade 'libyaml'
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
