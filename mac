@@ -128,9 +128,6 @@ fancy_echo "Installing ImageMagick, to crop and resize images ..."
 fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
   brew_install_or_upgrade 'qt'
 
-fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  brew_install_or_upgrade 'watch'
-
 fancy_echo "Installing GitHub CLI client ..."
   brew_install_or_upgrade 'gh'
 
@@ -186,12 +183,6 @@ fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
 fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
-
-fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
-  gem install suspenders --no-document
-
-fancy_echo "Installing Parity, shell commands for development, staging, and production parity ..."
-  gem install parity --no-document
 
 fancy_echo "Installing Heroku CLI for managing Heroku apps and Foreman for managing app processes ..."
   brew_install_or_upgrade 'heroku-toolbelt'

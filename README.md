@@ -46,10 +46,8 @@ What it sets up
 * [ImageMagick] for cropping and resizing images
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [NVM] for managing versions of Node.js
-* [Parity] for development, staging, and production parity
 * [Postgres] for storing relational data
 * [Qt] for headless JavaScript testing via Capybara Webkit
-* [Rails] gem for writing web applications
 * [Rbenv] for managing versions of Ruby
 * [Redis] for storing key-value data
 * [Ruby Build] for installing Rubies
@@ -69,17 +67,14 @@ What it sets up
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
 [NVM]: https://github.com/creationix/nvm
-[Parity]: https://github.com/croaky/parity
 [Postgres]: http://www.postgresql.org/
 [Qt]: http://qt-project.org/
-[Rails]: http://rubyonrails.org/
 [Rbenv]: https://github.com/sstephenson/rbenv
 [Redis]: http://redis.io/
 [Ruby Build]: https://github.com/sstephenson/ruby-build
 [Ruby]: https://www.ruby-lang.org/en/
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
 [Tmux]: http://tmux.sourceforge.net/
-[Watch]: http://linux.die.net/man/1/watch
 [Zsh]: http://www.zsh.org/
 
 It should take less than 15 minutes to install (depends on your machine).
@@ -103,10 +98,18 @@ brew install brew-cask
 brew cask install dropbox
 brew cask install google-chrome
 brew cask install rdio
+
+gem install suspenders
+gem install parity
+
+brew_install_or_upgrade 'watch'
 ```
 
-You should write your customizations such that they can be run safely more than
-once. See the `mac` script for examples.
+Write your customizations such that they can be run safely more than once.
+See the `mac` script for examples.
+
+Laptop functions such as `fancy_echo` and `brew_install_or_upgrade`
+can be used in your `~/.laptop.local`.
 
 Credits
 -------
