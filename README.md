@@ -85,11 +85,12 @@ Laptop can be run multiple times on the same machine safely. It will upgrade
 already installed packages and install and activate a new version of ruby (if
 one is available).
 
-Make your own customizations
-----------------------------
+Customize in `~/.laptop.local`
+------------------------------
 
-Put your customizations in `~/.laptop.local`. For example, your
-`~/.laptop.local` might look like this:
+Your `~/.laptop.local` is run at the end of the Laptop script.
+Put your customizations there.
+For example:
 
 ```sh
 #!/bin/sh
@@ -101,9 +102,9 @@ brew cask install dropbox
 brew cask install google-chrome
 brew cask install rdio
 
-gem install suspenders
 gem install parity
 
+brew_install_or_upgrade 'tree'
 brew_install_or_upgrade 'watch'
 ```
 
