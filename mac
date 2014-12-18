@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Welcome to the thoughtbot laptop script!
 # Be prepared to turn your laptop (or desktop, no haters here)
@@ -14,14 +14,14 @@ append_to_zshrc() {
   local text="$1" zshrc
   local skip_new_line="$2"
 
-  if [[ -w "$HOME/.zshrc.local" ]]; then
+  if [ -w "$HOME/.zshrc.local" ]; then
     zshrc="$HOME/.zshrc.local"
   else
     zshrc="$HOME/.zshrc"
   fi
 
   if ! grep -Fqs "$text" "$zshrc"; then
-    if (( skip_new_line )); then
+    if [ "$skip_new_line" -eq 1 ]; then
       printf "%s\n" "$text" >> "$zshrc"
     else
       printf "\n%s\n" "$text" >> "$zshrc"
@@ -33,20 +33,23 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
-if [[ ! -d "$HOME/.bin/" ]]; then
+if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
-if [[ ! -f "$HOME/.zshrc" ]]; then
+if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
 
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
-if [[ "$SHELL" != */zsh ]]; then
-  fancy_echo "Changing your shell to zsh ..."
-    chsh -s "$(which zsh)"
-fi
+case "$SHELL" in
+  */zsh) : ;;
+  *)
+    fancy_echo "Changing your shell to zsh ..."
+      chsh -s "$(which zsh)"
+    ;;
+esac
 
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
@@ -71,8 +74,7 @@ brew_is_installed() {
 brew_is_upgradable() {
   local name="$(brew_expand_alias "$1")"
 
-  brew outdated --quiet "$name" >/dev/null
-  [[ $? -ne 0 ]]
+  ! brew outdated --quiet "$name" >/dev/null
 }
 
 brew_expand_alias() {
@@ -87,7 +89,7 @@ brew_launchctl_restart() {
   mkdir -p "$HOME/Library/LaunchAgents"
   ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
 
-  if launchctl list | grep -q "$domain"; then
+  if launchctl list | grep -Fq "$domain"; then
     launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
   fi
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
@@ -106,7 +108,8 @@ gem_install_or_update() {
 
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
-    ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/master/install)
+    curl -fsS \
+      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
     append_to_zshrc '# recommended by brew doctor'
     append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
@@ -141,13 +144,13 @@ brew_install_or_upgrade 'nvm'
 append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
 append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh' 1
 
-source "$(brew --prefix nvm)/nvm.sh"
+. "$(brew --prefix nvm)/nvm.sh"
 nvm install "$node_version"
 
 fancy_echo "Setting $node_version as the global default nodejs..."
 nvm alias default "$node_version"
 
-if [[ ! -d "$HOME/.rbenv" ]]; then
+if [ ! -d "$HOME/.rbenv" ]; then
   brew_install_or_upgrade 'rbenv'
   brew_install_or_upgrade 'ruby-build'
   append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
@@ -183,6 +186,6 @@ if ! command -v rcup >/dev/null; then
   brew_install_or_upgrade 'rcm'
 fi
 
-if [[ -f ~/.laptop.local ]]; then
-  source ~/.laptop.local
+if [ -f "$HOME/.laptop.local" ]; then
+  . "$HOME/.laptop.local"
 fi
