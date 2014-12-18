@@ -5,7 +5,9 @@
 # into an awesome development machine.
 
 fancy_echo() {
-  printf "\n%b\n" "$1"
+  local fmt="$1"; shift
+
+  printf "\n$fmt\n" "$@"
 }
 
 append_to_zshrc() {
@@ -49,9 +51,13 @@ fi
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then
+      fancy_echo "Upgrading %s ..." "$1"
       brew upgrade "$@"
+    else
+      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
     fi
   else
+    fancy_echo "Installing %s ..." "$1"
     brew install "$@"
   fi
 }
@@ -88,7 +94,7 @@ brew_launchctl_restart() {
 }
 
 if ! command -v brew >/dev/null; then
-  fancy_echo "Installing Homebrew, a good OS X package manager ..."
+  fancy_echo "Installing Homebrew ..."
     ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/master/install)
 
     append_to_zshrc '# recommended by brew doctor'
@@ -101,101 +107,72 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
-fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew_install_or_upgrade 'postgres'
+brew_install_or_upgrade 'postgres'
 
-fancy_echo "Installing Redis, a good key-value database ..."
-  brew_install_or_upgrade 'redis'
+fancy_echo "Restarting Postgres ..."
+  brew_launchctl_restart postgresql
 
-fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  brew_install_or_upgrade 'the_silver_searcher'
-
-fancy_echo "Installing vim from Homebrew to get the latest version ..."
-  brew_install_or_upgrade 'vim'
-
-fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  brew_install_or_upgrade 'ctags'
-
-fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  brew_install_or_upgrade 'tmux'
-
-fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  brew_install_or_upgrade 'reattach-to-user-namespace'
-
-fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew_install_or_upgrade 'imagemagick'
-
-fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew_install_or_upgrade 'qt'
-
-fancy_echo "Installing GitHub CLI client ..."
-  brew_install_or_upgrade 'gh'
+brew_install_or_upgrade 'redis'
+brew_install_or_upgrade 'the_silver_searcher'
+brew_install_or_upgrade 'vim'
+brew_install_or_upgrade 'ctags'
+brew_install_or_upgrade 'tmux'
+brew_install_or_upgrade 'reattach-to-user-namespace'
+brew_install_or_upgrade 'imagemagick'
+brew_install_or_upgrade 'qt'
+brew_install_or_upgrade 'gh'
 
 node_version="0.10"
 
-fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing JavaScript packages ..."
-  brew_install_or_upgrade 'nvm'
+brew_install_or_upgrade 'nvm'
 
-  append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
-  append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh' 1
+append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
+append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh' 1
 
-  source "$(brew --prefix nvm)/nvm.sh"
-  nvm install "$node_version"
+source "$(brew --prefix nvm)/nvm.sh"
+nvm install "$node_version"
 
-  fancy_echo "Setting $node_version as the global default nodejs..."
-  nvm alias default "$node_version"
-
-fancy_echo "Starting Postgres ..."
-  brew_launchctl_restart postgresql
+fancy_echo "Setting $node_version as the global default nodejs..."
+nvm alias default "$node_version"
 
 if [[ ! -d "$HOME/.rbenv" ]]; then
-  fancy_echo "Installing rbenv, to change Ruby versions ..."
-    brew_install_or_upgrade 'rbenv'
-    append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-
-  fancy_echo "Installing ruby-build, to install new Ruby versions ..."
-    brew_install_or_upgrade 'ruby-build'
+  brew_install_or_upgrade 'rbenv'
+  brew_install_or_upgrade 'ruby-build'
+  append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
 fi
 
-fancy_echo "Installing sytem dependencies for Ruby builds ..."
-  brew_install_or_upgrade 'openssl'
-  brew unlink openssl && brew link openssl --force
-  brew_install_or_upgrade 'libyaml'
+brew_install_or_upgrade 'openssl'
+brew unlink openssl && brew link openssl --force
+brew_install_or_upgrade 'libyaml'
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
 eval "$(rbenv init - zsh)"
 
-fancy_echo "Installing Ruby $ruby_version ..."
+if ! rbenv versions | grep -Fq "$ruby_version"; then
   rbenv install -s "$ruby_version"
+fi
 
-fancy_echo "Setting $ruby_version as global default Ruby ..."
-  rbenv global "$ruby_version"
-  rbenv local "$ruby_version"
+rbenv global "$ruby_version"
+rbenv local "$ruby_version"
 
-fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
+gem update --system
 
-fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
+fancy_echo "Installing Bundler ..."
   gem install bundler --no-document
   rbenv rehash
 
-fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
+fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-fancy_echo "Installing Heroku CLI for managing Heroku apps and Foreman for managing app processes ..."
-  brew_install_or_upgrade 'heroku-toolbelt'
+brew_install_or_upgrade 'heroku-toolbelt'
 
 if ! command -v rcup >/dev/null; then
-  fancy_echo "Installing rcm, to manage your dotfiles ..."
-    brew tap thoughtbot/formulae
-    brew_install_or_upgrade 'rcm'
-else
-  fancy_echo "rcm already installed. Skipping ..."
+  brew tap thoughtbot/formulae
+  brew_install_or_upgrade 'rcm'
 fi
 
-fancy_echo "Installing your personal additions from ~/.laptop.local ..."
-  if [[ -f ~/.laptop.local ]]; then
-    source ~/.laptop.local
-  fi
+if [[ -f ~/.laptop.local ]]; then
+  source ~/.laptop.local
+fi
