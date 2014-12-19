@@ -93,6 +93,17 @@ brew_launchctl_restart() {
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
 }
 
+gem_install_or_update() {
+  if gem list "$1" --installed > /dev/null; then
+    fancy_echo "Updating %s ..." "$1"
+    gem update "$@"
+  else
+    fancy_echo "Installing %s ..." "$1"
+    gem install "$@"
+    rbenv rehash
+  fi
+}
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/master/install)
@@ -159,17 +170,11 @@ rbenv shell "$ruby_version"
 
 gem update --system
 
-if gem list bundler --installed > /dev/null; then
-  fancy_echo "Updating Bundler ..."
-  gem update bundler --no-document
-else
-  fancy_echo "Installing Bundler ..."
-    gem install bundler --no-document
-    rbenv rehash
-  fancy_echo "Configuring Bundler ..."
-    number_of_cores=$(sysctl -n hw.ncpu)
-    bundle config --global jobs $((number_of_cores - 1))
-fi
+gem_install_or_update 'bundler'
+
+fancy_echo "Configuring Bundler ..."
+  number_of_cores=$(sysctl -n hw.ncpu)
+  bundle config --global jobs $((number_of_cores - 1))
 
 brew_install_or_upgrade 'heroku-toolbelt'
 

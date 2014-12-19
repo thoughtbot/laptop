@@ -59,7 +59,6 @@ What it sets up
 * [Ruby] stable for writing general-purpose code
 * [The Silver Searcher] for finding things in files
 * [Tmux] for saving project state and switching between projects
-* [Watch] for periodically executing a program and displaying the output
 * [Zsh] as your shell
 
 [Bundler]: http://bundler.io/
@@ -111,7 +110,9 @@ brew_install_or_upgrade 'watch'
 Write your customizations such that they can be run safely more than once.
 See the `mac` script for examples.
 
-Laptop functions such as `fancy_echo` and `brew_install_or_upgrade`
+Laptop functions such as `fancy_echo`,
+`brew_install_or_upgrade`, and
+`gem_install_or_update`
 can be used in your `~/.laptop.local`.
 
 Credits
