@@ -3,6 +3,10 @@ Laptop
 
 Laptop is a script to set up an OS X laptop for web development.
 
+It can be run multiple times on the same machine safely.
+It installs, upgrades, or skips packages
+based on what is already installed on the machine.
+
 Requirements
 ------------
 
@@ -80,10 +84,6 @@ What it sets up
 [Zsh]: http://www.zsh.org/
 
 It should take less than 15 minutes to install (depends on your machine).
-
-Laptop can be run multiple times on the same machine safely. It will upgrade
-already installed packages and install and activate a new version of ruby (if
-one is available).
 
 Customize in `~/.laptop.local`
 ------------------------------
