@@ -158,13 +158,17 @@ rbenv local "$ruby_version"
 
 gem update --system
 
-fancy_echo "Installing Bundler ..."
-  gem install bundler --no-document
-  rbenv rehash
-
-fancy_echo "Configuring Bundler ..."
-  number_of_cores=$(sysctl -n hw.ncpu)
-  bundle config --global jobs $((number_of_cores - 1))
+if gem list bundler --installed > /dev/null; then
+  fancy_echo "Updating Bundler ..."
+  gem update bundler --no-document
+else
+  fancy_echo "Installing Bundler ..."
+    gem install bundler --no-document
+    rbenv rehash
+  fancy_echo "Configuring Bundler ..."
+    number_of_cores=$(sysctl -n hw.ncpu)
+    bundle config --global jobs $((number_of_cores - 1))
+fi
 
 brew_install_or_upgrade 'heroku-toolbelt'
 
