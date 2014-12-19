@@ -155,7 +155,7 @@ if ! rbenv versions | grep -Fq "$ruby_version"; then
 fi
 
 rbenv global "$ruby_version"
-rbenv local "$ruby_version"
+rbenv shell "$ruby_version"
 
 gem update --system
 
