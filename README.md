@@ -111,7 +111,9 @@ brew_install_or_upgrade 'watch'
 Write your customizations such that they can be run safely more than once.
 See the `mac` script for examples.
 
-Laptop functions such as `fancy_echo` and `brew_install_or_upgrade`
+Laptop functions such as `fancy_echo`,
+`brew_install_or_upgrade`, and
+`gem_install_or_update`
 can be used in your `~/.laptop.local`.
 
 Credits
