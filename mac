@@ -7,6 +7,7 @@
 fancy_echo() {
   local fmt="$1"; shift
 
+  # shellcheck disable=SC2059
   printf "\n$fmt\n" "$@"
 }
 
@@ -41,6 +42,7 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
 
+# shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
 case "$SHELL" in
@@ -112,7 +114,10 @@ if ! command -v brew >/dev/null; then
       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
     append_to_zshrc '# recommended by brew doctor'
+
+    # shellcheck disable=SC2016
     append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+
     export PATH="/usr/local/bin:$PATH"
 else
   fancy_echo "Homebrew already installed. Skipping ..."
@@ -141,7 +146,10 @@ node_version="0.10"
 
 brew_install_or_upgrade 'nvm'
 
+# shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
+
+# shellcheck disable=SC2016
 append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh' 1
 
 . "$(brew --prefix nvm)/nvm.sh"
@@ -153,6 +161,8 @@ nvm alias default "$node_version"
 if [ ! -d "$HOME/.rbenv" ]; then
   brew_install_or_upgrade 'rbenv'
   brew_install_or_upgrade 'ruby-build'
+
+  # shellcheck disable=SC2016
   append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
 fi
 

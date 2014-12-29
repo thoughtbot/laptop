@@ -1,0 +1,16 @@
+language: sh
+
+before_script:
+  - sudo add-apt-repository -y "deb http://mirrors.kernel.org/ubuntu utopic main universe"
+  - sudo apt-get -y update
+  - sudo apt-get -y install shellcheck
+
+script:
+  - shellcheck mac
+
+notifications:
+  email: false
+
+branches:
+  only:
+    - master
