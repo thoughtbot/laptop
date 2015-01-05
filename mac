@@ -88,6 +88,7 @@ brew_launchctl_restart() {
   local domain="homebrew.mxcl.$name"
   local plist="$domain.plist"
 
+  fancy_echo "Restarting %s ..." "$1"
   mkdir -p "$HOME/Library/LaunchAgents"
   ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
 
@@ -128,11 +129,9 @@ brew update
 
 brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'postgres'
-
-fancy_echo "Restarting Postgres ..."
-  brew_launchctl_restart postgresql
-
+brew_launchctl_restart 'postgresql'
 brew_install_or_upgrade 'redis'
+brew_launchctl_restart 'redis'
 brew_install_or_upgrade 'the_silver_searcher'
 brew_install_or_upgrade 'vim'
 brew_install_or_upgrade 'ctags'
