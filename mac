@@ -79,6 +79,10 @@ brew_is_upgradable() {
   ! brew outdated --quiet "$name" >/dev/null
 }
 
+brew_tap() {
+  brew tap "$1" 2> /dev/null
+}
+
 brew_expand_alias() {
   brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
@@ -176,7 +180,7 @@ fancy_echo "Configuring Bundler ..."
 brew_install_or_upgrade 'heroku-toolbelt'
 
 if ! command -v rcup >/dev/null; then
-  brew tap thoughtbot/formulae
+  brew_tap 'thoughtbot/formulae'
   brew_install_or_upgrade 'rcm'
 fi
 
