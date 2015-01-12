@@ -146,13 +146,11 @@ brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'gh'
 brew_install_or_upgrade 'node'
 
-if [ ! -d "$HOME/.rbenv" ]; then
-  brew_install_or_upgrade 'rbenv'
-  brew_install_or_upgrade 'ruby-build'
+brew_install_or_upgrade 'rbenv'
+brew_install_or_upgrade 'ruby-build'
 
-  # shellcheck disable=SC2016
-  append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-fi
+# shellcheck disable=SC2016
+append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
 
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
