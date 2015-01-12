@@ -145,9 +145,22 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'gh'
 brew_install_or_upgrade 'node'
-
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
+brew tap caskroom/cask
+brew_install_or_upgrade 'caskroom/cask/brew-cask'
+
+brew cask install 0xdbe-eap
+brew cask install skype
+brew cask install slack
+brew cask install github
+
+node_version="0.10"
+
+brew_install_or_upgrade 'nvm'
+
+# shellcheck disable=SC2016
+append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
@@ -185,3 +198,40 @@ fi
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo 'Ensuring ~/recombine directory exists'
+RECOMBINE_DIR=$HOME/recombine
+mkdir -p $RECOMBINE_DIR
+
+fancy_echo 'Cloning and/or updating repos'
+repos=(recombine-logistics recombine-api recombine-bioinformatics recombine-client-services recombine-counseling recombine-public-new recombine-labs-new recombine-sales recombine-billing Recombine)
+
+for repo in "${repos[@]}"
+do
+  REPO_PATH=$RECOMBINE_DIR/$repo
+  if [ -d $REPO_PATH ]
+  then
+    echo "$repo already exists"
+  else
+    git clone git@github.com:Recombine/$repo.git $REPO_PATH
+  fi
+  git -C $REPO_PATH pull --all
+done
+
+fancy_echo 'Creating an (empty) database.yml that all your apps will symlink to. Please fill it in before using'
+mkdir -p $RECOMBINE_DIR/config
+touch $RECOMBINE_DIR/config/database.yml
+
+fancy_echo 'Symlinking all rails apps database.yml files to ~/recombine/config/database.yml'
+rails_repos=(recombine-logistics recombine-bioinformatics recombine-client-services recombine-counseling recombine-sales recombine-billing Recombine)
+for rails_repo in "${rails_repos[@]}"
+do
+  DB_CONFIG_PATH=$RECOMBINE_DIR/$rails_repo/config/database.yml
+  if [ -f $DB_CONFIG_PATH ]
+  then
+    echo "$DB_CONFIG_PATH already exists"
+  else
+    ln -s $RECOMBINE_DIR/config/database.yml $DB_CONFIG_PATH
+  fi
+done
+
