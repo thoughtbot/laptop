@@ -140,22 +140,7 @@ brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'gh'
-
-node_version="0.10"
-
-brew_install_or_upgrade 'nvm'
-
-# shellcheck disable=SC2016
-append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
-
-# shellcheck disable=SC2016
-append_to_zshrc 'source $(brew --prefix nvm)/nvm.sh' 1
-
-. "$(brew --prefix nvm)/nvm.sh"
-nvm install "$node_version"
-
-fancy_echo "Setting $node_version as the global default nodejs..."
-nvm alias default "$node_version"
+brew_install_or_upgrade 'node'
 
 if [ ! -d "$HOME/.rbenv" ]; then
   brew_install_or_upgrade 'rbenv'
