@@ -141,6 +141,7 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'gh'
 
+brew_install_or_upgrade 'phantomjs'
 brew_install_or_upgrade 'sbt'
 
 brew tap caskroom/cask
