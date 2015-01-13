@@ -141,6 +141,8 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'gh'
 
+brew_install_or_upgrade 'sbt'
+
 brew tap caskroom/cask
 brew_install_or_upgrade 'caskroom/cask/brew-cask'
 
@@ -148,6 +150,7 @@ brew cask install 0xdbe-eap
 brew cask install skype
 brew cask install slack
 brew cask install github
+brew cask install intellij-idea
 
 node_version="0.10"
 
