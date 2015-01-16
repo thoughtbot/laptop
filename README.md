@@ -92,14 +92,14 @@ For example:
 ```sh
 #!/bin/sh
 
-brew tap caskroom/cask
-brew install brew-cask
+brew_tap 'caskroom/cask'
+brew_install_or_upgrade 'brew-cask'
 
 brew cask install dropbox
 brew cask install google-chrome
 brew cask install rdio
 
-gem install parity
+gem_install_or_upgrade 'parity'
 
 brew_install_or_upgrade 'tree'
 brew_install_or_upgrade 'watch'
