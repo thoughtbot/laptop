@@ -1,6 +1,8 @@
 Laptop
 ======
 
+Maintained by thoughtbot and modified by Louis Rassaby and Teddy Widom.
+
 Laptop is a script to set up an OS X laptop for web development.
 
 It can be run multiple times on the same machine safely.
@@ -24,7 +26,7 @@ Install
 Download, review, then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/recombine/laptop/master/mac
 less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
@@ -59,6 +61,7 @@ What it sets up
 * [The Silver Searcher] for finding things in files
 * [Tmux] for saving project state and switching between projects
 * [Zsh] as your shell
+* A variety of extra Recombine-specific goodies
 
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
