@@ -99,7 +99,7 @@ brew cask install dropbox
 brew cask install google-chrome
 brew cask install rdio
 
-gem_install_or_upgrade 'parity'
+gem_install_or_update 'parity'
 
 brew_install_or_upgrade 'tree'
 brew_install_or_upgrade 'watch'
