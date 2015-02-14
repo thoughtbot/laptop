@@ -113,6 +113,9 @@ Laptop functions such as `fancy_echo`,
 `gem_install_or_update`
 can be used in your `~/.laptop.local`.
 
+See the [wiki](https://github.com/thoughtbot/laptop/wiki)
+for more customization examples.
+
 Credits
 -------
 
