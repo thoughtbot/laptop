@@ -13,7 +13,7 @@ fancy_echo() {
 
 append_to_zshrc() {
   local text="$1" zshrc
-  local skip_new_line="$2"
+  local skip_new_line="${2:-0}"
 
   if [ -w "$HOME/.zshrc.local" ]; then
     zshrc="$HOME/.zshrc.local"
