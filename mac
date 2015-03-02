@@ -253,25 +253,31 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
 fancy_echo "Installing GitHub CLI client ..."
   brew_install_or_upgrade 'gh'
 
+fancy_echo "Installing Ngrok client ..."
+  brew_install_or_upgrade 'ngrok'
+
 fancy_echo "Installing Node ..."
   brew_install_or_upgrade 'node'
 
 fancy_echo "Installing SVGO for SVG minification..."
   npm install -g svgo
 
-fancy_echo "Installing expect"
-  brew_install_or_upgrade 'expect'
+# fancy_echo "Installing expect"
+#   brew_install_or_upgrade 'expect'
 
-fancy_echo "Installing Android SDK ..."
-  brew_install_or_upgrade 'android-sdk'
-  append_to_zshrc 'export ANDROID_HOME="/usr/local/opt/android-sdk"'
-  export ANDROID_HOME="/usr/local/opt/android-sdk"
-  expect <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/android-accept-license.sh) "android update sdk --all --no-ui --filter platform-tool,android-19,android-21,build-tools-21.1.1" "android-sdk-license-5be876d5"
+# fancy_echo "Installing Android SDK ..."
+#   brew_install_or_upgrade 'android-sdk'
+#   append_to_zshrc 'export ANDROID_HOME="/usr/local/opt/android-sdk"'
+#   export ANDROID_HOME="/usr/local/opt/android-sdk"
+#   expect <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/android-accept-license.sh) "android update sdk --all --no-ui --filter platform-tool,android-19,android-21,build-tools-21.1.1" "android-sdk-license-5be876d5"
 
-fancy_echo "Installing Ant ..."
-  brew_install_or_upgrade 'ant'
+fancy_echo "Installing Android Studio ..."
+  brew cask install android-studio
 
-fancy_echo "Installing Ryby Install ..."
+# fancy_echo "Installing Ant ..."
+#   brew_install_or_upgrade 'ant'
+
+fancy_echo "Installing Ruby Install ..."
   brew_install_or_upgrade 'ruby-install'
 
 fancy_echo "Installing chruby ..."
@@ -287,7 +293,7 @@ fancy_echo "Starting Postgres ..."
 fancy_echo "Starting Redis ..."
   brew_launchctl_restart redis
 
-ruby_version="2.1.5"
+ruby_version="2.2.0"
 if ls ~/.rubies | grep -q "ruby-$ruby_version"; then
   fancy_echo "Ruby $ruby_version is already installed"
 else
@@ -345,10 +351,10 @@ fancy_echo "Installing flux"
   brew cask install flux
   open -a /Applications/Flux.app
 
-fancy_echo "Installing java6"
-  brew cask install java6
-  append_to_zshrc 'export JAVA_HOME="$(/usr/libexec/java_home -v 1.6)"'
-  export JAVA_HOME="$(/usr/libexec/java_home -v 1.6)"
+fancy_echo "Installing java7"
+  brew cask install java7
+  append_to_zshrc 'export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"'
+  export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
 
 fancy_echo "Installing vagrant"
   brew cask install vagrant
@@ -378,8 +384,17 @@ fancy_echo "Installing caffeine"
   brew cask install caffeine
   open -a /Applications/Caffeine.app
 
+fancy_echo "Installing diffmerge"
+  brew cask install diffmerge
+
 fancy_echo "Installing google-drive"
   brew cask install google-drive
+
+fancy_echo "Installing Android Studio ..."
+  brew cask install android-studio
+
+fancy_echo "Installing evernote ..."
+  brew cask install evernote
 
 fancy_echo "Installing mou"
   brew cask install mou
@@ -410,6 +425,12 @@ fancy_echo "Installing vlc"
 fancy_echo "Installing dropbox"
   brew cask install dropbox
 
+fancy_echo "Installing mailbox"
+  brew cask install mailbox
+
+fancy_echo "Installing omnidisksweeper"
+  brew cask install omnidisksweeper
+
 fancy_echo "Installing imageoptim"
   brew cask install imageoptim
 
@@ -427,6 +448,10 @@ fancy_echo "Installing vmware-fusion"
 fancy_echo "Installing iterm2-beta"
   brew cask install iterm2-beta
   dockutil --add /Applications/iTerm.app
+
+fancy_echo "Installing bee"
+  brew cask install bee
+  dockutil --add /Applications/Bee.app
 
 fancy_echo "Installing pgadmin3"
   brew cask install pgadmin3
