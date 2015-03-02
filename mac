@@ -301,6 +301,7 @@ else
     ruby-install ruby "$ruby_version"
     append_to_zshrc "chruby ruby-$ruby_version"
 fi
+chruby ruby-$ruby_version
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
