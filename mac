@@ -335,6 +335,7 @@ fancy_echo "Installing brew cask"
   brew tap caskroom/fonts
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
   append_to_zshrc 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
+  mkdir -p /opt/homebrew-cask
 
 fancy_echo "Fix homebrew permissions for multi-user"
 sudo chgrp -R admin /opt/homebrew-cask
@@ -364,7 +365,6 @@ fancy_echo "Installing vagrant"
   brew cask install vagrant
   vagrant plugin install vagrant-cachier
   vagrant plugin install vagrant-bindfs
-  vagrant plugin install vagrant-fsnotify
   vagrant plugin install vagrant-parallels
 
 fancy_echo "Installing fonts"
