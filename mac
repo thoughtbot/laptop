@@ -92,6 +92,7 @@ if [ $? -eq "2" ]; then
   fancy_echo "Installing Xcode commandline tools"
   xcode-select --install
   read -p "Press [Enter] once install is done."
+  xcodebuild -license
 else
   fancy_echo "Xcode commandline tools are installed. Continuing."
 fi
@@ -156,7 +157,9 @@ fancy_echo "Installing dotfiles"
   if ! cat "$HOME/.gitconfig.local" | grep -q "user"; then
     read -p "Git user name (eg: John Doe): " GIT_USER
     read -p "Git email (eg: john@doe.com): " GIT_EMAIL
-    echo "[user]\n  name = $GIT_USER\n  email = $GIT_EMAIL" > "$HOME/.gitconfig.local"
+    echo "[user]" > "$HOME/.gitconfig.local"
+    echo "  name = $GIT_USER" >> "$HOME/.gitconfig.local"
+    echo "  email = $GIT_EMAIL" >> "$HOME/.gitconfig.local"
     defaults write com.torusknot.SourceTreeNotMAS globalUserEmail -string "$GIT_EMAIL"
     defaults write com.torusknot.SourceTreeNotMAS globalUserFullName -string "$GIT_USER"
     killall cfprefsd
@@ -269,10 +272,7 @@ fancy_echo "Installing SVGO for SVG minification..."
 #   brew_install_or_upgrade 'android-sdk'
 #   append_to_zshrc 'export ANDROID_HOME="/usr/local/opt/android-sdk"'
 #   export ANDROID_HOME="/usr/local/opt/android-sdk"
-#   expect <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/android-accept-license.sh) "android update sdk --all --no-ui --filter platform-tool,android-19,android-21,build-tools-21.1.1" "android-sdk-license-5be876d5"
-
-fancy_echo "Installing Android Studio ..."
-  brew cask install android-studio
+#   expect <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/android-accept-license.sh) "android update sdk --all --no-ui --filter platform-tool,android-19,android-21,build-tools-21.1.1" "android-sdk-license-5be876d5
 
 # fancy_echo "Installing Ant ..."
 #   brew_install_or_upgrade 'ant'
@@ -346,6 +346,9 @@ defaults write com.apple.dock persistent-apps -array
 fancy_echo "Installing alfred"
   brew cask install alfred
   open -a /Applications/Alfred\ 2.app
+
+fancy_echo "Installing Android Studio ..."
+  brew cask install android-studio
 
 fancy_echo "Installing flux"
   brew cask install flux
