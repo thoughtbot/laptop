@@ -219,9 +219,12 @@ fancy_echo "Installing Tree"
   brew_install_or_upgrade 'tree'
 
 fancy_echo "Installing Postgres, a good open source relational database ..."
-  brew_install_or_upgrade 'postgres'
   export ARCHFLAGS="-arch x86_64"
+  brew_install_or_upgrade 'postgres'
   append_to_zshrc 'export ARCHFLAGS="-arch x86_64"'
+
+fancy_echo "Installing Postgis"
+  brew_install_or_upgrade 'postgis'
 
 fancy_echo "Installing Redis, a good key-value database ..."
   brew_install_or_upgrade 'redis'
