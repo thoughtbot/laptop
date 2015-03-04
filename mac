@@ -352,9 +352,6 @@ fancy_echo "Installing alfred"
   brew cask install alfred
   open -a /Applications/Alfred\ 2.app
 
-fancy_echo "Installing Android Studio ..."
-  brew cask install android-studio
-
 fancy_echo "Installing flux"
   brew cask install flux
   open -a /Applications/Flux.app
@@ -399,6 +396,8 @@ fancy_echo "Installing google-drive"
 
 fancy_echo "Installing Android Studio ..."
   brew cask install android-studio
+  append_to_zshrc 'ANDROID_HOME="~/Library/Android/sdk"'
+  append_to_zshrc 'PATH="$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools:$HOME/Library/Android/sdk/build-tools:$PATH"'
 
 fancy_echo "Installing evernote ..."
   brew cask install evernote
