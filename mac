@@ -428,6 +428,9 @@ fancy_echo "Installing the-unarchiver"
 fancy_echo "Installing vlc"
   brew cask install vlc
 
+fancy_echo "Installing HockeyAPp"
+  brew cask install hockey
+
 fancy_echo "Installing dropbox"
   brew cask install dropbox
 
