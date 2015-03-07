@@ -116,16 +116,6 @@ can be used in your `~/.laptop.local`.
 See the [wiki](https://github.com/thoughtbot/laptop/wiki)
 for more customization examples.
 
-Credits
--------
-
-![thoughtbot](http://thoughtbot.com/assets/tm/logo.png)
-
-Laptop is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
-The names and logos for thoughtbot are trademarks of thoughtbot, inc.
-
-Thank you, [contributors](https://github.com/thoughtbot/laptop/graphs/contributors)!
-
 Contributing
 ------------
 
@@ -140,9 +130,30 @@ brew install shellcheck
 [ShellCheck]: http://www.shellcheck.net/about.html
 [Syntastic]: https://github.com/scrooloose/syntastic
 
+Thank you, [contributors]!
+
+[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
+
 License
 -------
 
 Laptop is © 2011-2015 thoughtbot, inc.
- It is free software,
-and may be redistributed under the terms specified in the LICENSE file.
+It is free software,
+and may be redistributed under the terms specified in the [LICENSE] file.
+
+[LICENSE]: LICENSE
+
+About thoughtbot
+----------------
+
+![thoughtbot](https://thoughtbot.com/logo.png)
+
+Laptop is maintained and funded by thoughtbot, inc.
+The names and logos for thoughtbot are trademarks of thoughtbot, inc.
+
+We are passionate about open source software.
+See [our other projects][community].
+We are [available for hire][hire].
+
+[community]: https://thoughtbot.com/community?utm_source=github
+[hire]: https://thoughtbot.com?utm_source=github
