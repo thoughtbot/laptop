@@ -205,7 +205,7 @@ bundle config --global jobs $((number_of_cores - 1))
 # Install LastPass
 open /opt/homebrew-cask/Caskroom/lastpass/latest/LastPass\ Installer.app
 
-sh vim_config
+sh vim_config.sh
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
