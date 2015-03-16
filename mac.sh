@@ -171,6 +171,7 @@ brew_install_or_upgrade 'docker'
 brew_install_or_upgrade 'docker-compose'
 brew_install_or_upgrade 'boot2docker'
 brew_install_or_upgrade 'wget'
+brew_install_or_upgrade 'dockutil'
 
 
 cask_install_or_upgrade 'macvim'
@@ -225,6 +226,7 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 12
 sh vim_config.sh
 sh install_pivotal_git_scripts.sh
 sh setup_git_aliases.sh
+sh setup_the_dock.sh
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
