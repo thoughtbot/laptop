@@ -175,6 +175,7 @@ brew_install_or_upgrade 'wget'
 
 cask_install_or_upgrade 'macvim'
 cask_install_or_upgrade 'google-chrome'
+cask_install_or_upgrade 'firefox'
 cask_install_or_upgrade 'iterm2'
 cask_install_or_upgrade 'slack'
 cask_install_or_upgrade 'screenhero'
