@@ -227,7 +227,7 @@ sh vim_config.sh
 sh install_pivotal_git_scripts.sh
 sh setup_git_aliases.sh
 sh setup_the_dock.sh
-sh install_shiftit
+sh install_shiftit.sh
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
