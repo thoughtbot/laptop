@@ -164,6 +164,10 @@ brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'caskroom/cask/brew-cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
+brew_install_or_upgrade 'docker'
+brew_install_or_upgrade 'docker-compose'
+brew_install_or_upgrade 'boot2docker'
+
 
 cask_install_or_upgrade 'macvim'
 cask_install_or_upgrade 'google-chrome'
