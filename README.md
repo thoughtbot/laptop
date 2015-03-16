@@ -7,12 +7,13 @@ It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
 based on what is already installed on the machine.
 
+It is based on [thoughtbot/laptop](https://github.com/thoughtbot/laptop).
+
 Requirements
 ------------
 
 We support:
 
-* [OS X Mavericks (10.9)](https://itunes.apple.com/us/app/os-x-mavericks/id675248567)
 * [OS X Yosemite (10.10)](https://www.apple.com/osx/)
 
 Older versions may work but aren't regularly tested. Bug reports for older
@@ -26,7 +27,7 @@ Download, review, then execute the script:
 ```sh
 curl --remote-name https://raw.githubusercontent.com/policygenius/laptop/master/mac
 less mac
-sh mac 2>&1 | tee ~/laptop.log
+sh mac.sh 2>&1 | tee ~/laptop.log
 ```
 
 Debugging
@@ -45,8 +46,8 @@ What it sets up
 * [Exuberant Ctags] for indexing files for vim tab completion
 * [Foreman] for managing web processes
 * [gh] for interacting with the GitHub API
-* [Heroku Toolbelt] for interacting with the Heroku API
-* [Homebrew] for managing operating system libraries
+* [aptible] for HIPAA-compliant deploys
+* [Homebrew] and [Homebrew Cask] for managing operating system libraries
 * [ImageMagick] for cropping and resizing images
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Postgres] for storing relational data
@@ -58,29 +59,45 @@ What it sets up
 * [Ruby] stable for writing general-purpose code
 * [The Silver Searcher] for finding things in files
 * [Tmux] for saving project state and switching between projects
-* [Zsh] as your shell
+* [Zsh] as your shell and [Oh My ZSH!] as a base config
+* [Docker] for prod-like development environments
+* [MacVim] for writing code and [pivotalcommon/vim-config] as a base config
+* [iTerm2] for your terminal
+* [Slack] for team communication
+* [Screenhero] for remote pairing
+* [Sourcetree] because sometime you just want a GUI
+* [ShiftIt] for window management
+* Chrome and Firefox
+
 
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Foreman]: https://github.com/ddollar/foreman
 [gh]: https://github.com/jingweno/gh
-[Heroku Toolbelt]: https://toolbelt.heroku.com/
+[aptible]: https://github.com/aptible/aptible-cli
 [Homebrew]: http://brew.sh/
+[Homebrew]: http://caskroom.io/
 [ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
 [Postgres]: http://www.postgresql.org/
 [Qt]: http://qt-project.org/
 [Rbenv]: https://github.com/sstephenson/rbenv
-[RCM]: https://github.com/thoughtbot/rcm
 [Redis]: http://redis.io/
 [Ruby Build]: https://github.com/sstephenson/ruby-build
 [Ruby]: https://www.ruby-lang.org/en/
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
 [Tmux]: http://tmux.sourceforge.net/
 [Zsh]: http://www.zsh.org/
-
-It should take less than 15 minutes to install (depends on your machine).
+[Oh My ZSH!]: http://ohmyz.sh/
+[Docker]: https://www.docker.com/
+[MacVim]: https://github.com/b4winckler/macvim
+[pivotalcommon/vim-config]: https://github.com/pivotalcommon/vim-config
+[iTerm2]: http://iterm2.com/
+[Slack]: https://slack.com/
+[Screenhero]: https://screenhero.com/
+[SourceTree]: http://www.sourcetreeapp.com/
+[ShiftIt]: https://github.com/fikovnik/ShiftIt
 
 Customize in `~/.laptop.local`
 ------------------------------
@@ -106,54 +123,9 @@ brew_install_or_upgrade 'watch'
 ```
 
 Write your customizations such that they can be run safely more than once.
-See the `mac` script for examples.
+See the `mac.sh` script for examples.
 
 Laptop functions such as `fancy_echo`,
 `brew_install_or_upgrade`, and
 `gem_install_or_update`
 can be used in your `~/.laptop.local`.
-
-See the [wiki](https://github.com/policygenius/laptop/wiki)
-for more customization examples.
-
-Contributing
-------------
-
-Edit the `mac` file.
-Document in the `README.md` file.
-Follow shell style guidelines by using [ShellCheck] and [Syntastic].
-
-```sh
-brew install shellcheck
-```
-
-[ShellCheck]: http://www.shellcheck.net/about.html
-[Syntastic]: https://github.com/scrooloose/syntastic
-
-Thank you, [contributors]!
-
-[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
-
-License
--------
-
-Laptop is © 2011-2015 thoughtbot, inc.
-It is free software,
-and may be redistributed under the terms specified in the [LICENSE] file.
-
-[LICENSE]: LICENSE
-
-About thoughtbot
-----------------
-
-![thoughtbot](https://thoughtbot.com/logo.png)
-
-Laptop is maintained and funded by thoughtbot, inc.
-The names and logos for thoughtbot are trademarks of thoughtbot, inc.
-
-We are passionate about open source software.
-See [our other projects][community].
-We are [available for hire][hire].
-
-[community]: https://thoughtbot.com/community?utm_source=github
-[hire]: https://thoughtbot.com?utm_source=github
