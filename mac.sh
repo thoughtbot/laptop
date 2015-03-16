@@ -182,6 +182,7 @@ cask_install_or_upgrade 'xquartz'
 cask_install_or_upgrade 'shiftit'
 cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade 'lastpass'
+cask_install_or_upgrade 'alfred'
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
