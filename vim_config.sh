@@ -22,7 +22,8 @@ install_vim_config() {
 }
 
 if [ -f ~/.vim/bin/upgrade ]; then
-    upgrade_vim_config
+  echo "vim-config already installed."
+  echo " run ~/.vim/bin/upgrade to upgrade."
 else
   if [ -d ~/.vim ]; then
     save_old_vim_config
