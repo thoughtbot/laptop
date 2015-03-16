@@ -170,6 +170,7 @@ brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'docker'
 brew_install_or_upgrade 'docker-compose'
 brew_install_or_upgrade 'boot2docker'
+brew_install_or_upgrade 'wget'
 
 
 cask_install_or_upgrade 'macvim'
