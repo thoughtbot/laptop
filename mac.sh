@@ -211,6 +211,7 @@ bundle config --global jobs $((number_of_cores - 1))
 open /opt/homebrew-cask/Caskroom/lastpass/latest/LastPass\ Installer.app
 
 sh vim_config.sh
+sh install_pivotal_git_scripts.sh
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
