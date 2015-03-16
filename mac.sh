@@ -172,7 +172,8 @@ brew_install_or_upgrade 'docker-compose'
 brew_install_or_upgrade 'boot2docker'
 brew_install_or_upgrade 'wget'
 brew_install_or_upgrade 'dockutil'
-
+brew_install_or_upgrade 'tree'
+brew_install_or_upgrade 'tig'
 
 cask_install_or_upgrade 'macvim'
 cask_install_or_upgrade 'google-chrome'
