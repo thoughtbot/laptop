@@ -24,7 +24,7 @@ Install
 Download, review, then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/policygenius/laptop/master/mac
 less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
@@ -35,7 +35,7 @@ Debugging
 Your last Laptop run will be saved to `~/laptop.log`. Read through it to see if
 you can debug the issue yourself. If not, copy the lines where the script
 failed into a [new GitHub
-Issue](https://github.com/thoughtbot/laptop/issues/new) for us. Or, attach the
+Issue](https://github.com/policygenius/laptop/issues/new) for us. Or, attach the
 whole log file as an attachment.
 
 What it sets up
@@ -113,7 +113,7 @@ Laptop functions such as `fancy_echo`,
 `gem_install_or_update`
 can be used in your `~/.laptop.local`.
 
-See the [wiki](https://github.com/thoughtbot/laptop/wiki)
+See the [wiki](https://github.com/policygenius/laptop/wiki)
 for more customization examples.
 
 Contributing
