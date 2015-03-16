@@ -215,6 +215,12 @@ bundle config --global jobs $((number_of_cores - 1))
 # Install LastPass
 open /opt/homebrew-cask/Caskroom/lastpass/latest/LastPass\ Installer.app
 
+#Set a blazingly fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 0.02
+
+#Set a shorter Delay until key repeat
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
+
 sh vim_config.sh
 sh install_pivotal_git_scripts.sh
 sh setup_git_aliases.sh
