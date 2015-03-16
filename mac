@@ -169,6 +169,13 @@ brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 
 cask_install_or_upgrade 'google-chrome'
+cask_install_or_upgrade 'iterm2'
+cask_install_or_upgrade 'slack'
+cask_install_or_upgrade 'sourcetree'
+cask_install_or_upgrade 'xquartz'
+cask_install_or_upgrade 'shiftit'
+cask_install_or_upgrade 'sublime-text'
+cask_install_or_upgrade 'lastpass'
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
@@ -195,6 +202,9 @@ gem_install_or_update 'bundler'
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
+
+# Install LastPass
+open /opt/homebrew-cask/Caskroom/lastpass/latest/LastPass\ Installer.app
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
