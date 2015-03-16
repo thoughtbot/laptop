@@ -212,6 +212,7 @@ open /opt/homebrew-cask/Caskroom/lastpass/latest/LastPass\ Installer.app
 
 sh vim_config.sh
 sh install_pivotal_git_scripts.sh
+sh setup_git_aliases.sh
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
