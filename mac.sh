@@ -164,6 +164,7 @@ brew_install_or_upgrade 'caskroom/cask/brew-cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 
+cask_install_or_upgrade 'macvim'
 cask_install_or_upgrade 'google-chrome'
 cask_install_or_upgrade 'iterm2'
 cask_install_or_upgrade 'slack'
