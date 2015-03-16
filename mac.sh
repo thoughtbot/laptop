@@ -40,6 +40,7 @@ fi
 
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
+append_to_zshrc 'export GIT_EDITOR=vim'
 
 case "$SHELL" in
   */zsh) : ;;
