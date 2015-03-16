@@ -182,7 +182,6 @@ cask_install_or_upgrade 'slack'
 cask_install_or_upgrade 'screenhero'
 cask_install_or_upgrade 'sourcetree'
 cask_install_or_upgrade 'xquartz'
-cask_install_or_upgrade 'shiftit'
 cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade 'lastpass'
 cask_install_or_upgrade 'alfred'
@@ -227,6 +226,7 @@ sh vim_config.sh
 sh install_pivotal_git_scripts.sh
 sh setup_git_aliases.sh
 sh setup_the_dock.sh
+sh install_shiftit
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
