@@ -53,6 +53,23 @@ case "$SHELL" in
     ;;
 esac
 
+cask_install_or_upgrade() {
+  if ! cast_is_installed "$1"; then
+    fancy_echo "Installing %s ..." "$1"
+    brew cask install "$@"
+  fi
+}
+
+cask_is_installed() {
+  local name="$(cask_expand_alias "$1")"
+
+  brew cask list -1 | grep -Fqx "$name"
+}
+
+cask_expand_alias() {
+  brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+}
+
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then
@@ -80,6 +97,7 @@ brew_is_upgradable() {
 }
 
 brew_tap() {
+  fancy_echo "Tapping %s..." "$1"
   brew tap "$1" 2> /dev/null
 }
 
@@ -145,9 +163,12 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
-
+brew_tap 'caskroom/cask'
+brew_install_or_upgrade 'caskroom/cask/brew-cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
+
+cask_install_or_upgrade 'google-chrome'
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
