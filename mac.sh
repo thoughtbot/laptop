@@ -56,7 +56,7 @@ esac
 cask_install_or_upgrade() {
   if ! cask_is_installed "$1"; then
     fancy_echo "Installing %s ..." "$1"
-    brew cask install "$@"
+    brew cask install --appdir="/Applications" "$@"
   fi
 }
 
