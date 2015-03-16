@@ -150,8 +150,13 @@ fancy_echo "Updating Homebrew formulas ..."
 brew update
 
 brew_install_or_upgrade 'git'
+
 brew_install_or_upgrade 'postgres'
 brew_launchctl_restart 'postgresql'
+if [ `psql -U postgres -c "select 1" &> /dev/null` ]; then
+  /usr/local/bin/createuser -U `whoami` --superuser postgres
+fi
+
 brew_install_or_upgrade 'redis'
 brew_launchctl_restart 'redis'
 brew_install_or_upgrade 'the_silver_searcher'
