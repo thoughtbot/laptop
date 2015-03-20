@@ -730,8 +730,8 @@ echo ""
 echo "Hot corners"
 
 echo ""
-echo "Top left screen corner → Start screen saver"
-defaults write com.apple.dock wvous-tl-corner -int 5
+echo "Top left screen corner → Put display to sleep"
+defaults write com.apple.dock wvous-tl-corner -int 10
 defaults write com.apple.dock wvous-tl-modifier -int 0
 
 echo ""
@@ -746,7 +746,7 @@ defaults write com.apple.dock wvous-br-modifier -int 0
 
 echo ""
 echo "Bottom left screen corner → Application Windows"
-defaults write com.apple.dock wvous-bl-corner -int 4
+defaults write com.apple.dock wvous-bl-corner -int 3
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
