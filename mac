@@ -209,7 +209,7 @@ RECOMBINE_DIR=$HOME/recombine
 mkdir -p $RECOMBINE_DIR
 
 fancy_echo 'Cloning and/or updating repos'
-repos=(recombine-logistics recombine-api recombine-bioinformatics recombine-client-services recombine-counseling recombine-public-new recombine-labs-new recombine-sales recombine-billing Recombine)
+repos=(recombine-logistics workflow-utils recombine-api recombine-bioinformatics recombine-client-services recombine-counseling recombine-public-new recombine-labs-new recombine-sales recombine-billing Recombine)
 
 for repo in "${repos[@]}"
 do
@@ -226,6 +226,19 @@ done
 fancy_echo 'Creating an (empty) database.yml that all your apps will symlink to. Please fill it in before using'
 mkdir -p $RECOMBINE_DIR/config
 touch $RECOMBINE_DIR/config/database.yml
+
+#append workflow-utils path to zshrc
+WORKFLOW_UTILS_PATH=$RECOMBINE_DIR/workflow-utils
+append_to_zshrc 'export PATH="$PATH:'$WORKFLOW_UTILS_PATH"\""
+SYM_PATH=$WORKFLOW_UTILS_PATH/database.yml
+if [ -f $SYM_PATH ]
+then
+  echo "$SYM_PATH already exists"
+else
+  ln -s $RECOMBINE_DIR/config/database.yml $WORKFLOW_UTILS_PATH/database.yml
+fi
+
+
 
 fancy_echo 'Symlinking all rails apps database.yml files to ~/recombine/config/database.yml'
 rails_repos=(recombine-logistics recombine-bioinformatics recombine-client-services recombine-counseling recombine-sales recombine-billing Recombine)
