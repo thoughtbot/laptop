@@ -459,7 +459,8 @@ fancy_echo "Installing your personal additions from ~/.laptop.local ..."
     source ~/.laptop.local
   fi
 
-
+fancy_echo "Disabling Gatekeeper"
+  sudo spctl --master-disable
 
 fancy_echo "Running osx for hackers ..."
 
