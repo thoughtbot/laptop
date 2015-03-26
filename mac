@@ -232,6 +232,8 @@ brew_install_or_upgrade 'ngrok'
 brew_install_or_upgrade 'heroku-toolbelt'
 brew_install_or_upgrade 'github-release'
 brew_install_or_upgrade 'docker'
+brew_install_or_upgrade 'ant'
+brew_install_or_upgrade 'go'
 
 export ARCHFLAGS="-arch x86_64"
 brew_install_or_upgrade 'postgres'
@@ -371,9 +373,13 @@ fancy_echo "Installing Android Studio ..."
 
 fancy_echo "Installing evernote ..."
   brew cask install evernote
+  dockutil --add /Applications/Evernote.app
 
 fancy_echo "Installing mou"
   brew cask install mou
+
+fancy_echo "Installing xquartz"
+  brew cask install xquartz
 
 fancy_echo "Installing slack"
   brew cask install slack
