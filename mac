@@ -111,7 +111,6 @@ gem_install_or_update() {
   else
     fancy_echo "Installing %s ..." "$1"
     gem install "$@"
-    rbenv rehash
   fi
 }
 
@@ -267,7 +266,7 @@ fi
 sudo easy_install pip
 sudo pip install boto
 
-npm install -g svgo tslint tsc
+npm install -g svgo tslint typescript
 
 brew_install_or_upgrade 'chruby'
 append_to_zshrc 'source /usr/local/share/chruby/chruby.sh'
@@ -284,7 +283,7 @@ else
     ruby-install ruby "$ruby_version"
     append_to_zshrc "chruby ruby-$ruby_version"
 fi
-chruby ruby-$ruby_version
+chruby ruby $ruby_version
 
 gem update --system
 gem_install_or_update 'bundler'
@@ -305,7 +304,7 @@ fancy_echo "Installing brew cask"
   brew_tap caskroom/versions
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
   append_to_zshrc 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
-  mkdir -p /opt/homebrew-cask
+  sudo mkdir -p /opt/homebrew-cask
 
 fancy_echo "Installing fonts"
   brew_tap caskroom/fonts
@@ -382,7 +381,7 @@ fancy_echo "Installing xquartz"
 
 fancy_echo "Installing slack"
   brew cask install slack
-  dockutil --add /Applications/Slack\ 0.44.2.app
+  dockutil --add /Applications/Slack.app
 
 fancy_echo "Installing teamviewer"
   brew cask install teamviewer
@@ -817,7 +816,7 @@ fancy_echo "Downloading dev box"
 if vagrant box list | grep -q sharette; then
   vagrant box update sharette/dev
 else
-  vagrant box add http://box.sharette.fr --provider paralells
+  vagrant box add http://box.sharette.fr --provider parallels
 fi
 
 
