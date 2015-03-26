@@ -367,6 +367,9 @@ fancy_echo "Installing vagrant"
   vagrant plugin install vagrant-bindfs
   vagrant plugin install vagrant-parallels
 
+fancy_echo "Installing Parallels Virtualization SDK"
+  brew cask install parallels-virtualization-sdk
+
 fancy_echo "Installing fonts"
   brew cask install caskroom/fonts/font-anonymous-pro
   brew cask install caskroom/fonts/font-roboto
