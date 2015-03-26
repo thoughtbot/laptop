@@ -266,6 +266,7 @@ fi
 sudo easy_install pip
 sudo pip install boto
 
+npm install -g npm@latest
 npm install -g svgo tslint typescript
 
 brew_install_or_upgrade 'chruby'
