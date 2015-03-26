@@ -128,12 +128,11 @@ else
   fancy_echo "FileVault is enabled. Continuing."
 fi
 
-xcode-select -p 2> /dev/null 1> /dev/null
-if [ $? -eq "2" ]; then
+XCODE_TOOLS_INSTALLED=$(xcode-select -p 2> /dev/null 1> /dev/null && echo "1" || echo "0")
+if [ XCODE_TOOLS_INSTALLED == "0" ]; then
   fancy_echo "Installing Xcode commandline tools"
   xcode-select --install
   read -p "Press [Enter] once install is done."
-  xcodebuild -license
 else
   fancy_echo "Xcode commandline tools are installed. Continuing."
 fi
