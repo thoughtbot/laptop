@@ -268,7 +268,7 @@ fi
 sudo easy_install pip
 sudo pip install boto
 
-npm install -g svgo
+npm install -g svgo tslint tsc
 
 brew_install_or_upgrade 'chruby'
 append_to_zshrc 'source /usr/local/share/chruby/chruby.sh'
