@@ -453,10 +453,6 @@ fancy_echo "Installing sourcetree"
   brew cask install sourcetree
   dockutil --add /Applications/SourceTree.app
 
-fancy_echo "Installing vmware-fusion"
-  brew cask install vmware-fusion
-  dockutil --add /Applications/VMware\ Fusion.app
-
 fancy_echo "Installing iterm2-beta"
   brew cask install iterm2-beta
   dockutil --add /Applications/iTerm.app
