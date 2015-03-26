@@ -1,27 +1,30 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Welcome to the thoughtbot laptop script!
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
 
 fancy_echo() {
-  printf "\n%b\n" "$1"
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
 }
 
 touch "$HOME/.zshrc.local"
 
 append_to_zshrc() {
   local text="$1" zshrc
-  local skip_new_line="$2"
+  local skip_new_line="${2:-0}"
 
-  if [[ -w "$HOME/.zshrc.local" ]]; then
+  if [ -w "$HOME/.zshrc.local" ]; then
     zshrc="$HOME/.zshrc.local"
   else
     zshrc="$HOME/.zshrc"
   fi
 
   if ! grep -Fqs "$text" "$zshrc"; then
-    if (( skip_new_line )); then
+    if [ "$skip_new_line" -eq 1 ]; then
       printf "%s\n" "$text" >> "$zshrc"
     else
       printf "\n%s\n" "$text" >> "$zshrc"
@@ -33,12 +36,35 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+if [ ! -d "$HOME/.bin/" ]; then
+  mkdir "$HOME/.bin"
+fi
+
+if [ ! -f "$HOME/.zshrc" ]; then
+  touch "$HOME/.zshrc"
+fi
+
+# shellcheck disable=SC2016
+append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
+
+case "$SHELL" in
+  */zsh) : ;;
+  *)
+    fancy_echo "Changing your shell to zsh ..."
+      chsh -s "$(which zsh)"
+    ;;
+esac
+
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then
+      fancy_echo "Upgrading %s ..." "$1"
       brew upgrade "$@"
+    else
+      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
     fi
   else
+    fancy_echo "Installing %s ..." "$1"
     brew install "$@"
   fi
 }
@@ -52,8 +78,11 @@ brew_is_installed() {
 brew_is_upgradable() {
   local name="$(brew_expand_alias "$1")"
 
-  brew outdated --quiet "$name" >/dev/null
-  [[ $? -ne 0 ]]
+  ! brew outdated --quiet "$name" >/dev/null
+}
+
+brew_tap() {
+  brew tap "$1" 2> /dev/null
 }
 
 brew_expand_alias() {
@@ -65,13 +94,25 @@ brew_launchctl_restart() {
   local domain="homebrew.mxcl.$name"
   local plist="$domain.plist"
 
+  fancy_echo "Restarting %s ..." "$1"
   mkdir -p "$HOME/Library/LaunchAgents"
   ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
 
-  if launchctl list | grep -q "$domain"; then
+  if launchctl list | grep -Fq "$domain"; then
     launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
   fi
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
+}
+
+gem_install_or_update() {
+  if gem list "$1" --installed > /dev/null; then
+    fancy_echo "Updating %s ..." "$1"
+    gem update "$@"
+  else
+    fancy_echo "Installing %s ..." "$1"
+    gem install "$@"
+    rbenv rehash
+  fi
 }
 
 # Here we go.. ask for the administrator password upfront and run a
@@ -105,11 +146,15 @@ else
 fi
 
 if ! command -v brew >/dev/null; then
-  fancy_echo "Installing Homebrew, a good OS X package manager ..."
-    ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/master/install)
+  fancy_echo "Installing Homebrew ..."
+    curl -fsS \
+      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
     append_to_zshrc '# recommended by brew doctor'
+
+    # shellcheck disable=SC2016
     append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+
     export PATH="/usr/local/bin:$PATH"
 else
   fancy_echo "Homebrew already installed. Skipping ..."
@@ -133,9 +178,8 @@ sudo chmod -R g+wx /usr/local
 sudo chgrp -R admin /Library/Caches/Homebrew
 sudo chmod -R g+wx /Library/Caches/Homebrew
 
-fancy_echo "Installing rcm, to manage your dotfiles ..."
-  brew tap thoughtbot/formulae
-  brew_install_or_upgrade 'rcm'
+brew tap thoughtbot/formulae
+brew_install_or_upgrade 'rcm'
 
 fancy_echo "Installing sublime text package control"
   mkdir -p "$HOME/Library/Application Support/Sublime Text 3/Installed Packages"
@@ -165,137 +209,72 @@ fancy_echo "Installing dotfiles"
     killall cfprefsd
   fi
 
-fancy_echo "Upgrading and linking OpenSSL ..."
-  brew_install_or_upgrade 'openssl'
-  brew unlink openssl && brew link openssl --force
+brew_install_or_upgrade 'openssl'
+brew unlink openssl && brew link openssl --force
 
-fancy_echo "Installing GNU core utilities (those that come with OS X are outdated)"
-  brew_install_or_upgrade 'coreutils'
-  append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
-  append_to_zshrc 'export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"'
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+brew_install_or_upgrade 'libyaml'
+brew_install_or_upgrade 'git'
+brew_install_or_upgrade 'vim' --override-system-vi
+brew_install_or_upgrade 'tmux'
+brew_install_or_upgrade 'imagemagick' --with-webp
+brew_install_or_upgrade 'node'
+brew_install_or_upgrade 'moreutils'
+brew_install_or_upgrade 'findutils'
+brew_install_or_upgrade 'homebrew/dupes/grep' --default-names
+brew_install_or_upgrade 'homebrew/dupes/screen'
+brew_install_or_upgrade 'tig'
+brew_install_or_upgrade 'ansible'
+brew_install_or_upgrade 'wget' --with-iri
+brew_install_or_upgrade 'tree'
+brew_install_or_upgrade 'dockutil'
+brew_install_or_upgrade 'watch'
+brew_install_or_upgrade 'ngrok'
+brew_install_or_upgrade 'heroku-toolbelt'
+brew_install_or_upgrade 'github-release'
+brew_install_or_upgrade 'docker'
 
-fancy_echo "Installing some other useful utilities like sponge"
-  brew_install_or_upgrade 'moreutils'
+export ARCHFLAGS="-arch x86_64"
+brew_install_or_upgrade 'postgres'
+brew_launchctl_restart 'postgresql'
+append_to_zshrc 'export ARCHFLAGS="-arch x86_64"'
 
-fancy_echo "Installing GNU find, locate, updatedb, and xargs, g-prefixed."
-  brew_install_or_upgrade 'findutils'
+brew_install_or_upgrade 'redis'
+brew_launchctl_restart 'redis'
 
-fancy_echo "Installing GNU sed, overwriting the built-in sed."
-  brew_install_or_upgrade 'gnu-sed'
-  append_to_zshrc 'export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"'
-  append_to_zshrc 'export MANPATH="$(brew --prefix gnu-sed)/libexec/gnuman:$MANPATH"'
-  export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
+brew_install_or_upgrade 'postgis'
 
-fancy_echo "Installing more recent versions of grep."
-  brew_install_or_upgrade 'homebrew/dupes/grep' --default-names
+brew_install_or_upgrade 'coreutils'
+append_to_zshrc 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
+append_to_zshrc 'export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"'
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 
-fancy_echo "Installing more recent versions of screen."
-  brew_install_or_upgrade 'homebrew/dupes/screen'
+brew_install_or_upgrade 'gnu-sed'
+append_to_zshrc 'export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"'
+append_to_zshrc 'export MANPATH="$(brew --prefix gnu-sed)/libexec/gnuman:$MANPATH"'
+export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
 
-fancy_echo "Installing Git"
-  brew_install_or_upgrade 'git'
+brew_install_or_upgrade 'bash'
+brew_install_or_upgrade 'bash-completion'
+sed -E 's|$/bin/bash$|/usr/local/bin/bash|' /etc/shells | sudo tee /etc/shells > /dev/null
+# XXX add completion to bashrc
 
-fancy_echo "Installing Tig"
-  brew_install_or_upgrade 'tig'
+if ! command -v rcup >/dev/null; then
+  brew_tap 'thoughtbot/formulae'
+  brew_install_or_upgrade 'rcm'
+fi
 
-fancy_echo "Installing pip"
-  sudo easy_install pip
+sudo easy_install pip
+sudo pip install boto
 
-fancy_echo "Installing Ansible"
-  brew_install_or_upgrade 'ansible'
-  sudo pip install boto
+npm install -g svgo
 
-fancy_echo "Installing Wget with IRI support."
-  brew_install_or_upgrade 'wget' --with-iri
+brew_install_or_upgrade 'chruby'
+append_to_zshrc 'source /usr/local/share/chruby/chruby.sh'
+append_to_zshrc 'source /usr/local/share/chruby/auto.sh'
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
 
-fancy_echo "Installing Bash 4"
-  brew_install_or_upgrade 'bash'
-  brew_install_or_upgrade 'bash-completion'
-  sed -E 's|$/bin/bash$|/usr/local/bin/bash|' /etc/shells | sudo tee /etc/shells > /dev/null
-  # XXX add completion to bashrc
-
-fancy_echo "Installing Tree"
-  brew_install_or_upgrade 'tree'
-
-fancy_echo "Installing Postgres, a good open source relational database ..."
-  export ARCHFLAGS="-arch x86_64"
-  brew_install_or_upgrade 'postgres'
-  append_to_zshrc 'export ARCHFLAGS="-arch x86_64"'
-
-fancy_echo "Installing Postgis"
-  brew_install_or_upgrade 'postgis'
-
-fancy_echo "Installing Redis, a good key-value database ..."
-  brew_install_or_upgrade 'redis'
-
-fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  brew_install_or_upgrade 'the_silver_searcher'
-
-fancy_echo "Installing vim from Homebrew to get the latest version ..."
-  brew_install_or_upgrade 'vim' --override-system-vi
-
-fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  brew_install_or_upgrade 'ctags'
-
-fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  brew_install_or_upgrade 'tmux'
-
-fancy_echo "Installing dockutil to manage the dock"
-  brew_install_or_upgrade 'dockutil'
-
-fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  brew_install_or_upgrade 'reattach-to-user-namespace'
-
-fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew_install_or_upgrade 'imagemagick' --with-webp
-
-fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew_install_or_upgrade 'qt'
-
-fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  brew_install_or_upgrade 'watch'
-
-fancy_echo "Installing GitHub CLI client ..."
-  brew_install_or_upgrade 'gh'
-
-fancy_echo "Installing Ngrok client ..."
-  brew_install_or_upgrade 'ngrok'
-
-fancy_echo "Installing Node ..."
-  brew_install_or_upgrade 'node'
-
-fancy_echo "Installing SVGO for SVG minification..."
-  npm install -g svgo
-
-# fancy_echo "Installing expect"
-#   brew_install_or_upgrade 'expect'
-
-# fancy_echo "Installing Android SDK ..."
-#   brew_install_or_upgrade 'android-sdk'
-#   append_to_zshrc 'export ANDROID_HOME="/usr/local/opt/android-sdk"'
-#   export ANDROID_HOME="/usr/local/opt/android-sdk"
-#   expect <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/android-accept-license.sh) "android update sdk --all --no-ui --filter platform-tool,android-19,android-21,build-tools-21.1.1" "android-sdk-license-5be876d5
-
-# fancy_echo "Installing Ant ..."
-#   brew_install_or_upgrade 'ant'
-
-fancy_echo "Installing Ruby Install ..."
-  brew_install_or_upgrade 'ruby-install'
-
-fancy_echo "Installing chruby ..."
-  brew_install_or_upgrade 'chruby'
-  append_to_zshrc 'source /usr/local/share/chruby/chruby.sh'
-  append_to_zshrc 'source /usr/local/share/chruby/auto.sh'
-  source /usr/local/share/chruby/chruby.sh
-  source /usr/local/share/chruby/auto.sh
-
-fancy_echo "Starting Postgres ..."
-  brew_launchctl_restart postgresql
-
-fancy_echo "Starting Redis ..."
-  brew_launchctl_restart redis
-
+brew_install_or_upgrade 'ruby-install'
 ruby_version="2.2.1"
 if ls ~/.rubies | grep -q "ruby-$ruby_version"; then
   fancy_echo "Ruby $ruby_version is already installed"
@@ -306,24 +285,12 @@ else
 fi
 chruby ruby-$ruby_version
 
-fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
+gem update --system
+gem_install_or_update 'bundler'
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
 
-fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
-  gem install bundler --no-document
-
-fancy_echo "Installing awesome_print ..."
-  gem install awesome_print --no-document
-
-fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
-  number_of_cores=$(sysctl -n hw.ncpu)
-  bundle config --global jobs $((number_of_cores - 1))
-
-fancy_echo "Installing Heroku CLI client ..."
-  brew_install_or_upgrade 'heroku-toolbelt'
-
-fancy_echo "Installing Github Release ..."
-  brew_install_or_upgrade 'github-release'
+gem_install_or_update 'awesome_print'
 
 fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
   heroku plugins:install https://github.com/ddollar/heroku-config.git
@@ -334,15 +301,20 @@ fancy_echo "Installing foreman ..."
 
 fancy_echo "Installing brew cask"
   brew_install_or_upgrade 'caskroom/cask/brew-cask'
-  brew tap caskroom/versions
-  brew tap caskroom/fonts
+  brew_tap caskroom/versions
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
   append_to_zshrc 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
   mkdir -p /opt/homebrew-cask
 
+fancy_echo "Installing fonts"
+  brew_tap caskroom/fonts
+  brew cask install caskroom/fonts/font-anonymous-pro
+  brew cask install caskroom/fonts/font-roboto
+  brew cask install caskroom/fonts/font-meslo-lg
+
 fancy_echo "Fix homebrew permissions for multi-user"
-sudo chgrp -R admin /opt/homebrew-cask
-sudo chmod -R g+wx /opt/homebrew-cask
+  sudo chgrp -R admin /opt/homebrew-cask
+  sudo chmod -R g+wx /opt/homebrew-cask
 
 echo ""
 echo "Wipe all (default) app icons from the Dock"
@@ -369,11 +341,6 @@ fancy_echo "Installing vagrant"
 
 fancy_echo "Installing Parallels Virtualization SDK"
   brew cask install parallels-virtualization-sdk
-
-fancy_echo "Installing fonts"
-  brew cask install caskroom/fonts/font-anonymous-pro
-  brew cask install caskroom/fonts/font-roboto
-  brew cask install caskroom/fonts/font-meslo-lg
 
 fancy_echo "Installing skype"
   brew cask install skype
@@ -407,7 +374,6 @@ fancy_echo "Installing evernote ..."
 
 fancy_echo "Installing mou"
   brew cask install mou
-  dockutil --add /Applications/Mou.app
 
 fancy_echo "Installing slack"
   brew cask install slack
@@ -431,7 +397,7 @@ fancy_echo "Installing the-unarchiver"
 fancy_echo "Installing vlc"
   brew cask install vlc
 
-fancy_echo "Installing HockeyAPp"
+fancy_echo "Installing HockeyApp"
   brew cask install hockey
 
 fancy_echo "Installing dropbox"
