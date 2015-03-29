@@ -44,7 +44,7 @@ What it sets up
 * [Bundler] for managing Ruby libraries
 * [Exuberant Ctags] for indexing files for vim tab completion
 * [Foreman] for managing web processes
-* [gh] for interacting with the GitHub API
+* [hub] for interacting with the GitHub API
 * [Heroku Toolbelt] for interacting with the Heroku API
 * [Homebrew] for managing operating system libraries
 * [ImageMagick] for cropping and resizing images
@@ -63,7 +63,7 @@ What it sets up
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Foreman]: https://github.com/ddollar/foreman
-[gh]: https://github.com/jingweno/gh
+[hub]: https://github.com/github/hub
 [Heroku Toolbelt]: https://toolbelt.heroku.com/
 [Homebrew]: http://brew.sh/
 [ImageMagick]: http://www.imagemagick.org/
