@@ -25,8 +25,8 @@ Install
 Download, review, then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/policygenius/laptop/master/mac
-less mac
+curl --remote-name https://raw.githubusercontent.com/policygenius/laptop/master/mac.sh
+less mac.sh
 sh mac.sh 2>&1 | tee ~/laptop.log
 ```
 
@@ -53,7 +53,6 @@ What it sets up
 * [Postgres] for storing relational data
 * [Qt] for headless JavaScript testing via Capybara Webkit
 * [Rbenv] for managing versions of Ruby
-* [RCM] for managing company and personal dotfiles
 * [Redis] for storing key-value data
 * [Ruby Build] for installing Rubies
 * [Ruby] stable for writing general-purpose code
@@ -67,8 +66,7 @@ What it sets up
 * [Screenhero] for remote pairing
 * [Sourcetree] because sometime you just want a GUI
 * [ShiftIt] for window management
-* Chrome and Firefox
-
+* [Google Chrome] and [Firefox] browsers
 
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
@@ -76,7 +74,7 @@ What it sets up
 [gh]: https://github.com/jingweno/gh
 [aptible]: https://github.com/aptible/aptible-cli
 [Homebrew]: http://brew.sh/
-[Homebrew]: http://caskroom.io/
+[Homebrew Cask]: http://caskroom.io/
 [ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
@@ -98,6 +96,8 @@ What it sets up
 [Screenhero]: https://screenhero.com/
 [SourceTree]: http://www.sourcetreeapp.com/
 [ShiftIt]: https://github.com/fikovnik/ShiftIt
+[Google Chrome]: https://www.google.com/chrome
+[Firefox]: https://www.mozilla.org/firefox
 
 Customize in `~/.laptop.local`
 ------------------------------
@@ -126,6 +126,8 @@ Write your customizations such that they can be run safely more than once.
 See the `mac.sh` script for examples.
 
 Laptop functions such as `fancy_echo`,
-`brew_install_or_upgrade`, and
-`gem_install_or_update`
+`brew_install_or_upgrade`,
+`cask_install_or_upgrade`,
+`gem_install_or_update`, and
+`append_to_zshrc`
 can be used in your `~/.laptop.local`.
