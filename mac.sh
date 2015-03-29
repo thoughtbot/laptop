@@ -1,4 +1,9 @@
 #!/bin/sh
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+set -e
+
+##### Functions and Helpers #####
 
 fancy_echo() {
   local fmt="$1"; shift
@@ -25,33 +30,6 @@ append_to_zshrc() {
     fi
   fi
 }
-
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
-
-set -e
-
-if [ ! -d "$HOME/.bin/" ]; then
-  mkdir "$HOME/.bin"
-fi
-
-if [ ! -f "$HOME/.zshrc" ]; then
-  touch "$HOME/.zshrc"
-fi
-
-# install oh my zsh
-curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-
-# shellcheck disable=SC2016
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-append_to_zshrc 'export GIT_EDITOR=vim'
-
-case "$SHELL" in
-  */zsh) : ;;
-  *)
-    fancy_echo "Changing your shell to zsh ..."
-    chsh -s "$(which zsh)"
-    ;;
-esac
 
 cask_install_or_upgrade() {
   if ! cask_is_installed "$1"; then
@@ -140,32 +118,105 @@ install_shift_it() {
   open /Applications/ShiftIt.app/
 }
 
-if ! command -v brew >/dev/null; then
-  fancy_echo "Installing Homebrew ..."
-  curl -fsS \
-    'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+install_or_update_homebrew() {
+  if ! command -v brew >/dev/null; then
+    fancy_echo "Installing Homebrew ..."
+    curl -fsS \
+      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
-  append_to_zshrc '# recommended by brew doctor'
+    append_to_zshrc '# recommended by brew doctor'
 
-  # shellcheck disable=SC2016
-  append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
 
-  export PATH="/usr/local/bin:$PATH"
-else
-  fancy_echo "Homebrew already installed. Skipping ..."
+    export PATH="/usr/local/bin:$PATH"
+  else
+    fancy_echo "Homebrew already installed."
+  fi
+  fancy_echo "Updating Homebrew formulas ..."
+  brew update
+}
+
+install_latest_ruby() {
+  append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
+  ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+  eval "$(rbenv init - zsh)"
+
+  if ! rbenv versions | grep -Fq "$ruby_version"; then
+    rbenv install -s "$ruby_version"
+  fi
+
+  rbenv global "$ruby_version"
+  rbenv shell "$ruby_version"
+
+  gem update --system
+
+  gem_install_or_update 'bundler'
+  gem_install_or_update 'aptible-cli'
+
+  fancy_echo "Configuring Bundler ..."
+  number_of_cores=$(sysctl -n hw.ncpu)
+  bundle config --global jobs $((number_of_cores - 1))
+}
+
+install_vim_config() {
+  if [ -f ~/.vim/bin/upgrade ]; then
+    echo "vim-config already installed."
+    echo " run ~/.vim/bin/upgrade to upgrade."
+  else
+    if [ -d ~/.vim ]; then
+      echo "Saving old vim config to ~/.vim.old"
+      cp -r ~/.vim ~/.vim.old
+    fi
+    echo "Downloading and installing pivotalcommons/vim-config..."
+
+    curl -o ~/vim-config.zip -L https://github.com/pivotalcommon/vim-config/archive/master.zip
+    unzip ~/vim-config.zip -d ~/
+    mv ~/vim-config-master ~/.vim
+    ~/.vim/bin/install
+
+    rm ~/vim-config.zip
+  fi
+}
+
+change_shell_to_zsh() {
+  case "$SHELL" in
+    */zsh) : ;;
+    *)
+      fancy_echo "Changing your shell to zsh ..."
+      chsh -s "$(which zsh)"
+      ;;
+  esac
+}
+
+install_oh_my_zsh() {
+  if [! -d ~/.oh-my-zsh ]; then
+    curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+  fi
+}
+
+##### Start Installation #####
+
+if [ ! -d "$HOME/.bin/" ]; then
+  mkdir "$HOME/.bin"
 fi
 
-fancy_echo "Updating Homebrew formulas ..."
-brew update
+if [ ! -f "$HOME/.zshrc" ]; then
+  touch "$HOME/.zshrc"
+fi
 
+change_shell_to_zsh
+append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
+append_to_zshrc 'export GIT_EDITOR=vim'
+install_oh_my_zsh
+
+# Install packages
+install_or_update_homebrew
 brew_install_or_upgrade 'git'
-
 brew_install_or_upgrade 'postgres'
 brew_launchctl_restart 'postgresql'
 if [ `psql -U postgres -c "select 1" &> /dev/null` ]; then
   /usr/local/bin/createuser -U `whoami` --superuser postgres
 fi
-
 brew_install_or_upgrade 'redis'
 brew_launchctl_restart 'redis'
 brew_install_or_upgrade 'the_silver_searcher'
@@ -190,7 +241,11 @@ brew_install_or_upgrade 'tree'
 brew_install_or_upgrade 'tig'
 brew_tap 'pivotal/tap'
 brew_install_or_upgrade 'git-pair'
+brew_install_or_upgrade 'openssl'
+brew unlink openssl && brew link openssl --force
+brew_install_or_upgrade 'libyaml'
 
+# Install applications
 cask_install_or_upgrade 'macvim'
 cask_install_or_upgrade 'google-chrome'
 cask_install_or_upgrade 'firefox'
@@ -205,74 +260,15 @@ cask_install_or_upgrade 'alfred'
 cask_install_or_upgrade 'vagrant'
 install_shift_it
 
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-
-brew_install_or_upgrade 'openssl'
-brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'libyaml'
-
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-
-eval "$(rbenv init - zsh)"
-
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  rbenv install -s "$ruby_version"
-fi
-
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
-
-gem update --system
-
-gem_install_or_update 'bundler'
-gem_install_or_update 'aptible-cli'
-
-fancy_echo "Configuring Bundler ..."
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
+install_latest_ruby
+install_vim_config
 
 # Install LastPass
 open /opt/homebrew-cask/Caskroom/lastpass/latest/LastPass\ Installer.app
 
-#Set a blazingly fast keyboard repeat rate
+# Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 0.02
-
-#Set a shorter Delay until key repeat
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
-
-# Install shared Vim config
-
-upgrade_vim_config() {
-  echo "vim-config already installed. Upgrading..."
-  ~/.vim/bin/upgrade
-}
-
-save_old_vim_config() {
-  echo "Saving old vim config to ~/.vim.old"
-  cp -r ~/.vim ~/.vim.old
-}
-
-install_vim_config() {
-  echo "Downloading and installing pivotalcommons/vim-config..."
-
-  curl -o ~/vim-config.zip -L https://github.com/pivotalcommon/vim-config/archive/master.zip
-  unzip ~/vim-config.zip -d ~/
-  mv ~/vim-config-master ~/.vim
-  ~/.vim/bin/install
-
-  rm ~/vim-config.zip
-}
-
-if [ -f ~/.vim/bin/upgrade ]; then
-  echo "vim-config already installed."
-  echo " run ~/.vim/bin/upgrade to upgrade."
-else
-  if [ -d ~/.vim ]; then
-    save_old_vim_config
-  fi
-    install_vim_config
-fi
 
 # Configure git aliases
 git config --global alias.st status
@@ -293,6 +289,7 @@ git config --global alias.squash "commit --squash"
 git config --global alias.unstage "reset HEAD"
 git config --global alias.rum "rebase master@{u}"
 
+# Customize OS X Dock
 defaults write com.apple.Dock autohide 1
 
 dockutil --remove "Launchpad" --no-restart
@@ -320,6 +317,7 @@ dockutil --add ~/Applications/SourceTree.app/ --no-restart
 
 /usr/bin/killall -HUP Dock >/dev/null 2>&1
 
+# Run local customizations
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
