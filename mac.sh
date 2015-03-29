@@ -194,6 +194,7 @@ cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade 'lastpass'
 cask_install_or_upgrade 'alfred'
 cask_install_or_upgrade 'vagrant'
+cask_install_or_upgrade 'shiftit'
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
@@ -253,7 +254,6 @@ git config --global alias.unstage "reset HEAD"
 git config --global alias.rum "rebase master@{u}"
 
 sh setup_the_dock.sh
-sh install_shiftit.sh
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
