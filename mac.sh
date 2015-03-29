@@ -179,6 +179,8 @@ brew_install_or_upgrade 'wget'
 brew_install_or_upgrade 'dockutil'
 brew_install_or_upgrade 'tree'
 brew_install_or_upgrade 'tig'
+brew_tap 'pivotal/tap'
+brew_install_or_upgrade 'git-pair'
 
 cask_install_or_upgrade 'macvim'
 cask_install_or_upgrade 'google-chrome'
@@ -230,7 +232,6 @@ defaults write NSGlobalDomain KeyRepeat -int 0.02
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
 sh vim_config.sh
-sh install_pivotal_git_scripts.sh
 
 # Setup git aliases
 git config --global alias.st status
@@ -250,7 +251,6 @@ git config --global alias.fixup "commit --fixup"
 git config --global alias.squash "commit --squash"
 git config --global alias.unstage "reset HEAD"
 git config --global alias.rum "rebase master@{u}"
-
 
 sh setup_the_dock.sh
 sh install_shiftit.sh
