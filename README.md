@@ -95,7 +95,7 @@ What it sets up
 [Slack]: https://slack.com/
 [Screenhero]: https://screenhero.com/
 [SourceTree]: http://www.sourcetreeapp.com/
-[ShiftIt]: https://github.com/fikovnik/ShiftIt
+[ShiftIt]: https://github.com/onsi/ShiftIt
 [Google Chrome]: https://www.google.com/chrome
 [Firefox]: https://www.mozilla.org/firefox
 

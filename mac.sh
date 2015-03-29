@@ -131,6 +131,15 @@ gem_install_or_update() {
   fi
 }
 
+install_shift_it() {
+  # from Onsi's fork
+  curl -L https://raw.github.com/onsi/ShiftIt/master/ShiftIt.zip -o ShiftIt.zip
+  unzip ShiftIt.zip ShiftIt.app/* -d /Applications/
+  rm ShiftIt.zip
+  
+  open /Applications/ShiftIt.app/
+}
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
   curl -fsS \
@@ -194,7 +203,7 @@ cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade 'lastpass'
 cask_install_or_upgrade 'alfred'
 cask_install_or_upgrade 'vagrant'
-cask_install_or_upgrade 'shiftit'
+install_shift_it
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
