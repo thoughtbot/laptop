@@ -131,6 +131,15 @@ gem_install_or_update() {
   fi
 }
 
+install_shift_it() {
+  # from Onsi's fork
+  curl -L https://raw.github.com/onsi/ShiftIt/master/ShiftIt.zip -o ShiftIt.zip
+  unzip ShiftIt.zip ShiftIt.app/* -d /Applications/
+  rm ShiftIt.zip
+  
+  open /Applications/ShiftIt.app/
+}
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
   curl -fsS \
@@ -179,6 +188,8 @@ brew_install_or_upgrade 'wget'
 brew_install_or_upgrade 'dockutil'
 brew_install_or_upgrade 'tree'
 brew_install_or_upgrade 'tig'
+brew_tap 'pivotal/tap'
+brew_install_or_upgrade 'git-pair'
 
 cask_install_or_upgrade 'macvim'
 cask_install_or_upgrade 'google-chrome'
@@ -192,6 +203,7 @@ cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade 'lastpass'
 cask_install_or_upgrade 'alfred'
 cask_install_or_upgrade 'vagrant'
+install_shift_it
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
@@ -229,11 +241,84 @@ defaults write NSGlobalDomain KeyRepeat -int 0.02
 #Set a shorter Delay until key repeat
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
-sh vim_config.sh
-sh install_pivotal_git_scripts.sh
-sh setup_git_aliases.sh
-sh setup_the_dock.sh
-sh install_shiftit.sh
+# Install shared Vim config
+
+upgrade_vim_config() {
+  echo "vim-config already installed. Upgrading..."
+  ~/.vim/bin/upgrade
+}
+
+save_old_vim_config() {
+  echo "Saving old vim config to ~/.vim.old"
+  cp -r ~/.vim ~/.vim.old
+}
+
+install_vim_config() {
+  echo "Downloading and installing pivotalcommons/vim-config..."
+
+  curl -o ~/vim-config.zip -L https://github.com/pivotalcommon/vim-config/archive/master.zip
+  unzip ~/vim-config.zip -d ~/
+  mv ~/vim-config-master ~/.vim
+  ~/.vim/bin/install
+
+  rm ~/vim-config.zip
+}
+
+if [ -f ~/.vim/bin/upgrade ]; then
+  echo "vim-config already installed."
+  echo " run ~/.vim/bin/upgrade to upgrade."
+else
+  if [ -d ~/.vim ]; then
+    save_old_vim_config
+  fi
+    install_vim_config
+fi
+
+# Configure git aliases
+git config --global alias.st status
+git config --global alias.di diff
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.br branch
+git config --global alias.sta stash
+git config --global alias.llog "log --date=local"
+git config --global alias.flog "log --pretty=fuller --decorate"
+git config --global alias.lg "log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\" --abbrev-commit --date=relative"
+git config --global alias.lol "log --graph --decorate --oneline"
+git config --global alias.lola "log --graph --decorate --oneline --all"
+git config --global alias.blog "log origin/master... --left-right"
+git config --global alias.ds "diff --staged"
+git config --global alias.fixup "commit --fixup"
+git config --global alias.squash "commit --squash"
+git config --global alias.unstage "reset HEAD"
+git config --global alias.rum "rebase master@{u}"
+
+defaults write com.apple.Dock autohide 1
+
+dockutil --remove "Launchpad" --no-restart
+dockutil --remove "Safari" --no-restart
+dockutil --remove "Mail" --no-restart
+dockutil --remove "Contacts" --no-restart
+dockutil --remove "Calendar" --no-restart
+dockutil --remove "Notes" --no-restart
+dockutil --remove "Map" --no-restart
+dockutil --remove "Facetime" --no-restart
+dockutil --remove "iPhoto" --no-restart
+dockutil --remove "Pages" --no-restart
+dockutil --remove "Numbers" --no-restart
+dockutil --remove "Keynote" --no-restart
+dockutil --remove "iTunes" --no-restart
+dockutil --remove "iBooks" --no-restart
+
+dockutil --add /Applications/Google\ Chrome.app --no-restart
+dockutil --add ~/Applications/iTerm.app/ --no-restart
+dockutil --add ~/Applications/Slack.app/ --no-restart
+dockutil --add ~/Applications/Sublime Text 2.app/ --no-restart
+dockutil --add ~/Applications/MacVim.app/ --no-restart
+dockutil --add ~/Applications/Screenhero.app/ --no-restart
+dockutil --add ~/Applications/SourceTree.app/ --no-restart
+
+/usr/bin/killall -HUP Dock >/dev/null 2>&1
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
