@@ -518,6 +518,8 @@ sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate CriticalUpdate
 
 echo ""
 echo "Exclude VMs from TimeMachine"
+mkdir -p "~/Documents/Parallels"
+mkdir -p "~/VirtualBox VMs"
 sudo tmutil addexclusion "~/Documents/Parallels"
 sudo tmutil addexclusion "~/VirtualBox VMs"
 
