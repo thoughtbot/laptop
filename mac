@@ -213,7 +213,6 @@ brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'vim' --override-system-vi
-brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'imagemagick' --with-webp
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'moreutils'
@@ -321,10 +320,6 @@ echo ""
 echo "Wipe all (default) app icons from the Dock"
 defaults write com.apple.dock persistent-apps -array
 
-fancy_echo "Installing alfred"
-  brew cask install alfred
-  open -a /Applications/Alfred\ 2.app
-
 fancy_echo "Installing flux"
   brew cask install flux
   open -a /Applications/Flux.app
@@ -374,23 +369,12 @@ fancy_echo "Installing evernote ..."
   brew cask install evernote
   dockutil --add /Applications/Evernote.app
 
-fancy_echo "Installing mou"
-  brew cask install mou
-
 fancy_echo "Installing xquartz"
   brew cask install xquartz
 
 fancy_echo "Installing slack"
   brew cask install slack
   dockutil --add /Applications/Slack.app
-
-fancy_echo "Installing teamviewer"
-  brew cask install teamviewer
-  dockutil --add /Applications/TeamViewer.app
-
-fancy_echo "Installing viscosity"
-  brew cask install viscosity
-  open -a /Applications/Viscosity.app
 
 fancy_echo "Installing imagealpha"
   brew cask install imagealpha
@@ -679,10 +663,6 @@ chflags nohidden ~/Library
 echo ""
 echo "When performing a search, search the current folder by default"
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-
-echo ""
-echo "Fix spotlight privacy"
-python <(curl -s https://raw.githubusercontent.com/sharette/laptop/master/fix-spotlight-privacy.py) 2>&1
 
 ###############################################################################
 # Dock & Mission Control
