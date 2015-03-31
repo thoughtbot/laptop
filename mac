@@ -281,9 +281,9 @@ if ls ~/.rubies | grep -q "ruby-$ruby_version"; then
 else
   fancy_echo "Installing Ruby $ruby_version ..."
     ruby-install ruby "$ruby_version"
-    append_to_zshrc "chruby ruby-$ruby_version"
+    append_to_zshrc "chruby ruby "$ruby_version"
 fi
-chruby "ruby-$ruby_version"
+chruby ruby "$ruby_version"
 
 gem update --system
 gem_install_or_update 'bundler'
