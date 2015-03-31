@@ -515,6 +515,12 @@ sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticCheck
 sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticDownload -bool TRUE
 sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate ConfigDataInstall -bool TRUE
 sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate CriticalUpdateInstall -bool TRUE
+
+echo ""
+echo "Exclude VMs from TimeMachine"
+sudo tmutil addexclusion "~/Documents/Parallels"
+sudo tmutil addexclusion "~/VirtualBox VMs"
+
 ###############################################################################
 # General Power and Performance modifications
 ###############################################################################
