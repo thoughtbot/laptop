@@ -168,13 +168,8 @@ install_vim_config() {
       cp -r ~/.vim ~/.vim.old
     fi
     echo "Downloading and installing pivotalcommons/vim-config..."
-
-    curl -o ~/vim-config.zip -L https://github.com/pivotalcommon/vim-config/archive/master.zip
-    unzip ~/vim-config.zip -d ~/
-    mv ~/vim-config-master ~/.vim
+    git clone https://github.com/pivotalcommon/vim-config.git ~/.vim
     ~/.vim/bin/install
-
-    rm ~/vim-config.zip
   fi
 }
 
@@ -189,7 +184,7 @@ change_shell_to_zsh() {
 }
 
 install_oh_my_zsh() {
-  if [! -d ~/.oh-my-zsh ]; then
+  if [ ! -d ~/.oh-my-zsh ]; then
     curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
   fi
 }
