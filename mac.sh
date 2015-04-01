@@ -112,10 +112,10 @@ gem_install_or_update() {
 install_shift_it() {
   # from Onsi's fork
   curl -L https://raw.github.com/onsi/ShiftIt/master/ShiftIt.zip -o ShiftIt.zip
-  unzip ShiftIt.zip ShiftIt.app/* -d /Applications/
+  unzip -oq ShiftIt.zip -d ~/Applications/
   rm ShiftIt.zip
   
-  open /Applications/ShiftIt.app/
+  open ~/Applications/ShiftIt.app/
 }
 
 install_or_update_homebrew() {
