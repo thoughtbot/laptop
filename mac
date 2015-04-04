@@ -123,6 +123,7 @@ if fdesetup status | grep -q "is Off"; then
   fancy_echo "Enabling FileVault. Please enter your password."
   sudo fdesetup enable -forcerestart
   fancy_echo "FileVault is enabled. Please restart and relaunch this script."
+  exit 1
 else
   fancy_echo "FileVault is enabled. Continuing."
 fi
