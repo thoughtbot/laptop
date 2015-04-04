@@ -231,7 +231,15 @@ brew_install_or_upgrade 'heroku-toolbelt'
 brew_install_or_upgrade 'github-release'
 brew_install_or_upgrade 'docker'
 brew_install_or_upgrade 'ant'
+
+mkdir -p "$HOME/Desktop/GOPATH"
+export GOPATH="$HOME/Desktop/GOPATH"
 brew_install_or_upgrade 'go'
+append_to_zshrc 'export GOPATH="$HOME/Desktop/GOPATH"'
+append_to_zshrc 'export PATH="$GOPATH/bin:$PATH"'
+
+go get github.com/codegangsta/gin
+go get github.com/tools/godep
 
 export ARCHFLAGS="-arch x86_64"
 brew_install_or_upgrade 'postgres'
