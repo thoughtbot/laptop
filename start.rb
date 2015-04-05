@@ -93,7 +93,9 @@ else
   ohai "FileVault is enabled. Continuing..."
 end
 
-unless File.exist? "/Library/Developer/CommandLineTools/usr/bin/clang"
+if File.exist? "/Library/Developer/CommandLineTools/usr/bin/clang"
+  ohai "XCode Command Line Tools are installed. Continuing..."
+else
   ohai "Installing the Command Line Tools (expect a GUI popup):"
   sudo "/usr/bin/xcode-select", "--install"
   warnandexit "Relaunch this script when the installation has completed."
