@@ -1,0 +1,65 @@
+---
+
+- name: base | Ensure .zshrc.local is present
+  file:
+    path: ~/.zshrc.local
+    state: touch
+
+- name: base | Change shell to zsh
+  sudo: yes
+  shell: "chsh -s $(which zsh) {{ansible_ssh_user}}"
+  register: base_chsh
+  changed_when: "'no changes made' not in base_chsh.stderr"
+
+- name: base | Fetch Oh-My-Zsh installer
+  get_url:
+    url: http://install.ohmyz.sh
+    dest: /tmp/oh-my-zsh-install.sh
+
+- name: base | Install Oh-My-Zsh
+  shell: /tmp/oh-my-zsh-install.sh
+  args:
+    creates: "~/.oh-my-zsh"
+
+- name: base | Fetch Homebrew installer
+  get_url:
+    url: https://raw.githubusercontent.com/Homebrew/install/master/install
+    dest: /tmp/homebrew-install.rb
+
+- name: base | Install Homebrew
+  shell: ruby /tmp/homebrew-install.rb
+  args:
+    creates: "/usr/local/.git"
+
+- name: base | Add homebrew binaries to PATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export PATH="/usr/local/bin:$PATH"'
+
+- name: base | Update homebrew
+  homebrew:
+    update_homebrew: yes
+
+- name: base | Tap caskroom
+  homebrew_tap:
+    tap: caskroom/cask
+
+- name: base | Install Brew Cask
+  homebrew:
+    name: brew-cask
+
+- name: base | Set-up cask application directory
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
+
+- name: base | Fix homebrew permissions for multi-user
+  file:
+    path: "{{ item }}"
+    group: admin
+    mode: "u=rwx,g=rwx,o=rx"
+    state: directory
+  with_items:
+    - /usr/local
+    - /Library/Caches/Homebrew
+    - /opt/homebrew-cask
