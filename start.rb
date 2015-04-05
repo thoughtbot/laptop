@@ -107,13 +107,19 @@ puts "  - Ansible"
 puts "  - All applications and settings from the playbook"
 puts ""
 
-if macos_version > "10.8"
-  unless File.exist? "/Library/Developer/CommandLineTools/usr/bin/clang"
-    ohai "Installing the Command Line Tools (expect a GUI popup):"
-    sudo "/usr/bin/xcode-select", "--install"
-    puts "Press any key when the installation has completed."
-    getc
-  end
+if `fdesetup status`.include? "is Off"
+  ohai "Enabling FileVault..."
+  sudo "fdesetup enable -forcerestart"
+  warnandexit "FileVault is enabled. Please restart and relaunch this script."
+else
+  ohai "FileVault is enabled. Continuing..."
+end
+
+unless File.exist? "/Library/Developer/CommandLineTools/usr/bin/clang"
+  ohai "Installing the Command Line Tools (expect a GUI popup):"
+  sudo "/usr/bin/xcode-select", "--install"
+  puts "Press any key when the installation has completed."
+  getc
 end
 
 if File.directory?(LAPTOP_PATH) && File.directory?("#{LAPTOP_PATH}/.git")
@@ -160,3 +166,5 @@ end
 
 ohai "Running ansible playbook"
 normaldo "ansible-playbook -i hosts.ini site.yml --ask-sudo-pass"
+
+ohai "Done!"
