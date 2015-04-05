@@ -3,9 +3,6 @@
 LAPTOP_PATH = ENV.fetch("LAPTOP_PATH", "/opt/laptop")
 LAPTOP_REPO = ENV.fetch("LAPTOP_REPO", "https://github.com/sharette/laptop.git")
 LAPTOP_REPO_BRANCH = ENV.fetch("LAPTOP_REPO_BRANCH", "master")
-DOTFILES_PATH = ENV.fetch("DOTFILES_PATH", "/opt/dotfiles")
-DOTFILES_REPO = ENV.fetch("DOTFILES_REPO", "https://github.com/sharette/dotfiles.git")
-DOTFILES_REPO_BRANCH = ENV.fetch("DOTFILES_REPO_BRANCH", "master")
 
 module Tty extend self
   def blue; bold 34; end
@@ -62,26 +59,6 @@ def normaldo *args
   system *args
 end
 
-def getc  # NOTE only tested on OS X
-  system "/bin/stty raw -echo"
-  if RUBY_VERSION >= '1.8.7'
-    STDIN.getbyte
-  else
-    STDIN.getc
-  end
-ensure
-  system "/bin/stty -raw echo"
-end
-
-def wait_for_user
-  puts
-  puts "Press ENTER to continue or any other key to abort"
-  puts
-  c = getc
-  # we test for \r and \n because some stuff does \r instead
-  abort unless c == 13 or c == 10
-end
-
 def macos_version
   @macos_version ||= `/usr/bin/sw_vers -productVersion`.chomp[/10\.\d+/]
 end
@@ -90,15 +67,16 @@ def has_command(name)
   `which #{name}`.length > 0
 end
 
-if macos_version != "10.10"
-  ohai "This script is only tested on OSX 10.10, proceed on your own risk."
-  wait_for_user if macos_version < "10.8"
-end
+###########################################
 
 abort "Don't run this as root!" if Process.uid == 0
 abort <<-EOABORT unless `groups`.split.include? "admin"
 This script requires the user #{ENV['USER']} to be an Administrator.
 EOABORT
+
+if macos_version != "10.10"
+  abort "This script is only tested on OSX 10.10."
+end
 
 ohai "This script will setup:"
 puts "  - FileVault if not already enabled"
@@ -110,7 +88,7 @@ puts ""
 if `fdesetup status`.include? "is Off"
   ohai "Enabling FileVault..."
   sudo "fdesetup enable -forcerestart"
-  warnandexit "FileVault is enabled. Please restart and relaunch this script."
+  warnandexit "FileVault is enabled. Please restart the computer and relaunch this script."
 else
   ohai "FileVault is enabled. Continuing..."
 end
@@ -118,8 +96,7 @@ end
 unless File.exist? "/Library/Developer/CommandLineTools/usr/bin/clang"
   ohai "Installing the Command Line Tools (expect a GUI popup):"
   sudo "/usr/bin/xcode-select", "--install"
-  puts "Press any key when the installation has completed."
-  getc
+  warnandexit "Relaunch this script when the installation has completed."
 end
 
 if File.directory?(LAPTOP_PATH) && File.directory?("#{LAPTOP_PATH}/.git")
@@ -133,19 +110,6 @@ else
   sudo "chown -R #{ENV["USER"]} #{LAPTOP_PATH}"
   normaldo "git clone -q #{LAPTOP_REPO} #{LAPTOP_PATH} -b #{LAPTOP_REPO_BRANCH}"
   Dir.chdir LAPTOP_PATH
-end
-
-if File.directory?(DOTFILES_PATH) && File.directory?("#{DOTFILES_PATH}/.git")
-  ohai "Updating existing dotfiles installation..."
-  Dir.chdir DOTFILES_PATH
-  normaldo "git pull"
-  normaldo "git checkout #{DOTFILES_REPO_BRANCH}"
-else
-  ohai "Setting up the dotfiles installation..."
-  sudo "mkdir -p #{DOTFILES_PATH}"
-  sudo "chown -R #{ENV["USER"]} #{DOTFILES_PATH}"
-  normaldo "git clone -q #{DOTFILES_REPO} #{DOTFILES_PATH} -b #{DOTFILES_REPO_BRANCH}"
-  Dir.chdir DOTFILES_PATH
 end
 
 Dir.chdir(LAPTOP_PATH)
