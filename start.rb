@@ -44,6 +44,13 @@ def warnandexit message
   exit
 end
 
+def prompt(default, *args)
+  print(*args)
+  print ': '
+  result = gets.strip
+  return result.empty? ? default : result
+end
+
 def sudo *args
   args = if args.length > 1
     args.unshift "/usr/bin/sudo"
@@ -128,6 +135,49 @@ if has_command "ansible"
 else
   ohai "Installing ansible..."
   sudo "pip install ansible"
+end
+
+git_user_name = `git config -f ~/.gitconfig.local user.name`
+git_user_email = `git config -f ~/.gitconfig.local user.email`
+
+if git_user_name != "" && git_user_email != ""
+  ohai "Git is already configured. Continuing..."
+else
+  ohai "Asking for Git configuration"
+
+  if git_user_name == ""
+
+    while git_user_name == ""
+      git_user_name = prompt("", "Your GIT full name (eg: John Doe)")
+      if git_user_name == ""
+        warn "Should not be empty"
+      end
+    end
+
+    normaldo "git config -f ~/.gitconfig.local --add user.name #{git_user_name}"
+
+  end
+
+  if git_user_email == ""
+
+    while git_user_email == ""
+      git_user_email = prompt("", "Your GIT email (eg: john@doe.com)")
+      if git_user_email == ""
+        warn "Should not be empty"
+      end
+    end
+
+    normaldo "git config -f ~/.gitconfig.local --add user.email #{git_user_email}"
+
+  end
+end
+
+if File.exists?("~/.ssh/id_rsa")
+  ohai "SSH key already exists. Continuing..."
+else
+  ohai "Generating SSH key"
+  normaldo "ssh-keygen -t rsa -f ~/.ssh/id_rsa -C #{git_user_email}"
+  normaldo "ssh-add ~/.ssh/id_rsa"
 end
 
 ohai "Running ansible playbook"
