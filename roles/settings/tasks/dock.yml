@@ -1,7 +1,7 @@
 ---
 
 - name: dock | wipe all apps from the dock to start fresh
-  shell: defaults write com.apple.dock persistent-apps -array
+  shell: dockutil --remove all
   changed_when: false
   tags:
     - settings
