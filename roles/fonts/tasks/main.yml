@@ -1,0 +1,20 @@
+---
+
+- name: Tap caskroom/fonts
+  homebrew_tap:
+    tap: caskroom/fonts
+
+- name: Install font-anonymous-pro
+  homebrew_cask:
+    name: font-anonymous-pro
+
+- name: Install font-roboto
+  homebrew_cask:
+    name: font-roboto
+
+- name: Install font-meslo-lg
+  homebrew_cask:
+    name: font-meslo-lg
+
+# Todo Helvetica
+# Todo Motion Picture
