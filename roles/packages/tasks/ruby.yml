@@ -3,20 +3,32 @@
 - name: ruby | Install chruby
   homebrew:
     name: chruby
+  tags:
+    - packages
+    - ruby
 
 - name: ruby | Install ruby-install
   homebrew:
     name: ruby-install
+  tags:
+    - packages
+    - ruby
 
 - name: ruby | Setup chruby
   lineinfile:
     dest: ~/.zshrc.local
     line: source /usr/local/share/chruby/chruby.sh
+  tags:
+    - packages
+    - ruby
 
 - name: ruby | Setup autoloading of ruby version via .ruby-version files
   lineinfile:
     dest: ~/.zshrc.local
     line: source /usr/local/share/chruby/auto.sh
+  tags:
+    - packages
+    - ruby
 
 - name: ruby | Ensure ruby_directory exists
   file:
@@ -26,16 +38,25 @@
     state: directory
     recurse: yes
   sudo: true
+  tags:
+    - packages
+    - ruby
 
 - name: ruby | Install ruby
   shell: "ruby-install --rubies-dir {{ ruby_directory }} --cleanup --no-reinstall ruby {{ ruby_version }}"
   register: _ruby_install
   changed_when: "'already installed' not in _ruby_install.stdout"
+  tags:
+    - packages
+    - ruby
 
 - name: ruby | Setup default ruby version
   lineinfile:
     dest: ~/.zshrc.local
     line: "chruby ruby-{{ ruby_version }}"
+  tags:
+    - packages
+    - ruby
 
 # todo gem update --system
 # todo bundle jobs config
@@ -44,9 +65,15 @@
   gem:
     name: bundler
     executable: "{{ ruby_gem_executable }}"
+  tags:
+    - packages
+    - ruby
 
 - name: ruby | Install awesome_print
   gem:
     name: awesome_print
     executable: "{{ ruby_gem_executable }}"
+  tags:
+    - packages
+    - ruby
 
