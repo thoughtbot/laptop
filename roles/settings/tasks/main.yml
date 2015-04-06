@@ -1,0 +1,67 @@
+---
+
+- name: Disable Gatekeeper
+  shell: spctl --master-disable
+  sudo: true
+  changed_when: false
+  tags:
+    - settings
+
+- name: Ensure VM Directories are present
+  file:
+    name: "{{ item }}"
+    state: directory
+  with_items:
+    - ~/Documents/Parallels
+    - ~/VirtualBox VMs
+  tags:
+    - settings
+
+- name: Exclude VM directories from TimeMachine
+  shell: 'tmutil addexclusion "{{ item }}"'
+  sudo: true
+  with_items:
+    - "{{ home }}/Documents/Parallels"
+    - "{{ home }}/VirtualBox VMs"
+  tags:
+    - settings
+
+- name: Removing duplicates in the 'Open With' menu
+  shell: /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Check for updates automatically"
+  shell: softwareupdate --schedule on
+  changed_when: false
+  sudo: true
+  tags:
+    - settings
+    - hacker
+
+# http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
+- name: "Speeding up wake from sleep to 24 hours from an hour"
+  shell: pmset -a standbydelay 86400
+  changed_when: false
+  sudo: true
+  tags:
+    - settings
+    - hacker
+
+- name: "Show the ~/Library folder"
+  shell: chflags nohidden ~/Library
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Disable local Time Machine backups (This can take up a ton of SSD space on <128GB SSDs)"
+  shell: "hash tmutil &> /dev/null && sudo tmutil disablelocal"
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- include: hacker.yml

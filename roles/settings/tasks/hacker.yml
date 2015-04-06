@@ -1,0 +1,597 @@
+---
+
+- name: Increasing the window resize speed for Cocoa applications
+  shell: defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: Expanding the save panel by default
+  shell: "defaults write NSGlobalDomain {{ item }} -bool true"
+  changed_when: false
+  with_items:
+    - NSNavPanelExpandedStateForSaveMode
+    - PMPrintingExpandedStateForPrint
+    - PMPrintingExpandedStateForPrint2
+  tags:
+    - settings
+    - hacker
+
+- name: Automatically quit printer app once the print jobs complete
+  shell: defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: Displaying ASCII control characters using caret notation in standard text views
+  shell: defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: Save to disk rather than iCloud by default
+  shell: defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window"
+  shell: defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+  changed_when: false
+  sudo: true
+  tags:
+    - settings
+    - hacker
+
+- name: "Check for software updates daily, not just once per week"
+  shell: defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: Disable smart quotes and smart dashes
+  shell: "defaults write NSGlobalDomain {{ item }} -bool false"
+  changed_when: false
+  with_items:
+    - NSAutomaticQuoteSubstitutionEnabled
+    - NSAutomaticDashSubstitutionEnabled
+  tags:
+    - settings
+    - hacker
+
+- name: "Always show scrollbars"
+  shell: defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Automatically install updates (1)"
+  shell: defaults write /Library/Preferences/com.apple.commerce {{ item }} -bool TRUE
+  changed_when: false
+  sudo: true
+  with_items:
+    - AutoUpdate
+    - AutoUpdateRestartRequired
+  tags:
+    - settings
+    - hacker
+
+- name: "Automatically install updates (2)"
+  shell: defaults write /Library/Preferences/com.apple.SoftwareUpdate {{ item }} -bool TRUE
+  changed_when: false
+  sudo: true
+  with_items:
+    - AutomaticCheckEnabled
+    - AutomaticDownload
+    - ConfigDataInstall
+    - CriticalUpdateInstall
+  tags:
+    - settings
+    - hacker
+
+- name: "Disabling the annoying backswipe in Chrome"
+  shell: defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Increasing sound quality for Bluetooth headphones/headsets"
+  shell: defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+
+################################################################################
+# Trackpad, mouse, keyboard, Bluetooth accessories, and input
+###############################################################################
+
+
+- name: "Enabling full keyboard access for all controls (enable Tab in modal dialogs, menu windows, etc.)"
+  shell: defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Disabling press-and-hold for special keys in favor of key repeat"
+  shell: defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Setting a blazingly fast keyboard repeat rate"
+  shell: defaults write NSGlobalDomain KeyRepeat -int 0
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Disable auto-correct"
+  shell: defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Setting trackpad speed to a reasonable number"
+  shell: defaults write -g com.apple.trackpad.scaling 2
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Setting mouse speed to a reasonable number"
+  shell: defaults write -g com.apple.mouse.scaling 2.5
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enable three finger drag"
+  shell: defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerSwipeGesture -int 1
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Turn off keyboard illumination when computer is not used for 5 minutes"
+  shell: defaults write com.apple.BezelServices kDimTime -int 300
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Trackpad: enable tap to click for this user and for the login screen (1)"
+  shell: defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Trackpad: enable tap to click for this user and for the login screen (2)"
+  shell: defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Trackpad: enable tap to click for this user and for the login screen (3)"
+  shell: defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Disable “natural” (Lion-style) scrolling"
+  shell: defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Follow the keyboard focus while zoomed in"
+  shell: defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enable Magic Mouse secondary click"
+  shell: defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode TwoButton
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+###############################################################################
+# Screen
+###############################################################################
+
+- name: "Requiring password immediately after sleep or screen saver begins (1)"
+  shell: defaults write com.apple.screensaver askForPassword -int 1
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Requiring password immediately after sleep or screen saver begins (2)"
+  shell: defaults write com.apple.screensaver askForPasswordDelay -int 0
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Setting screenshot format to PNG"
+  shell: defaults write com.apple.screencapture type -string "png"
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enabling subpixel font rendering on non-Apple LCDs"
+  shell: defaults write NSGlobalDomain AppleFontSmoothing -int 2
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enabling HiDPI display modes (requires restart)"
+  shell: defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+  sudo: true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+###############################################################################
+# Finder
+###############################################################################
+
+- name: "Set Desktop as the default location for new Finder windows (1)"
+  shell: defaults write com.apple.finder NewWindowTarget -string "PfDe"
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Set Desktop as the default location for new Finder windows (2)"
+  shell: 'defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"'
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Show icons for hard drives, servers, and removable media on the desktop?"
+  shell: defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Show all filename extensions in Finder by default"
+  shell: defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Show status bar in Finder by default"
+  shell: defaults write com.apple.finder ShowStatusBar -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Show path bar"
+  shell: defaults write com.apple.finder ShowPathbar -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Display full POSIX path as Finder window title"
+  shell: defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Disable the warning when changing a file extension? (y/n)"
+  shell: defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Use column view in all Finder windows by default"
+  shell: defaults write com.apple.finder FXPreferredViewStyle Clmv
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Avoid creation of .DS_Store files on network volumes"
+  shell: defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Disable disk image verification"
+  shell: "defaults write com.apple.frameworks.diskimages {{ item }} -bool true"
+  changed_when: false
+  with_items:
+    - skip-verify
+    - skip-verify-locked
+    - skip-verify-remote
+  tags:
+    - settings
+    - hacker
+
+- name: "Allowing text selection in Quick Look/Preview in Finder by default"
+  shell: defaults write com.apple.finder QLEnableTextSelection -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enable AirDrop over Ethernet and on unsupported Macs running Lion"
+  shell: defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "When performing a search, search the current folder by default"
+  shell: defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+###############################################################################
+# Dock & Mission Control
+###############################################################################
+
+- name: "Setting the icon size of Dock items to 36 pixels for optimal size/screen-realestate"
+  shell: defaults write com.apple.dock tilesize -int 36
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Speeding up Mission Control animations and grouping windows by application (1)"
+  shell: defaults write com.apple.dock expose-animation-duration -float 0.1
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Speeding up Mission Control animations and grouping windows by application (1)"
+  shell: defaults write com.apple.dock "expose-group-by-app" -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Top left screen corner → Put display to sleep"
+  shell: defaults write com.apple.dock wvous-tl-corner -int 10
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Top left screen corner → Put display to sleep"
+  shell: defaults write com.apple.dock wvous-tl-modifier -int 0
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Top right screen corner → Mission Control"
+  shell: defaults write com.apple.dock wvous-tr-corner -int 2
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Top right screen corner → Mission Control"
+  shell: defaults write com.apple.dock wvous-tr-modifier -int 0
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Bottom right screen corner → Desktop"
+  shell: defaults write com.apple.dock wvous-br-corner -int 4
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Bottom right screen corner → Desktop"
+  shell: defaults write com.apple.dock wvous-br-modifier -int 0
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Bottom left screen corner → Application Windows"
+  shell: defaults write com.apple.dock wvous-bl-corner -int 3
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Bottom left screen corner → Application Windows"
+  shell: defaults write com.apple.dock wvous-bl-modifier -int 0
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+###############################################################################
+# Safari & WebKit
+###############################################################################
+
+- name: "Privacy: don’t send search queries to Apple"
+  shell: defaults write com.apple.Safari UniversalSearchEnabled -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Hiding Safari's bookmarks bar by default"
+  shell: defaults write com.apple.Safari ShowFavoritesBar -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Hiding Safari's sidebar in Top Sites"
+  shell: defaults write com.apple.Safari ShowSidebarInTopSites -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Disabling Safari's thumbnail cache for History and Top Sites"
+  shell: defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enabling Safari's debug menu"
+  shell: defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Making Safari's search banners default to Contains instead of Starts With"
+  shell: defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Removing useless icons from Safari's bookmarks bar"
+  shell: defaults write com.apple.Safari ProxiesInBookmarksBar "()"
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Allow hitting the Backspace key to go to the previous page in history"
+  shell: defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enabling the Develop menu and the Web Inspector in Safari (1)"
+  shell: defaults write com.apple.Safari IncludeDevelopMenu -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enabling the Develop menu and the Web Inspector in Safari (2)"
+  shell: defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enabling the Develop menu and the Web Inspector in Safari (3)"
+  shell: defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Adding a context menu item for showing the Web Inspector in web views"
+  shell: defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+
+###############################################################################
+# Mail
+###############################################################################
+
+- name: "Setting email addresses to copy as 'foo@example.com' instead of 'Foo Bar <foo@example.com>' in Mail.app"
+  shell: defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+
+###############################################################################
+# Terminal
+###############################################################################
+
+- name: "Enabling UTF-8 ONLY in Terminal.app and setting the Pro theme by default (1)"
+  shell: defaults write com.apple.terminal StringEncodings -array 4
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enabling UTF-8 ONLY in Terminal.app and setting the Pro theme by default (3)"
+  shell: defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Enabling UTF-8 ONLY in Terminal.app and setting the Pro theme by default (4)"
+  shell: defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+
+###############################################################################
+# Time Machine
+###############################################################################
+
+- name: "Prevent Time Machine from prompting to use new hard drives as backup volume"
+  shell: defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+###############################################################################
+# Messages                                                                    #
+###############################################################################
+
+- name: "Disable smart quotes in Messages.app (it's annoying for messages that contain code)"
+  shell: defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
+
+- name: "Disable continuous spell checking in Messages.app"
+  shell: defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
+  changed_when: false
+  tags:
+    - settings
+    - hacker
