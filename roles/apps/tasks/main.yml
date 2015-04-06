@@ -1,17 +1,5 @@
 ---
 
-- name: Install flux
-  homebrew_cask:
-    name: flux
-  tags:
-    - apps
-
-- name: Open flux
-  shell: open -a /Applications/Flux.app
-  changed_when: false
-  tags:
-    - apps
-
 - name: Install java7
   homebrew_cask:
     name: java7
@@ -200,3 +188,5 @@
     name: firefox-beta
   tags:
     - apps
+
+- include: flux.yml

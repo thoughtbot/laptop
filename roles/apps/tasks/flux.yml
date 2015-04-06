@@ -1,0 +1,35 @@
+---
+
+- name: Install flux
+  homebrew_cask:
+    name: flux
+  tags:
+    - apps
+    - flux
+
+- name: flux | Set flux settings
+  shell: "defaults write org.herf.Flux {{ item }}"
+  changed_when: false
+  with_items:
+    - SUHasLaunchedBefore -int 1
+    - moveToApplicationsFolderAlertSuppress -int 1
+    - lateColorTemp -int 2300
+    - "location -string '48.894000,2.354390'"
+    - "locationTextField -string '48.894000,2.354390'"
+    - locationType -string "L"
+    - disable-com.adobe.Lightroom5 -int 1
+    - nightColorTemp -int 3400
+    - sleepLate -int 1
+    - steptime -int 36
+    - transitionSpeed -int 1
+    - wakeTime -int 540
+  tags:
+    - apps
+    - flux
+
+- name: Open flux
+  shell: open -a /Applications/Flux.app
+  changed_when: false
+  tags:
+    - apps
+    - flux
