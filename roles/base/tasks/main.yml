@@ -8,8 +8,8 @@
 - name: Change shell to zsh
   sudo: yes
   shell: "chsh -s $(which zsh) {{ansible_ssh_user}}"
-  register: base_chsh
-  changed_when: "'no changes made' not in base_chsh.stderr"
+  register: _base_chsh
+  changed_when: "'no changes made' not in _base_chsh.stderr"
 
 - name: Fetch Oh-My-Zsh installer
   get_url:
