@@ -111,24 +111,6 @@
   tags:
     - apps
 
-- name: Install dropbox
-  homebrew_cask:
-    name: dropbox
-  tags:
-    - apps
-
-- name: Install mailbox
-  homebrew_cask:
-    name: mailbox
-  tags:
-    - apps
-
-- name: Install omnidisksweeper
-  homebrew_cask:
-    name: omnidisksweeper
-  tags:
-    - apps
-
 - name: Install packer
   homebrew_cask:
     name: packer

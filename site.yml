@@ -9,3 +9,8 @@
     - apps
     - vagrant
     - settings
+
+  tasks:
+
+    - include: "users/adrien/main.yml"
+      when: "ansible_ssh_user == 'adrien'"
