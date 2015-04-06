@@ -59,6 +59,8 @@
     group: admin
     mode: "u=rwx,g=rwx,o=rx"
     state: directory
+    recurse: yes
+  sudo: true
   with_items:
     - /usr/local
     - /Library/Caches/Homebrew
