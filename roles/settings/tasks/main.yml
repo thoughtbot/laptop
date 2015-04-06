@@ -65,3 +65,4 @@
     - hacker
 
 - include: hacker.yml
+- include: dock.yml

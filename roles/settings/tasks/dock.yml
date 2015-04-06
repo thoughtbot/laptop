@@ -1,0 +1,49 @@
+---
+
+- name: dock | wipe all apps from the dock to start fresh
+  shell: defaults write com.apple.dock persistent-apps -array
+  changed_when: false
+  tags:
+    - settings
+    - dock
+
+- name: dock | Add apps to the dock
+  shell: 'dockutil --add "{{ item }}"'
+  changed_when: false
+  with_items:
+    # General tools
+    - /Applications/Mail.app
+    - /Applications/Calendar.app
+    - /Applications/Notes.app
+    - /Applications/Google Chrome.app
+    - /Applications/Slack.app
+    - /Applications/Wunderlist.app
+    - /Applications/Evernote.app
+
+    # Office
+    - /Applications/Microsoft Office 2011/Microsoft Excel.app
+    - /Applications/Microsoft Office 2011/Microsoft Powerpoint.app
+    - /Applications/Microsoft Office 2011/Microsoft Word.app
+
+    # Design
+    - /Applications/Adobe InDesign CC 2014/Adobe InDesign CC 2014.app
+    - /Applications/Adobe Photoshop CC 2014/Adobe Photoshop CC 2014.app
+    - /Applications/Adobe Illustrator CC 2014/Adobe Illustrator.app
+    - /Applications/Sketch.app
+
+    # Developer tools
+    - /Applications/Android Studio.app
+    - /Applications/Bee.app
+    - /Applications/Firefox.app
+    - /Applications/HockeyApp.app
+    - /Applications/iTerm.app
+    - /Applications/Parallels Desktop.app
+    - /Applications/pgAdmin3.app
+    - /Applications/Safari.app
+    - /Applications/SourceTree.app
+    - /Applications/Sublime Text.app
+    - /Applications/Transmit.app
+    - /Applications/Xcode.app
+  tags:
+    - settings
+    - dock
