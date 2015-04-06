@@ -20,6 +20,7 @@
 - name: Exclude VM directories from TimeMachine
   shell: 'tmutil addexclusion "{{ item }}"'
   sudo: true
+  changed_when: false
   with_items:
     - "{{ home }}/Documents/Parallels"
     - "{{ home }}/VirtualBox VMs"
