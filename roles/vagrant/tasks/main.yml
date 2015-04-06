@@ -20,10 +20,12 @@
 
 # todo : make it indepotent
 - name: Install vagrant plugins
-  shell: "vagrant plugin install {{ item }}"
+  shell: "/usr/bin/vagrant plugin list | grep -q {{ item }} || /usr/bin/vagrant plugin install {{ item }}"
   with_items:
     - vagrant-cachier
     - vagrant-bindfs
     - vagrant-parallels
+  register: _vagrant_plugin
+  changed_when: "'Installing' in _vagrant_plugin.stdout"
   tags:
     - vagrant
