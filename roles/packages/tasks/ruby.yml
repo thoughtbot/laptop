@@ -58,13 +58,24 @@
     - packages
     - ruby
 
-# todo gem update --system
-# todo bundle jobs config
+- name: ruby | Update rubygems
+  shell: "{{ ruby_gem_executable }} update --system"
+  changed_when: false
+  tags:
+    - packages
+    - ruby
 
 - name: ruby | Install bundler
   gem:
     name: bundler
     executable: "{{ ruby_gem_executable }}"
+  tags:
+    - packages
+    - ruby
+
+- name: ruby | Configure bundler parallelism
+  shell: "{{ ruby_bundle_executable }} config --global jobs {{ ansible_processor_cores }}"
+  changed_when: false
   tags:
     - packages
     - ruby
