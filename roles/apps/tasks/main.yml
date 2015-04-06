@@ -25,18 +25,6 @@
   tags:
     - apps
 
-- name: Install caffeine
-  homebrew_cask:
-    name: caffeine
-  tags:
-    - apps
-
-- name: Open caffeine
-  shell: open -a /Applications/Caffeine.app
-  changed_when: false
-  tags:
-    - apps
-
 - name: Install diffmerge
   homebrew_cask:
     name: diffmerge
@@ -190,3 +178,4 @@
     - apps
 
 - include: flux.yml
+- include: caffeine.yml

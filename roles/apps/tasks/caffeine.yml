@@ -1,0 +1,25 @@
+---
+
+- name: Install caffeine
+  homebrew_cask:
+    name: caffeine
+  tags:
+    - apps
+    - caffeine
+
+- name: caffeine | Set caffeine settings
+  shell: "defaults write com.lightheadsw.Caffeine {{ item }}"
+  changed_when: false
+  with_items:
+    - SuppressLaunchMessage -bool true
+    - DefaultDuration -int 0
+  tags:
+    - apps
+    - caffeine
+
+- name: Open caffeine
+  shell: open -a /Applications/Caffeine.app
+  changed_when: false
+  tags:
+    - apps
+    - caffeine
