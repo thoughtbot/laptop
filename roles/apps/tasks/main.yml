@@ -135,18 +135,6 @@
   tags:
     - apps
 
-- name: Install sourcetree
-  homebrew_cask:
-    name: sourcetree
-  tags:
-    - apps
-
-- name: Install iterm2-beta
-  homebrew_cask:
-    name: iterm2-beta
-  tags:
-    - apps
-
 - name: Install bee
   homebrew_cask:
     name: bee
@@ -179,3 +167,4 @@
 
 - include: flux.yml
 - include: caffeine.yml
+- include: sourcetree.yml
