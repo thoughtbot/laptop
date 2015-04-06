@@ -137,8 +137,8 @@ else
   sudo "pip install ansible"
 end
 
-git_user_name = `git config -f ~/.gitconfig.local user.name`
-git_user_email = `git config -f ~/.gitconfig.local user.email`
+git_user_name = `git config -f #{Dir.home}/.gitconfig.local user.name`
+git_user_email = `git config -f #{Dir.home}/.gitconfig.local user.email`
 
 if git_user_name != "" && git_user_email != ""
   ohai "Git is already configured. Continuing..."
@@ -154,7 +154,7 @@ else
       end
     end
 
-    normaldo "git config -f ~/.gitconfig.local --add user.name #{git_user_name}"
+    normaldo "git config -f #{Dir.home}/.gitconfig.local --add user.name #{git_user_name}"
 
   end
 
@@ -167,17 +167,17 @@ else
       end
     end
 
-    normaldo "git config -f ~/.gitconfig.local --add user.email #{git_user_email}"
+    normaldo "git config -f #{Dir.home}/.gitconfig.local --add user.email #{git_user_email}"
 
   end
 end
 
-if File.exists?("~/.ssh/id_rsa")
+if File.exists?("#{Dir.home}/.ssh/id_rsa")
   ohai "SSH key already exists. Continuing..."
 else
   ohai "Generating SSH key"
-  normaldo "ssh-keygen -t rsa -f ~/.ssh/id_rsa -C #{git_user_email}"
-  normaldo "ssh-add ~/.ssh/id_rsa"
+  normaldo "ssh-keygen -t rsa -f #{Dir.home}/.ssh/id_rsa -C #{git_user_email}"
+  normaldo "ssh-add #{Dir.home}/.ssh/id_rsa"
 end
 
 ohai "Running ansible playbook"
