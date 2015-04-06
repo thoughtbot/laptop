@@ -1,0 +1,202 @@
+---
+
+- name: Install flux
+  homebrew_cask:
+    name: flux
+  tags:
+    - apps
+
+- name: Open flux
+  shell: open -a /Applications/Flux.app
+  changed_when: false
+  tags:
+    - apps
+
+- name: Install java7
+  homebrew_cask:
+    name: java7
+  tags:
+    - apps
+
+- name: Setup JAVA_HOME
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
+  tags:
+    - apps
+
+- name: Install skype
+  homebrew_cask:
+    name: skype
+  tags:
+    - apps
+
+- name: Install sublime-text3
+  homebrew_cask:
+    name: sublime-text3
+  tags:
+    - apps
+
+- name: Install caffeine
+  homebrew_cask:
+    name: caffeine
+  tags:
+    - apps
+
+- name: Open caffeine
+  shell: open -a /Applications/Caffeine.app
+  changed_when: false
+  tags:
+    - apps
+
+- name: Install diffmerge
+  homebrew_cask:
+    name: diffmerge
+  tags:
+    - apps
+
+- name: Install google-drive
+  homebrew_cask:
+    name: google-drive
+  tags:
+    - apps
+
+- name: Install android-studio
+  homebrew_cask:
+    name: android-studio
+  tags:
+    - apps
+
+- name: Setup ANDROID_HOME
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: export ANDROID_HOME="$HOME/Library/Android/sdk"
+  tags:
+    - apps
+
+- name: Setup PATH for Android SDK
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: export PATH="$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools:$HOME/Library/Android/sdk/build-tools:$PATH"
+  tags:
+    - apps
+
+- name: Install evernote
+  homebrew_cask:
+    name: evernote
+  tags:
+    - apps
+
+- name: Install xquartz
+  homebrew_cask:
+    name: xquartz
+  tags:
+    - apps
+
+- name: Install slack
+  homebrew_cask:
+    name: slack
+  tags:
+    - apps
+
+- name: Install imagealpha
+  homebrew_cask:
+    name: imagealpha
+  tags:
+    - apps
+
+- name: Install imageoptim
+  homebrew_cask:
+    name: imageoptim
+  tags:
+    - apps
+
+- name: Install the-unarchiver
+  homebrew_cask:
+    name: the-unarchiver
+  tags:
+    - apps
+
+- name: Open the-unarchiver
+  shell: open -a /Applications/The\ Unarchiver.app
+  changed_when: false
+  tags:
+    - apps
+
+- name: Install vlc
+  homebrew_cask:
+    name: vlc
+  tags:
+    - apps
+
+- name: Install hockey
+  homebrew_cask:
+    name: hockey
+  tags:
+    - apps
+
+- name: Install dropbox
+  homebrew_cask:
+    name: dropbox
+  tags:
+    - apps
+
+- name: Install mailbox
+  homebrew_cask:
+    name: mailbox
+  tags:
+    - apps
+
+- name: Install omnidisksweeper
+  homebrew_cask:
+    name: omnidisksweeper
+  tags:
+    - apps
+
+- name: Install packer
+  homebrew_cask:
+    name: packer
+  tags:
+    - apps
+
+- name: Install sourcetree
+  homebrew_cask:
+    name: sourcetree
+  tags:
+    - apps
+
+- name: Install iterm2-beta
+  homebrew_cask:
+    name: iterm2-beta
+  tags:
+    - apps
+
+- name: Install bee
+  homebrew_cask:
+    name: bee
+  tags:
+    - apps
+
+- name: Install pgadmin3
+  homebrew_cask:
+    name: pgadmin3
+  tags:
+    - apps
+
+- name: Install google-chrome-beta
+  homebrew_cask:
+    name: google-chrome-beta
+  tags:
+    - apps
+
+- name: Open Google Chrome and set default browser
+  shell: open -a /Applications/Google\ Chrome.app --args --make-default-browser
+  changed_when: false
+  tags:
+    - apps
+
+- name: Install firefox-beta
+  homebrew_cask:
+    name: firefox-beta
+  tags:
+    - apps
