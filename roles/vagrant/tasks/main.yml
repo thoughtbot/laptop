@@ -1,0 +1,29 @@
+---
+
+- name: Install vagrant
+  homebrew_cask:
+    name: vagrant
+  tags:
+    - vagrant
+
+- name: Install parallels-virtualization-sdk
+  homebrew_cask:
+    name: parallels-virtualization-sdk
+  tags:
+    - vagrant
+
+- name: Install virtualbox
+  homebrew_cask:
+    name: virtualbox
+  tags:
+    - vagrant
+
+# todo : make it indepotent
+- name: Install vagrant plugins
+  shell: "vagrant plugin install {{ item }}"
+  with_items:
+    - vagrant-cachier
+    - vagrant-bindfs
+    - vagrant-parallels
+  tags:
+    - vagrant
