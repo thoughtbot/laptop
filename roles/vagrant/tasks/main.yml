@@ -29,3 +29,9 @@
   changed_when: "'Installing' in _vagrant_plugin.stdout"
   tags:
     - vagrant
+
+- name: Install dev box
+  shell: "/usr/bin/vagrant box list | grep -q sharette || /usr/bin/vagrant box add http://box.sharette.fr --provider parallels"
+  changed_when: false
+  tags:
+    - vagrant
