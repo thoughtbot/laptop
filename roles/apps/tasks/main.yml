@@ -168,3 +168,4 @@
 - include: flux.yml
 - include: caffeine.yml
 - include: sourcetree.yml
+- include: iterm.yml
