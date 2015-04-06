@@ -1,0 +1,52 @@
+---
+
+- name: ruby | Install chruby
+  homebrew:
+    name: chruby
+
+- name: ruby | Install ruby-install
+  homebrew:
+    name: ruby-install
+
+- name: ruby | Setup chruby
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: source /usr/local/share/chruby/chruby.sh
+
+- name: ruby | Setup autoloading of ruby version via .ruby-version files
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: source /usr/local/share/chruby/auto.sh
+
+- name: ruby | Ensure ruby_directory exists
+  file:
+    path: "{{ ruby_directory }}"
+    group: admin
+    mode: "u=rwx,g=rwx,o=rx"
+    state: directory
+    recurse: yes
+  sudo: true
+
+- name: ruby | Install ruby
+  shell: "ruby-install --rubies-dir {{ ruby_directory }} --cleanup --no-reinstall ruby {{ ruby_version }}"
+  register: _ruby_install
+  changed_when: "'already installed' not in _ruby_install.stdout"
+
+- name: ruby | Setup default ruby version
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: "chruby ruby-{{ ruby_version }}"
+
+# todo gem update --system
+# todo bundle jobs config
+
+- name: ruby | Install bundler
+  gem:
+    name: bundler
+    executable: "{{ ruby_gem_executable }}"
+
+- name: ruby | Install awesome_print
+  gem:
+    name: awesome_print
+    executable: "{{ ruby_gem_executable }}"
+

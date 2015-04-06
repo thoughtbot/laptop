@@ -3,3 +3,4 @@
 - hosts: all
   roles:
     - base
+    - packages

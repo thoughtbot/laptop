@@ -1,0 +1,11 @@
+---
+
+- name: postgres | Install postgres
+  homebrew:
+    name: postgres
+
+- name: postgres | Install postgis
+  homebrew:
+    name: postgis
+
+# XXX todo launchctl

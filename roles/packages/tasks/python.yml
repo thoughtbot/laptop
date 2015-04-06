@@ -1,0 +1,13 @@
+---
+
+- name: python | Install pip
+  easy_install:
+    name: pip
+
+- name: python | Install ansible
+  pip:
+    name: ansible
+
+- name: python | Install boto
+  pip:
+    name: boto

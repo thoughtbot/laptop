@@ -1,0 +1,136 @@
+---
+
+- name: Install openssl
+  homebrew:
+    name: openssl
+
+- name: Re-link openssl (unlink)
+  homebrew:
+    name: openssl
+    state: unlinked
+
+- name: Re-link openssl (link)
+  homebrew:
+    name: openssl
+    state: linked
+
+- name: Install git
+  homebrew:
+    name: git
+    install_options:
+      - with-blk-sha1 # Compile with the block-optimized SHA1 implementation (10% faster than openssl's)
+
+- name: Install vim
+  homebrew:
+    name: vim
+    install_options:
+      - override-system-vi
+
+- name: Install imagemagick
+  homebrew:
+    name: imagemagick
+    install_options:
+      - with-webp
+
+- name: Install moreutils
+  homebrew:
+    name: moreutils
+
+- name: Install findutils
+  homebrew:
+    name: findutils
+    install_options:
+      - with-default-names # Do not prepend 'g' to the binary
+
+- name: Tap homebrew/dupes
+  homebrew_tap:
+    tap: homebrew/dupes
+
+- name: Install homebrew/dupes/grep
+  homebrew:
+    name: grep
+    install_options:
+      - with-default-names # Do not prepend 'g' to the binary
+
+- name: Install homebrew/dupes/screen
+  homebrew:
+    name: screen
+
+- name: Install tig
+  homebrew:
+    name: tig
+    install_options:
+      - with-docs # Build man pages using asciidoc and xmlto
+
+- name: Install wget
+  homebrew:
+    name: wget
+    install_options:
+      - with-iri # Build with Internationalized URI (IRI) support
+
+- name: Install dockutil
+  homebrew:
+    name: dockutil
+
+- name: Install tree
+  homebrew:
+    name: tree
+
+- name: Install watch
+  homebrew:
+    name: watch
+
+- name: Install ngrok
+  homebrew:
+    name: ngrok
+
+- name: Install heroku-toolbelt
+  homebrew:
+    name: heroku-toolbelt
+
+- name: Install github-release
+  homebrew:
+    name: github-release
+
+- name: Install docker
+  homebrew:
+    name: docker
+
+- name: Install ant
+  homebrew:
+    name: ant
+
+- name: Install coreutils
+  homebrew:
+    name: coreutils
+
+- name: Add unprefixed coreutils to PATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
+
+- name: Add unprefixed coreutils to MANPATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"'
+
+- name: Install gnu-sed
+  homebrew:
+    name: gnu-sed
+
+- name: Add unprefixed gnu-sed to PATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"'
+
+- name: Add unprefixed gnu-sed to MANPATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export MANPATH="$(brew --prefix gnu-sed)/libexec/gnuman:$MANPATH"'
+
+- include: go.yml
+- include: postgres.yml
+- include: redis.yml
+- include: python.yml
+- include: node.yml
+- include: ruby.yml
