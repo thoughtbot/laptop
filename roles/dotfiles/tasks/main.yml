@@ -1,0 +1,14 @@
+---
+
+- name: Clone repository
+  git:
+    repo: git@github.com:sharette/dotfiles.git
+    dest: ~/.dotfiles
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+  sudo: true
+  tags:
+    - dotfiles
+
+- include: ~/.dotfiles/install.yml
