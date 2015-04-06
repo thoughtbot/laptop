@@ -1,0 +1,57 @@
+---
+
+- name: alban | Install appcleaner
+  homebrew_cask:
+    name: appcleaner
+  tags:
+    - users
+    - alban
+
+- name: alban | Install infinit
+  homebrew_cask:
+    name: infinit
+  tags:
+    - users
+    - alban
+
+- name: alban | Install hub
+  homebrew:
+    name: hub
+  tags:
+    - users
+    - alban
+
+- name: alban | Install rowanj-gitx
+  homebrew:
+    name: rowanj-gitx
+  tags:
+    - users
+    - alban
+
+- name: alban | Enable lion-style scrolling
+  shell: defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
+  changed_when: false
+  tags:
+    - users
+    - alban
+
+- name: alban | Disable tap to click for this user and for the login screen (1)
+  shell: defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool false
+  changed_when: false
+  tags:
+    - users
+    - alban
+
+- name: alban | Disable tap to click for this user and for the login screen (2)
+  shell: defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 0
+  changed_when: false
+  tags:
+    - users
+    - alban
+
+- name: alban | Disable tap to click for this user and for the login screen (3)
+  shell: defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 0
+  changed_when: false
+  tags:
+    - users
+    - alban
