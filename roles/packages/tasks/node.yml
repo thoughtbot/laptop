@@ -1,0 +1,43 @@
+---
+
+- name: node | Install node
+  homebrew:
+    name: node
+    install_options:
+      - with-openssl # Build with openssl support
+  tags:
+    - packages
+    - node
+
+- name: node | Install latest npm
+  npm:
+    name: npm
+    global: yes
+    version: latest
+  tags:
+    - packages
+    - node
+
+- name: node | Install svgo
+  npm:
+    name: svgo
+    global: yes
+  tags:
+    - packages
+    - node
+
+- name: node | Install tslint
+  npm:
+    name: tslint
+    global: yes
+  tags:
+    - packages
+    - node
+
+- name: node | Install typescript
+  npm:
+    name: typescript
+    global: yes
+  tags:
+    - packages
+    - node

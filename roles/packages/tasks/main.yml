@@ -1,0 +1,190 @@
+---
+
+- name: Install openssl
+  homebrew:
+    name: openssl
+  tags:
+    - packages
+
+- name: Re-link openssl (unlink)
+  homebrew:
+    name: openssl
+    state: unlinked
+  tags:
+    - packages
+
+- name: Re-link openssl (link)
+  homebrew:
+    name: openssl
+    state: linked
+  tags:
+    - packages
+
+- name: Install git
+  homebrew:
+    name: git
+    install_options:
+      - with-blk-sha1 # Compile with the block-optimized SHA1 implementation (10% faster than openssl's)
+  tags:
+    - packages
+
+- name: Install vim
+  homebrew:
+    name: vim
+    install_options:
+      - override-system-vi
+  tags:
+    - packages
+
+- name: Install imagemagick
+  homebrew:
+    name: imagemagick
+    install_options:
+      - with-webp
+  tags:
+    - packages
+
+- name: Install moreutils
+  homebrew:
+    name: moreutils
+  tags:
+    - packages
+
+- name: Install findutils
+  homebrew:
+    name: findutils
+    install_options:
+      - with-default-names # Do not prepend 'g' to the binary
+  tags:
+    - packages
+
+- name: Tap homebrew/dupes
+  homebrew_tap:
+    tap: homebrew/dupes
+  tags:
+    - packages
+
+- name: Install homebrew/dupes/grep
+  homebrew:
+    name: grep
+    install_options:
+      - with-default-names # Do not prepend 'g' to the binary
+  tags:
+    - packages
+
+- name: Install homebrew/dupes/screen
+  homebrew:
+    name: screen
+  tags:
+    - packages
+
+- name: Install tig
+  homebrew:
+    name: tig
+    install_options:
+      - with-docs # Build man pages using asciidoc and xmlto
+  tags:
+    - packages
+
+- name: Install wget
+  homebrew:
+    name: wget
+    install_options:
+      - with-iri # Build with Internationalized URI (IRI) support
+  tags:
+    - packages
+
+- name: Install dockutil
+  homebrew:
+    name: dockutil
+  tags:
+    - packages
+
+- name: Install tree
+  homebrew:
+    name: tree
+  tags:
+    - packages
+
+- name: Install watch
+  homebrew:
+    name: watch
+  tags:
+    - packages
+
+- name: Install ngrok
+  homebrew:
+    name: ngrok
+  tags:
+    - packages
+
+- name: Install heroku-toolbelt
+  homebrew:
+    name: heroku-toolbelt
+  tags:
+    - packages
+
+- name: Install github-release
+  homebrew:
+    name: github-release
+  tags:
+    - packages
+
+- name: Install docker
+  homebrew:
+    name: docker
+  tags:
+    - packages
+
+- name: Install ant
+  homebrew:
+    name: ant
+  tags:
+    - packages
+
+- name: Install coreutils
+  homebrew:
+    name: coreutils
+  tags:
+    - packages
+
+- name: Add unprefixed coreutils to PATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"'
+  tags:
+    - packages
+
+- name: Add unprefixed coreutils to MANPATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"'
+  tags:
+    - packages
+
+- name: Install gnu-sed
+  homebrew:
+    name: gnu-sed
+  tags:
+    - packages
+
+- name: Add unprefixed gnu-sed to PATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"'
+  tags:
+    - packages
+
+- name: Add unprefixed gnu-sed to MANPATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export MANPATH="$(brew --prefix gnu-sed)/libexec/gnuman:$MANPATH"'
+  tags:
+    - packages
+
+- include: go.yml
+- include: postgres.yml
+- include: redis.yml
+- include: python.yml
+- include: node.yml
+- include: ruby.yml

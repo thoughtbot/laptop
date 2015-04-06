@@ -1,0 +1,77 @@
+---
+
+- name: Ensure .zshrc.local is present
+  file:
+    path: ~/.zshrc.local
+    state: touch
+  changed_when: false
+  tags:
+    - base
+
+- name: Change shell to zsh
+  sudo: yes
+  shell: "chsh -s $(which zsh) {{ansible_ssh_user}}"
+  register: _base_chsh
+  changed_when: "'no changes made' not in _base_chsh.stderr"
+  tags:
+    - base
+
+- name: Fetch Oh-My-Zsh installer
+  get_url:
+    url: http://install.ohmyz.sh
+    dest: /tmp/oh-my-zsh-install.sh
+  tags:
+    - base
+
+- name: Install Oh-My-Zsh
+  shell: /tmp/oh-my-zsh-install.sh
+  args:
+    creates: "~/.oh-my-zsh"
+  tags:
+    - base
+
+- name: Fetch Homebrew installer
+  get_url:
+    url: https://raw.githubusercontent.com/Homebrew/install/master/install
+    dest: /tmp/homebrew-install.rb
+  tags:
+    - base
+
+- name: Install Homebrew
+  shell: ruby /tmp/homebrew-install.rb
+  args:
+    creates: "/usr/local/.git"
+  tags:
+    - base
+
+- name: Add homebrew binaries to PATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export PATH="/usr/local/bin:$PATH"'
+  tags:
+    - base
+
+- name: Update homebrew
+  homebrew:
+    update_homebrew: yes
+  tags:
+    - base
+
+- name: Tap caskroom
+  homebrew_tap:
+    tap: caskroom/cask
+  tags:
+    - base
+
+- name: Install Brew Cask
+  homebrew:
+    name: brew-cask
+  tags:
+    - base
+
+- name: Set-up cask application directory
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
+  tags:
+    - base

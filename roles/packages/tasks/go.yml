@@ -1,0 +1,54 @@
+---
+
+- name: go | Install go
+  homebrew:
+    name: go
+  tags:
+    - packages
+    - go
+
+- name: go | Ensure GOPATH directory is present
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ gopath }}"
+    - "{{ gopath }}/bin"
+    - "{{ gopath }}/pkg"
+    - "{{ gopath }}/src"
+  tags:
+    - packages
+    - go
+
+- name: go | Setup GOPATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export GOPATH="{{ gopath }}"'
+    regexp: '^export GOPATH'
+  tags:
+    - packages
+    - go
+
+- name: go | Add go binaries to PATH
+  lineinfile:
+    dest: ~/.zshrc.local
+    line: 'export PATH="$GOPATH/bin:$PATH"'
+  tags:
+    - packages
+    - go
+
+- name: go | Install gin
+  shell: go get github.com/codegangsta/gin
+  args:
+    creates: "{{ gopath }}/src/github.com/codegangsta/gin"
+  tags:
+    - packages
+    - go
+
+- name: go | Install godep
+  shell: go get github.com/tools/godep
+  args:
+    creates: "{{ gopath }}/src/github.com/tools/godep"
+  tags:
+    - packages
+    - go

@@ -1,0 +1,127 @@
+---
+
+- name: adrien | Install dropbox
+  homebrew_cask:
+    name: dropbox
+  tags:
+    - users
+    - adrien
+
+- name: adrien | Install mailbox
+  homebrew_cask:
+    name: mailbox
+  tags:
+    - users
+    - adrien
+
+- name: adrien | Install 1password
+  homebrew_cask:
+    name: 1password
+  tags:
+    - users
+    - adrien
+
+- name: adrien | Install superduper
+  homebrew_cask:
+    name: superduper
+  tags:
+    - users
+    - adrien
+
+- name: adrien | Install arq
+  homebrew_cask:
+    name: arq
+  tags:
+    - users
+    - adrien
+
+- name: adrien | Install houdahgeo
+  homebrew_cask:
+    name: houdahgeo
+  tags:
+    - users
+    - adrien
+
+- name: adrien | Install sonos
+  homebrew_cask:
+    name: sonos
+  tags:
+    - users
+    - adrien
+
+- name: adrien | Install dash
+  homebrew_cask:
+    name: dash
+  tags:
+    - users
+    - adrien
+
+- name: adrien | Install omnidisksweeper
+  homebrew_cask:
+    name: omnidisksweeper
+  tags:
+    - users
+    - adrien
+
+- name: "adrien | Top left screen corner → Put display to sleep"
+  shell: defaults write com.apple.dock wvous-tl-corner -int 10
+  changed_when: false
+  tags:
+    - users
+    - adrien
+
+- name: "adrien | Top left screen corner → Put display to sleep"
+  shell: defaults write com.apple.dock wvous-tl-modifier -int 0
+  changed_when: false
+  tags:
+    - users
+    - adrien
+
+- name: "adrien | Top right screen corner → Mission Control"
+  shell: defaults write com.apple.dock wvous-tr-corner -int 2
+  changed_when: false
+  tags:
+    - users
+    - adrien
+
+- name: "adrien | Top right screen corner → Mission Control"
+  shell: defaults write com.apple.dock wvous-tr-modifier -int 0
+  changed_when: false
+  tags:
+    - users
+    - adrien
+
+- name: "adrien | Bottom right screen corner → Desktop"
+  shell: defaults write com.apple.dock wvous-br-corner -int 4
+  changed_when: false
+  tags:
+    - users
+    - adrien
+
+- name: "adrien | Bottom right screen corner → Desktop"
+  shell: defaults write com.apple.dock wvous-br-modifier -int 0
+  changed_when: false
+  tags:
+    - users
+    - adrien
+
+- name: "adrien | Bottom left screen corner → Application Windows"
+  shell: defaults write com.apple.dock wvous-bl-corner -int 3
+  changed_when: false
+  tags:
+    - users
+    - adrien
+
+- name: "adrien | Bottom left screen corner → Application Windows"
+  shell: defaults write com.apple.dock wvous-bl-modifier -int 0
+  changed_when: false
+  tags:
+    - users
+    - adrien
+
+- name: adrien | wipe all apps from the dock to start fresh
+  shell: dockutil --remove all
+  changed_when: false
+  tags:
+    - users
+    - adrien

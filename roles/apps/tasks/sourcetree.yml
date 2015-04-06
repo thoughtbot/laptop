@@ -1,0 +1,48 @@
+---
+
+- name: sourcetree | Install sourcetree
+  homebrew_cask:
+    name: sourcetree
+  tags:
+    - apps
+    - sourcetree
+
+- name: sourcetree | Set sourcetree settings
+  shell: "defaults write com.torusknot.SourceTreeNotMAS {{ item }}"
+  changed_when: false
+  with_items:
+    - SUEnableAutomaticChecks -bool true
+    - SUHasLaunchedBefore -bool true
+    - agreedToEULA -bool true
+    - allowForcePush -bool true
+    - diffContextLevel -int 3
+    - diffIgnoreWhitespace -bool false
+    - fileDoubleClickBehaviour -int 1
+    - fileStatusFilterMode -int 1
+    - gitCustomPath -string "$(brew --prefix git)/bin/git"
+    - gitDoNotFastForwardOnMerge -bool true
+    - gitFetchPrune -bool true
+    - gitIncludeMessagesFromCommits -bool true
+    - gitSuppressWarnOnAmend -bool true
+    - gitWhichOne -int 1
+    - logViewFollowFirst -bool false
+    - logViewOrdering -int 1
+    - logViewSelectedBranches -string "*__STAllBranches__*"
+    - logViewShowRemotes -bool true
+    - respondToGitHubMacURLs -bool true
+    - selectAllFilesOnCommitSelection -bool true
+    - showFileStatusViewOptionsTip -bool false
+    - showStagingTip -bool false
+    - terminalApp -int 2
+    - warnForcePush -bool false
+  tags:
+    - apps
+    - sourcetree
+
+- name: Open sourcetree
+  shell: open -a /Applications/SourceTree.app
+  changed_when: false
+  tags:
+    - apps
+    - sourcetree
+

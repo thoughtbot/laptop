@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  roles:
+    - base
+    - dotfiles
+    - packages
+    - fonts
+    - apps
+    - vagrant
+    - settings
+
+  tasks:
+
+    - include: "users/adrien/main.yml"
+      when: "ansible_ssh_user == 'adrien'"
+
+    - include: "users/alban/main.yml"
+      when: "ansible_ssh_user == 'alban'"

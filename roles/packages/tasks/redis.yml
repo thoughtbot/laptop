@@ -1,0 +1,10 @@
+---
+
+- name: redis | Install redis
+  homebrew:
+    name: redis
+  tags:
+    - packages
+    - redis
+
+# XXX todo launchctl

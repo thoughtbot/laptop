@@ -1,0 +1,36 @@
+---
+
+- name: Install vagrant
+  homebrew_cask:
+    name: vagrant
+  tags:
+    - vagrant
+
+- name: Install parallels-virtualization-sdk
+  homebrew_cask:
+    name: parallels-virtualization-sdk
+  tags:
+    - vagrant
+
+- name: Install virtualbox
+  homebrew_cask:
+    name: virtualbox
+  tags:
+    - vagrant
+
+- name: Install vagrant plugins
+  shell: "/usr/bin/vagrant plugin list | grep -q {{ item }} || /usr/bin/vagrant plugin install {{ item }}"
+  with_items:
+    - vagrant-cachier
+    - vagrant-bindfs
+    - vagrant-parallels
+  register: _vagrant_plugin
+  changed_when: "'Installing' in _vagrant_plugin.stdout"
+  tags:
+    - vagrant
+
+- name: Install dev box
+  shell: "/usr/bin/vagrant box list | grep -q sharette || /usr/bin/vagrant box add http://box.sharette.fr --provider parallels"
+  changed_when: false
+  tags:
+    - vagrant
