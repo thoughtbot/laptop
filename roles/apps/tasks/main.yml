@@ -111,6 +111,12 @@
   tags:
     - apps
 
+- name: Install sketch
+  homebrew_cask:
+    name: sketch
+  tags:
+    - apps
+
 - name: Install packer
   homebrew_cask:
     name: packer

@@ -21,6 +21,13 @@
     - users
     - adrien
 
+- name: adrien | Install superduper
+  homebrew_cask:
+    name: superduper
+  tags:
+    - users
+    - adrien
+
 - name: adrien | Install arq
   homebrew_cask:
     name: arq
@@ -38,6 +45,13 @@
 - name: adrien | Install sonos
   homebrew_cask:
     name: sonos
+  tags:
+    - users
+    - adrien
+
+- name: adrien | Install dash
+  homebrew_cask:
+    name: dash
   tags:
     - users
     - adrien
