@@ -1,6 +1,6 @@
 ---
 
-- name: Install caffeine
+- name: caffeine | Install caffeine
   homebrew_cask:
     name: caffeine
   tags:
@@ -17,7 +17,7 @@
     - apps
     - caffeine
 
-- name: Open caffeine
+- name: caffeine | Open caffeine
   shell: open -a /Applications/Caffeine.app
   changed_when: false
   tags:

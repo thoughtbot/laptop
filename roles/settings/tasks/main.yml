@@ -31,7 +31,6 @@
   changed_when: false
   tags:
     - settings
-    - hacker
 
 - name: "Check for updates automatically"
   shell: softwareupdate --schedule on
@@ -39,7 +38,6 @@
   sudo: true
   tags:
     - settings
-    - hacker
 
 # http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
 - name: "Speeding up wake from sleep to 24 hours from an hour"
@@ -48,21 +46,18 @@
   sudo: true
   tags:
     - settings
-    - hacker
 
 - name: "Show the ~/Library folder"
   shell: chflags nohidden ~/Library
   changed_when: false
   tags:
     - settings
-    - hacker
 
 - name: "Disable local Time Machine backups (This can take up a ton of SSD space on <128GB SSDs)"
   shell: "hash tmutil &> /dev/null && sudo tmutil disablelocal"
   changed_when: false
   tags:
     - settings
-    - hacker
 
 - include: hacker.yml
 - include: dock.yml

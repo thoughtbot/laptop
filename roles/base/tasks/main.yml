@@ -75,18 +75,3 @@
     line: 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
   tags:
     - base
-
-# - name: Fix homebrew permissions for multi-user
-#   file:
-#     path: "{{ item }}"
-#     group: admin
-#     mode: "u=rwx,g=rwx,o=rx"
-#     state: directory
-#     recurse: yes
-#   sudo: true
-#   with_items:
-#     - /usr/local
-#     - /Library/Caches/Homebrew
-#     - /opt/homebrew-cask
-#   tags:
-#     - base

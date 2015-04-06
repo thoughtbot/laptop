@@ -18,7 +18,6 @@
   tags:
     - vagrant
 
-# todo : make it indepotent
 - name: Install vagrant plugins
   shell: "/usr/bin/vagrant plugin list | grep -q {{ item }} || /usr/bin/vagrant plugin install {{ item }}"
   with_items:

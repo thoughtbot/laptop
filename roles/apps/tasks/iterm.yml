@@ -1,14 +1,14 @@
 ---
 
 
-- name: Install iterm2-beta
+- name: iterm | Install iterm2-beta
   homebrew_cask:
     name: iterm2-beta
   tags:
     - apps
     - iterm
 
-- name: Copy iterm settings
+- name: iterm | Copy iterm settings
   copy:
     src: com.googlecode.iterm2.plist
     dest: ~/Library/Preferences/com.googlecode.iterm2.plist
@@ -16,13 +16,13 @@
     - apps
     - iterm
 
-- name: Reload iterm settings
+- name: iterm | Reload iterm settings
   shell: defaults read com.googlecode.iterm2
   tags:
     - apps
     - iterm
 
-- name: Open iterm
+- name: iterm | Open iterm
   shell: open -a /Applications/iTerm.app
   changed_when: false
   tags:

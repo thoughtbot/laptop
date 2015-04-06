@@ -1,6 +1,6 @@
 ---
 
-- name: Install sourcetree
+- name: sourcetree | Install sourcetree
   homebrew_cask:
     name: sourcetree
   tags:
