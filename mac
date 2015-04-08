@@ -30,6 +30,18 @@ append_to_zshrc() {
   fi
 }
 
+fancy_symlink() {
+  local master_db_yaml_path="$1"
+  local linked_db_yaml_path="$2"
+
+  if [ -f $linked_db_yaml_path ]
+  then
+    echo "$linked_db_yaml_path already exists"
+  else
+    ln -s $master_db_yaml_path $linked_db_yaml_path
+  fi
+}
+
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
@@ -220,36 +232,22 @@ do
   else
     git clone git@github.com:Recombine/$repo.git $REPO_PATH
   fi
-  git -C $REPO_PATH pull --all
+  git -C $REPO_PATH fetch origin
 done
 
 fancy_echo 'Creating an (empty) database.yml that all your apps will symlink to. Please fill it in before using'
 mkdir -p $RECOMBINE_DIR/config
 touch $RECOMBINE_DIR/config/database.yml
+DB_YAML_PATH=$RECOMBINE_DIR/config/database.yml
 
-#append workflow-utils path to zshrc
-WORKFLOW_UTILS_PATH=$RECOMBINE_DIR/workflow-utils
-append_to_zshrc 'export PATH="$PATH:'$WORKFLOW_UTILS_PATH"\""
-SYM_PATH=$WORKFLOW_UTILS_PATH/database.yml
-if [ -f $SYM_PATH ]
-then
-  echo "$SYM_PATH already exists"
-else
-  ln -s $RECOMBINE_DIR/config/database.yml $WORKFLOW_UTILS_PATH/database.yml
-fi
 
+append_to_zshrc 'export PATH=$PATH:$HOME/recombine/workflow-utils'
+fancy_symlink $DB_YAML_PATH $RECOMBINE_DIR/workflow-utils/database.yml
 
 
 fancy_echo 'Symlinking all rails apps database.yml files to ~/recombine/config/database.yml'
 rails_repos=(recombine-logistics recombine-bioinformatics recombine-client-services recombine-counseling recombine-sales recombine-billing Recombine)
 for rails_repo in "${rails_repos[@]}"
 do
-  DB_CONFIG_PATH=$RECOMBINE_DIR/$rails_repo/config/database.yml
-  if [ -f $DB_CONFIG_PATH ]
-  then
-    echo "$DB_CONFIG_PATH already exists"
-  else
-    ln -s $RECOMBINE_DIR/config/database.yml $DB_CONFIG_PATH
-  fi
+  fancy_symlink $DB_YAML_PATH $RECOMBINE_DIR/$rails_repo/config/database.yml
 done
-
