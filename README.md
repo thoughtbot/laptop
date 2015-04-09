@@ -24,7 +24,7 @@ Install
 Download, review, then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/givewellgetwell/laptop/master/mac
 less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
@@ -35,14 +35,13 @@ Debugging
 Your last Laptop run will be saved to `~/laptop.log`. Read through it to see if
 you can debug the issue yourself. If not, copy the lines where the script
 failed into a [new GitHub
-Issue](https://github.com/thoughtbot/laptop/issues/new) for us. Or, attach the
+Issue](https://github.com/givewellgetwell/laptop/issues/new) for us. Or, attach the
 whole log file as an attachment.
 
 What it sets up
 ---------------
 
 * [Bundler] for managing Ruby libraries
-* [Exuberant Ctags] for indexing files for vim tab completion
 * [Foreman] for managing web processes
 * [gh] for interacting with the GitHub API
 * [Heroku Toolbelt] for interacting with the Heroku API
@@ -78,7 +77,6 @@ What it sets up
 [Ruby]: https://www.ruby-lang.org/en/
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
 [Tmux]: http://tmux.sourceforge.net/
-[Zsh]: http://www.zsh.org/
 
 It should take less than 15 minutes to install (depends on your machine).
 
