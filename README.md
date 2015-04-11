@@ -32,11 +32,11 @@ sh mac 2>&1 | tee ~/laptop.log
 Debugging
 ---------
 
-Your last Laptop run will be saved to `~/laptop.log`. Read through it to see if
-you can debug the issue yourself. If not, copy the lines where the script
-failed into a [new GitHub
-Issue](https://github.com/thoughtbot/laptop/issues/new) for us. Or, attach the
-whole log file as an attachment.
+Your last Laptop run will be saved to `~/laptop.log`.
+Read through it to see if you can debug the issue yourself.
+If not, copy the lines where the script failed into a
+[new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
+Or, attach the whole log file as an attachment.
 
 What it sets up
 ---------------
@@ -44,9 +44,9 @@ What it sets up
 * [Bundler] for managing Ruby libraries
 * [Exuberant Ctags] for indexing files for vim tab completion
 * [Foreman] for managing web processes
-* [gh] for interacting with the GitHub API
-* [Heroku Toolbelt] for interacting with the Heroku API
+* [Heroku Toolbelt] via [Parity] for interacting with the Heroku API
 * [Homebrew] for managing operating system libraries
+* [Hub] for interacting with the GitHub API
 * [ImageMagick] for cropping and resizing images
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Postgres] for storing relational data
@@ -63,12 +63,13 @@ What it sets up
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Foreman]: https://github.com/ddollar/foreman
-[gh]: https://github.com/jingweno/gh
 [Heroku Toolbelt]: https://toolbelt.heroku.com/
 [Homebrew]: http://brew.sh/
+[Hub]: https://github.com/github/hub
 [ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
+[Parity]: https://github.com/thoughtbot/parity
 [Postgres]: http://www.postgresql.org/
 [Qt]: http://qt-project.org/
 [Rbenv]: https://github.com/sstephenson/rbenv

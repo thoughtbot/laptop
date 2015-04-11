@@ -80,7 +80,7 @@ brew_is_upgradable() {
 }
 
 brew_tap() {
-  brew tap "$1" 2> /dev/null
+  brew tap "$1" --repair 2> /dev/null
 }
 
 brew_expand_alias() {
@@ -128,11 +128,12 @@ else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
 
+brew_tap 'thoughtbot/formulae'
+
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
-brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'postgres'
+brew_install_or_upgrade 'parity'
 brew_launchctl_restart 'postgresql'
 brew_install_or_upgrade 'redis'
 brew_launchctl_restart 'redis'
@@ -175,10 +176,7 @@ fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-brew_install_or_upgrade 'heroku-toolbelt'
-
 if ! command -v rcup >/dev/null; then
-  brew_tap 'thoughtbot/formulae'
   brew_install_or_upgrade 'rcm'
 fi
 
