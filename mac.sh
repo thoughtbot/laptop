@@ -239,6 +239,7 @@ brew_install_or_upgrade 'git-pair'
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
+brew_install_or_upgrade 'chromedriver'
 
 # Install applications
 cask_install_or_upgrade 'macvim'
