@@ -147,6 +147,7 @@ brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
 
 brew_install_or_upgrade 'rbenv'
+brew_install_or_upgrade 'rbenv-gem-rehash'
 brew_install_or_upgrade 'ruby-build'
 
 # shellcheck disable=SC2016
