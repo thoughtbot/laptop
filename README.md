@@ -90,7 +90,7 @@ Put your customizations there.
 For example:
 
 ```sh
-#!/bin/sh
+#!/usr/bin/env sh
 
 brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'brew-cask'
