@@ -102,6 +102,7 @@ brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt5'
+brew unlink qt5 && brew link qt5 --force
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'caskroom/cask/brew-cask'
