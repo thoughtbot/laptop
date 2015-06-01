@@ -119,6 +119,8 @@ if ! rbenv versions | grep -Fq "$ruby_version"; then
   rbenv install -s "$ruby_version"
 fi
 
+rbenv global "$ruby_version"
+
 gem update --system
 
 gem_install_or_update 'bundler'
