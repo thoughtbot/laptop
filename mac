@@ -4,6 +4,8 @@
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
 
+ruby_version="2.2.1"
+
 fancy_echo() {
   local fmt="$1"; shift
 
@@ -102,6 +104,7 @@ brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt5'
+brew unlink qt5 && brew link qt5 --force
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'caskroom/cask/brew-cask'
@@ -112,8 +115,6 @@ brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
-
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
   rbenv install -s "$ruby_version"
@@ -128,6 +129,8 @@ gem_install_or_update 'bundler'
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
+
+gem_install_or_update 'foreman'
 
 brew_install_or_upgrade 'heroku-toolbelt'
 
