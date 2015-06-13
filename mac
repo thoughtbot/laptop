@@ -87,7 +87,7 @@ brew_tap() {
 }
 
 brew_expand_alias() {
-  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/.*\//, ""); gsub(/:/, ""); print $1}'
 }
 
 brew_launchctl_restart() {
