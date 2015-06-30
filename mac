@@ -30,6 +30,7 @@ append_to_zshrc() {
   fi
 }
 
+# shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
@@ -68,13 +69,15 @@ brew_install_or_upgrade() {
 }
 
 brew_is_installed() {
-  local name="$(brew_expand_alias "$1")"
+  local name
+  name="$(brew_expand_alias "$1")"
 
   brew list -1 | grep -Fqx "$name"
 }
 
 brew_is_upgradable() {
-  local name="$(brew_expand_alias "$1")"
+  local name
+  name="$(brew_expand_alias "$1")"
 
   ! brew outdated --quiet "$name" >/dev/null
 }
@@ -88,9 +91,15 @@ brew_expand_alias() {
 }
 
 brew_launchctl_restart() {
-  local name="$(brew_expand_alias "$1")"
-  local domain="homebrew.mxcl.$name"
-  local plist="$domain.plist"
+  local name
+  name="$(brew_expand_alias "$1")"
+
+  local plist
+  plist="$domain.plist"
+
+  local domain
+  domain="homebrew.mxcl.$name"
+
 
   fancy_echo "Restarting %s ..." "$1"
   mkdir -p "$HOME/Library/LaunchAgents"
