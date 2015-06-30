@@ -131,20 +131,9 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
-brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'postgres'
-brew_launchctl_restart 'postgresql'
-brew_install_or_upgrade 'redis'
-brew_launchctl_restart 'redis'
-brew_install_or_upgrade 'the_silver_searcher'
-brew_install_or_upgrade 'vim'
-brew_install_or_upgrade 'ctags'
-brew_install_or_upgrade 'tmux'
-brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
-brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
 
 brew_install_or_upgrade 'rbenv'
@@ -153,13 +142,14 @@ brew_install_or_upgrade 'ruby-build'
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
 
+fancy_echo "Updating OpenSSL ..."
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'libyaml'
 
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-
+# shellcheck disable=SC2016
 eval "$(rbenv init - zsh)"
+
+ruby_version="2.1.5"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
   rbenv install -s "$ruby_version"
@@ -170,18 +160,13 @@ rbenv shell "$ruby_version"
 
 gem update --system
 
+brew_install_or_upgrade 'libyaml'
+
 gem_install_or_update 'bundler'
 
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
-
-brew_install_or_upgrade 'heroku-toolbelt'
-
-if ! command -v rcup >/dev/null; then
-  brew_tap 'thoughtbot/formulae'
-  brew_install_or_upgrade 'rcm'
-fi
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
