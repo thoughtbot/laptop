@@ -180,3 +180,5 @@ fancy_echo "Configuring Bundler ..."
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
+
+gem_install_or_update 'pre-commit'
