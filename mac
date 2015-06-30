@@ -144,6 +144,7 @@ brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'node'
+brew_install_or_upgrade 'readline'
 
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
