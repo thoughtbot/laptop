@@ -208,3 +208,4 @@ if [ -f "$HOME/.laptop.local" ]; then
 fi
 
 gem_install_or_update 'pre-commit'
+fancy_echo 'Done. Now your laptop is awesome!'
