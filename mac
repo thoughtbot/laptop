@@ -111,6 +111,29 @@ brew_launchctl_restart() {
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
 }
 
+brew_cask_expand_alias() {
+  brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+}
+
+brew_cask_is_installed() {
+  local NAME=$(brew_cask_expand_alias "$1")
+  brew cask list -1 | grep -Fqx "$NAME"
+}
+
+brew_cask_install() {
+  if ! brew_cask_is_installed "$1"; then
+    brew cask install "$@"
+  fi
+}
+
+brew_cask_install_or_upgrade() {
+  if brew_cask_is_installed "$1"; then
+    echo "$1 is already installed, brew cask upgrade is not yet implemented"
+  else
+    brew cask install "$@"
+  fi
+}
+
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
     fancy_echo "Updating %s ..." "$1"
@@ -148,6 +171,8 @@ brew_install_or_upgrade 'readline'
 
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
+brew_tap 'caskroom/cask'
+brew_cask_install_or_upgrade 'xquartz'
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
