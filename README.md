@@ -50,7 +50,8 @@ What it sets up
 * [Rbenv] for managing versions of Ruby
 * [Ruby] stable for writing general-purpose code
 * [Zsh] as your shell
-
+* [XQuartz] for running headless browser  
+ 
 [Bundler]: http://bundler.io/
 [Homebrew]: http://brew.sh/
 [ImageMagick]: http://www.imagemagick.org/
@@ -59,6 +60,7 @@ What it sets up
 [Rbenv]: https://github.com/sstephenson/rbenv
 [Ruby]: https://www.ruby-lang.org/en/
 [Zsh]: http://www.zsh.org/
+[XQuartz]: http://xquartz.macosforge.org 
 
 It should take less than 15 minutes to install (depends on your machine).
 

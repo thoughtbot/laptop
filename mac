@@ -128,8 +128,10 @@ brew_cask_install() {
 
 brew_cask_install_or_upgrade() {
   if brew_cask_is_installed "$1"; then
-    echo "$1 is already installed, brew cask upgrade is not yet implemented"
+    fancy_echo "Updating %s ..." "$1"
+    brew cask install "$@" --force
   else
+    fancy_echo "Installing %s ..." "$1"
     brew cask install "$@"
   fi
 }
