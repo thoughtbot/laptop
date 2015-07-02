@@ -30,6 +30,7 @@ append_to_zshrc() {
   fi
 }
 
+# shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
@@ -68,13 +69,15 @@ brew_install_or_upgrade() {
 }
 
 brew_is_installed() {
-  local name="$(brew_expand_alias "$1")"
+  local name
+  name="$(brew_expand_alias "$1")"
 
   brew list -1 | grep -Fqx "$name"
 }
 
 brew_is_upgradable() {
-  local name="$(brew_expand_alias "$1")"
+  local name
+  name="$(brew_expand_alias "$1")"
 
   ! brew outdated --quiet "$name" >/dev/null
 }
@@ -88,9 +91,15 @@ brew_expand_alias() {
 }
 
 brew_launchctl_restart() {
-  local name="$(brew_expand_alias "$1")"
-  local domain="homebrew.mxcl.$name"
-  local plist="$domain.plist"
+  local name
+  name="$(brew_expand_alias "$1")"
+
+  local plist
+  plist="$domain.plist"
+
+  local domain
+  domain="homebrew.mxcl.$name"
+
 
   fancy_echo "Restarting %s ..." "$1"
   mkdir -p "$HOME/Library/LaunchAgents"
@@ -100,6 +109,31 @@ brew_launchctl_restart() {
     launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
   fi
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
+}
+
+brew_cask_expand_alias() {
+  brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+}
+
+brew_cask_is_installed() {
+  local NAME=$(brew_cask_expand_alias "$1")
+  brew cask list -1 | grep -Fqx "$NAME"
+}
+
+brew_cask_install() {
+  if ! brew_cask_is_installed "$1"; then
+    brew cask install "$@"
+  fi
+}
+
+brew_cask_install_or_upgrade() {
+  if brew_cask_is_installed "$1"; then
+    fancy_echo "Updating %s ..." "$1"
+    brew cask install "$@" --force
+  else
+    fancy_echo "Installing %s ..." "$1"
+    brew cask install "$@"
+  fi
 }
 
 gem_install_or_update() {
@@ -131,35 +165,29 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
-brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'postgres'
-brew_launchctl_restart 'postgresql'
-brew_install_or_upgrade 'redis'
-brew_launchctl_restart 'redis'
-brew_install_or_upgrade 'the_silver_searcher'
-brew_install_or_upgrade 'vim'
-brew_install_or_upgrade 'ctags'
-brew_install_or_upgrade 'tmux'
-brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
-brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
+brew_install_or_upgrade 'readline'
 
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
+brew_tap 'caskroom/cask'
+brew_install_or_upgrade 'caskroom/cask/brew-cask'
+brew_cask_install_or_upgrade 'xquartz'
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
 
+fancy_echo "Updating OpenSSL ..."
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'libyaml'
 
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-
+# shellcheck disable=SC2016
 eval "$(rbenv init - zsh)"
+
+ruby_version="2.1.5"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
   rbenv install -s "$ruby_version"
@@ -170,19 +198,17 @@ rbenv shell "$ruby_version"
 
 gem update --system
 
+brew_install_or_upgrade 'libyaml'
+
 gem_install_or_update 'bundler'
 
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-brew_install_or_upgrade 'heroku-toolbelt'
-
-if ! command -v rcup >/dev/null; then
-  brew_tap 'thoughtbot/formulae'
-  brew_install_or_upgrade 'rcm'
-fi
-
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
+
+gem_install_or_update 'pre-commit'
+fancy_echo 'Done. Now your laptop is awesome!'
