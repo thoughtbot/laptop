@@ -178,13 +178,6 @@ fancy_echo "Configuring Bundler ..."
 
 brew_install_or_upgrade 'heroku-toolbelt'
 
-
-brew_install_or_upgrade 'python' # Brew installs PIP with Python
-brew_install_or_upgrade 'python3'
-pip install virtualenv # install Virtualenv for python
-brew install node
-npm install -g bower
-
 if ! command -v rcup >/dev/null; then
   brew_tap 'thoughtbot/formulae'
   brew_install_or_upgrade 'rcm'
