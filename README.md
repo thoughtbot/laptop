@@ -29,6 +29,9 @@ less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
 
+Optionally [install thoughtbot's
+dotfiles](https://github.com/thoughtbot/dotfiles#install).
+
 Debugging
 ---------
 
