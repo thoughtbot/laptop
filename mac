@@ -222,7 +222,7 @@ RECOMBINE_DIR=$HOME/recombine
 mkdir -p $RECOMBINE_DIR
 
 fancy_echo 'Cloning and/or updating repos'
-repos=(recombine-logistics workflow-utils recombine-api recombine-bioinformatics recombine-client-services recombine-counseling recombine-public-new recombine-labs-new recombine-sales recombine-billing Recombine)
+repos=(recombine-rails-suite workflow-utils recombine-api recombine-public-new recombine-labs-new  Recombine)
 
 for repo in "${repos[@]}"
 do
@@ -246,9 +246,4 @@ append_to_zshrc 'export PATH=$PATH:$HOME/recombine/workflow-utils'
 fancy_symlink $DB_YAML_PATH $RECOMBINE_DIR/workflow-utils/database.yml
 
 
-fancy_echo 'Symlinking all rails apps database.yml files to ~/recombine/config/database.yml'
-rails_repos=(recombine-logistics recombine-bioinformatics recombine-client-services recombine-counseling recombine-sales recombine-billing Recombine)
-for rails_repo in "${rails_repos[@]}"
-do
-  fancy_symlink $DB_YAML_PATH $RECOMBINE_DIR/$rails_repo/config/database.yml
-done
+
