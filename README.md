@@ -31,14 +31,18 @@ less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
 
+Optionally, [install thoughtbot/dotfiles][dotfiles].
+
+[dotfiles]: https://github.com/thoughtbot/dotfiles#install
+
 Debugging
 ---------
 
-Your last Laptop run will be saved to `~/laptop.log`. Read through it to see if
-you can debug the issue yourself. If not, copy the lines where the script
-failed into a [new GitHub
-Issue](https://github.com/thoughtbot/laptop/issues/new) for us. Or, attach the
-whole log file as an attachment.
+Your last Laptop run will be saved to `~/laptop.log`.
+Read through it to see if you can debug the issue yourself.
+If not, copy the lines where the script failed into a
+[new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
+Or, attach the whole log file as an attachment.
 
 What it sets up
 ---------------
@@ -46,7 +50,7 @@ What it sets up
 * [Bundler] for managing Ruby libraries
 * [Exuberant Ctags] for indexing files for vim tab completion
 * [Foreman] for managing web processes
-* [gh] for interacting with the GitHub API
+* [hub] for interacting with the GitHub API
 * [Heroku Toolbelt] for interacting with the Heroku API
 * [Homebrew] for managing operating system libraries
 * [ImageMagick] for cropping and resizing images
@@ -66,7 +70,7 @@ What it sets up
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Foreman]: https://github.com/ddollar/foreman
-[gh]: https://github.com/jingweno/gh
+[hub]: http://hub.github.com/
 [Heroku Toolbelt]: https://toolbelt.heroku.com/
 [Homebrew]: http://brew.sh/
 [ImageMagick]: http://www.imagemagick.org/
@@ -136,6 +140,11 @@ brew install shellcheck
 Thank you, [contributors]!
 
 [contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
+
+By participating in this project,
+you agree to abide by the thoughtbot [code of conduct].
+
+[code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
 
 License
 -------
