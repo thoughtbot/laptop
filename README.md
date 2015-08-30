@@ -21,6 +21,14 @@ versions are welcome.
 Install
 -------
 
+Optionally, clone your dotfiles before installing laptop. [install thoughtbot/dotfiles][dotfiles]
+
+```sh
+git clone git://github.com/thoughtbot/dotfiles.git ~/dotfiles
+```
+
+[dotfiles]: https://github.com/thoughtbot/dotfiles#install
+
 Download, review, then execute the script:
 
 ```sh
@@ -28,10 +36,6 @@ curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/ma
 less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
-
-Optionally, [install thoughtbot/dotfiles][dotfiles].
-
-[dotfiles]: https://github.com/thoughtbot/dotfiles#install
 
 Debugging
 ---------

@@ -183,6 +183,11 @@ if ! command -v rcup >/dev/null; then
   brew_install_or_upgrade 'rcm'
 fi
 
+if [ -d "$HOME/dotfiles" ]; then
+  fancy_echo "Dotfiles installed, running rcup ..."
+  env RCRC="$HOME/dotfiles/rcrc" rcup
+fi
+
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
