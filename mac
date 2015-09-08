@@ -167,6 +167,7 @@ brew_install_or_upgrade 'mysql'
 brew tap caskroom/cask
 brew_install_or_upgrade 'caskroom/cask/brew-cask'
 
+brew cask install 0xdbe-eap
 brew cask install skype
 brew cask install slack
 brew cask install github-desktop
