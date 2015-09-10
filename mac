@@ -125,6 +125,15 @@ gem_install_or_update() {
   fi
 }
 
+pip_install_or_upgrade() {
+  if pip list | grep "$1" > /dev/null; then
+    fancy_echo "Upgrading pip pacakge $1"
+    pip install --upgrade "$1" > /dev/null
+  else
+    pip install "$1"
+  fi
+}
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
@@ -160,8 +169,10 @@ brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'phantomjs'
 brew_install_or_upgrade 'sbt'
 brew_install_or_upgrade 'mysql'
-brew_install_or_upgrade 'python' # for pip so that we can install aws command line tools
-pip install awscli
+
+brew_install_or_upgrade 'jq' # for parsing awscli JSON return values
+brew_install_or_upgrade 'python' # for pip so that we can install awscli
+pip_install_or_upgrade 'awscli'
 
 brew tap caskroom/cask
 brew_install_or_upgrade 'caskroom/cask/brew-cask'
