@@ -126,8 +126,9 @@ gem_install_or_update() {
 }
 
 pip_install_or_upgrade() {
-  if pip list | grep -Fq "$1"; then
-    pip install --upgrade "$1"
+  if pip list | grep "$1" > /dev/null; then
+    fancy_echo "Upgrading pip pacakge $1"
+    pip install --upgrade "$1" > /dev/null
   else
     pip install "$1"
   fi
