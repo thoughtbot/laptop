@@ -12,8 +12,9 @@ Requirements
 
 We support:
 
-* [OS X Mavericks (10.9)](https://itunes.apple.com/us/app/os-x-mavericks/id675248567)
-* [OS X Yosemite (10.10)](https://www.apple.com/osx/)
+* OS X Mavericks (10.9)
+* OS X Yosemite (10.10)
+* OS X El Capitan (10.11)
 
 Older versions may work but aren't regularly tested. Bug reports for older
 versions are welcome.
@@ -41,6 +42,15 @@ Read through it to see if you can debug the issue yourself.
 If not, copy the lines where the script failed into a
 [new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
 Or, attach the whole log file as an attachment.
+
+OS X El Capitan (10.11)
+-----------------------
+
+You may have problems installing Homebrew for the first time on OS X El
+Capitan due to permission changes to the /usr folder (where Homebrew's
+installation folder is located). See the [Homebrew El Capitan troubleshooting instructions](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md)
+for steps to resolve the permissions issues that interfere with Homebrew's
+installation.
 
 What it sets up
 ---------------
