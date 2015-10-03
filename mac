@@ -113,6 +113,14 @@ gem_install_or_update() {
   fi
 }
 
+find_latest_ruby() {
+  local ruby_download_site="https://www.ruby-lang.org/en/downloads/"
+
+  fancy_echo "Finding latest stable Ruby version ..."
+  curl -s "$ruby_download_site" | sed -ne \
+    '/Current stable/{n; /Ruby/s/.*Ruby //; s/<.*//p}'
+}
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
@@ -157,7 +165,7 @@ brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+ruby_version="$(find_latest_ruby)"
 
 eval "$(rbenv init - zsh)"
 
