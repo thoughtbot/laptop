@@ -31,7 +31,7 @@ sh mac 2>&1 | tee ~/laptop.log
 
 Optionally, [install thoughtbot/dotfiles][dotfiles].
 
-[dotfiles]: https://github.com/thoughtbot/dotfiles#install
+[dotfiles]: https://github.com/epionhealth/dotfiles#install
 
 Debugging
 ---------
