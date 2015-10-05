@@ -42,7 +42,7 @@ If not, copy the lines where the script failed into a
 [new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
 Or, attach the whole log file as an attachment.
 
-What it sets up
+What dev tools it sets up
 ---------------
 
 * [Bundler] for managing Ruby libraries
@@ -84,7 +84,24 @@ What it sets up
 [Tmux]: http://tmux.sourceforge.net/
 [Zsh]: http://www.zsh.org/
 
-It should take less than 15 minutes to install (depends on your machine).
+What binaries it installs
+------------------
+
+* [Google Chrome] for web browsing
+* [Alfred] for a more productive task bar
+* [Caffeine] to keep your mac from sleeping
+* [Google Drive] for sharing documents
+* [Day-O] the menu bar calendar that OS X should have had
+* [F.lux] to adapt your screen hue to the time of day
+* [ShiftIt] for managing windows
+
+[Google Chrome]: https://www.google.com/chrome/browser/desktop/
+[Alfred]: https://www.alfredapp.com/
+[Caffeine]: http://lightheadsw.com/caffeine/
+[Google Drive]: https://www.google.com/drive/
+[Day-O]: http://www.shauninman.com/archive/2011/10/20/day_o_mac_menu_bar_clock
+[F.lux]: https://justgetflux.com/
+[ShiftIt]: https://github.com/onsi/ShiftIt
 
 Customize in `~/.laptop.local`
 ------------------------------
