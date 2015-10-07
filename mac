@@ -103,13 +103,12 @@ brew_launchctl_restart() {
 }
 
 gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
+  if gem list "^$1$" --installed > /dev/null; then
     fancy_echo "Updating %s ..." "$1"
     gem update "$@"
   else
     fancy_echo "Installing %s ..." "$1"
     gem install "$@"
-    rbenv rehash
   fi
 }
 
@@ -131,6 +130,7 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
+brew_install_or_upgrade 'gpg'
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'postgres'
@@ -147,11 +147,7 @@ brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
 
-brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
-
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
 
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
@@ -159,16 +155,36 @@ brew_install_or_upgrade 'libyaml'
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
-eval "$(rbenv init - zsh)"
+is_rvm_installed() {
+  rvm -v | grep -q "rvm.io"
+}
 
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  rbenv install -s "$ruby_version"
+if ! is_rvm_installed; then
+  fancy_echo "Securely installing RVM ..."
+  pushd $(mktemp -d -t rvm)
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+  \curl -O https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer
+  \curl -O https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer.asc
+  gpg --verify rvm-installer.asc && bash rvm-installer stable
+  popd
+else
+  fancy_echo "... skipping RVM, already installed"
 fi
 
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
+source $HOME/.rvm/scripts/rvm
 
-gem update --system
+if ! rvm list | grep -Fq "$ruby_version"; then
+  fancy_echo "Installing ruby ${ruby_version} ..."
+  rvm install "$ruby_version"
+else
+  fancy_echo "... skipping ruby ${ruby_version}, already installed"
+fi
+
+fancy_echo "Setting default ruby to ${ruby_version} ..."
+  rvm --default use "${ruby_version}"
+
+fancy_echo "Updating system gems ..."
+  gem update --system
 
 gem_install_or_update 'bundler'
 
@@ -183,24 +199,30 @@ if ! command -v rcup >/dev/null; then
   brew_install_or_upgrade 'rcm'
 fi
 
-# hat-tip to Mark Gangl (https://github.com/attack/laptop-lite/blob/master/mac)
-fancy_echo "Installing brew-cask to install Mac binaries ..."
-  brew_install_or_upgrade caskroom/cask/brew-cask
-
 fancy_echo "Installing wget ..."
   brew_install_or_upgrade wget
 
-is_brew_cask_installed() {
-    echo ${CASKS} | grep -q "\b$1"
-}
+if ! brew list | grep -q "brew cask"; then
+  brew tap caskroom/cask
+fi
 
+brew_install_or_upgrade 'caskroom/cask/brew-cask'
+brew cleanup && brew cask cleanup
+
+# run this once, the command is slow
 brew_cask_list() {
   brew cask list 2> /dev/null || true
 }
 
+CASKS=$(brew_cask_list)
+
+is_brew_cask_installed() {
+  echo ${CASKS} | grep -q "\b$1"
+}
+
 brew_cask_install() {
   if is_brew_cask_installed $1; then
-    less_fancy_echo "... skipping cask $1, already installed"
+    fancy_echo "... skipping cask $1, already installed"
   else
     brew cask install $1 2> /dev/null || true
   fi
@@ -222,20 +244,20 @@ fancy_echo "Installing Alfred ..."
 fancy_echo "Installing Caffeine ..."
   brew_cask_install caffeine
 
-fancy_echo "Installing Google Chrome ..."
-  brew_cask_install google-chrome
-
-fancy_echo "Installing Google Drive ..."
-  brew_cask_install google-drive
-
 fancy_echo "Installing Day-O ..."
   brew_cask_install day-o
 
 fancy_echo "Installing f.lux ..."
   brew_cask_install flux
 
-fancy_echo "Linking Alfred, so that it sees casks ..."
-  brew_cask_link alfred
+fancy_echo "Installing Flycut ..."
+  brew_cask_install flycut
+
+fancy_echo "Installing Google Chrome ..."
+  brew_cask_install google-chrome
+
+fancy_echo "Installing Google Drive ..."
+  brew_cask_install google-drive
 
 if [ ! -d /Applications/ShiftIt.app ]; then
   fancy_echo "Installing ShiftIt (onsi fork) window manager ..."
