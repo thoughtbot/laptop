@@ -187,6 +187,7 @@ fancy_echo "Updating system gems ..."
   gem update --system
 
 gem_install_or_update 'bundler'
+gem_install_or_update 'hitch'
 
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
