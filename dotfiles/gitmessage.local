@@ -1,0 +1,21 @@
+# Type(<scope>): <subject>
+
+# Why
+
+# This change addresses the need by
+
+# Type should be one of the following:
+# * feat (new feature)
+# * fix (bug fix)
+# * docs (changes to documentation)
+# * style (formatting, missing semi colons, etc; no code change)
+# * refactor (refactoring production code)
+# * test (adding missing tests, refactoring tests; no production code change)
+# * chore (updating grunt tasks etc; no production code change)
+# Scope is just the scope of the change. Something like (admin) or (teacher).
+# Subject should use impertivite tone and say what you did.
+# The body should go into detail about changes made.
+# The footer should contain any JIRA (or other tool) issue references or actions.
+
+# For a full example of how to write a good commit message, check out
+# https://github.com/sparkbox/how_to/tree/master/style/git
