@@ -135,8 +135,6 @@ brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'postgres'
 brew_launchctl_restart 'postgresql'
-brew_install_or_upgrade 'redis'
-brew_launchctl_restart 'redis'
 brew_install_or_upgrade 'the_silver_searcher'
 brew_install_or_upgrade 'vim'
 brew_install_or_upgrade 'ctags'
@@ -186,3 +184,40 @@ fi
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
+
+brew_tap 'caskroom/cask'
+brew_install_or_upgrade 'brew-cask'
+
+# Powerline Fonts
+git clone https://github.com/powerline/fonts.git
+./fonts/install.sh
+rm -rf fonts
+
+# Applications
+brew cask install google-chrome
+brew cask install iterm2
+brew cask install atom
+brew cask install the-unarchiver
+brew cask install flux
+
+
+# OhMyZsh
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Dotfiles
+
+# Vim
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+cp dotfiles/vimrc.local ~/.vimrc
+vim +PluginInstall +qall
+
+# zsh
+cp dotfiles/zshrc.local ~/.zshrc
+
+# tmux
+cp dotfiles/tmux.conf.local ~/.tmux.conf
+
+# Git
+cp dotfiles/gitconfig.local ~/.gitconfig
+cp dotfiles/gitignore.local ~/.gitignore
+cp dotfiles/gitmessage.local ~/.gitmessage
