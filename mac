@@ -194,6 +194,7 @@ fancy_echo "Configuring Bundler ..."
   bundle config --global jobs $((number_of_cores - 1))
 
 brew_install_or_upgrade 'heroku-toolbelt'
+brew_install_or_upgrade 'phantomjs'
 
 if ! command -v rcup >/dev/null; then
   brew_tap 'thoughtbot/formulae'
