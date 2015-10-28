@@ -48,7 +48,7 @@ What it sets up
 * [Homebrew] for managing operating system libraries
 * [ImageMagick] for cropping and resizing images
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
-* [Postgres] for storing relational data
+* [Postgres] with [Postgis] for storing relational data
 * [Qt] for headless JavaScript testing via Capybara Webkit
 * [Rbenv] for managing versions of Ruby
 * [RCM] for managing company and personal dotfiles
@@ -57,7 +57,6 @@ What it sets up
 * [Ruby] stable for writing general-purpose code
 * [The Silver Searcher] for finding things in files
 * [Tmux] for saving project state and switching between projects
-* [Zsh] as your shell
 
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
@@ -69,6 +68,7 @@ What it sets up
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
 [Postgis]:http://postgis.net/
+[Postgres]:http://http://www.postgresql.org/
 [Qt]: http://qt-project.org/
 [Rbenv]: https://github.com/sstephenson/rbenv
 [RCM]: https://github.com/thoughtbot/rcm
