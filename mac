@@ -1,4 +1,4 @@
-#!/bin/sh
+e!/bin/sh
 
 # Welcome to the thoughtbot laptop script!
 # Be prepared to turn your laptop (or desktop, no haters here)
@@ -107,9 +107,11 @@ brew_install_or_upgrade 'qt5'
 brew unlink qt5 && brew link qt5 --force
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
-brew_install_or_upgrade 'caskroom/cask/brew-cask'
 
 brew_install_or_upgrade 'rbenv'
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+source ~/.bashrc
+
 brew_install_or_upgrade 'ruby-build'
 
 brew_install_or_upgrade 'openssl'
