@@ -146,6 +146,7 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
+brew_install_or_upgrade 'phantomjs'
 
 brew_install_or_upgrade 'ruby-build'
 
@@ -192,9 +193,6 @@ gem_install_or_update 'hitch'
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
-
-brew_install_or_upgrade 'heroku-toolbelt'
-brew_install_or_upgrade 'phantomjs'
 
 if ! command -v rcup >/dev/null; then
   brew_tap 'thoughtbot/formulae'
