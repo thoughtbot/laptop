@@ -147,28 +147,15 @@ brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
 
-brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
-
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
-
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
-eval "$(rbenv init - zsh)"
+\curl -L https://get.rvm.io | bash -s stable
 
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  rbenv install -s "$ruby_version"
-fi
-
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
-
-gem update --system
+rvm use ruby --install --default
 
 gem_install_or_update 'bundler'
 
@@ -182,6 +169,8 @@ if ! command -v rcup >/dev/null; then
   brew_tap 'thoughtbot/formulae'
   brew_install_or_upgrade 'rcm'
 fi
+
+gem install rails --no-ri --no-rdoc
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
