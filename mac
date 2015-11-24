@@ -144,7 +144,7 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
-
+brew_install_or_upgrade 'python'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 
@@ -185,6 +185,8 @@ if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
 
+brew linkapps python
+
 brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'brew-cask'
 
@@ -203,6 +205,10 @@ brew cask install flux
 
 # OhMyZsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Powerline
+pip install powerline-status
+ln -s /usr/local/lib/python2.7/site-packages/scripts/powerline ~/.local/bin
 
 # Dotfiles
 
