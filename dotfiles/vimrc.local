@@ -9,11 +9,10 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'mileszs/ack.vim'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'jonathanfilip/vim-lucius'
-Plugin 'itchyny/lightline.vim'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
+Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 call vundle#end()
 filetype plugin indent on

@@ -35,5 +35,8 @@ bind-key C-b send-prefix
 # prefix-2 -> forward-incremental-history-search
 bind-key C-s send-prefix -2
 
+run-shell "powerline-daemon -q"
+source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+
 # Local config
 if-shell "[ -f ~/.tmux.conf.local ]" 'source ~/.tmux.conf.local'

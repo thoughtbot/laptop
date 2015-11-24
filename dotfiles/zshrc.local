@@ -88,3 +88,5 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 export PATH="$HOME/.bin:$PATH"
 eval "$(rbenv init - --no-rehash zsh)"
+
+. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
