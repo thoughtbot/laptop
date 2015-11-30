@@ -189,6 +189,12 @@ install_oh_my_zsh() {
   fi
 }
 
+install_elasticsearch() {
+  cask_install_or_upgrade 'java'
+  brew_install_or_upgrade 'elasticsearch'
+  brew services && brew services start elasticsearch
+}
+
 ##### Start Installation #####
 
 if [ ! -d "$HOME/.bin/" ]; then
@@ -255,7 +261,7 @@ cask_install_or_upgrade 'lastpass'
 cask_install_or_upgrade 'alfred'
 cask_install_or_upgrade 'vagrant'
 install_shift_it
-
+install_elasticsearch
 install_latest_ruby
 install_vim_config
 
