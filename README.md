@@ -91,7 +91,7 @@ What it sets up
 [Ruby Build]: https://github.com/sstephenson/ruby-build
 [Ruby]: https://www.ruby-lang.org/en/
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
-[Tmux]: http://tmux.sourceforge.net/
+[Tmux]: http://tmux.github.io/
 [Zsh]: http://www.zsh.org/
 
 It should take less than 15 minutes to install (depends on your machine).
