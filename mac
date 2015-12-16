@@ -129,6 +129,8 @@ else
 fi
 
 fancy_echo "Updating Homebrew formulas ..."
+
+brew_tap 'caskroom/cask'
 brew update
 
 brew_install_or_upgrade 'zsh'
@@ -146,35 +148,13 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
-
-brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
-
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
+brew_install_or_upgrade 'vim'
 
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
-
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-
-eval "$(rbenv init - zsh)"
-
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  rbenv install -s "$ruby_version"
-fi
-
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
-
-gem update --system
-
-gem_install_or_update 'bundler'
-
-fancy_echo "Configuring Bundler ..."
-  number_of_cores=$(sysctl -n hw.ncpu)
-  bundle config --global jobs $((number_of_cores - 1))
+brew install firefox
+brew install google-chrome
 
 brew_install_or_upgrade 'heroku-toolbelt'
 
