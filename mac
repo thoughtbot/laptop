@@ -153,8 +153,8 @@ brew_install_or_upgrade 'vim'
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
-brew install firefox
-brew install google-chrome
+brew cask install firefox
+brew cask install google-chrome
 
 brew_install_or_upgrade 'heroku-toolbelt'
 
