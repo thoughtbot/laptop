@@ -113,6 +113,11 @@ gem_install_or_update() {
   fi
 }
 
+install_rvm_with_dotfiles() {
+  fancy_echo "Installing rvm with auto-dotfiles support..."
+  curl -sSL https://get.rvm.io | bash -s stable --auto-dotfiles
+}
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
@@ -166,3 +171,5 @@ fi
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
+
+install_rvm_with_dotfiles
