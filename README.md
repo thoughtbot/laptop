@@ -76,7 +76,9 @@ What it sets up
 
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
+[Firefox]: https://www.mozilla.org/en-US/firefox/
 [Foreman]: https://github.com/ddollar/foreman
+[Google Chrome]: https://www.google.com/chrome/
 [hub]: http://hub.github.com/
 [Heroku Toolbelt]: https://toolbelt.heroku.com/
 [Homebrew]: http://brew.sh/
@@ -85,13 +87,13 @@ What it sets up
 [NPM]: https://www.npmjs.org/
 [Postgres]: http://www.postgresql.org/
 [Qt]: http://qt-project.org/
-[Rbenv]: https://github.com/sstephenson/rbenv
+[RVM]: https://rvm.io
 [RCM]: https://github.com/thoughtbot/rcm
 [Redis]: http://redis.io/
-[Ruby Build]: https://github.com/sstephenson/ruby-build
 [Ruby]: https://www.ruby-lang.org/en/
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
 [Tmux]: http://tmux.sourceforge.net/
+[Vim]: https://github.com/vim/vim/
 [Zsh]: http://www.zsh.org/
 
 It should take less than 15 minutes to install (depends on your machine).
