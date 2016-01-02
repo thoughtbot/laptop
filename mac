@@ -54,34 +54,6 @@ case "$SHELL" in
     ;;
 esac
 
-brew_install_or_upgrade() {
-  if brew_is_installed "$1"; then
-    if brew_is_upgradable "$1"; then
-      fancy_echo "Upgrading %s ..." "$1"
-      brew upgrade "$@"
-    else
-      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
-    fi
-  else
-    fancy_echo "Installing %s ..." "$1"
-    brew install "$@"
-  fi
-}
-
-brew_is_installed() {
-  local name
-  name="$(brew_expand_alias "$1")"
-
-  brew list -1 | grep -Fqx "$name"
-}
-
-brew_is_upgradable() {
-  local name
-  name="$(brew_expand_alias "$1")"
-
-  ! brew outdated --quiet "$name" >/dev/null
-}
-
 brew_tap() {
   brew tap "$1" 2> /dev/null
 }
@@ -135,31 +107,32 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
-brew_install_or_upgrade 'zsh'
-brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'postgres'
-brew_launchctl_restart 'postgresql'
-brew_install_or_upgrade 'redis'
-brew_launchctl_restart 'redis'
-brew_install_or_upgrade 'the_silver_searcher'
-brew_install_or_upgrade 'vim'
-brew_install_or_upgrade 'ctags'
-brew_install_or_upgrade 'tmux'
-brew_install_or_upgrade 'reattach-to-user-namespace'
-brew_install_or_upgrade 'imagemagick'
-brew_install_or_upgrade 'qt'
-brew_install_or_upgrade 'hub'
-brew_install_or_upgrade 'node'
 
-brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
+brew install zsh
+brew install git
+brew install postgres
+brew_launchctl_restart 'postgresql'
+brew install redis
+brew_launchctl_restart 'redis'
+brew install the_silver_searcher
+brew install vim
+brew install ctags
+brew install tmux
+brew install reattach-to-user-namespace
+brew install imagemagick
+brew install qt
+brew install hub
+brew install node
+
+brew install rbenv
+brew install ruby-build
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
 
-brew_install_or_upgrade 'openssl'
+brew install openssl
 brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'libyaml'
+brew install libyaml
 
 find_latest_ruby() {
   rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
@@ -184,11 +157,11 @@ fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-brew_install_or_upgrade 'heroku-toolbelt'
+brew install heroku-toolbelt
 
 if ! command -v rcup >/dev/null; then
   brew_tap 'thoughtbot/formulae'
-  brew_install_or_upgrade 'rcm'
+  brew install rcm
 fi
 
 if [ -f "$HOME/.laptop.local" ]; then

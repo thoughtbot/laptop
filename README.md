@@ -106,24 +106,21 @@ For example:
 ```sh
 #!/bin/sh
 
-brew_tap 'caskroom/cask'
-brew_install_or_upgrade 'brew-cask'
-
 brew cask install dropbox
 brew cask install google-chrome
-brew cask install rdio
 
 gem_install_or_update 'parity'
 
-brew_install_or_upgrade 'tree'
-brew_install_or_upgrade 'watch'
+brew install tree
+brew install watch
 ```
 
 Write your customizations such that they can be run safely more than once.
 See the `mac` script for examples.
 
 Laptop functions such as `fancy_echo`,
-`brew_install_or_upgrade`, and
+`brew_tap`,
+`brew_launchctl_restart`, and
 `gem_install_or_update`
 can be used in your `~/.laptop.local`.
 
