@@ -1,2 +1,2 @@
-fancy_echo "Starting MySQL ..."
-  brew services restart mysql
+brew_launchctl_restart 'mysql56'
+brew_launchctl_restart 'redis'

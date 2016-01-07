@@ -6,7 +6,4 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch $HOME/.zshrc
 fi
 
-if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
-  printf 'export PATH="$HOME/.bin:$PATH"\n' >> ~/.zshrc
-  export PATH="$HOME/.bin:$PATH"
-fi
+append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'

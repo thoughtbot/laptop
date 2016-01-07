@@ -1,8 +1,8 @@
 common-components/bash-shebang
 common-components/header
+common-components/shared-functions
 common-components/exit-trap
 common-components/check-home-bin
-common-components/shared-functions
 linux-components/distro-check
 linux-components/debian-package-update
 linux-components/debian-derivative-packages
@@ -10,11 +10,9 @@ common-components/zsh
 common-components/oh-my-zsh
 common-components/janus-vim
 linux-components/silver-searcher
-linux-components/rbenv
+common-components/rvm
 common-components/ruby-environment
 linux-components/bundler
 common-components/default-gems
-linux-components/heroku
-linux-components/github
 linux-components/rcm
 common-components/personal-additions

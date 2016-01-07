@@ -1,3 +1,2 @@
-fancy_echo "Upgrading and linking OpenSSL ..."
-  brew_install_or_upgrade 'openssl'
-  brew link openssl --force
+brew_install_or_upgrade 'openssl'
+brew unlink openssl && brew link openssl --force

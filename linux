@@ -8,6 +8,33 @@
 # you're doing. Please see 'CONTRIBUTING.md' for more information.
 ### end common-components/header
 
+fancy_echo() {
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
+}
+
+append_to_zshrc() {
+  local text="$1" zshrc
+  local skip_new_line="${2:-0}"
+
+  if [ -w "$HOME/.zshrc.local" ]; then
+    zshrc="$HOME/.zshrc.local"
+  else
+    zshrc="$HOME/.zshrc"
+  fi
+
+  if ! grep -Fqs "$text" "$zshrc"; then
+    if [ "$skip_new_line" -eq 1 ]; then
+      printf "%s\n" "$text" >> "$zshrc"
+    else
+      printf "\n%s\n" "$text" >> "$zshrc"
+    fi
+  fi
+}
+### end common-components/shared-functions
+
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
@@ -21,16 +48,8 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch $HOME/.zshrc
 fi
 
-if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
-  printf 'export PATH="$HOME/.bin:$PATH"\n' >> ~/.zshrc
-  export PATH="$HOME/.bin:$PATH"
-fi
+append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 ### end common-components/check-home-bin
-
-fancy_echo() {
-  printf "\n%b\n" "$1"
-}
-### end common-components/shared-functions
 
 if ! grep -qiE 'wheezy|jessie|precise|saucy|trusty' /etc/os-release; then
   fancy_echo "Sorry! we don't currently support that distro."
@@ -92,8 +111,13 @@ fancy_echo "Installing node, to render the rails asset pipeline ..."
   sudo aptitude install -y nodejs
 ### end linux-components/debian-derivative-packages
 
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s $(which zsh)
+case "$SHELL" in
+  */zsh) : ;;
+  *)
+    fancy_echo "Changing your shell to zsh ..."
+      chsh -s "$(which zsh)"
+    ;;
+esac
 ### end common-components/zsh
 
 fancy_echo "Installing oh-my-zsh ..."
@@ -131,38 +155,12 @@ if ! command -v ag >/dev/null; then
 fi
 ### end linux-components/silver-searcher
 
-if [[ ! -d "$HOME/.rbenv" ]]; then
-  fancy_echo "Installing rbenv, to change Ruby versions ..."
-    git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+fancy_echo "Installing rvm, to change Ruby versions ..."
+  curl -sSL https://get.rvm.io | bash
+### end common-components/rvm
 
-    if ! grep -qs "rbenv init" ~/.zshrc; then
-      printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.zshrc
-      printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.zshrc
-    fi
-
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
-fi
-
-if [[ ! -d "$HOME/.rbenv/plugins/rbenv-gem-rehash" ]]; then
-  fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-    git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
-fi
-
-if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
-  fancy_echo "Installing ruby-build, to install Rubies ..."
-    git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-fi
-### end linux-components/rbenv
-
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-
-fancy_echo "Installing Ruby $ruby_version ..."
-  rbenv install -s "$ruby_version"
-
-fancy_echo "Setting $ruby_version as global default Ruby ..."
-  rbenv global "$ruby_version"
-  rbenv rehash
+fancy_echo "Installing Ruby ..."
+  rvm install ruby
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
@@ -178,27 +176,14 @@ fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
 
 ### end common-components/default-gems
 
-fancy_echo "Installing Heroku CLI client ..."
-  curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
-fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
-### end linux-components/heroku
-
-fancy_echo "Installing GitHub CLI client ..."
-  curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  chmod +x ~/.bin/hub
-### end linux-components/github
-
 fancy_echo "Installing rcm, to manage your dotfiles ..."
   wget -O /tmp/rcm_1.1.0_all.deb http://mike-burns.com/project/rcm/rcm_1.1.0_all.deb
   sudo dpkg -i /tmp/rcm_1.1.0_all.deb
   rm -f /tmp/rcm_1.1.0_all.deb
 ### end linux-components/rcm
 
-fancy_echo "Installing your personal additions from ~/.laptop.local ..."
-  if [[ -f ~/.laptop.local ]]; then
-    source ~/.laptop.local
-  fi
+if [[ -f ~/.laptop.local ]]; then
+  source ~/.laptop.local
+fi
 ### end common-components/personal-additions
 

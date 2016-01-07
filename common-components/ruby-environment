@@ -1,11 +1,5 @@
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-
-fancy_echo "Installing Ruby $ruby_version ..."
-  rbenv install -s "$ruby_version"
-
-fancy_echo "Setting $ruby_version as global default Ruby ..."
-  rbenv global "$ruby_version"
-  rbenv rehash
+fancy_echo "Installing Ruby ..."
+  rvm install ruby
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system

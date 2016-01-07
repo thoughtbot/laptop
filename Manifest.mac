@@ -1,8 +1,8 @@
 common-components/bash-shebang
 common-components/header
+common-components/shared-functions
 common-components/exit-trap
 common-components/check-home-bin
-common-components/shared-functions
 common-components/zsh
 mac-components/mac-functions
 common-components/oh-my-zsh
@@ -12,12 +12,10 @@ mac-components/homebrew
 mac-components/cask
 mac-components/packages
 mac-components/start-services
-mac-components/rbenv
+common-components/rvm
 mac-components/compiler-and-libraries
 common-components/ruby-environment
 mac-components/bundler
 common-components/default-gems
-mac-components/heroku
-mac-components/github
 mac-components/rcm
 common-components/personal-additions

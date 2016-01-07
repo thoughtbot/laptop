@@ -1,32 +1,13 @@
-fancy_echo "Installing MySQL, a good relational database ..."
-  brew_install_or_upgrade install mysql
-
-fancy_echo "Installing Redis, a good key-value database ..."
-  brew_install_or_upgrade 'redis'
-
-fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-  brew_install_or_upgrade 'the_silver_searcher'
-
-fancy_echo "Installing vim from Homebrew to get the latest version ..."
-  brew_install_or_upgrade 'vim'
-
-fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  brew_install_or_upgrade 'ctags'
-
-fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  brew_install_or_upgrade 'tmux'
-
-fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
-  brew_install_or_upgrade 'reattach-to-user-namespace'
-
-fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  brew_install_or_upgrade 'imagemagick'
-
-fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
-  brew_install_or_upgrade 'qt'
-
-fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  brew_install_or_upgrade 'watch'
+brew_install_or_upgrade 'zsh'
+brew_install_or_upgrade 'git'
+brew_install_or_upgrade 'mysql56'
+brew_install_or_upgrade 'redis'
+brew_install_or_upgrade 'the_silver_searcher'
+brew_install_or_upgrade 'vim'
+brew_install_or_upgrade 'ctags'
+brew_install_or_upgrade 'tmux'
+brew_install_or_upgrade 'imagemagick'
+brew_install_or_upgrade 'qt'
 
 node_version="0.10.28"
 
@@ -43,10 +24,6 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
 
   fancy_echo "Setting $node_version as the global default nodejs..."
   nvm alias default "$node_version"
-
-fancy_echo "Installing alfred"
-  brew cask install alfred
-  brew cask alfred link
 
 fancy_echo "Installing jumpcut"
   brew cask install jumpcut
