@@ -155,7 +155,7 @@ brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 
 # shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
+append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
 
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
@@ -167,7 +167,7 @@ find_latest_ruby() {
 
 ruby_version="$(find_latest_ruby)"
 
-eval "$(rbenv init - zsh)"
+eval "$(rbenv init -)"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
   rbenv install -s "$ruby_version"
