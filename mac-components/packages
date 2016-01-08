@@ -9,6 +9,13 @@ brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'dockutil'
+brew_install_or_upgrade 'docker'
+brew_install_or_upgrade 'docker-machine'
+brew_install_or_upgrade 'autojump'
+brew_install_or_upgrade 'git-extras'
+brew_install_or_upgrade 'htop-osx'
+brew_install_or_upgrade 'wget'
+brew_install_or_upgrade 'source-highlight'
 
 node_version="0.10.28"
 
@@ -26,18 +33,26 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
   fancy_echo "Setting $node_version as the global default nodejs..."
   nvm alias default "$node_version"
 
-brew_cask_install 'iterm2'
-dockutil --add ~/Applications/iTerm.app
-brew_cask_install 'atom'
-dockutil --add ~/Applications/Atom.app
 brew_cask_install 'caffeine'
+brew_cask_install 'jumpcut'
+brew_cask_install 'spectacle'
+brew_cask_install '1password'
+brew_cask_install 'rubymine'
+brew_cask_install 'flash'
+brew_cask_install 'java'
+brew_cask_install 'sequel-pro'
+brew_cask_install 'silverlight'
+brew_cask_install 'virtualbox'
+
 brew_cask_install 'google-chrome'
 dockutil --add ~/Applications/Google\ Chrome.app
 brew_cask_install 'firefox'
 dockutil --add ~/Applications/Firefox.app
-brew_cask_install 'jumpcut'
 brew_cask_install 'slack'
 dockutil --add ~/Applications/Slack.app
-brew_cask_install 'spectacle'
+brew_cask_install 'atom'
+dockutil --add ~/Applications/Atom.app
 brew_cask_install 'textmate'
 dockutil --add ~/Applications/TextMate.app
+brew_cask_install 'iterm2'
+dockutil --add ~/Applications/iTerm.app
