@@ -51,6 +51,13 @@ fi
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 ### end common-components/check-home-bin
 
+# Might as well ask for password up-front, right?
+sudo -v
+
+# Keep-alive: update existing sudo time stamp if set, otherwise do nothing.
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+### end common-components/get-sudo
+
 if ! grep -qiE 'wheezy|jessie|precise|saucy|trusty' /etc/os-release; then
   fancy_echo "Sorry! we don't currently support that distro."
   exit 1

@@ -3,6 +3,7 @@ common-components/header
 common-components/shared-functions
 common-components/exit-trap
 common-components/check-home-bin
+common-components/get-sudo
 linux-components/distro-check
 linux-components/debian-package-update
 linux-components/debian-derivative-packages

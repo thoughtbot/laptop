@@ -3,6 +3,7 @@ common-components/header
 common-components/shared-functions
 common-components/exit-trap
 common-components/check-home-bin
+common-components/get-sudo
 common-components/zsh
 mac-components/mac-functions
 common-components/oh-my-zsh
