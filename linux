@@ -157,10 +157,12 @@ fi
 
 fancy_echo "Installing rvm, to change Ruby versions ..."
   curl -sSL https://get.rvm.io | bash
+  source ~/.rvm/scripts/rvm
 ### end common-components/rvm
 
 fancy_echo "Installing Ruby ..."
   rvm install ruby
+  rvm --default use ruby
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
