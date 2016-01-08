@@ -1,3 +1,8 @@
+brew_cask_install() {
+  fancy_echo "Installing %s ..." "$1"
+  brew cask install "$@"
+}
+
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then

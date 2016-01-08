@@ -25,8 +25,12 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
   fancy_echo "Setting $node_version as the global default nodejs..."
   nvm alias default "$node_version"
 
-fancy_echo "Installing jumpcut"
-  brew cask install jumpcut
-
-fancy_echo "Installing spectacle"
-  brew cask install spectacle
+brew_cask_install 'iterm2'
+brew_cask_install 'atom'
+brew_cask_install 'caffeine'
+brew_cask_install 'google-chrome'
+brew_cask_install 'firefox'
+brew_cask_install 'jumpcut'
+brew_cask_install 'slack'
+brew_cask_install 'spectacle'
+brew_cask_install 'textmate'
