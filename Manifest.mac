@@ -4,6 +4,7 @@ common-components/shared-functions
 common-components/exit-trap
 common-components/check-home-bin
 common-components/get-sudo
+mac-components/command-line-tools
 common-components/zsh
 mac-components/mac-functions
 common-components/oh-my-zsh
