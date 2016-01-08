@@ -1,0 +1,11 @@
+fancy_echo "Cleanup dock ..."
+  dockutil --remove 'Mail'
+  dockutil --remove 'Contacts'
+  dockutil --remove 'Calendar'
+  dockutil --remove 'Maps'
+  dockutil --remove 'Photos'
+  dockutil --remove 'Messages'
+  dockutil --remove 'FaceTime'
+  dockutil --remove 'iBooks'
+  dockutil --remove 'App Store'
+  dockutil --remove 'System Preferences'

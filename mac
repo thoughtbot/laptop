@@ -182,6 +182,7 @@ brew_install_or_upgrade 'ctags'
 brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
+brew_install_or_upgrade 'dockutil'
 
 node_version="0.10.28"
 
@@ -200,14 +201,20 @@ fancy_echo "Installing NVM, Node.js, and NPM, for running apps and installing Ja
   nvm alias default "$node_version"
 
 brew_cask_install 'iterm2'
+dockutil --add ~/Applications/iTerm.app
 brew_cask_install 'atom'
+dockutil --add ~/Applications/Atom.app
 brew_cask_install 'caffeine'
 brew_cask_install 'google-chrome'
+dockutil --add ~/Applications/Google\ Chrome.app
 brew_cask_install 'firefox'
+dockutil --add ~/Applications/Firefox.app
 brew_cask_install 'jumpcut'
 brew_cask_install 'slack'
+dockutil --add ~/Applications/Slack.app
 brew_cask_install 'spectacle'
 brew_cask_install 'textmate'
+dockutil --add ~/Applications/TextMate.app
 ### end mac-components/packages
 
 brew_launchctl_restart 'mysql56'
@@ -252,3 +259,15 @@ if [[ -f ~/.laptop.local ]]; then
 fi
 ### end common-components/personal-additions
 
+fancy_echo "Cleanup dock ..."
+  dockutil --remove 'Mail'
+  dockutil --remove 'Contacts'
+  dockutil --remove 'Calendar'
+  dockutil --remove 'Maps'
+  dockutil --remove 'Photos'
+  dockutil --remove 'Messages'
+  dockutil --remove 'FaceTime'
+  dockutil --remove 'iBooks'
+  dockutil --remove 'App Store'
+  dockutil --remove 'System Preferences'
+### end mac-components/cleanup-dock

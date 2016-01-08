@@ -19,3 +19,4 @@ mac-components/bundler
 common-components/default-gems
 mac-components/rcm
 common-components/personal-additions
+mac-components/cleanup-dock
