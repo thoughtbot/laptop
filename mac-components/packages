@@ -37,7 +37,6 @@ brew_cask_install 'caffeine'
 brew_cask_install 'jumpcut'
 brew_cask_install 'spectacle'
 brew_cask_install '1password'
-brew_cask_install 'rubymine'
 brew_cask_install 'flash'
 brew_cask_install 'java'
 brew_cask_install 'sequel-pro'
@@ -50,6 +49,8 @@ brew_cask_install 'firefox'
 dockutil --add ~/Applications/Firefox.app
 brew_cask_install 'slack'
 dockutil --add ~/Applications/Slack.app
+brew_cask_install 'rubymine'
+dockutil --add ~/Applications/RubyMine.app
 brew_cask_install 'atom'
 dockutil --add ~/Applications/Atom.app
 brew_cask_install 'textmate'
