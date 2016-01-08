@@ -1,9 +1,8 @@
 language: sh
 
 before_script:
-  - sudo add-apt-repository -y "deb http://mirrors.kernel.org/ubuntu utopic main universe"
-  - sudo apt-get -y update
-  - sudo apt-get -y install shellcheck
+  - wget "http://ftp.debian.org/debian/pool/main/s/shellcheck/shellcheck_0.3.7-5_amd64.deb"
+  - sudo dpkg -i "shellcheck_0.3.7-5_amd64.deb"
 
 script:
   - shellcheck mac
