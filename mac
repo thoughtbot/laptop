@@ -82,7 +82,6 @@ brew_launchctl_restart() {
   local domain="homebrew.mxcl.$name"
   local plist="$domain.plist"
 
-  fancy_echo "Restarting %s ..." "$1"
   mkdir -p "$HOME/Library/LaunchAgents"
   ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
 
@@ -94,10 +93,8 @@ brew_launchctl_restart() {
 
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
-    fancy_echo "Updating %s ..." "$1"
     gem update "$@"
   else
-    fancy_echo "Installing %s ..." "$1"
     gem install "$@"
     rbenv rehash
   fi
@@ -114,50 +111,50 @@ if ! command -v brew >/dev/null; then
     append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
 
     export PATH="/usr/local/bin:$PATH"
-else
-  fancy_echo "Homebrew already installed. Skipping ..."
 fi
 
 fancy_echo "Updating Homebrew formulas ..."
 brew_tap 'thoughtbot/formulae'
 brew update
 
-fancy_echo "Upgrading Homebrew formulas ..."
+fancy_echo "Installing Homebrew packages ..."
 brew upgrade
-
-brew install zsh
-brew install git
-brew install postgres
-brew_launchctl_restart 'postgresql'
-brew install redis
-brew_launchctl_restart 'redis'
-brew install the_silver_searcher
-brew install vim
 brew install ctags
-brew install tmux
-brew install reattach-to-user-namespace
-brew install imagemagick
-brew install qt
+brew install git
+brew install heroku-toolbelt
 brew install hub
-brew install node
-
-brew install rbenv
-brew install ruby-build
-
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
-
-brew install openssl
-brew unlink openssl && brew link openssl --force
+brew install imagemagick
 brew install libyaml
+brew install node
+brew install openssl
+brew install postgres
+brew install qt
+brew install rbenv
+brew install rcm
+brew install reattach-to-user-namespace
+brew install redis
+brew install ruby-build
+brew install the_silver_searcher
+brew install tmux
+brew install vim
+brew install zsh
 
+fancy_echo "Restarting services ..."
+brew_launchctl_restart 'postgresql'
+brew_launchctl_restart 'redis'
+
+fancy_echo "Relinking OpenSSL ..."
+brew unlink openssl && brew link openssl --force
+
+fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
   rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
 }
 
-ruby_version="$(find_latest_ruby)"
-
+# shellcheck disable=SC2016
+append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
 eval "$(rbenv init -)"
+ruby_version="$(find_latest_ruby)"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
   rbenv install -s "$ruby_version"
@@ -165,22 +162,13 @@ fi
 
 rbenv global "$ruby_version"
 rbenv shell "$ruby_version"
-
 gem update --system
-
 gem_install_or_update 'bundler'
-
-fancy_echo "Configuring Bundler ..."
-  number_of_cores=$(sysctl -n hw.ncpu)
-  bundle config --global jobs $((number_of_cores - 1))
-
-brew install heroku-toolbelt
-
-if ! command -v rcup >/dev/null; then
-  brew install rcm
-fi
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
 
 if [ -f "$HOME/.laptop.local" ]; then
+  fancy_echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
