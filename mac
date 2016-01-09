@@ -135,6 +135,7 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
+brew install 'caskroom/cask/brew-cask'
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'postgres'
