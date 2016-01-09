@@ -54,6 +54,20 @@ case "$SHELL" in
     ;;
 esac
 
+brew_install_or_upgrade() {
+  fancy_echo "brew_install_or_upgrade is deprecated. Use brew install instead."
+}
+
+brew_is_installed() {
+  fancy_echo "brew_is_installed is deprecated."
+  return 1
+}
+
+brew_is_upgradable() {
+  fancy_echo "brew_is_upgradable is deprecated."
+  return 1
+}
+
 brew_tap() {
   brew tap "$1" 2> /dev/null
 }
@@ -105,8 +119,11 @@ else
 fi
 
 fancy_echo "Updating Homebrew formulas ..."
+brew_tap 'thoughtbot/formulae'
 brew update
 
+fancy_echo "Upgrading Homebrew formulas ..."
+brew upgrade
 
 brew install zsh
 brew install git
@@ -160,7 +177,6 @@ fancy_echo "Configuring Bundler ..."
 brew install heroku-toolbelt
 
 if ! command -v rcup >/dev/null; then
-  brew_tap 'thoughtbot/formulae'
   brew install rcm
 fi
 
@@ -168,3 +184,7 @@ if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "Cleaning up old Homebrew formulas ..."
+brew cleanup
+brew cask cleanup
