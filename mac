@@ -132,6 +132,11 @@ else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
 
+if brew list | grep -Fq brew-cask; then
+  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  brew uninstall --force brew-cask
+fi
+
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
