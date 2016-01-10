@@ -58,8 +58,8 @@ What it sets up
 * [Bundler] for managing Ruby libraries
 * [Exuberant Ctags] for indexing files for vim tab completion
 * [Foreman] for managing web processes
-* [hub] for interacting with the GitHub API
-* [Heroku Toolbelt] for interacting with the Heroku API
+* [Hub] for interacting with the GitHub API
+* [Heroku Toolbelt] and [Parity] for interacting with the Heroku API
 * [Homebrew] for managing operating system libraries
 * [ImageMagick] for cropping and resizing images
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
@@ -77,12 +77,13 @@ What it sets up
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Foreman]: https://github.com/ddollar/foreman
-[hub]: http://hub.github.com/
+[Hub]: http://hub.github.com/
 [Heroku Toolbelt]: https://toolbelt.heroku.com/
 [Homebrew]: http://brew.sh/
 [ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
+[Parity]: https://github.com/thoughtbot/parity
 [Postgres]: http://www.postgresql.org/
 [Qt]: http://qt-project.org/
 [Rbenv]: https://github.com/sstephenson/rbenv
