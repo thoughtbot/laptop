@@ -99,7 +99,7 @@ It should take less than 15 minutes to install (depends on your machine).
 Customize in `~/.laptop.local`
 ------------------------------
 
-Your `~/.laptop.local` is run at the end of the Laptop script.
+Your `~/.laptop.local` is run near the end of the Laptop script.
 Put your customizations there.
 For example:
 

@@ -137,7 +137,7 @@ if brew list | grep -Fq brew-cask; then
   brew uninstall --force brew-cask
 fi
 
-fancy_echo "Updating Homebrew formulas ..."
+fancy_echo "Updating Homebrew formulae ..."
 brew update
 
 brew_install_or_upgrade 'zsh'
@@ -200,3 +200,7 @@ if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "Cleaning up old Homebrew formulae ..."
+brew cleanup
+brew cask cleanup
