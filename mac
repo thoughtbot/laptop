@@ -120,6 +120,11 @@ gem_install_or_update() {
   fi
 }
 
+if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
+  fancy_echo "Generating an SSH key ..."
+  ssh-keygen -t rsa
+fi
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
