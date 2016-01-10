@@ -79,7 +79,7 @@ brew_is_upgradable() {
 }
 
 brew_tap() {
-  brew tap "$1" 2> /dev/null
+  brew tap "$1" --repair 2> /dev/null
 }
 
 brew_expand_alias() {
