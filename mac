@@ -269,6 +269,13 @@ else
   fancy_echo "... skipping onsi ShiftIt, already installed"
 fi
 
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+  fancy_echo "Installing Tmux Plugin Manager"
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+else
+  fancy_echo "... skipping Tmux Plugin Manager, already installed"
+fi
+
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
