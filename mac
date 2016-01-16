@@ -58,16 +58,26 @@ else
   sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
 fi
 
+update_shell() {
+  local shell_path;
+  shell_path="$(which zsh)"
+
+  fancy_echo "Changing your shell to zsh ..."
+  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+    fancy_echo "Adding '$shell_path' to /etc/shells"
+    sudo sh -c "echo $shell_path >> /etc/shells"
+  fi
+  chsh -s "$shell_path"
+}
+
 case "$SHELL" in
-  */zsh) : ;;
+  */zsh)
+    if [ "$(which zsh)" != '/bin/zsh' ] ; then
+      update_shell
+    fi
+    ;;
   *)
-    fancy_echo "Changing your shell to zsh ..."
-      shell_path="$(which zsh)"
-      if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
-        fancy_echo "Adding '$shell_path' to /etc/shells"
-        sudo bash -c "echo $shell_path >> /etc/shells"
-      fi
-      chsh -s "$shell_path"
+    update_shell
     ;;
 esac
 
