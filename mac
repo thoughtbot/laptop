@@ -46,6 +46,16 @@ fi
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
+if [ -d "/usr/local" ]; then
+  if ! [ -r "/usr/local" ]; then
+    sudo chown -R "$(whoami)":admin /usr/local
+  fi
+else
+  sudo mkdir /usr/local
+  sudo chflags norestricted /usr/local
+  sudo chown -R "$(whoami)":admin /usr/local
+fi
+
 case "$SHELL" in
   */zsh) : ;;
   *)
