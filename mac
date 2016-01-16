@@ -140,6 +140,7 @@ fi
 
 fancy_echo "Updating Homebrew formulae ..."
 brew_tap 'thoughtbot/formulae'
+
 brew update
 
 fancy_echo "Updating Unix tools ..."
@@ -205,7 +206,3 @@ if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
-
-fancy_echo "Cleaning up old Homebrew formulae ..."
-brew cleanup
-brew cask cleanup

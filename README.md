@@ -131,7 +131,7 @@ It should take less than 15 minutes to install (depends on your machine).
 Customize in `~/.laptop.local`
 ------------------------------
 
-Your `~/.laptop.local` is run near the end of the Laptop script.
+Your `~/.laptop.local` is run at the end of the Laptop script.
 Put your customizations there.
 For example:
 
@@ -141,6 +141,10 @@ For example:
 brew_install_or_upgrade 'go'
 brew_install_or_upgrade 'ngrok'
 brew_install_or_upgrade 'watch'
+
+fancy_echo "Cleaning up old Homebrew formulae ..."
+brew cleanup
+brew cask cleanup
 
 if [ -r "$HOME/.rcrc" ]; then
   fancy_echo "Updating dotfiles ..."
