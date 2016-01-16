@@ -62,7 +62,12 @@ case "$SHELL" in
   */zsh) : ;;
   *)
     fancy_echo "Changing your shell to zsh ..."
-      chsh -s "$(which zsh)"
+      shell_path="$(which zsh)"
+      if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+        fancy_echo "Adding '$shell_path' to /etc/shells"
+        sudo bash -c "echo $shell_path >> /etc/shells"
+      fi
+      chsh -s "$shell_path"
     ;;
 esac
 
