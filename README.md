@@ -182,7 +182,7 @@ you agree to abide by the thoughtbot [code of conduct].
 License
 -------
 
-Laptop is © 2011-2015 thoughtbot, inc.
+Laptop is © 2011-2016 thoughtbot, inc.
 It is free software,
 and may be redistributed under the terms specified in the [LICENSE] file.
 
