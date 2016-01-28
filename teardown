@@ -1,0 +1,48 @@
+#!/bin/sh
+
+
+fancy_echo() {
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
+}
+
+fancy_echo "Resetting to default shell
+chsh -s /bin/bash
+
+fancy_echo "Removing config files"
+env RCRC=$HOME/projects/dotfiles/rcrc rcdown
+
+brew_launchctl_stop() {
+  local name
+  name="$(brew_expand_alias "$1")"
+  local domain="homebrew.mxcl.$name"
+  local plist="$domain.plist"
+  launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
+  rm -rf  "$HOME/Library/LaunchAgents/$plist" d
+}
+
+fancy_echo "Stopping Services"
+brew_launchctl_stop 'mysql56'
+brew_launchctl_stop 'redis'
+brew_launchctl_stop 'elasticsearch'
+brew_launchctl_stop 'rabbitmq'
+brew_launchctl_stop 'memcached'
+brew_launchctl_stop 'pow'
+
+fancy_echo "Removing Mailcatcher"
+locals_launchctl_restart() {
+  local name
+  name=$1
+  local domain="com.captainu.$name"
+  local plist="$domain.plist"
+  launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
+    rm -rf  "$HOME/Library/LaunchAgents/$plist"
+}
+locals_launchctl_restart "mailcatcher"
+
+fancy_echo "Tearing Down Homebrew"
+rm -rf /usr/local
+rm -rf /Library/Caches/Homebrew/*
+rm -rf $HOME/Library/LaunchAgents/*homebrew*
