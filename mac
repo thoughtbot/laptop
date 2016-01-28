@@ -46,14 +46,16 @@ fi
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
-if [ -d "/usr/local" ]; then
-  if ! [ -r "/usr/local" ]; then
-    sudo chown -R "$(whoami)":admin /usr/local
+HOMEBREW_PREFIX="/usr/local"
+
+if [ -d "$HOMEBREW_PREFIX" ]; then
+  if ! [ -r "$HOMEBREW_PREFIX" ]; then
+    sudo chown -R "$LOGNAME:admin" /usr/local
   fi
 else
-  sudo mkdir /usr/local
-  sudo chflags norestricted /usr/local
-  sudo chown -R "$(whoami)":admin /usr/local
+  sudo mkdir "$HOMEBREW_PREFIX"
+  sudo chflags norestricted "$HOMEBREW_PREFIX"
+  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
 fi
 
 case "$SHELL" in
