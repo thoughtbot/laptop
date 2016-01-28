@@ -205,8 +205,6 @@ brew_install_or_upgrade 'pow'
 brew_install_or_upgrade 'cassandra22'
 
 fancy_echo "Updating customs"
-brew tap homebrew/versions
-brew tap thoughtbot/formulae
 brew_launchctl_restart 'cassandra22'
 
 fancy_echo "Configuring Ruby ..."
@@ -270,11 +268,7 @@ locals_launchctl_restart() {
   fi
   launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
 }
-
 locals_launchctl_restart "mailcatcher"
-
-#fancy_echo "Updating SSH Config"
-#cp $HOME/projects/laptop/dotfiles/ssh_config $HOME/.ssh/config
 
 fancy_echo "Installing CU commands"
 if [ ! -d "$HOME/projects/subs" ]; then
