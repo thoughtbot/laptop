@@ -154,6 +154,8 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 fancy_echo "Updating Homebrew formulae ..."
+
+brew tap
 brew tap homebrew/versions
 brew tap thoughtbot/formulae
 
