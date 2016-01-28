@@ -195,7 +195,7 @@ brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'rbenv-bundler'
 
-fancy_echo "Updating databases ..."
+fancy_echo "Updating services ..."
 brew_install_or_upgrade 'mysql'
 brew_install_or_upgrade 'redis'
 brew_install_or_upgrade 'elasticsearch'
@@ -204,12 +204,9 @@ brew_install_or_upgrade 'memcached'
 brew_install_or_upgrade 'pow'
 brew_install_or_upgrade 'cassandra22'
 
-brew_launchctl_restart 'mysql'
-brew_launchctl_restart 'redis'
-brew_launchctl_restart 'elasticsearch'
-brew_launchctl_restart 'rabbitmq'
-brew_launchctl_restart 'memcached'
-brew_launchctl_restart 'pow'
+fancy_echo "Updating customs"
+brew tap homebrew/versions
+brew tap thoughtbot/formulae
 brew_launchctl_restart 'cassandra22'
 
 fancy_echo "Configuring Ruby ..."
