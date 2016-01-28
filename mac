@@ -49,7 +49,7 @@ fi
 
 if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
   fancy_echo "Creating SSH Keys"
-  #ssh-keygen
+  ssh-keygen
   fancy_echo "Please add this key to your github profile."
   echo "Your key has been copied to the clipboard, you can use Cmd-V to paste it"
   echo "Come back after you've done that and click enter"
@@ -164,7 +164,6 @@ brew update
 fancy_echo "Updating Unix tools ..."
 brew_install_or_upgrade 'ctags'
 brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'git-extras'
 brew_install_or_upgrade 'rcm'
 brew_install_or_upgrade 'openssl'
 brew_install_or_upgrade 'direnv'
@@ -196,13 +195,20 @@ brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'rbenv-bundler'
 
 fancy_echo "Updating services ..."
-brew_install_or_upgrade 'mysql'
+brew_install_or_upgrade 'mysql56'
 brew_install_or_upgrade 'redis'
 brew_install_or_upgrade 'elasticsearch'
 brew_install_or_upgrade 'rabbitmq'
 brew_install_or_upgrade 'memcached'
 brew_install_or_upgrade 'pow'
 brew_install_or_upgrade 'cassandra22'
+
+brew_launchctl_restart 'mysql56'
+brew_launchctl_restart 'redis'
+brew_launchctl_restart 'elasticsearch'
+brew_launchctl_restart 'rabbitmq'
+brew_launchctl_restart 'memcached'
+brew_launchctl_restart 'pow'
 
 fancy_echo "Updating customs"
 brew_launchctl_restart 'cassandra22'

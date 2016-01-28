@@ -1,29 +1,89 @@
 #!/bin/sh
 
+fancy_echo() {
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
+}
+
 # setup rails applications
+restart_app() {
+  if [ ! -d "$HOME/projects/$1/tmp" ]; then
+    mkdir "$HOME/projects/$1/tmp"
+  fi
+  touch tmp/restart.txt
+}
+
+update_configs() {
+  cd $HOME/projects/$1/config
+  local configs
+  configs="$(ls *.yml.example)"
+  for config in $configs; do
+    local name
+    name="$(echo $config | cut -d '.' -f1)"
+    cp $config "$name.yml"
+  done
+}
+
 setup_rails_app() {
   if [ ! -d "$HOME/projects/$1" ]; then
     cd $HOME/projects/$1
-    rbenv install
-    mkdir tmp
-    bundle install
-    cd $HOME/projects/$1/config
-    cp database.yml.example database.yml
+  fi
+  fancy_echo "Installing Ruby Version"
+  rbenv install -s
+  rbenv version
+  gem install bundler
+
+  fancy_echo "Create application tmp directory"
+  mkdir -p tmp
+
+  fancy_echo "Installing needed Gems"
+  bundle install
+
+  fancy_echo "Updating Config"
+  update_configs $1
+}
+
+clean_app() {
+  fancy_echo "Cleaning Up Old Versions"
+  if [ -d "$HOME/projects/$1" ]; then
+    rm -rf "$HOME/projects/$1"
   fi
 }
+
 # Clone our repos
-clone_or_update_repo() {
-  if [ ! -d "$HOME/projects/$1" ]; then
-    git clone git@github.com:captainu/"$1"
-    ln -s $HOME/projects/"$1" ~/.pow/"$1"
-    setup_rails_app $1
-  fi
-  if [ -d "$HOME/projects/$1" ]; then
-    cd $HOME/projects/"$1"
-    git checkout master
-    git pull origin master
-    touch tmp/restart.txt
-  fi
+clone_repo() {
+  fancy_echo "Cloning $1"
+  git clone git@github.com:captainu/"$1"
+}
+
+symlink_pow() {
+  rm $HOME/.pow/$1
+  ln -s $HOME/projects/"$1" $HOME/.pow/"$1"
+}
+
+create_and_seed_db() {
+  cd "$HOME/projects/$1"
+  export RAILS_ENV=development
+  bundle exec rake db:drop
+  bundle exec rake db:create
+  bundle exec rake db:schema:load
+  bundle exec rake db:migrate
+  #bundle exec rake db:seed
+}
+
+clone_and_setup_app() {
+  cd $HOME/projects
+  fancy_echo "Setting up $1"
+  echo ""
+  clean_app $1
+  clone_repo $1
+  cd $HOME/projects/$1
+  setup_rails_app $1
+  create_and_seed_db $1
+  symlink_pow $1
+  restart_app $1
 }
 
 if [ ! -d "$HOME/.pow/" ]; then
@@ -31,8 +91,11 @@ if [ ! -d "$HOME/.pow/" ]; then
 fi
 
 cd $HOME/projects
-clone_or_update_repo 'captainu'
-clone_or_update_repo 'teamlab'
-clone_or_update_repo 'core-data-api'
-clone_or_update_repo 'communicator'
-clone_or_update_repo 'hermod'
+clone_and_setup_app 'captainu'
+clone_and_setup_app 'teamlab'
+clone_and_setup_app 'core-data-api'
+clone_and_setup_app 'communicator'
+clone_and_setup_app 'hermod'
+
+# Open All the Apps
+open http://captainu.dev
