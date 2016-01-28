@@ -79,28 +79,24 @@ Unix tools:
 [Tmux]: http://tmux.github.io/
 [Zsh]: http://www.zsh.org/
 
-Heroku tools:
-
-* [Heroku Toolbelt] and [Parity] for interacting with the Heroku API
-
-[Heroku Toolbelt]: https://toolbelt.heroku.com/
-[Parity]: https://github.com/thoughtbot/parity
-
 GitHub tools:
 
 * [Hub] for interacting with the GitHub API
 
 [Hub]: http://hub.github.com/
+[Git Extras]: https://github.com/tj/git-extras
 
 Image tools:
 
 * [ImageMagick] for cropping and resizing images
+* [FreeImage]: https://sourceforge.net/projects/freeimage
 
 Testing tools:
 
 * [Qt] for headless JavaScript testing via Capybara Webkit
 
 [Qt]: http://qt-project.org/
+[PhantomJS]: http://phantomjs.org/
 
 Programming languages and configuration:
 
@@ -118,13 +114,15 @@ Programming languages and configuration:
 [Ruby Build]: https://github.com/sstephenson/ruby-build
 [Ruby]: https://www.ruby-lang.org/en/
 
-Databases:
+Servers / Databases:
 
-* [Postgres] for storing relational data
-* [Redis] for storing key-value data
-
-[Postgres]: http://www.postgresql.org/
+[MySQL]: https://dev.mysql.com/doc/refman/5.7/en/
 [Redis]: http://redis.io/
+[Memcached]: http://memcached.org/
+[ElasticSearch]: https://www.elastic.co/products/elasticsearch
+[RabbitMQ]: https://www.rabbitmq.com
+[Cassandra22]: https://cassandra.apache.org
+[Pow]: http://pow.cx/
 
 It should take less than 15 minutes to install (depends on your machine).
 
@@ -196,18 +194,3 @@ It is free software,
 and may be redistributed under the terms specified in the [LICENSE] file.
 
 [LICENSE]: LICENSE
-
-About thoughtbot
-----------------
-
-![thoughtbot](https://thoughtbot.com/logo.png)
-
-Laptop is maintained and funded by thoughtbot, inc.
-The names and logos for thoughtbot are trademarks of thoughtbot, inc.
-
-We are passionate about open source software.
-See [our other projects][community].
-We are [available for hire][hire].
-
-[community]: https://thoughtbot.com/community?utm_source=github
-[hire]: https://thoughtbot.com?utm_source=github

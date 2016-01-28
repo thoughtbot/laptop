@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# setup rails applications
+setup_rails_app() {
+  if [ ! -d "$HOME/projects/$1" ]; then
+    cd $HOME/projects/$1
+    rbenv install
+    mkdir tmp
+    bundle install
+    cd $HOME/projects/$1/config
+    cp database.yml.example database.yml
+  fi
+}
+# Clone our repos
+clone_or_update_repo() {
+  if [ ! -d "$HOME/projects/$1" ]; then
+    git clone git@github.com:captainu/"$1"
+    ln -s $HOME/projects/"$1" ~/.pow/"$1"
+    setup_rails_app $1
+  fi
+  if [ -d "$HOME/projects/$1" ]; then
+    cd $HOME/projects/"$1"
+    git checkout master
+    git pull origin master
+    touch tmp/restart.txt
+  fi
+}
+
+if [ ! -d "$HOME/.pow/" ]; then
+  mkdir $HOME/.pow
+fi
+
+cd $HOME/projects
+clone_or_update_repo 'captainu'
+clone_or_update_repo 'teamlab'
+clone_or_update_repo 'core-data-api'
+clone_or_update_repo 'communicator'
+clone_or_update_repo 'hermod'

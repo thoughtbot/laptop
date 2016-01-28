@@ -43,6 +43,21 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
 
+if [ ! -d "$HOME/.ssh" ]; then
+  mkdir -p $HOME/.ssh
+fi
+
+if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
+  fancy_echo "Creating SSH Keys"
+  #ssh-keygen
+  fancy_echo "Please add this key to your github profile."
+  echo "Your key has been copied to the clipboard, you can use Cmd-V to paste it"
+  echo "Come back after you've done that and click enter"
+  cat $HOME/.ssh/id_rsa.pub | pbcopy
+  open "https://github.com/settings/ssh"
+  read -n 1 -s
+fi
+
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
@@ -139,45 +154,61 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 fancy_echo "Updating Homebrew formulae ..."
-brew_tap 'thoughtbot/formulae'
+brew tap homebrew/versions
+brew tap thoughtbot/formulae
 
 brew update
 
 fancy_echo "Updating Unix tools ..."
 brew_install_or_upgrade 'ctags'
 brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'openssl'
+brew_install_or_upgrade 'git-extras'
 brew_install_or_upgrade 'rcm'
+brew_install_or_upgrade 'openssl'
+brew_install_or_upgrade 'direnv'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'the_silver_searcher'
 brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'vim'
 brew_install_or_upgrade 'zsh'
-
-fancy_echo "Updating Heroku tools ..."
-brew_install_or_upgrade 'heroku-toolbelt'
-brew_install_or_upgrade 'parity'
+brew_install_or_upgrade 'wget'
+brew_install_or_upgrade 'zsh-completions'
 
 fancy_echo "Updating GitHub tools ..."
 brew_install_or_upgrade 'hub'
+brew_install_or_upgrade 'git-extras'
 
 fancy_echo "Updating image tools ..."
 brew_install_or_upgrade 'imagemagick'
+brew_install_or_upgrade 'freeimage'
 
 fancy_echo "Updating testing tools ..."
 brew_install_or_upgrade 'qt'
+brew_install_or_upgrade 'phantomjs'
 
 fancy_echo "Updating programming languages ..."
 brew_install_or_upgrade 'libyaml' # should come after openssl
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
+brew_install_or_upgrade 'rbenv-bundler'
 
 fancy_echo "Updating databases ..."
-brew_install_or_upgrade 'postgres'
+brew_install_or_upgrade 'mysql'
 brew_install_or_upgrade 'redis'
-brew_launchctl_restart 'postgresql'
+brew_install_or_upgrade 'elasticsearch'
+brew_install_or_upgrade 'rabbitmq'
+brew_install_or_upgrade 'memcached'
+brew_install_or_upgrade 'pow'
+brew_install_or_upgrade 'cassandra22'
+
+brew_launchctl_restart 'mysql'
 brew_launchctl_restart 'redis'
+brew_launchctl_restart 'elasticsearch'
+brew_launchctl_restart 'rabbitmq'
+brew_launchctl_restart 'memcached'
+brew_launchctl_restart 'pow'
+brew_launchctl_restart 'cassandra22'
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
@@ -197,6 +228,8 @@ rbenv global "$ruby_version"
 rbenv shell "$ruby_version"
 gem update --system
 gem_install_or_update 'bundler'
+gem_install_or_update 'mailcatcher'
+
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
@@ -205,3 +238,62 @@ if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "Setting Up Projects Directory"
+if [ ! -d "$HOME/projects" ]; then
+  mkdir -p "$HOME/projects"
+fi
+
+fancy_echo "Cloning Or Updating Laptop Locally"
+# Clone self to projects directory
+if [ ! -d "$HOME/projects/laptop" ]; then
+  fancy_echo "Cloning Self Locally"
+  git clone git@github.com:captainu/laptop
+else
+  cd "$HOME/projects/laptop"
+  git checkout master
+  git pull origin master
+fi
+
+
+fancy_echo "Updating Mailtrap Config"
+locals_launchctl_restart() {
+  local name
+  name=$1
+  local domain="com.captainu.$name"
+  local plist="$domain.plist"
+
+  mkdir -p "$HOME/Library/LaunchAgents"
+  ln -sfv "$HOME/projects/laptop/launch_agents/$plist" "$HOME/Library/LaunchAgents"
+
+  if launchctl list | grep -Fq "$domain"; then
+    launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
+  fi
+  launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
+}
+
+locals_launchctl_restart "mailcatcher"
+
+#fancy_echo "Updating SSH Config"
+#cp $HOME/projects/laptop/dotfiles/ssh_config $HOME/.ssh/config
+
+fancy_echo "Installing CU commands"
+if [ ! -d "$HOME/projects/subs" ]; then
+  cd "$HOME/projects"
+  git clone git@github.com:captainu/subs
+else
+  cd "$HOME/projects/cu"
+  git pull origin master
+fi
+
+fancy_echo "Install basic dotfiles"
+if [ ! -d "$HOME/projects/dotfiles" ]; then
+  cd "$HOME/projects"
+  git clone git@github.com:captainu/dotfiles
+  env RCRC=$HOME/projects/dotfiles/rcrc rcup
+fi
+
+fancy_echo "Updating configs"
+append_to_zshrc "export PATH=$HOME/.rbenv/bin:$HOME/projects/subs/bin:/usr/local/bin:$PATH"
+append_to_zshrc 'eval "$(rbenv init -)"'
+append_to_zshrc 'eval "$($HOME/projects/subs/bin/cu init -)"'
