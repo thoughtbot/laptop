@@ -173,7 +173,7 @@ fancy_echo "Updating programming languages ..."
 brew_install_or_upgrade 'libyaml' # should come after openssl
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
+brew_install_or_upgrade 'ruby-install'
 
 fancy_echo "Updating databases ..."
 brew_install_or_upgrade 'postgres'
