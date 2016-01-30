@@ -1,3 +1,10 @@
+# Allister Antosik's Tmux Config
+# me@allisterantosik.com
+
+# setup powerline
+run-shell "powerline-daemon -q"
+source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+
 # improve colors
 set -g default-terminal 'screen-256color'
 
@@ -10,7 +17,8 @@ bind l select-pane -R
 bind-key -r C-h select-window -t :-
 bind-key -r C-l select-window -t :+
 
-set -g prefix2 C-s
+# allow using CTRL+A as prefix
+set -g prefix2 C-a
 
 # start window numbers at 1 to match keyboard order with tmux window order
 set -g base-index 1
@@ -19,24 +27,42 @@ set-window-option -g pane-base-index 1
 # renumber windows sequentially after closing any of them
 set -g renumber-windows on
 
-# soften status bar color from harsh green to light gray
-set -g status-bg '#666666'
-set -g status-fg '#aaaaaa'
-
 # remove administrative debris (session name, hostname, time) in status bar
 set -g status-left ''
 set -g status-right ''
 
-# increase scrollback lines
-set -g history-limit 10000
+# COLOUR (Solarized dark)
+# From: https://github.com/seebi/tmux-colors-solarized/blob/master/tmuxcolors-dark.conf
 
-# prefix -> back-one-character
-bind-key C-b send-prefix
-# prefix-2 -> forward-incremental-history-search
-bind-key C-s send-prefix -2
+## default statusbar colors
+set-option -g status-bg black #base02
+set-option -g status-fg yellow #yellow
+set-option -g status-attr default
+#
+## default window title colors
+set-window-option -g window-status-fg brightblue #base0
+set-window-option -g window-status-bg default
+set-window-option -g window-status-attr dim
 
-run-shell "powerline-daemon -q"
-source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+## active window title colors
+set-window-option -g window-status-current-fg brightred #orange
+set-window-option -g window-status-current-bg default
+#set-window-option -g window-status-current-attr bright
 
-# Local config
-if-shell "[ -f ~/.tmux.conf.local ]" 'source ~/.tmux.conf.local'
+## pane border
+set-option -g pane-border-fg black #base02
+set-option -g pane-active-border-fg brightgreen #base01
+
+## message text
+set-option -g message-bg black #base02
+set-option -g message-fg brightred #orange
+
+## pane number display
+set-option -g display-panes-active-colour blue #blue
+set-option -g display-panes-colour brightred #orange
+
+## clock
+set-window-option -g clock-mode-colour green #green
+
+## bell
+set-window-option -g window-status-bell-style fg=black,bg=red #base02, red

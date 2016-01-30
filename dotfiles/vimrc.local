@@ -8,10 +8,10 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'mileszs/ack.vim'
-Plugin 'flazz/vim-colorschemes'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
+Plugin 'altercation/vim-colors-solarized'
 Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 call vundle#end()
@@ -33,14 +33,10 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
 
-if executable('LuciusLight')
-  colorscheme lucius
-  LuciusDark
-endif
-
 syntax enable           " enable syntax processing
 
 set tabstop=2       " number of visual spaces per TAB
+set shiftwidth=2
 set softtabstop=2   " number of spaces in tab when editing
 set expandtab       " tabs are spaces
 
@@ -59,3 +55,13 @@ set noswapfile
 
 " highlight last inserted text
 nnoremap gV `[v`]
+
+
+set background=dark
+let g:solarized_visibility = "high"
+let g:solarized_contrast = "high"
+colorscheme solarized
+
+
+set showtabline=2
+
