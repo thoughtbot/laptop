@@ -35,10 +35,18 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+# Make sure we have installed Xcode
+fancy_echo "Install Xcode"
+echo "Download and instsall Xcode from the App Store"
+echo "Once that's complete please hit <Enter>"
+read -n 1 -s
+
+# Make sure we have a home bin directory
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
+# Make sure we create a a zshrc
 if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
@@ -57,6 +65,10 @@ if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
   open "https://github.com/settings/ssh"
   read -n 1 -s
 fi
+
+# Ensure we have selected Xcode
+fancy_echo "Accepting the Xcode License ..."
+sudo xcodebuild -license
 
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
@@ -135,6 +147,12 @@ gem_install_or_update() {
   fi
 }
 
+npm_module_install_or_update() {
+  if npm list "$1" --installed > /dev/null; then
+    npm update $"@"
+  fi
+}
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
@@ -157,6 +175,7 @@ fancy_echo "Updating Homebrew formulae ..."
 
 brew tap
 brew tap homebrew/versions
+brew tap Caskroom/cask
 brew tap thoughtbot/formulae
 
 brew update
@@ -174,6 +193,9 @@ brew_install_or_upgrade 'vim'
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'wget'
 brew_install_or_upgrade 'zsh-completions'
+
+fancy_echo "Updating Java ..."
+brew cask install 'java'
 
 fancy_echo "Updating GitHub tools ..."
 brew_install_or_upgrade 'hub'
@@ -197,7 +219,7 @@ brew_install_or_upgrade 'rbenv-bundler'
 fancy_echo "Updating services ..."
 brew_install_or_upgrade 'mysql56'
 brew_install_or_upgrade 'redis'
-brew_install_or_upgrade 'elasticsearch'
+brew_install_or_upgrade 'elasticsearch17'
 brew_install_or_upgrade 'rabbitmq'
 brew_install_or_upgrade 'memcached'
 brew_install_or_upgrade 'pow'
@@ -296,3 +318,5 @@ fancy_echo "Updating configs"
 append_to_zshrc "export PATH=$HOME/.rbenv/bin:$HOME/projects/subs/bin:/usr/local/bin:$PATH"
 append_to_zshrc 'eval "$(rbenv init -)"'
 append_to_zshrc 'eval "$($HOME/projects/subs/bin/cu init -)"'
+
+source $HOME/.zshrc
