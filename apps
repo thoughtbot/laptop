@@ -64,6 +64,7 @@ symlink_pow() {
 }
 
 create_and_seed_db() {
+  fancy_echo "Preparing Database"
   cd "$HOME/projects/$1"
   export RAILS_ENV=development
   bundle exec rake db:drop
@@ -71,6 +72,13 @@ create_and_seed_db() {
   bundle exec rake db:schema:load
   bundle exec rake db:migrate
   #bundle exec rake db:seed
+}
+
+run_specs() {
+  fancy_echo "Running Tests"
+  cd $HOME/projects/$1
+  bundle exec rake db:test:prepare
+  bundle exec rake spec
 }
 
 clone_and_setup_app() {
@@ -84,9 +92,10 @@ clone_and_setup_app() {
   create_and_seed_db $1
   symlink_pow $1
   restart_app $1
+  run_specs $1
 }
 
-if [ ! -d "$HOME/.pow/" ]; then
+if [ ! -d "$HOME/.pow" ]; then
   mkdir $HOME/.pow
 fi
 
@@ -96,6 +105,7 @@ clone_and_setup_app 'teamlab'
 clone_and_setup_app 'core-data-api'
 clone_and_setup_app 'communicator'
 clone_and_setup_app 'hermod'
+clone_and_setup_app 'sendgrid-adapter'
 
 # Open All the Apps
 open http://captainu.dev
