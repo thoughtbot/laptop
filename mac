@@ -273,6 +273,7 @@ fancy_echo "Cloning Or Updating Laptop Locally"
 # Clone self to projects directory
 if [ ! -d "$HOME/projects/laptop" ]; then
   fancy_echo "Cloning Self Locally"
+  cd $HOME/projects
   git clone git@github.com:captainu/laptop
 else
   cd "$HOME/projects/laptop"
