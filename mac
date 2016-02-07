@@ -90,10 +90,6 @@ brew_is_upgradable() {
   ! brew outdated --quiet "$name" >/dev/null
 }
 
-brew_tap() {
-  brew tap "$1" --repair 2> /dev/null
-}
-
 brew_expand_alias() {
   brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/.*\//, ""); gsub(/:/, ""); print $1}'
 }
@@ -141,7 +137,7 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 fancy_echo "Updating Homebrew formulae ..."
-brew_tap 'thoughtbot/formulae'
+brew tap thoughtbot/formulae
 
 brew update
 

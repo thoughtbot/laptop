@@ -148,7 +148,6 @@ See the `mac` script for examples.
 
 Laptop functions such as `fancy_echo`,
 `brew_install_or_upgrade`,
-`brew_tap`,
 `brew_launchctl_restart`, and
 `gem_install_or_update`
 can be used in your `~/.laptop.local`.
