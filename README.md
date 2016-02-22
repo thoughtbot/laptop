@@ -43,15 +43,6 @@ If not, copy the lines where the script failed into a
 [new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
 Or, attach the whole log file as an attachment.
 
-OS X El Capitan (10.11)
------------------------
-
-You may have problems installing Homebrew for the first time on OS X El
-Capitan due to permission changes to the /usr directory (within which the Homebrew
-installation is typically located). See the [Homebrew El Capitan troubleshooting instructions](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md)
-for steps to resolve the permissions issues that interfere with Homebrew's
-installation.
-
 What it sets up
 ---------------
 
