@@ -197,6 +197,7 @@ brew_install_or_upgrade 'zsh-completions'
 fancy_echo "Updating Java ..."
 brew cask install 'java'
 brew cask install launchrocket
+brew cask install devcenter
 
 fancy_echo "Updating GitHub tools ..."
 brew_install_or_upgrade 'hub'
@@ -235,6 +236,10 @@ brew_launchctl_restart 'pow'
 
 fancy_echo "Updating customs"
 brew_launchctl_restart 'cassandra22'
+
+fancy_echo "Updating software ..."
+brew cask install launchrocket
+brew cask install devcenter
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
