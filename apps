@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+PROJECTS_DIR=$HOME/Projects/test_captainu
 
 fancy_echo() {
   local fmt="$1"; shift
@@ -9,14 +11,14 @@ fancy_echo() {
 
 # setup rails applications
 restart_app() {
-  if [ ! -d "$HOME/projects/$1/tmp" ]; then
-    mkdir "$HOME/projects/$1/tmp"
+  if [ ! -d "$PROJECTS_DIR/$1/tmp" ]; then
+    mkdir "$PROJECTS_DIR/$1/tmp"
   fi
   touch tmp/restart.txt
 }
 
 update_configs() {
-  cd $HOME/projects/$1/config
+  cd $PROJECTS_DIR/$1/config
   local configs
   configs="$(ls *.yml.example)"
   for config in $configs; do
@@ -27,11 +29,13 @@ update_configs() {
 }
 
 setup_rails_app() {
-  if [ ! -d "$HOME/projects/$1" ]; then
-    cd $HOME/projects/$1
+  if [ ! -d "$PROJECTS_DIR/$1" ]; then
+    cd $PROJECTS_DIR/$1
   fi
   fancy_echo "Installing Ruby Version"
   rbenv install -s
+  cd ..
+  cd $1
   rbenv version
   gem install bundler
 
@@ -47,8 +51,8 @@ setup_rails_app() {
 
 clean_app() {
   fancy_echo "Cleaning Up Old Versions"
-  if [ -d "$HOME/projects/$1" ]; then
-    rm -rf "$HOME/projects/$1"
+  if [ -d "$PROJECTS_DIR/$1" ]; then
+    rm -rf "$PROJECTS_DIR/$1"
   fi
 }
 
@@ -60,34 +64,37 @@ clone_repo() {
 
 symlink_pow() {
   rm $HOME/.pow/$1
-  ln -s $HOME/projects/"$1" $HOME/.pow/"$1"
+  ln -s "$PROJECTS_DIR/$1" $HOME/.pow/"$1"
 }
 
 create_and_seed_db() {
   fancy_echo "Preparing Database"
-  cd "$HOME/projects/$1"
+  cd "$PROJECTS_DIR/$1"
   export RAILS_ENV=development
   bundle exec rake db:drop
   bundle exec rake db:create
   bundle exec rake db:schema:load
   bundle exec rake db:migrate
+  if [ $1 == "communicator" ]; then
+    bundle exec rake cassandra:create
+  fi
   #bundle exec rake db:seed
 }
 
 run_specs() {
   fancy_echo "Running Tests"
-  cd $HOME/projects/$1
+  cd $PROJECTS_DIR/$1
   bundle exec rake db:test:prepare
   bundle exec rake spec
 }
 
 clone_and_setup_app() {
-  cd $HOME/projects
+  cd $PROJECTS_DIR
   fancy_echo "Setting up $1"
   echo ""
   clean_app $1
   clone_repo $1
-  cd $HOME/projects/$1
+  cd $PROJECTS_DIR/$1
   setup_rails_app $1
   create_and_seed_db $1
   symlink_pow $1
@@ -99,7 +106,13 @@ if [ ! -d "$HOME/.pow" ]; then
   mkdir $HOME/.pow
 fi
 
-cd $HOME/projects
+if [ ! -d $PROJECTS_DIR ]; then
+  fancy_echo "Creating $PROJECTS_DIR"
+  mkdir -p $PROJECTS_DIR
+fi
+
+cd $PROJECTS_DIR
+
 clone_and_setup_app 'captainu'
 clone_and_setup_app 'teamlab'
 clone_and_setup_app 'core-data-api'
