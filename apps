@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PROJECTS_DIR=$HOME/Projects/test_captainu
+#PROJECTS_DIR=$HOME/Projects/test_captainu
+PROJECTS_DIR=$HOME/projects
 
 fancy_echo() {
   local fmt="$1"; shift
