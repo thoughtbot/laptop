@@ -45,6 +45,7 @@ setup_rails_app() {
 
   fancy_echo "Installing needed Gems"
   bundle install
+  rbenv rehash
 
   fancy_echo "Updating Config"
   update_configs $1
