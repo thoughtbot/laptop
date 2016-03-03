@@ -39,6 +39,11 @@ failed into a [new GitHub
 Issue](https://github.com/policygenius/laptop/issues/new) for us. Or, attach the
 whole log file as an attachment.
 
+PolicyGenius specific tips
+--------------------------
+* PG repo
+  * If after installing all dependancies you are getting `Invalid CSS` error in the browser, it might be Node version. Check that you are using `v0.12`.
+
 What it sets up
 ---------------
 
