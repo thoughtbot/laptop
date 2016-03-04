@@ -41,6 +41,11 @@ echo "Download and instsall Xcode from the App Store"
 echo "Once that's complete please hit <Enter>"
 read -n 1 -s
 
+fancy_echo "Install Xcode Command Line Tools"
+echo "One the xcode command line tools install is complete please hit <Enter>"
+xcode-select --install
+read -n 1 -s
+
 # Make sure we have a home bin directory
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
@@ -239,6 +244,12 @@ fancy_echo "Updating software ..."
 brew cask install launchrocket
 brew cask install devcenter
 brew cask install ssh-tunnel-manager
+brew cask install iterm2
+brew cask install sequel-pro
+brew cask install google-chrome
+brew cask install postman
+brew cask install atom
+brew cask install hipchat
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
