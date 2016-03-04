@@ -72,13 +72,16 @@ symlink_pow() {
 create_and_seed_db() {
   fancy_echo "Preparing Database"
   cd "$PROJECTS_DIR/$1"
-  export RAILS_ENV=development
-  bundle exec rake db:drop
-  bundle exec rake db:create
-  bundle exec rake db:schema:load
-  bundle exec rake db:migrate
+  if [ $1 != "communicator" ]; then
+    bundle exec rake db:drop
+    bundle exec rake db:create
+    bundle exec rake db:schema:load
+    bundle exec rake db:migrate
+  fi
   if [ $1 == "communicator" ]; then
     bundle exec rake cassandra:create
+    bundle exec rake cassandra: migrate
+    RAILS_ENV=test bundle exec rake db:create
   fi
   #bundle exec rake db:seed
 }
