@@ -91,8 +91,8 @@ fi
 case "$SHELL" in
   */zsh) : ;;
   *)
-    fancy_echo "Changing your shell to zsh ..."
-      chsh -s "$(which zsh)"
+    #fancy_echo "Changing your shell to zsh ..."
+    #  chsh -s "$(which zsh)"
     ;;
 esac
 
