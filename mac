@@ -43,7 +43,7 @@ read -n 1 -s
 
 fancy_echo "Install Xcode Command Line Tools"
 echo "One the xcode command line tools install is complete please hit <Enter>"
-xcode-select --install
+#xcode-select --install
 read -n 1 -s
 
 # Make sure we have a home bin directory
