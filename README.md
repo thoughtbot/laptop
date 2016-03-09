@@ -130,10 +130,27 @@ For example:
 #!/bin/sh
 
 brew bundle --file=- <<EOF
+brew "Caskroom/cask/dockertoolbox"
 brew "go"
 brew "ngrok"
 brew "watch"
 EOF
+
+default_docker_machine() {
+  docker-machine ls | grep -Fq "default"
+}
+
+if ! default_docker_machine; then
+  docker-machine create --driver virtualbox default
+fi
+
+default_docker_machine_running() {
+  default_docker_machine | grep -Fq "Running"
+}
+
+if ! default_docker_machine_running; then
+  docker-machine start default
+fi
 
 fancy_echo "Cleaning up old Homebrew formulae ..."
 brew cleanup
