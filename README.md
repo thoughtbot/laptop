@@ -129,9 +129,11 @@ For example:
 ```sh
 #!/bin/sh
 
-brew_install_or_upgrade 'go'
-brew_install_or_upgrade 'ngrok'
-brew_install_or_upgrade 'watch'
+brew bundle --file=- <<EOF
+brew "go"
+brew "ngrok"
+brew "watch"
+EOF
 
 fancy_echo "Cleaning up old Homebrew formulae ..."
 brew cleanup
@@ -146,9 +148,7 @@ fi
 Write your customizations such that they can be run safely more than once.
 See the `mac` script for examples.
 
-Laptop functions such as `fancy_echo`,
-`brew_install_or_upgrade`,
-`brew_launchctl_restart`, and
+Laptop functions such as `fancy_echo` and
 `gem_install_or_update`
 can be used in your `~/.laptop.local`.
 

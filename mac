@@ -66,49 +66,6 @@ case "$SHELL" in
     ;;
 esac
 
-brew_install_or_upgrade() {
-  if brew_is_installed "$1"; then
-    if brew_is_upgradable "$1"; then
-      brew upgrade "$@"
-    fi
-  else
-    brew install "$@"
-  fi
-}
-
-brew_is_installed() {
-  local name
-  name="$(brew_expand_alias "$1")"
-
-  brew list -1 | grep -Fqx "$name"
-}
-
-brew_is_upgradable() {
-  local name
-  name="$(brew_expand_alias "$1")"
-
-  ! brew outdated --quiet "$name" >/dev/null
-}
-
-brew_expand_alias() {
-  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/.*\//, ""); gsub(/:/, ""); print $1}'
-}
-
-brew_launchctl_restart() {
-  local name
-  name="$(brew_expand_alias "$1")"
-  local domain="homebrew.mxcl.$name"
-  local plist="$domain.plist"
-
-  mkdir -p "$HOME/Library/LaunchAgents"
-  ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
-
-  if launchctl list | grep -Fq "$domain"; then
-    launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
-  fi
-  launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
-}
-
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
     gem update "$@"
@@ -137,45 +94,45 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 fancy_echo "Updating Homebrew formulae ..."
-brew tap thoughtbot/formulae
-
 brew update
+brew bundle --file=- <<EOF
+tap "thoughtbot/formulae"
+tap "homebrew/services"
 
-fancy_echo "Updating Unix tools ..."
-brew_install_or_upgrade 'ctags'
-brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'openssl'
-brew_install_or_upgrade 'rcm'
-brew_install_or_upgrade 'reattach-to-user-namespace'
-brew_install_or_upgrade 'the_silver_searcher'
-brew_install_or_upgrade 'tmux'
-brew_install_or_upgrade 'vim'
-brew_install_or_upgrade 'zsh'
+# Unix
+brew "ctags"
+brew "git"
+brew "openssl"
+brew "rcm"
+brew "reattach-to-user-namespace"
+brew "the_silver_searcher"
+brew "tmux"
+brew "vim"
+brew "zsh"
 
-fancy_echo "Updating Heroku tools ..."
-brew_install_or_upgrade 'heroku-toolbelt'
-brew_install_or_upgrade 'parity'
+# Heroku
+brew "heroku-toolbelt"
+brew "parity"
 
-fancy_echo "Updating GitHub tools ..."
-brew_install_or_upgrade 'hub'
+# GitHub
+brew "hub"
 
-fancy_echo "Updating image tools ..."
-brew_install_or_upgrade 'imagemagick'
+# Image manipulation
+brew "imagemagick"
 
-fancy_echo "Updating testing tools ..."
-brew_install_or_upgrade 'qt'
+# Testing
+brew "qt"
 
-fancy_echo "Updating programming languages ..."
-brew_install_or_upgrade 'libyaml' # should come after openssl
-brew_install_or_upgrade 'node'
-brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
+# Programming languages
+brew "libyaml" # should come after openssl
+brew "node"
+brew "rbenv"
+brew "ruby-build"
 
-fancy_echo "Updating databases ..."
-brew_install_or_upgrade 'postgres'
-brew_install_or_upgrade 'redis'
-brew_launchctl_restart 'postgresql'
-brew_launchctl_restart 'redis'
+# Databases
+brew "postgres", restart_service: true
+brew "redis", restart_service: true
+EOF
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
