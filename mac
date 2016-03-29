@@ -88,13 +88,6 @@ else
   sudo chown -R "$(whoami)":admin /usr/local
 fi
 
-#case "$SHELL" in
-#  */zsh) : ;;
-#  *)
-    #fancy_echo "Changing your shell to zsh ..."
-    #  chsh -s "$(which zsh)"
-    ##;;
-#esac
 
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
@@ -232,7 +225,7 @@ brew_install_or_upgrade 'cassandra22'
 
 brew_launchctl_restart 'mysql56'
 brew_launchctl_restart 'redis'
-brew_launchctl_restart 'elasticsearch'
+brew_launchctl_restart 'elasticsearch17'
 brew_launchctl_restart 'rabbitmq'
 brew_launchctl_restart 'memcached'
 brew_launchctl_restart 'pow'
@@ -250,6 +243,16 @@ brew cask install google-chrome
 brew cask install postman
 brew cask install atom
 brew cask install hipchat
+
+
+# Setting up zsh
+case "$SHELL" in
+  */zsh) : ;;
+  *)
+    fancy_echo "Changing your shell to zsh ..."
+    chsh -s "/bin/zsh"
+    ;;
+esac
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
