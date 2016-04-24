@@ -1,40 +1,23 @@
 Laptop
 ======
 
-Laptop is a script to set up an OS X or Linux laptop for Rails development.
+Laptop is a script to set up an Ubuntu laptop for software development.
 
 Requirements
 ------------
 
-### OS X
+### Ubuntu
 
 We support:
 
-* [OS X Mavericks (10.9)](https://itunes.apple.com/us/app/os-x-mavericks/id675248567)
-* OS X Yosemite (10.10)
+- [14.04: Trusty Tahr]
 
-Older versions may work but aren't regularly tested. Bug reports for older
-versions are welcome.
-
-### Linux
-
-We support:
-
-* [14.04: Trusty Tahr](https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes),
-* [12.04 LTS: Precise Pangolin](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes),
-* Debian stable (currently [wheezy](http://www.debian.org/releases/stable/)).
-* Debian testing (currently [jessie](http://www.debian.org/releases/testing/)).
+[14.04: Trusty Tahr]: https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes
 
 Install
 -------
 
-### OS X
-
-Read, then run the script:
-
-    bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) 2>&1 | tee ~/laptop.log
-
-### Linux
+### Ubuntu
 
 Read, then run the script:
 
@@ -46,34 +29,33 @@ Debugging
 Your last Laptop run will be saved to `~/laptop.log`. Read through it to see if
 you can debug the issue yourself. If not, copy the lines where the script
 failed into a [new GitHub
-Issue](https://github.com/thoughtbot/laptop/issues/new) for us. Or, attach the
+Issue](https://github.com/ncronquist/laptop/issues/new) for us. Or, attach the
 whole log file as an attachment.
 
 What it sets up
 ---------------
 
-* [Bundler] for managing Ruby libraries
-* [Exuberant Ctags] for indexing files for vim tab completion
-* [Foreman] for serving Rails apps locally
-* [gh] for interacting with the GitHub API
-* [Heroku Config] for local `ENV` variables
-* [Heroku Toolbelt] for interacting with the Heroku API
-* [Homebrew] for managing operating system libraries (OS X only)
-* [ImageMagick] for cropping and resizing images
-* [Node.js] and [NPM], for running apps and installing JavaScript packages
-* [NVM] for managing versions of Node.js
-* [Parity] for development, staging, and production parity
-* [Postgres] for storing relational data
-* [Qt] for headless JavaScript testing via Capybara Webkit
-* [Rails] gem for writing web applications
-* [Rbenv] for managing versions of Ruby
-* [Redis] for storing key-value data
-* [Ruby Build] for installing Rubies
-* [Ruby] stable for writing general-purpose code
-* [The Silver Searcher] for finding things in files
-* [Tmux] for saving project state and switching between projects
-* [Watch] for periodically executing a program and displaying the output
-* [Zsh] as your shell
+- [Bundler] for managing Ruby libraries
+- [Exuberant Ctags] for indexing files for vim tab completion
+- [Foreman] for serving Rails apps locally
+- [gh] for interacting with the GitHub API
+- [Heroku Config] for local `ENV` variables
+- [Heroku Toolbelt] for interacting with the Heroku API
+- [ImageMagick] for cropping and resizing images
+- [Node.js] and [NPM], for running apps and installing JavaScript packages
+- [NVM] for managing versions of Node.js
+- [Parity] for development, staging, and production parity
+- [Postgres] for storing relational data
+- [Qt] for headless JavaScript testing via Capybara Webkit
+- [Rails] gem for writing web applications
+- [Rbenv] for managing versions of Ruby
+- [Redis] for storing key-value data
+- [Ruby Build] for installing Rubies
+- [Ruby] stable for writing general-purpose code
+- [The Silver Searcher] for finding things in files
+- [Tmux] for saving project state and switching between projects
+- [Watch] for periodically executing a program and displaying the output
+- [Zsh] as your shell
 
 [Bundler]: http://bundler.io/
 [Exuberant Ctags]: http://ctags.sourceforge.net/
@@ -81,7 +63,6 @@ What it sets up
 [gh]: https://github.com/jingweno/gh
 [Heroku Config]: https://github.com/ddollar/heroku-config
 [Heroku Toolbelt]: https://toolbelt.heroku.com/
-[Homebrew]: http://brew.sh/
 [ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
@@ -121,42 +102,22 @@ Put your customizations in `~/.laptop.local`. For example, your
     brew cask install rdio
 
 You should write your customizations such that they can be run safely more than
-once. See the `mac` and `linux` scripts for examples.
-
-Laptop'ed Linux Vagrant boxes
------------------------------
-
-We now publish [Vagrant](http://vagrantup.com) boxes with the Laptop script
-applied for every supported Linux distro.
-
-Create a Vagrantfile:
-
-    vagrant init thoughtbot/ubuntu-14-04-server-with-laptop
-
-In the same directory as your Vagrantfile:
-
-    vagrant up
-    vagrant ssh
-
-Laptop'ed vagrantcloud boxes currently available:
-
-* `thoughtbot/debian-wheezy-64-with-laptop`
-* `thoughtbot/debian-jessie-64-with-laptop`
-* `thoughtbot/ubuntu-14-04-server-with-laptop`
-* `thoughtbot/ubuntu-12-04-server-with-laptop`
-
-See our [vagrantcloud profile](https://vagrantcloud.com/thoughtbot). You must
-have Vagrant >= 1.5.0 to use vagrantcloud images directly.
+once. See the `linux` script for examples.
 
 Credits
 -------
 
 ![thoughtbot](http://thoughtbot.com/assets/tm/logo.png)
 
-Laptop is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
+Laptop was created and funded by [thoughtbot, inc](http://thoughtbot.com/community).
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
 
-Thank you, [contributors](https://github.com/thoughtbot/laptop/graphs/contributors)!
+While this is a fork of Thoughtbot's Laptop project, it is only related in origin.
+Thoughtbot [dropped Linux support] in Oct. 2014, but I really like they way
+they have organized their project so I am starting from their last Linux supported
+commit.
+
+[dropped Linux support]: https://github.com/thoughtbot/laptop/commit/91048f3f96f0d2d14c1106f746dd51c417a26e30
 
 Contributing
 ------------
@@ -166,5 +127,4 @@ Please see [CONTRIBUTING.md](https://github.com/thoughtbot/laptop/blob/master/CO
 License
 -------
 
-Laptop is © 2011-2014 thoughtbot, inc. It is free software, and may be
-redistributed under the terms specified in the LICENSE file.
+Laptop is free software, and may be redistributed under the terms specified in the LICENSE file.
