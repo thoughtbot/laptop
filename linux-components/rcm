@@ -1,4 +1,5 @@
 fancy_echo "Installing rcm, to manage your dotfiles ..."
-  wget -O /tmp/rcm_1.1.0_all.deb http://mike-burns.com/project/rcm/rcm_1.1.0_all.deb
-  sudo dpkg -i /tmp/rcm_1.1.0_all.deb
-  rm -f /tmp/rcm_1.1.0_all.deb
+  wget https://thoughtbot.github.io/rcm/debs/rcm_1.3.0-1_all.deb
+  sha=$(sha256sum rcm_1.3.0-1_all.deb | cut -f1 -d' ')
+  [ "$sha" = "2e95bbc23da4a0b995ec4757e0920197f4c92357214a65fedaf24274cda6806d" ] && \
+  sudo dpkg -i rcm_1.3.0-1_all.deb
