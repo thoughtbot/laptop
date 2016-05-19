@@ -1,6 +1,7 @@
 #!/bin/sh
+set -eou pipefail
 
-# Welcome to the thoughtbot laptop script!
+# Welcome to the recombine laptop script - adapated from thoughtbot
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
 
@@ -30,21 +31,7 @@ append_to_zshrc() {
   fi
 }
 
-fancy_symlink() {
-  local master_db_yaml_path="$1"
-  local linked_db_yaml_path="$2"
-
-  if [ -f $linked_db_yaml_path ]
-  then
-    echo "$linked_db_yaml_path already exists"
-  else
-    ln -s $master_db_yaml_path $linked_db_yaml_path
-  fi
-}
-
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
-
-set -e
 
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
@@ -99,21 +86,6 @@ brew_expand_alias() {
   brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
 
-brew_launchctl_restart() {
-  local name="$(brew_expand_alias "$1")"
-  local domain="homebrew.mxcl.$name"
-  local plist="$domain.plist"
-
-  fancy_echo "Restarting %s ..." "$1"
-  mkdir -p "$HOME/Library/LaunchAgents"
-  ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
-
-  if launchctl list | grep -Fq "$domain"; then
-    launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
-  fi
-  launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
-}
-
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
     fancy_echo "Updating %s ..." "$1"
@@ -154,12 +126,10 @@ brew update
 
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
+# We should be running postgres servers in docker containers, i.e. not using this installation
+# However, we still include postgres here because it can be useful to have the psql client installed locally.
 brew_install_or_upgrade 'postgres'
-brew_launchctl_restart 'postgresql'
 brew_install_or_upgrade 'the_silver_searcher'
-brew_install_or_upgrade 'vim'
-brew_install_or_upgrade 'ctags'
-brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
@@ -169,26 +139,23 @@ brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'phantomjs'
 brew_install_or_upgrade 'sbt'
 brew_install_or_upgrade 'mysql'
-
-brew_install_or_upgrade 'jq' # for parsing awscli JSON return values
+brew_install_or_upgrade 'jq' # command line JSON parser
 brew_install_or_upgrade 'python' # for pip so that we can install awscli
 pip_install_or_upgrade 'awscli'
+brew_install_or_upgrade 'parallel'
+brew_install_or_upgrade 'gpg2'
 
 brew tap caskroom/cask
 brew_install_or_upgrade 'caskroom/cask/brew-cask'
 
-
-brew cask install skype
 brew cask install slack
-brew cask install github-desktop
 brew cask install intellij-idea
+brew cask install dockertoolbox
+brew cask install disk-inventory-x
 
 node_version="0.10"
 
 brew_install_or_upgrade 'nvm'
-
-# shellcheck disable=SC2016
-append_to_zshrc 'export PATH="$PATH:/usr/local/lib/node_modules"'
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
@@ -197,7 +164,7 @@ brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+ruby_version="2.1.3"
 
 eval "$(rbenv init - zsh)"
 
@@ -218,42 +185,10 @@ fancy_echo "Configuring Bundler ..."
 
 brew_install_or_upgrade 'heroku-toolbelt'
 
-if ! command -v rcup >/dev/null; then
-  brew_tap 'thoughtbot/formulae'
-  brew_install_or_upgrade 'rcm'
+if ! docker-machine ls | grep -Fq "default"; then
+  fancy_echo "Creating a local virtual machine for docker. Its name is 'default'. Its disk size is 80GB."
+  # We need around 80 GB for docker's virtual machine because our dev databases are so big
+  docker-machine create --driver virtualbox --virtualbox-disk-size "80000" default
+else
+  fancy_echo "A docker-machine named 'default' already exists. Skipping ..."
 fi
-
-if [ -f "$HOME/.laptop.local" ]; then
-  . "$HOME/.laptop.local"
-fi
-
-fancy_echo 'Ensuring ~/recombine directory exists'
-RECOMBINE_DIR=$HOME/recombine
-mkdir -p $RECOMBINE_DIR
-
-fancy_echo 'Cloning and/or updating repos'
-repos=(recombine-rails-suite workflow-utils recombine-api recombine-public-new recombine-labs-new  Recombine)
-
-for repo in "${repos[@]}"
-do
-  REPO_PATH=$RECOMBINE_DIR/$repo
-  if [ -d $REPO_PATH ]
-  then
-    echo "$repo already exists"
-  else
-    git clone git@github.com:Recombine/$repo.git $REPO_PATH
-  fi
-  git -C $REPO_PATH fetch origin
-done
-
-fancy_echo 'Creating an (empty) database.yml that all your apps will symlink to. Please fill it in before using'
-mkdir -p $RECOMBINE_DIR/config
-touch $RECOMBINE_DIR/config/database.yml
-DB_YAML_PATH=$RECOMBINE_DIR/config/database.yml
-
-
-append_to_zshrc 'export PATH=$PATH:$HOME/recombine/workflow-utils'
-fancy_symlink $DB_YAML_PATH $RECOMBINE_DIR/workflow-utils/database.yml
-
-
-
