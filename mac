@@ -4,7 +4,7 @@
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
 
-ruby_version="2.2.3"
+ruby_version="2.3.0"
 
 fancy_echo() {
   local fmt="$1"; shift
