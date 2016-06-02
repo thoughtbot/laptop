@@ -44,6 +44,7 @@ setup_rails_app() {
   mkdir -p tmp
 
   fancy_echo "Installing needed Gems"
+  bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/include
   bundle install
   rbenv rehash
 
