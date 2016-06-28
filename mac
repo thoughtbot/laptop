@@ -147,6 +147,7 @@ brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'phantomjs'
+brew_install_or_upgrade 'tesseract'
 
 brew_install_or_upgrade 'ruby-build'
 
