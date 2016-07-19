@@ -48,43 +48,16 @@ case "$SHELL" in
   */zsh) : ;;
   *)
     fancy_echo "Changing your shell to zsh ..."
-      chsh -s "$(which zsh)"
+      shell_path="$(which zsh)"
+      # In case the shell is not added to the list of shells
+      if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+        fancy_echo "Adding '$shell_path' to /etc/shells"
+        sudo sh -c "echo $shell_path >> /etc/shells"
+      fi
+      chsh -s "$shell_path"
+
     ;;
 esac
-
-brew_install_or_upgrade() {
-  if brew_is_installed "$1"; then
-    if brew_is_upgradable "$1"; then
-      fancy_echo "Upgrading %s ..." "$1"
-      brew upgrade "$@"
-    else
-      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
-    fi
-  else
-    fancy_echo "Installing %s ..." "$1"
-    brew install "$@"
-  fi
-}
-
-brew_is_installed() {
-  local name="$(brew_expand_alias "$1")"
-
-  brew list -1 | grep -Fqx "$name"
-}
-
-brew_is_upgradable() {
-  local name="$(brew_expand_alias "$1")"
-
-  ! brew outdated --quiet "$name" >/dev/null
-}
-
-brew_tap() {
-  brew tap "$1" 2> /dev/null
-}
-
-brew_expand_alias() {
-  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
-}
 
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
@@ -99,7 +72,7 @@ gem_install_or_update() {
 
 pip_install_or_upgrade() {
   if pip list | grep "$1" > /dev/null; then
-    fancy_echo "Upgrading pip pacakge $1"
+    fancy_echo "Upgrading pip package $1"
     pip install --upgrade "$1" > /dev/null
   else
     pip install "$1"
@@ -121,55 +94,66 @@ else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
 
+if brew list | grep -Fq brew-cask; then
+  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  brew uninstall --force brew-cask
+fi
+
 fancy_echo "Updating Homebrew formulas ..."
 brew update
+brew tap Homebrew/bundle
 
-brew_install_or_upgrade 'zsh'
-brew_install_or_upgrade 'git'
-# We should be running postgres servers in docker containers, i.e. not using this installation
-# However, we still include postgres here because it can be useful to have the psql client installed locally.
-brew_install_or_upgrade 'postgres'
-brew_install_or_upgrade 'the_silver_searcher'
-brew_install_or_upgrade 'reattach-to-user-namespace'
-brew_install_or_upgrade 'imagemagick'
-brew_install_or_upgrade 'qt'
-brew_install_or_upgrade 'node'
-brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
-brew_install_or_upgrade 'phantomjs'
-brew_install_or_upgrade 'sbt'
-brew_install_or_upgrade 'mysql'
-brew_install_or_upgrade 'jq' # command line JSON parser
-brew_install_or_upgrade 'python' # for pip so that we can install awscli
+brew bundle --file=- <<EOF
+tap 'caskroom/cask'
+tap 'homebrew/services'
+
+brew 'git'
+brew 'openssl'
+brew 'libyaml'                              # should come after openssl
+cask 'java'
+brew 'zsh'
+brew 'postgres', restart_service: :changed
+brew 'the_silver_searcher'
+brew 'reattach-to-user-namespace'
+brew 'imagemagick'
+brew 'qt'
+brew 'node'
+brew 'rbenv'
+brew 'ruby-build'
+brew 'phantomjs'
+brew 'sbt'
+brew 'mysql', restart_service: :changed
+brew 'jq'
+brew 'python'                               # for pip to install awscli
+brew 'parallel'
+brew 'gpg2'
+brew 'nvm'
+brew 'heroku-toolbelt'
+
+# Useful apps
+cask 'google-chrome'
+cask 'slack'
+cask 'intellij-idea'
+cask 'dockertoolbox'
+cask 'disk-inventory-x'
+cask 'atom'
+
+EOF
+
+pip_install_or_upgrade 'pip'
 pip_install_or_upgrade 'awscli'
-brew_install_or_upgrade 'parallel'
-brew_install_or_upgrade 'gpg2'
-
-brew tap caskroom/cask
-brew_install_or_upgrade 'caskroom/cask/brew-cask'
-
-brew cask install slack
-brew cask install intellij-idea
-brew cask install dockertoolbox
-brew cask install disk-inventory-x
 
 node_version="0.10"
 
-brew_install_or_upgrade 'nvm'
-
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
-
-brew_install_or_upgrade 'openssl'
-brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'libyaml'
 
 ruby_version="2.1.3"
 
 eval "$(rbenv init - zsh)"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
-  rbenv install -s "$ruby_version"
+  RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
 fi
 
 rbenv global "$ruby_version"
@@ -182,8 +166,6 @@ gem_install_or_update 'bundler'
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
-
-brew_install_or_upgrade 'heroku-toolbelt'
 
 if ! docker-machine ls | grep -Fq "default"; then
   fancy_echo "Creating a local virtual machine for docker. Its name is 'default'. Its disk size is 80GB."
