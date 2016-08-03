@@ -134,7 +134,7 @@ brew 'heroku-toolbelt'
 cask 'google-chrome'
 cask 'slack'
 cask 'intellij-idea'
-cask 'dockertoolbox'
+cask 'docker-toolbox'
 cask 'disk-inventory-x'
 cask 'atom'
 
