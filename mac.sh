@@ -138,7 +138,7 @@ install_or_update_homebrew() {
 
 install_latest_ruby() {
   append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-  ruby_version="2.2.2"
+  ruby_version="2.3.1"
   eval "$(rbenv init - zsh)"
 
   if ! rbenv versions | grep -Fq "$ruby_version"; then
@@ -240,6 +240,7 @@ brew_install_or_upgrade 'boot2docker'
 brew_install_or_upgrade 'wget'
 brew_install_or_upgrade 'dockutil'
 brew_install_or_upgrade 'tree'
+brew_install_or_upgrade 'autojump'
 brew_install_or_upgrade 'tig'
 brew_tap 'pivotal/tap'
 brew_install_or_upgrade 'git-pair'
@@ -261,6 +262,7 @@ cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade 'lastpass'
 cask_install_or_upgrade 'alfred'
 cask_install_or_upgrade 'vagrant'
+cask_install_or_upgrade 'docker'
 install_shift_it
 install_elasticsearch
 install_latest_ruby
