@@ -116,7 +116,6 @@ brew 'postgres', restart_service: :changed
 brew 'the_silver_searcher'
 brew 'reattach-to-user-namespace'
 brew 'imagemagick'
-brew 'qt'
 brew 'node'
 brew 'rbenv'
 brew 'ruby-build'
