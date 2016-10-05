@@ -121,7 +121,7 @@ enable_filevault() {
   sudo fdesetup enable -user `whoami` -defer $HOME/filevault-setup.plist -forceatlogin 0 -dontaskatlogout
   fancy_echo "The next time you login your Mac will prompt you to enable FileVault."
   fancy_echo "Once FileVault is enabled, copy the file created at $HOME/filevault-setup.plist into a secure note in 1Password."
-  fancy_echo "After you save it in 1Password, delete it with the following command: rm $HOME/filevault-setup.plist"
+  fancy_echo "After you save it in 1Password, delete it with the following command: sudo rm $HOME/filevault-setup.plist"
 }
 
 if ! command -v brew >/dev/null; then
