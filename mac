@@ -117,6 +117,13 @@ install_rvm_with_dotfiles() {
   curl -sSL https://get.rvm.io | bash -s stable --auto-dotfiles
 }
 
+enable_filevault() {
+  sudo fdesetup enable -user `whoami` -defer $HOME/filevault-setup.plist -forceatlogin 0 -dontaskatlogout
+  fancy_echo "The next time you login your Mac will prompt you to enable FileVault."
+  fancy_echo "Once FileVault is enabled, copy the file created at $HOME/filevault-setup.plist into a secure note in 1Password."
+  fancy_echo "After you save it in 1Password, delete it with the following command: rm $HOME/filevault-setup.plist"
+}
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
@@ -226,3 +233,6 @@ sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/iOS Simulat
 defaults write com.apple.terminal StringEncodings -array 4
 
 fancy_echo "You'll need to restart your computer before all iOS settings can take effect."
+
+# Enabling FileVault last so that post-setup instructions do not scroll off the screen
+enable_filevault
