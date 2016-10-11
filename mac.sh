@@ -159,9 +159,9 @@ install_latest_ruby() {
 }
 
 install_vim_config() {
-  if [ -f ~/.vim/bin/upgrade ]; then
+  if [ -f ~/.vim/bin/update ]; then
     echo "vim-config already installed."
-    echo " run ~/.vim/bin/upgrade to upgrade."
+    echo " run ~/.vim/bin/update to upgrade."
   else
     if [ -d ~/.vim ]; then
       echo "Saving old vim config to ~/.vim.old"
@@ -192,7 +192,7 @@ install_oh_my_zsh() {
 install_elasticsearch() {
   cask_install_or_upgrade 'java'
   brew_install_or_upgrade 'elasticsearch'
-  brew services && brew services start elasticsearch
+  brew services start elasticsearch
 }
 
 ##### Start Installation #####
@@ -229,9 +229,8 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'n'
-n 0.12 && n stable
+sudo n 0.12 && sudo n stable
 brew_tap 'caskroom/cask'
-brew_install_or_upgrade 'caskroom/cask/brew-cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'docker'
@@ -259,7 +258,7 @@ cask_install_or_upgrade 'screenhero'
 cask_install_or_upgrade 'sourcetree'
 cask_install_or_upgrade 'xquartz'
 cask_install_or_upgrade 'sublime-text'
-cask_install_or_upgrade 'lastpass'
+cask_install_or_upgrade '1password'
 cask_install_or_upgrade 'alfred'
 cask_install_or_upgrade 'vagrant'
 cask_install_or_upgrade 'docker'
@@ -267,9 +266,6 @@ install_shift_it
 install_elasticsearch
 install_latest_ruby
 install_vim_config
-
-# Install LastPass
-open /opt/homebrew-cask/Caskroom/lastpass/latest/LastPass\ Installer.app
 
 # Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 0.02
@@ -313,13 +309,13 @@ dockutil --remove "Keynote" --no-restart
 dockutil --remove "iTunes" --no-restart
 dockutil --remove "iBooks" --no-restart
 
-dockutil --add /Applications/Google\ Chrome.app --no-restart
-dockutil --add ~/Applications/iTerm.app/ --no-restart
-dockutil --add ~/Applications/Slack.app/ --no-restart
-dockutil --add ~/Applications/Sublime Text 2.app/ --no-restart
-dockutil --add ~/Applications/MacVim.app/ --no-restart
-dockutil --add ~/Applications/Screenhero.app/ --no-restart
-dockutil --add ~/Applications/SourceTree.app/ --no-restart
+dockutil --add --replacing /Applications/Google\ Chrome.app/ --no-restart
+dockutil --add --replacing /Applications/iTerm.app/ --no-restart
+dockutil --add --replacing /Applications/Slack.app/ --no-restart
+dockutil --add --replacing /Applications/Sublime Text 2.app/ --no-restart
+dockutil --add --replacing /Applications/MacVim.app/ --no-restart
+dockutil --add --replacing /Applications/Screenhero.app/ --no-restart
+dockutil --add --replacing /Applications/SourceTree.app/ --no-restart
 
 /usr/bin/killall -HUP Dock >/dev/null 2>&1
 
