@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a script to set up an OS X laptop for web development.
+Laptop is a script to set up an macOS laptop for web development.
 
 It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
@@ -12,9 +12,9 @@ Requirements
 
 We support:
 
-* OS X Mavericks (10.9)
-* OS X Yosemite (10.10)
-* OS X El Capitan (10.11)
+* macOS Mavericks (10.9)
+* macOS Yosemite (10.10)
+* macOS El Capitan (10.11)
 
 Older versions may work but aren't regularly tested. Bug reports for older
 versions are welcome.
@@ -46,7 +46,7 @@ Or, attach the whole log file as an attachment.
 What it sets up
 ---------------
 
-Mac OS X tools:
+macOS tools:
 
 * [Homebrew] for managing operating system libraries.
 
