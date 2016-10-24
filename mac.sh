@@ -230,6 +230,7 @@ brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'n'
 sudo n 0.12 && sudo n stable
+brew_install_or_upgrade 'phantomjs'
 brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
