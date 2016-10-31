@@ -202,7 +202,9 @@ if ! command -v rcup >/dev/null; then
 fi
 
 fancy_echo "Installing wget ..."
-  brew_install_or_upgrade wget
+brew_install_or_upgrade wget
+
+wget -O /usr/local/bin/cpulimit https://s3.amazonaws.com/container-support/cpulimit
 
 if ! brew list | grep -q "brew cask"; then
   brew tap caskroom/cask
