@@ -261,7 +261,6 @@ cask_install_or_upgrade 'xquartz'
 cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade '1password'
 cask_install_or_upgrade 'alfred'
-cask_install_or_upgrade 'vagrant'
 cask_install_or_upgrade 'docker'
 install_shift_it
 install_elasticsearch
