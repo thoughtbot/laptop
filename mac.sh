@@ -226,7 +226,8 @@ brew_install_or_upgrade 'ctags'
 brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
-brew_install_or_upgrade 'qt'
+brew_install_or_upgrade 'qt55'
+brew link --force qt55
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'n'
 sudo n 0.12 && sudo n stable
