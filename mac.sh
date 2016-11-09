@@ -152,6 +152,7 @@ install_latest_ruby() {
 
   gem_install_or_update 'bundler'
   gem_install_or_update 'aptible-cli'
+  gem_install_or_update 'docker-sync'
 
   fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
@@ -226,8 +227,11 @@ brew_install_or_upgrade 'ctags'
 brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
+brew_tap 'homebrew/versions'
 brew_install_or_upgrade 'qt55'
 brew link --force qt55
+brew_install_or_upgrade 'fswatch'
+brew_install_or_upgrade 'unison'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'n'
 sudo n 0.12 && sudo n stable
