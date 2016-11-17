@@ -297,34 +297,6 @@ git config --global alias.squash "commit --squash"
 git config --global alias.unstage "reset HEAD"
 git config --global alias.rum "rebase master@{u}"
 
-# Customize OS X Dock
-defaults write com.apple.Dock autohide 1
-
-dockutil --remove "Launchpad" --no-restart
-dockutil --remove "Safari" --no-restart
-dockutil --remove "Mail" --no-restart
-dockutil --remove "Contacts" --no-restart
-dockutil --remove "Calendar" --no-restart
-dockutil --remove "Notes" --no-restart
-dockutil --remove "Map" --no-restart
-dockutil --remove "Facetime" --no-restart
-dockutil --remove "iPhoto" --no-restart
-dockutil --remove "Pages" --no-restart
-dockutil --remove "Numbers" --no-restart
-dockutil --remove "Keynote" --no-restart
-dockutil --remove "iTunes" --no-restart
-dockutil --remove "iBooks" --no-restart
-
-dockutil --add --replacing /Applications/Google\ Chrome.app/ --no-restart
-dockutil --add --replacing /Applications/iTerm.app/ --no-restart
-dockutil --add --replacing /Applications/Slack.app/ --no-restart
-dockutil --add --replacing /Applications/Sublime Text 2.app/ --no-restart
-dockutil --add --replacing /Applications/MacVim.app/ --no-restart
-dockutil --add --replacing /Applications/Screenhero.app/ --no-restart
-dockutil --add --replacing /Applications/SourceTree.app/ --no-restart
-
-/usr/bin/killall -HUP Dock >/dev/null 2>&1
-
 # Run local customizations
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
