@@ -254,6 +254,7 @@ brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 brew_install_or_upgrade 'chromedriver'
+brew_install_or_upgrade 'zsh-syntax-highlighting'
 
 # Install applications
 cask_install_or_upgrade 'macvim'
@@ -268,6 +269,7 @@ cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade '1password'
 cask_install_or_upgrade 'alfred'
 cask_install_or_upgrade 'docker'
+
 install_shift_it
 install_elasticsearch
 install_latest_ruby
