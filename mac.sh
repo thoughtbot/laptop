@@ -254,6 +254,7 @@ brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 brew_install_or_upgrade 'chromedriver'
+brew_install_or_upgrade 'httpie'
 
 # Install applications
 cask_install_or_upgrade 'macvim'
