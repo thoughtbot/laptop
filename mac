@@ -112,6 +112,7 @@ cask "skitch"
 cask "slack"
 cask "iterm2"
 cask "skype-for-business"
+cask "macdown"
 
 # Extra
 cask "flux"
