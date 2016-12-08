@@ -111,6 +111,7 @@ cask "screenhero"
 cask "skitch"
 cask "slack"
 cask "iterm2"
+cask "skype-for-business"
 
 # Extra
 cask "flux"
