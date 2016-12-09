@@ -113,6 +113,7 @@ cask "slack"
 cask "iterm2"
 cask "skype-for-business"
 cask "macdown"
+cask "textmate"
 
 # Extra
 cask "flux"
