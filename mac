@@ -6,8 +6,8 @@
 # Specifically, we'll install...
 #
 # - Homebrew
-# - zsh & Oh-My-Zsh
 # - git
+# - zsh & Oh-My-Zsh
 # - rbenv & Ruby
 # - bundler
 # - node and npm
@@ -108,7 +108,6 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
 tap "homebrew/services"
 
 # Unix
@@ -123,6 +122,10 @@ brew "ruby-build"
 # Databases
 brew "postgres", restart_service: true
 EOF
+
+fancy_echo "Installing Oh-My-Zsh ..."
+curl -L \
+  "https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh" | sh
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
