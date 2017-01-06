@@ -164,3 +164,7 @@ fi
 fancy_echo "Setting sublime as default text editor ..."
 append_to_zshrc "export EDITOR='subl -w -n'"
 append_to_zshrc "export PAGER='less -f'"
+
+fancy_echo "Globally ignoring .DS_Store files"
+echo .DS_Store >> ~/.gitignore_global
+git config --global core.excludesfile ~/.gitignore_global
