@@ -122,9 +122,6 @@ brew "tmux"
 brew "vim"
 brew "zsh"
 
-# GitHub
-brew "hub"
-
 # Image manipulation
 brew "imagemagick"
 
