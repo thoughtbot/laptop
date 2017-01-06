@@ -121,6 +121,13 @@ brew "ruby-build"
 
 # Databases
 brew "postgres", restart_service: true
+
+# Text editing
+cask "atom"
+cask "sublime-text"
+
+# Chat
+cask "slack"
 EOF
 
 fancy_echo "Installing Oh-My-Zsh ..."
