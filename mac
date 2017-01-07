@@ -114,6 +114,8 @@ cask "iterm2"
 cask "skype-for-business"
 cask "macdown"
 cask "textmate"
+cask "pgadmin4"
+cask "pg-commander"
 
 # Extra
 cask "flux"
