@@ -158,6 +158,9 @@ gem_install_or_update 'bundler'
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
+# Skip rdoc generation when we install a gem
+echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
+
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090
