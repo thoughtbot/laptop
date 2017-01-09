@@ -196,7 +196,7 @@ KEYBINDINGS_DIR="~/Library/KeyBindings"
 create_folder_if_not_there("$KEYBINDINGS_DIR")
 KEYBINDINGS_FILE="$KEYBINDINGS_DIR/DefaultKeyBinding.dict"
 touch "$KEYBINDINGS_FILE"
-cat > "$KEYBINDINGS_FILE" <<- EOM
+cat > "$KEYBINDINGS_FILE" << EOM
   {
     /* Map \# to § key */
     "§" = ("insertText:", "#");
