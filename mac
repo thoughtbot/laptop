@@ -204,7 +204,9 @@ cat > "$KEYBINDINGS_FILE" << EOM
 EOM
 
 fancy_echo "Customizing Sublime Text"
-SUBLIME_INSTALLED_PACKAGE_DIR="$HOME/Library/Application Support/Sublime Text 3/Installed Packages"
+SUBLIME_DIR="$HOME/Library/Application Support/Sublime Text 3/"
+create_folder_if_not_there "$SUBILME_DIR"
+SUBLIME_INSTALLED_PACKAGE_DIR="$SUBLIME_DIR/Installed Packages"
 create_folder_if_not_there "$SUBLIME_INSTALLED_PACKAGE_DIR"
 SUBLIME_PACKAGE_CTRL_FILE="$SUBLIME_INSTALLED_PACKAGE_DIR/Package Control.sublime-settings"
 touch "$SUBLIME_PACKAGE_CTRL_FILE"
@@ -221,7 +223,7 @@ cat > "$SUBLIME_PACKAGE_CTRL_FILE" << EOM
 }
 EOM
 
-SUBLIME_PACKAGE_DIR="$HOME/Library/Application Support/Sublime Text 3/Packages/User"
+SUBLIME_PACKAGE_DIR="$SUBLIME_DIR/Packages/User"
 create_folder_if_not_there "$SUBLIME_PACKAGE_DIR"
 SUBLIME_KEYMAP_FILE="$SUBLIME_PACKAGE_DIR/Default (OSX).sublime-keymap"
 touch "$SUBLIME_KEYMAP_FILE"
