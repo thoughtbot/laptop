@@ -187,3 +187,15 @@ git config --global core.excludesfile ~/.gitignore_global
 
 fancy_echo "Creating Postgres database under current user name"
 createdb "$(whoami)"
+
+fancy_echo "Binding # to the weird key under escape"
+KEYBINDINGS_DIR="~/Library/KeyBindings"
+create_folder_if_not_there("$KEYBINDINGS_DIR")
+KEYBINDINGS_FILE="$KEYBINDINGS_DIR/DefaultKeyBinding.dict"
+touch "$KEYBINDINGS_FILE"
+cat > "$KEYBINDINGS_FILE" <<- EOM
+  {
+    /* Map \# to § key */
+    "§" = ("insertText:", "#");
+  }
+EOM
