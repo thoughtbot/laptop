@@ -189,7 +189,9 @@ echo .DS_Store >> ~/.gitignore_global
 git config --global core.excludesfile ~/.gitignore_global
 
 fancy_echo "Creating Postgres database under current user name"
-createdb "$(whoami)"
+if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
+  createdb "$(whoami)"
+fi
 
 fancy_echo "Binding # to the weird key under escape"
 KEYBINDINGS_DIR="$HOME/Library/KeyBindings"
