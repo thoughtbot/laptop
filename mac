@@ -206,7 +206,7 @@ cat > "$KEYBINDINGS_FILE" << EOM
 EOM
 
 fancy_echo "Customizing Sublime Text"
-SUBLIME_DIR="$HOME/Library/Application Support/Sublime Text 3/"
+SUBLIME_DIR="$HOME/Library/Application Support/Sublime Text 3"
 create_folder_if_not_there "$SUBLIME_DIR"
 SUBLIME_INSTALLED_PACKAGE_DIR="$SUBLIME_DIR/Installed Packages"
 create_folder_if_not_there "$SUBLIME_INSTALLED_PACKAGE_DIR"
