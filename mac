@@ -171,7 +171,7 @@ number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 rbenv rehash
 
-fancy_echo "Skipping rdoc generation when we install a gem"
+fancy_echo "Skipping rdoc generation when we install a gem"
 echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
 
 if [ -f "$HOME/.laptop.local" ]; then
@@ -192,7 +192,7 @@ fancy_echo "Creating Postgres database under current user name"
 createdb "$(whoami)"
 
 fancy_echo "Binding # to the weird key under escape"
-KEYBINDINGS_DIR="~/Library/KeyBindings"
+KEYBINDINGS_DIR="$HOME/Library/KeyBindings"
 create_folder_if_not_there "$KEYBINDINGS_DIR"
 KEYBINDINGS_FILE="$KEYBINDINGS_DIR/DefaultKeyBinding.dict"
 touch "$KEYBINDINGS_FILE"
@@ -204,7 +204,7 @@ cat > "$KEYBINDINGS_FILE" << EOM
 EOM
 
 fancy_echo "Customizing Sublime Text"
-SUBLIME_INSTALLED_PACKAGE_DIR="~/Library/Application Support/Sublime Text 3/Installed Packages"
+SUBLIME_INSTALLED_PACKAGE_DIR="$HOME/Library/Application Support/Sublime Text 3/Installed Packages"
 create_folder_if_not_there "$SUBLIME_INSTALLED_PACKAGE_DIR"
 SUBLIME_PACKAGE_CTRL_FILE="$SUBLIME_INSTALLED_PACKAGE_DIR/Package Control.sublime-settings"
 touch "$SUBLIME_PACKAGE_CTRL_FILE"
@@ -221,7 +221,7 @@ cat > "$SUBLIME_PACKAGE_CTRL_FILE" << EOM
 }
 EOM
 
-SUBLIME_PACKAGE_DIR="~Library/Application Support/Sublime Text 3/Packages/User"
+SUBLIME_PACKAGE_DIR="$HOME/Library/Application Support/Sublime Text 3/Packages/User"
 create_folder_if_not_there "$SUBLIME_PACKAGE_DIR"
 SUBLIME_KEYMAP_FILE="$SUBLIME_PACKAGE_DIR/Default (OSX).sublime-keymap"
 touch "$SUBLIME_KEYMAP_FILE"
