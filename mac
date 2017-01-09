@@ -202,3 +202,33 @@ cat > "$KEYBINDINGS_FILE" << EOM
     "§" = ("insertText:", "#");
   }
 EOM
+
+fancy_echo "Customizing Sublime Text"
+SUBLIME_INSTALLED_PACKAGE_DIR="~/Library/Application Support/Sublime Text 3/Installed Packages"
+create_folder_if_not_there("$SUBLIME_INSTALLED_PACKAGE_DIR")
+SUBLIME_PACKAGE_CTRL_FILE="$SUBLIME_INSTALLED_PACKAGE_DIR/Package Control.sublime-settings"
+touch "$SUBLIME_PACKAGE_CTRL_FILE"
+cat > "$SUBLIME_PACKAGE_CTRL_FILE" << EOM
+{
+  "installed_packages":
+  [
+    "GitGutter",
+    "Maybs Quit",
+    "SideBarEnhancements",
+    "SublimeLinter",
+    "SublimeLinter-Ruby"
+  ]
+}
+EOM
+
+SUBLIME_PACKAGE_DIR="~Library/Application Support/Sublime Text 3/Packages/User"
+create_folder_if_not_there("$SUBLIME_PACKAGE_DIR")
+SUBLIME_KEYMAP_FILE="$SUBLIME_PACKAGE_DIR/Default (OSX).sublime-keymap"
+touch "$SUBLIME_KEYMAP_FILE"
+cat > "$SUBLIME_KEYMAP_FILE" << EOM
+[
+  { "keys": ["super+v"], "command": "paste_and_indent" },
+  { "keys": ["super+shift+v"], "command": "paste" },
+  { "keys": ["super+shift+r"],  "command": "reindent" }
+]
+EOM
