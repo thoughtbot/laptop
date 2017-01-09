@@ -157,6 +157,7 @@ gem update --system
 gem_install_or_update 'bundler'
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
+rbenv rehash
 
 # Skip rdoc generation when we install a gem
 echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
