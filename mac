@@ -122,6 +122,9 @@ brew "ruby-build"
 # Databases
 brew "postgres", restart_service: true
 
+# Web browsing
+cask "google-chrome"
+
 # Text editing
 cask "atom"
 cask "sublime-text"
