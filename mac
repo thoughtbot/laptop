@@ -140,6 +140,9 @@ cask "slack"
 
 # Fonts
 cask "font-opendyslexic"
+
+# Android
+cask "android-studio"
 EOF
 
 fancy_echo "Installing Oh-My-Zsh ..."
