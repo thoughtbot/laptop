@@ -210,36 +210,25 @@ fancy_echo "Customizing Sublime Text"
 SUBLIME_DIR="$HOME/Library/Application Support/Sublime Text 3"
 SUBLIME_INSTALLED_PACKAGE_DIR="$SUBLIME_DIR/Installed Packages"
 SUBLIME_PACKAGE_CONTROL="Package Control.sublime-package"
-SUBLIME_PACKAGE_CTRL_FILE="$SUBLIME_INSTALLED_PACKAGE_DIR/$SUBLIME_PACKAGE_CONTROL"
+SUBLIME_PACKAGE_CTRL_DEST="$SUBLIME_INSTALLED_PACKAGE_DIR/$SUBLIME_PACKAGE_CONTROL"
 
+fancy_echo "Installing Package Control"
 create_folder_if_not_there "$SUBLIME_DIR"
 create_folder_if_not_there "$SUBLIME_INSTALLED_PACKAGE_DIR"
 
 curl -o "$SUBLIME_PACKAGE_CONTROL" "https://packagecontrol.io/Package%20Control.sublime-package"
-mv "$SUBLIME_PACKAGE_CONTROL" "$SUBLIME_PACKAGE_CTRL_FILE"
-
-touch "$SUBLIME_PACKAGE_CTRL_FILE"
-cat > "$SUBLIME_PACKAGE_CTRL_FILE" << EOM
-{
-  "installed_packages":
-  [
-    "GitGutter",
-    "Maybs Quit",
-    "SideBarEnhancements",
-    "SublimeLinter",
-    "SublimeLinter-Ruby"
-  ]
-}
-EOM
+mv "$SUBLIME_PACKAGE_CONTROL" "$SUBLIME_PACKAGE_CTRL_DEST"
 
 SUBLIME_PACKAGE_DIR="$SUBLIME_DIR/Packages"
 SUBLIME_DEFAULT_PACKAGE_DIR="$SUBLIME_PACKAGE_DIR/User"
 SUBLIME_KEYMAP_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Default (OSX).sublime-keymap"
 SUBLIME_PREFS_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Preferences.sublime-settings"
+SUBLIME_PACKAGES_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Package Control.sublime-settings"
 
 create_folder_if_not_there "$SUBLIME_PACKAGE_DIR"
 create_folder_if_not_there "$SUBLIME_DEFAULT_PACKAGE_DIR"
 
+fancy_echo "Adding keyboard shortcuts"
 touch "$SUBLIME_KEYMAP_FILE"
 cat > "$SUBLIME_KEYMAP_FILE" << EOM
 [
@@ -249,7 +238,23 @@ cat > "$SUBLIME_KEYMAP_FILE" << EOM
 ]
 EOM
 
+fancy_echo "Adding default package info"
+touch "$SUBLIME_PACKAGES_FILE"
+cat > "$SUBLIME_PACKAGES_FILE" << EOM
+{
+	"installed_packages":
+	[
+    "GitGutter",
+    "Maybs Quit",
+    "SideBarEnhancements",
+    "SublimeLinter",
+    "SublimeLinter-ruby"
+	]
+}
+EOM
+
 # N.b. replace Monaco with OpenDyslexic here if necessary
+fancy_echo "Adding sensible default preferences"
 touch "$SUBLIME_PREFS_FILE"
 cat > "$SUBLIME_PREFS_FILE" << EOM
 {
