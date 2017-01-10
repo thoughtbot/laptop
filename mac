@@ -234,9 +234,12 @@ EOM
 
 SUBLIME_PACKAGE_DIR="$SUBLIME_DIR/Packages"
 SUBLIME_DEFAULT_PACKAGE_DIR="$SUBLIME_PACKAGE_DIR/User"
+SUBLIME_KEYMAP_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Default (OSX).sublime-keymap"
+SUBLIME_PREFS_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Preferences.sublime-settings"
+
 create_folder_if_not_there "$SUBLIME_PACKAGE_DIR"
 create_folder_if_not_there "$SUBLIME_DEFAULT_PACKAGE_DIR"
-SUBLIME_KEYMAP_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Default (OSX).sublime-keymap"
+
 touch "$SUBLIME_KEYMAP_FILE"
 cat > "$SUBLIME_KEYMAP_FILE" << EOM
 [
@@ -244,4 +247,21 @@ cat > "$SUBLIME_KEYMAP_FILE" << EOM
   { "keys": ["super+shift+v"], "command": "paste" },
   { "keys": ["super+shift+r"],  "command": "reindent" }
 ]
+EOM
+
+# N.b. replace Monaco with OpenDyslexic here if necessary
+touch "$SUBLIME_PREFS_FILE"
+cat > "$SUBLIME_PREFS_FILE" << EOM
+{
+  "auto_complete_commit_on_tab": true,
+  "find_selected_text": true,
+  "font_face": "Monaco",
+  "highlight_active_indent_guide": true,
+  "highlight_line": true,
+  "highlight_modified_tabs": true,
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
+  "hot_exit": false,
+  "word_wrap": true
+}
 EOM
