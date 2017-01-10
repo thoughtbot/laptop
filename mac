@@ -205,12 +205,19 @@ cat > "$KEYBINDINGS_FILE" << EOM
   }
 EOM
 
+
 fancy_echo "Customizing Sublime Text"
 SUBLIME_DIR="$HOME/Library/Application Support/Sublime Text 3"
-create_folder_if_not_there "$SUBLIME_DIR"
 SUBLIME_INSTALLED_PACKAGE_DIR="$SUBLIME_DIR/Installed Packages"
+SUBLIME_PACKAGE_CONTROL="Package Control.sublime-package"
+SUBLIME_PACKAGE_CTRL_FILE="$SUBLIME_INSTALLED_PACKAGE_DIR/$SUBLIME_PACKAGE_CONTROL"
+
+create_folder_if_not_there "$SUBLIME_DIR"
 create_folder_if_not_there "$SUBLIME_INSTALLED_PACKAGE_DIR"
-SUBLIME_PACKAGE_CTRL_FILE="$SUBLIME_INSTALLED_PACKAGE_DIR/Package Control.sublime-settings"
+
+curl -o "$SUBLIME_PACKAGE_CONTROL" "https://packagecontrol.io/Package%20Control.sublime-package"
+mv "$SUBLIME_PACKAGE_CONTROL" "$SUBLIME_PACKAGE_CTRL_FILE"
+
 touch "$SUBLIME_PACKAGE_CTRL_FILE"
 cat > "$SUBLIME_PACKAGE_CTRL_FILE" << EOM
 {
