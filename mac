@@ -206,11 +206,6 @@ brew_install_or_upgrade wget
 
 wget -O /usr/local/bin/cpulimit https://s3.amazonaws.com/container-support/cpulimit
 
-if ! brew list | grep -q "brew cask"; then
-  brew tap caskroom/cask
-fi
-
-brew_install_or_upgrade 'caskroom/cask/brew-cask'
 brew cleanup && brew cask cleanup
 
 # run this once, the command is slow
