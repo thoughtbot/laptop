@@ -114,7 +114,7 @@ install_shift_it() {
   curl -L https://raw.github.com/onsi/ShiftIt/master/ShiftIt.zip -o ShiftIt.zip
   unzip -oq ShiftIt.zip -d ~/Applications/
   rm ShiftIt.zip
-  
+
   open ~/Applications/ShiftIt.app/
 }
 
@@ -188,6 +188,9 @@ install_oh_my_zsh() {
   if [ ! -d ~/.oh-my-zsh ]; then
     curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
   fi
+  if [ ! -d ~/.oh-my-zsh/zsh-syntax-highlighting ]; then
+    cd ~/.oh-my-zsh && git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
+  fi
 }
 
 install_elasticsearch() {
@@ -209,6 +212,8 @@ fi
 change_shell_to_zsh
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 append_to_zshrc 'export GIT_EDITOR=vim'
+append_to_zshrc 'source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+append_to_zshrc '. `brew --prefix`/etc/profile.d/z.sh'
 install_oh_my_zsh
 
 # Install packages
@@ -255,6 +260,7 @@ brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 brew_install_or_upgrade 'chromedriver'
 brew_install_or_upgrade 'httpie'
+brew_install_or_upgrade 'z'
 
 # Install applications
 cask_install_or_upgrade 'macvim'
@@ -297,34 +303,6 @@ git config --global alias.fixup "commit --fixup"
 git config --global alias.squash "commit --squash"
 git config --global alias.unstage "reset HEAD"
 git config --global alias.rum "rebase master@{u}"
-
-# Customize OS X Dock
-defaults write com.apple.Dock autohide 1
-
-dockutil --remove "Launchpad" --no-restart
-dockutil --remove "Safari" --no-restart
-dockutil --remove "Mail" --no-restart
-dockutil --remove "Contacts" --no-restart
-dockutil --remove "Calendar" --no-restart
-dockutil --remove "Notes" --no-restart
-dockutil --remove "Map" --no-restart
-dockutil --remove "Facetime" --no-restart
-dockutil --remove "iPhoto" --no-restart
-dockutil --remove "Pages" --no-restart
-dockutil --remove "Numbers" --no-restart
-dockutil --remove "Keynote" --no-restart
-dockutil --remove "iTunes" --no-restart
-dockutil --remove "iBooks" --no-restart
-
-dockutil --add --replacing /Applications/Google\ Chrome.app/ --no-restart
-dockutil --add --replacing /Applications/iTerm.app/ --no-restart
-dockutil --add --replacing /Applications/Slack.app/ --no-restart
-dockutil --add --replacing /Applications/Sublime Text 2.app/ --no-restart
-dockutil --add --replacing /Applications/MacVim.app/ --no-restart
-dockutil --add --replacing /Applications/Screenhero.app/ --no-restart
-dockutil --add --replacing /Applications/SourceTree.app/ --no-restart
-
-/usr/bin/killall -HUP Dock >/dev/null 2>&1
 
 # Run local customizations
 if [ -f "$HOME/.laptop.local" ]; then

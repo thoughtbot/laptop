@@ -19,6 +19,8 @@ We support:
 Older versions may work but aren't regularly tested. Bug reports for older
 versions are welcome.
 
+* [Xcode]:(https://itunes.apple.com/us/app/xcode/id497799835) must be installed.
+
 Install
 -------
 
@@ -29,6 +31,32 @@ curl --remote-name https://raw.githubusercontent.com/policygenius/laptop/master/
 less mac.sh
 sh mac.sh 2>&1 | tee ~/laptop.log
 ```
+
+**For OS X Sierra + (10.12+) and XCode 8:**
+
+With Xcode 8.0, when trying to compile the gem you may get the error Project ERROR: Xcode not set up properly. You may need to confirm the license agreement by running /usr/bin/xcodebuild. — even after confirming the license agreement. This is an upstream Qt bug that can be worked around by following these instructions:
+
+1. Find the Qt install folder
+2. Open [Qt_install_folder]/[Qt_version](/clang_64 || )/mkspecs/features/mac/default_pre.prf in a text editor
+
+   If you can't find the file, look for it by searching all files for the following line by running grep -rn /usr/bin/xcrun . in the [Qt_install_folder] or [Qt_version] director
+
+   For this laptop script and Qt 5.5.1, you edit the file directly in VIM via the command line:
+
+   `vim /usr/local/Cellar/qt@5.5/5.5.1/mkspecs/features/mac/default_pre.prf`
+
+3. Find the line with this text (for me it was line 15):
+
+   `isEmpty($$list($$system("/usr/bin/xcrun -find xcrun 2>/dev/null"))): \`
+
+4. Replace line with:
+
+   `isEmpty($$list($$system("/usr/bin/xcrun -find xcodebuild 2>/dev/null"))): \`
+
+5. Save & re-install the gem
+
+_For further reading: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macos-sierra-1012_
+
 
 Debugging
 ---------
@@ -64,6 +92,8 @@ What it sets up
 * [The Silver Searcher] for finding things in files
 * [Tmux] for saving project state and switching between projects
 * [Zsh] as your shell and [Oh My ZSH!] as a base config
+  - Includes a [ZSH Syntax Highlighting]
+  - Includes [Z], a script that makes navigating in the terminal much faster.
 * [Docker] for prod-like development environments
 * [MacVim] for writing code and [pivotalcommon/vim-config] as a base config
 * [iTerm2] for your terminal
@@ -93,6 +123,8 @@ What it sets up
 [Tmux]: http://tmux.sourceforge.net/
 [Zsh]: http://www.zsh.org/
 [Oh My ZSH!]: http://ohmyz.sh/
+[ZSH Syntax Highlighting]: https://github.com/zsh-users/zsh-syntax-highlighting
+[Z]: https://github.com/rupa/z
 [Docker]: https://www.docker.com/
 [MacVim]: https://github.com/b4winckler/macvim
 [pivotalcommon/vim-config]: https://github.com/pivotalcommon/vim-config
