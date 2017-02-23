@@ -182,19 +182,6 @@ if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
   createdb "$(whoami)"
 fi
 
-fancy_echo "Binding # to the weird key under escape"
-KEYBINDINGS_DIR="$HOME/Library/KeyBindings"
-create_folder_if_not_there "$KEYBINDINGS_DIR"
-KEYBINDINGS_FILE="$KEYBINDINGS_DIR/DefaultKeyBinding.dict"
-touch "$KEYBINDINGS_FILE"
-cat > "$KEYBINDINGS_FILE" << EOM
-  {
-    /* Map \# to § key */
-    "§" = ("insertText:", "#");
-  }
-EOM
-
-
 fancy_echo "Customizing Sublime Text"
 SUBLIME_DIR="$HOME/Library/Application Support/Sublime Text 3"
 SUBLIME_INSTALLED_PACKAGE_DIR="$SUBLIME_DIR/Installed Packages"
@@ -259,3 +246,7 @@ cat > "$SUBLIME_PREFS_FILE" << EOM
   "word_wrap": true
 }
 EOM
+
+fancy_echo ""
+
+fancy_echo "Laptop completed successfully! Let's celebrate! 🎉"
