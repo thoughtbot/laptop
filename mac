@@ -259,3 +259,7 @@ cat > "$SUBLIME_PREFS_FILE" << EOM
   "word_wrap": true
 }
 EOM
+
+fancy_echo ""
+
+fancy_echo "Laptop completed successfully! Let's celebrate! 🎉"
