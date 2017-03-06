@@ -32,6 +32,11 @@ less mac.sh
 sh mac.sh 2>&1 | tee ~/laptop.log
 ```
 
+In order to ensure consistent Docker environment, it should be downloaded manually from the Docker website.
+
+[Mac Download](https://www.docker.com/docker-mac)
+[Windows Download](https://www.docker.com/docker-windows)
+
 **For OS X Sierra + (10.12+) and XCode 8:**
 
 With Xcode 8.0, when trying to compile the gem you may get the error Project ERROR: Xcode not set up properly. You may need to confirm the license agreement by running /usr/bin/xcodebuild. — even after confirming the license agreement. This is an upstream Qt bug that can be worked around by following these instructions:
