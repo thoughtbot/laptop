@@ -71,7 +71,12 @@ PolicyGenius specific tips
 --------------------------
 * PG repo
   * If after installing all dependancies you are getting `Invalid CSS` error in the browser, it might be Node version. Check that you are using `v0.12`.
-
+* Elasticsearch 5.5.2 issue
+  * After running the laptop script, Elasticsearch will be installed as version 5.5.2, which is the current stable version. Currently, this version is not compatible with the configuration in the `policygenius` application.
+  * In order to resolve this issue, you will need to uninstall Elasticsearch and reinstall with version 2.4.
+  * Follow the commands on [this gist]( https://gist.github.com/jkubacki/e2dd904bd648b0bd4554 ) for removing Elasticsearch and uninstalling through Homebrew.
+  * Then, run `brew search elasticsearch` to see a current list of Elasticsearch versions and install `elasticsearch@2.4` through Homebrew with `brew install elasticsearch@2.4`.
+  * Once installed, run `brew services start elasticsearch@2.4` and you should be able to seed the database (don't forget to drop, create and migrate if necessary!) properly.
 What it sets up
 ---------------
 
