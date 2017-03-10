@@ -140,7 +140,7 @@ brew "qt"
 
 # Programming languages
 brew "libyaml" # should come after openssl
-brew "node"
+brew "nvm"
 brew "rbenv"
 brew "ruby-build"
 
@@ -148,6 +148,18 @@ brew "ruby-build"
 brew "postgres", restart_service: true
 brew "redis", restart_service: true
 EOF
+
+fancy_echo "Configuring Node ..."
+nvm install stable
+nvm alias default stable
+# shellcheck disable=SC1090
+. "$(brew --prefix nvm)/nvm.sh"
+append_to_zshrc '#NVM'
+# shellcheck disable=SC2016
+append_to_zshrc 'export NVM_DIR="$HOME/.nvm"' 1
+# shellcheck disable=SC2016
+append_to_zshrc '. "$(brew --prefix nvm)/nvm.sh"' 1
+
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
