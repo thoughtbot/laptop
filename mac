@@ -141,6 +141,7 @@ brew "qt"
 # Programming languages
 brew "libyaml" # should come after openssl
 brew "node"
+brew "pyenv"
 brew "rbenv"
 brew "ruby-build"
 
@@ -148,6 +149,33 @@ brew "ruby-build"
 brew "postgres", restart_service: true
 brew "redis", restart_service: true
 EOF
+
+
+fancy_echo "Configuring Python ..."
+find_latest_python2() {
+  pyenv install -l | grep -E '([2])\.([0-9]+)\.([0-9]+)' | grep -v - | tail -1 | sed -e 's/^ *//'
+}
+python_version2="$(find_latest_python2)"
+find_latest_python3() {
+  pyenv install -l | grep -E '([3])\.([0-9]+)\.([0-9]+)' | grep -v - | tail -1 | sed -e 's/^ *//'
+}
+python_version3="$(find_latest_python3)"
+
+# shellcheck disable=SC2016
+append_to_zshrc 'eval "$(pyenv init - --no-rehash)"' 1
+eval "$(pyenv init -)"
+
+if ! pyenv versions | grep -Fq "$python_version2"; then
+  PYTHON_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl pyenv install -s "$python_version2"
+fi
+
+if ! pyenv versions | grep -Fq "$python_version3"; then
+  PYTHON_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl pyenv install -s "$python_version3"
+fi
+
+pyenv global "$python_version2"
+pyenv shell "$python_version2"
+
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
