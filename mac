@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Welcome to the thoughtbot laptop script!
+# Welcome to the legalshield laptop script!
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
 
@@ -110,24 +110,47 @@ fi
 
 fancy_echo "Updating Homebrew formulae ..."
 brew update
+brew tap Homebrew/bundle
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
+tap "homebrew/dupes"
 tap "homebrew/services"
+tap "caskroom/cask"
+
+# Casks
+cask "java" unless system '/usr/libexec/java_home --failfast'
+cask "virtualbox"
+cask "alfred"
+cask "firefox"
+cask "google-chrome"
+cask "screenhero"
+cask "skitch"
+cask "slack"
+cask "iterm2"
+cask "skype-for-business"
+
+# Extra
+cask "flux"
+cask "spectacle"
+cask "karabiner"
 
 # Unix
 brew "ctags"
 brew "git"
 brew "openssl"
-brew "rcm"
 brew "reattach-to-user-namespace"
 brew "the_silver_searcher"
 brew "tmux"
-brew "vim"
+brew "vim", args: [ "override-system-vi" ]
 brew "zsh"
+brew "tmate"
+brew "gcc"
+brew "phantomjs"
+brew "htop"
+brew "watch"
 
-# Heroku
-brew "heroku-toolbelt"
-brew "parity"
+# Docker
+cask "docker"
+cask "vagrant"
 
 # GitHub
 brew "hub"
@@ -136,17 +159,14 @@ brew "hub"
 brew "imagemagick"
 
 # Testing
-brew "qt"
+# brew "qt" # not currently supported on Sierra
 
 # Programming languages
-brew "libyaml" # should come after openssl
-brew "node"
+brew "maven"
+brew "nodenv"
+brew "node-build"
 brew "rbenv"
 brew "ruby-build"
-
-# Databases
-brew "postgres", restart_service: true
-brew "redis", restart_service: true
 EOF
 
 fancy_echo "Configuring Ruby ..."
