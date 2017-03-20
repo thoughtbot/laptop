@@ -1,8 +1,9 @@
 #!/bin/sh
 
-# Welcome to the thoughtbot laptop script!
+# Welcome to a fork of the thoughtbot laptop script!
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
+
 
 fancy_echo() {
   local fmt="$1"; shift
@@ -30,6 +31,20 @@ append_to_zshrc() {
   fi
 }
 
+create_folder_if_not_there() {
+  local folder="$1"
+
+  if [ -d "$folder" ]; then
+    if ! [ -r "$folder" ]; then
+      sudo chown -R "$LOGNAME:admin" "$folder"
+    fi
+  else
+    sudo mkdir "$folder"
+    sudo chflags norestricted "$folder"
+    sudo chown -R "$LOGNAME:admin" "$folder"
+  fi
+}
+
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
@@ -47,16 +62,7 @@ fi
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
 HOMEBREW_PREFIX="/usr/local"
-
-if [ -d "$HOMEBREW_PREFIX" ]; then
-  if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "$LOGNAME:admin" /usr/local
-  fi
-else
-  sudo mkdir "$HOMEBREW_PREFIX"
-  sudo chflags norestricted "$HOMEBREW_PREFIX"
-  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
-fi
+create_folder_if_not_there "$HOMEBREW_PREFIX"
 
 update_shell() {
   local shell_path;
@@ -111,43 +117,41 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
 tap "homebrew/services"
+tap "caskroom/fonts"
 
 # Unix
-brew "ctags"
 brew "git"
-brew "openssl"
-brew "rcm"
-brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
-brew "tmux"
-brew "vim"
 brew "zsh"
 
-# Heroku
-brew "heroku-toolbelt"
-brew "parity"
-
-# GitHub
-brew "hub"
-
-# Image manipulation
-brew "imagemagick"
-
-# Testing
-brew "qt"
-
 # Programming languages
-brew "libyaml" # should come after openssl
 brew "node"
 brew "rbenv"
 brew "ruby-build"
 
 # Databases
 brew "postgres", restart_service: true
-brew "redis", restart_service: true
+
+# Web browsing
+cask "google-chrome"
+
+# Text editing
+cask "atom"
+cask "sublime-text"
+
+# Chat
+cask "slack"
+
+# Fonts
+cask "font-opendyslexic"
+
+# Android
+cask "android-studio"
 EOF
+
+fancy_echo "Installing Oh-My-Zsh ..."
+curl -L \
+  "https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh" | sh
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
@@ -169,9 +173,95 @@ gem update --system
 gem_install_or_update 'bundler'
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
+rbenv rehash
+
+fancy_echo "Skipping rdoc generation when we install a gem"
+echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "Setting sublime as default text editor ..."
+append_to_zshrc "export EDITOR='subl -w -n'"
+append_to_zshrc "export PAGER='less -f'"
+
+fancy_echo "Globally ignoring .DS_Store files"
+echo .DS_Store >> ~/.gitignore_global
+git config --global core.excludesfile ~/.gitignore_global
+
+fancy_echo "Creating Postgres database under current user name"
+if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
+  createdb "$(whoami)"
+fi
+
+fancy_echo "Customizing Sublime Text"
+SUBLIME_DIR="$HOME/Library/Application Support/Sublime Text 3"
+SUBLIME_INSTALLED_PACKAGE_DIR="$SUBLIME_DIR/Installed Packages"
+SUBLIME_PACKAGE_CONTROL="Package Control.sublime-package"
+SUBLIME_PACKAGE_CTRL_DEST="$SUBLIME_INSTALLED_PACKAGE_DIR/$SUBLIME_PACKAGE_CONTROL"
+
+fancy_echo "Installing Package Control"
+create_folder_if_not_there "$SUBLIME_DIR"
+create_folder_if_not_there "$SUBLIME_INSTALLED_PACKAGE_DIR"
+
+curl -o "$SUBLIME_PACKAGE_CONTROL" "https://packagecontrol.io/Package%20Control.sublime-package"
+mv "$SUBLIME_PACKAGE_CONTROL" "$SUBLIME_PACKAGE_CTRL_DEST"
+
+SUBLIME_PACKAGE_DIR="$SUBLIME_DIR/Packages"
+SUBLIME_DEFAULT_PACKAGE_DIR="$SUBLIME_PACKAGE_DIR/User"
+SUBLIME_KEYMAP_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Default (OSX).sublime-keymap"
+SUBLIME_PREFS_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Preferences.sublime-settings"
+SUBLIME_PACKAGES_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Package Control.sublime-settings"
+
+create_folder_if_not_there "$SUBLIME_PACKAGE_DIR"
+create_folder_if_not_there "$SUBLIME_DEFAULT_PACKAGE_DIR"
+
+fancy_echo "Adding keyboard shortcuts"
+touch "$SUBLIME_KEYMAP_FILE"
+cat > "$SUBLIME_KEYMAP_FILE" << EOM
+[
+  { "keys": ["super+v"], "command": "paste_and_indent" },
+  { "keys": ["super+shift+v"], "command": "paste" },
+  { "keys": ["super+shift+r"],  "command": "reindent" }
+]
+EOM
+
+fancy_echo "Adding default package info"
+touch "$SUBLIME_PACKAGES_FILE"
+cat > "$SUBLIME_PACKAGES_FILE" << EOM
+{
+	"installed_packages":
+	[
+    "GitGutter",
+    "Maybs Quit",
+    "SideBarEnhancements",
+    "SublimeLinter",
+    "SublimeLinter-ruby"
+	]
+}
+EOM
+
+# N.b. replace Monaco with OpenDyslexic here if necessary
+fancy_echo "Adding sensible default preferences"
+touch "$SUBLIME_PREFS_FILE"
+cat > "$SUBLIME_PREFS_FILE" << EOM
+{
+  "auto_complete_commit_on_tab": true,
+  "find_selected_text": true,
+  "font_face": "Monaco",
+  "highlight_active_indent_guide": true,
+  "highlight_line": true,
+  "highlight_modified_tabs": true,
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
+  "hot_exit": false,
+  "word_wrap": true
+}
+EOM
+
+fancy_echo ""
+
+fancy_echo "Laptop completed successfully! Let's celebrate! 🎉"

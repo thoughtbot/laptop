@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a script to set up an macOS laptop for web development.
+Laptop is a script to set up a macOS laptop for development.
 
 It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
@@ -12,12 +12,10 @@ Requirements
 
 We support:
 
-* macOS Mavericks (10.9)
-* macOS Yosemite (10.10)
 * macOS El Capitan (10.11)
+* macOS Sierra (10.12)
 
-Older versions may work but aren't regularly tested. Bug reports for older
-versions are welcome.
+Older versions may work but aren't  tested. Bug reports for older versions are welcome (but are probably better aimed at Thoughtbot/laptop upstream).
 
 Install
 -------
@@ -25,14 +23,10 @@ Install
 Download, review, then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/master/mac
 less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
-
-Optionally, [install thoughtbot/dotfiles][dotfiles].
-
-[dotfiles]: https://github.com/thoughtbot/dotfiles#install
 
 Debugging
 ---------
@@ -54,44 +48,11 @@ macOS tools:
 
 Unix tools:
 
-* [Exuberant Ctags] for indexing files for vim tab completion
 * [Git] for version control
-* [OpenSSL] for Transport Layer Security (TLS)
-* [RCM] for managing company and personal dotfiles
-* [The Silver Searcher] for finding things in files
-* [Tmux] for saving project state and switching between projects
 * [Zsh] as your shell
 
-[Exuberant Ctags]: http://ctags.sourceforge.net/
 [Git]: https://git-scm.com/
-[OpenSSL]: https://www.openssl.org/
-[RCM]: https://github.com/thoughtbot/rcm
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
-[Tmux]: http://tmux.github.io/
 [Zsh]: http://www.zsh.org/
-
-Heroku tools:
-
-* [Heroku Toolbelt] and [Parity] for interacting with the Heroku API
-
-[Heroku Toolbelt]: https://toolbelt.heroku.com/
-[Parity]: https://github.com/thoughtbot/parity
-
-GitHub tools:
-
-* [Hub] for interacting with the GitHub API
-
-[Hub]: http://hub.github.com/
-
-Image tools:
-
-* [ImageMagick] for cropping and resizing images
-
-Testing tools:
-
-* [Qt] for headless JavaScript testing via Capybara Webkit
-
-[Qt]: http://qt-project.org/
 
 Programming languages and configuration:
 
@@ -102,7 +63,6 @@ Programming languages and configuration:
 * [Ruby] stable for writing general-purpose code
 
 [Bundler]: http://bundler.io/
-[ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
 [Rbenv]: https://github.com/sstephenson/rbenv
@@ -112,12 +72,24 @@ Programming languages and configuration:
 Databases:
 
 * [Postgres] for storing relational data
-* [Redis] for storing key-value data
 
 [Postgres]: http://www.postgresql.org/
-[Redis]: http://redis.io/
 
-It should take less than 15 minutes to install (depends on your machine).
+GUI Apps:
+
+* Google Chrome for web browsing
+* Atom and Sublime for text editing
+* Slack for team chat
+* Android Studio for mobile development
+
+Fonts:
+* Open Dyslexic for accessibility
+
+We also install the Sublime Text package manager and a few default packages.
+
+Finally, we remap the `§` key on your Mac's keyboard to the `#` symbol, which can make commenting Ruby marginally less painful...
+
+It should take less than 15 minutes to install (though this depends on your machine).
 
 Customize in `~/.laptop.local`
 ------------------------------
@@ -162,11 +134,11 @@ if [ -r "$HOME/.rcrc" ]; then
 fi
 ```
 
-Write your customizations such that they can be run safely more than once.
+Ideally you should write your customizations so that they can be run safely more than once.
 See the `mac` script for examples.
 
-Laptop functions such as `fancy_echo` and
-`gem_install_or_update`
+Laptop functions such as `fancy_echo`,
+`gem_install_or_update` and `create_folder_if_not_there`
 can be used in your `~/.laptop.local`.
 
 See the [wiki](https://github.com/thoughtbot/laptop/wiki)
@@ -188,10 +160,10 @@ brew install shellcheck
 
 Thank you, [contributors]!
 
-[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
+[contributors]: https://github.com/codeclan/laptop/graphs/contributors
 
 By participating in this project,
-you agree to abide by the thoughtbot [code of conduct].
+you agree to abide by the Thoughtbot [code of conduct].
 
 [code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
 
@@ -218,3 +190,10 @@ We are [available for hire][hire].
 
 [community]: https://thoughtbot.com/community?utm_source=github
 [hire]: https://thoughtbot.com?utm_source=github
+
+About CodeClan
+--------------
+
+![CodeClan](https://codeclan.com/wp-content/uploads/2016/03/favicon.png)
+
+See [our website](https://codeclan.com) for more information.
