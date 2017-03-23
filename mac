@@ -183,8 +183,8 @@ if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
 fi
 
 fancy_echo "Creating 'subl' command to open Sublime Text from Terminal ..."
-ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl $HOME/bin/subl
-append_to_zshrc "export PATH=$PATH:$HOME/bin"
+create_folder_if_not_there "/usr/local/bin"
+ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin
 
 fancy_echo "Customizing Sublime Text"
 SUBLIME_DIR="$HOME/Library/Application Support/Sublime Text 3"
