@@ -152,7 +152,6 @@ install_latest_ruby() {
 
   gem_install_or_update 'bundler'
   gem_install_or_update 'aptible-cli'
-  gem_install_or_update 'docker-sync'
 
   fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
@@ -245,9 +244,6 @@ brew_install_or_upgrade 'phantomjs'
 brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
-brew_install_or_upgrade 'docker'
-brew_install_or_upgrade 'docker-compose'
-brew_install_or_upgrade 'boot2docker'
 brew_install_or_upgrade 'wget'
 brew_install_or_upgrade 'dockutil'
 brew_install_or_upgrade 'tree'
@@ -274,7 +270,6 @@ cask_install_or_upgrade 'xquartz'
 cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade '1password'
 cask_install_or_upgrade 'alfred'
-cask_install_or_upgrade 'docker'
 install_shift_it
 install_elasticsearch
 install_latest_ruby
