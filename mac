@@ -143,10 +143,19 @@ brew "libyaml" # should come after openssl
 brew "node"
 brew "rbenv"
 brew "ruby-build"
+brew "pyenv"
+brew "pyenv-virtualenv"
+brew "Caskroom/cask/miniconda"
 
 # Databases
 brew "postgres", restart_service: true
 brew "redis", restart_service: true
+
+# Widget
+brew "pngpaste"
+brew "pngquant"
+brew "ncdu" # Ncdu is a disk usage analyzer with an ncurses interface
+
 EOF
 
 fancy_echo "Configuring Ruby ..."
