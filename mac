@@ -45,6 +45,25 @@ create_folder_if_not_there() {
   fi
 }
 
+is_app_installed() {
+    local appNameOrBundleId=$1 bundleId
+
+    # convert app name to bundle ID
+    bundleId=$(osascript -e "id of application \"$appNameOrBundleId\"" 2>/dev/null) || { return 1; }
+
+    # search for location of app with given bundle ID
+    osascript -e "tell application \"Finder\" to POSIX path of (get application file id \"$bundleId\" as alias)" 2>/dev/null || { return 1; }
+}
+
+install_gui_app() {
+  local appName="$1" caskName="$2"
+
+  is_app_installed "$appName"
+  if [ $? -eq 1 ]; then
+    brew cask install "$caskName"
+  fi
+}
+
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
@@ -117,22 +136,24 @@ brew "ruby-build"
 # Databases
 brew "postgres", restart_service: true
 
-# Web browsing
-cask "google-chrome"
-
-# Text editing
-cask "atom"
-cask "sublime-text"
-
-# Chat
-cask "slack"
-
 # Fonts
 cask "font-opendyslexic"
+EOF
+
+fancy_echo "Installing GUI apps"
+
+# # Web browsing
+install_gui_app "google chrome" "google-chrome"
+
+# Text editing
+install_gui_app "atom" "atom"
+install_gui_app "sublime text" "sublime-text"
+
+# Chat
+install_gui_app "slack" "slack"
 
 # Android
-cask "android-studio"
-EOF
+install_gui_app "android studio" "android-studio"
 
 fancy_echo "Installing Oh-My-Zsh ..."
 curl -L \
