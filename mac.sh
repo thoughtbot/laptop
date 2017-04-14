@@ -194,8 +194,8 @@ install_oh_my_zsh() {
 
 install_elasticsearch() {
   cask_install_or_upgrade 'java'
-  brew_install_or_upgrade 'elasticsearch'
-  brew services start elasticsearch
+  brew_install_or_upgrade 'elasticsearch@2.4'
+  brew services start elasticsearch@2.4
 }
 
 ##### Start Installation #####
