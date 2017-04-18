@@ -136,7 +136,7 @@ brew "hub"
 brew "imagemagick"
 
 # Testing
-brew "qt"
+brew "qt@5.5"
 
 # Programming languages
 brew "libyaml" # should come after openssl
@@ -148,6 +148,9 @@ brew "ruby-build"
 brew "postgres", restart_service: true
 brew "redis", restart_service: true
 EOF
+
+fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
+brew link --force qt@5.5
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
