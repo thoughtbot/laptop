@@ -15,6 +15,7 @@ We support:
 * macOS Mavericks (10.9)
 * macOS Yosemite (10.10)
 * macOS El Capitan (10.11)
+* macOS Sierra (10.12)
 
 Older versions may work but aren't regularly tested. Bug reports for older
 versions are welcome.
