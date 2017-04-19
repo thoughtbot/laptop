@@ -150,6 +150,7 @@ brew "redis", restart_service: true
 EOF
 
 fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
+brew unlink qt@5.5
 brew link --force qt@5.5
 
 fancy_echo "Configuring Ruby ..."

@@ -1,11 +1,20 @@
-language: sh
+language: bash
 
-before_script:
-  - wget "http://ftp.debian.org/debian/pool/main/s/shellcheck/shellcheck_0.3.7-5_amd64.deb"
-  - sudo dpkg -i "shellcheck_0.3.7-5_amd64.deb"
+# Use container-based infrastructure for quicker build start-up
+sudo: false
+
+addons:
+  apt:
+    sources:
+    - debian-sid # Get shellcheck from the Debian repo
+    packages:
+    - shellcheck
 
 script:
-  - shellcheck mac
+  - shellcheck mac -e SC2039
+
+matrix:
+  fast_finish: true
 
 notifications:
   email: false
