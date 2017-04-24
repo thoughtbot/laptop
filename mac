@@ -138,11 +138,12 @@ brew "imagemagick"
 # Testing
 brew "qt@5.5"
 
-# Programming languages
+# Programming languages and package managers
 brew "libyaml" # should come after openssl
 brew "node"
 brew "rbenv"
 brew "ruby-build"
+brew "yarn"
 
 # Databases
 brew "postgres", restart_service: true
