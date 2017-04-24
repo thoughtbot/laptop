@@ -61,6 +61,7 @@ Unix tools:
 * [RCM] for managing company and personal dotfiles
 * [The Silver Searcher] for finding things in files
 * [Tmux] for saving project state and switching between projects
+* [Watchman] for watching for filesystem events
 * [Zsh] as your shell
 
 [Exuberant Ctags]: http://ctags.sourceforge.net/
@@ -69,6 +70,7 @@ Unix tools:
 [RCM]: https://github.com/thoughtbot/rcm
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
 [Tmux]: http://tmux.github.io/
+[Watchman]: https://facebook.github.io/watchman/
 [Zsh]: http://www.zsh.org/
 
 Heroku tools:
