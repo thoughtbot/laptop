@@ -175,6 +175,70 @@ gem_install_or_update 'bundler'
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
+# hat-tip to Mark Gangl (https://github.com/attack/laptop-lite/blob/master/mac)
+fancy_echo "Installing brew-cask to install Mac binaries ..."
+  brew_install_or_upgrade caskroom/cask/brew-cask
+
+fancy_echo "Installing wget ..."
+  brew_install_or_upgrade wget
+
+is_brew_cask_installed() {
+    echo ${CASKS} | grep -q "\b$1"
+}
+
+brew_cask_list() {
+  brew cask list 2> /dev/null || true
+}
+
+brew_cask_install() {
+  if is_brew_cask_installed $1; then
+    less_fancy_echo "... skipping cask $1, already installed"
+  else
+    brew cask install $1 2> /dev/null || true
+  fi
+
+  true
+}
+
+brew_cask_link() {
+  if brew cask $1 status | grep -q 'happily linked'; then
+    less_fancy_echo "... skip linking $1, already linked"
+  else
+    brew cask $1 link
+  fi
+}
+
+fancy_echo "Installing Alfred ..."
+  brew_cask_install alfred
+
+fancy_echo "Installing Caffeine ..."
+  brew_cask_install caffeine
+
+fancy_echo "Installing Google Chrome ..."
+  brew_cask_install google-chrome
+
+fancy_echo "Installing Google Drive ..."
+  brew_cask_install google-drive
+
+fancy_echo "Installing Day-O ..."
+  brew_cask_install day-o
+
+fancy_echo "Installing f.lux ..."
+  brew_cask_install flux
+
+fancy_echo "Linking Alfred, so that it sees casks ..."
+  brew_cask_link alfred
+
+if [ ! -d /Applications/ShiftIt.app ]; then
+  fancy_echo "Installing ShiftIt (onsi fork) window manager ..."
+  wget https://raw.github.com/onsi/ShiftIt/master/ShiftIt.zip
+  unzip -q ShiftIt.zip
+  rm ShiftIt.zip
+  mv ShiftIt.app /Applications/
+else
+  fancy_echo "... skipping onsi ShiftIt, already installed"
+fi
+
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090
