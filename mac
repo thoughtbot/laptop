@@ -22,10 +22,11 @@ append_to_zshrc() {
   fi
 
   if ! grep -Fqs "$text" "$zshrc"; then
+    local source_comment="# added by thoughtbot/laptop script"
     if [ "$skip_new_line" -eq 1 ]; then
-      printf "%s\n" "$text" >> "$zshrc"
+      printf "%s\n" "$text $source_comment" >> "$zshrc"
     else
-      printf "\n%s\n" "$text" >> "$zshrc"
+      printf "\n%s\n" "$text $source_comment" >> "$zshrc"
     fi
   fi
 }
