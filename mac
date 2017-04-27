@@ -117,6 +117,7 @@ tap "homebrew/services"
 # Unix
 brew "ctags"
 brew "git"
+brew "diff-so-fancy"
 brew "openssl"
 brew "rcm"
 brew "reattach-to-user-namespace"
