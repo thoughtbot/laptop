@@ -275,10 +275,6 @@ install_elasticsearch
 install_latest_ruby
 install_vim_config
 
-# Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 0.02
-defaults write NSGlobalDomain InitialKeyRepeat -int 12
-
 # Configure git aliases
 git config --global alias.st status
 git config --global alias.di diff
