@@ -1,0 +1,24 @@
+tap "homebrew/services"
+tap "thoughtbot/formulae"
+
+brew "ctags"
+brew "git"
+brew "rcm"
+brew "reattach-to-user-namespace"
+brew "the_silver_searcher"
+brew "tmux"
+
+brew "hub"
+
+brew "imagemagick@6"
+
+brew "qt@5.5"
+
+brew "node"
+brew "rbenv"
+brew "rbenv-default-gems"
+brew "rbenv-gemset"
+brew "ruby-build"
+
+brew "postgresql", restart_service: true
+brew "redis", restart_service: true
