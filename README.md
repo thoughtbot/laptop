@@ -133,7 +133,7 @@ Put your customizations there.
 For example:
 
 ```sh
-#!/bin/sh
+#!/usr/bin/env sh
 
 brew bundle --file=- <<EOF
 brew "Caskroom/cask/dockertoolbox"
