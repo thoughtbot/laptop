@@ -118,7 +118,6 @@ cask "pgadmin4"
 cask "pg-commander"
 
 # Extra
-cask "flux"
 cask "spectacle"
 cask "karabiner"
 
