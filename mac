@@ -39,7 +39,7 @@ create_folder_if_not_there() {
       sudo chown -R "$LOGNAME:admin" "$folder"
     fi
   else
-    sudo mkdir "$folder"
+    sudo mkdir -p "$folder"
     sudo chflags norestricted "$folder"
     sudo chown -R "$LOGNAME:admin" "$folder"
   fi
