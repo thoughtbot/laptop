@@ -179,7 +179,7 @@ find_latest_ruby() {
   rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
 }
 
-ruby_version="$(find_latest_ruby)"
+ruby_version="2.4.1"
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
 eval "$(rbenv init -)"
