@@ -113,6 +113,9 @@ if brew list | grep -Fq brew-cask; then
   brew uninstall --force brew-cask
 fi
 
+# Create data directory for MongoDB
+create_folder_if_not_there "/data/db"
+
 fancy_echo "Updating Homebrew formulae ..."
 brew update
 brew bundle --file=- <<EOF
@@ -130,6 +133,7 @@ brew "ruby-build"
 
 # Databases
 brew "postgres", restart_service: true
+brew "mongodb"
 
 # Fonts
 cask "font-opendyslexic"
