@@ -209,6 +209,17 @@ fancy_echo "Setting sublime as default text editor ..."
 append_to_zshrc "export EDITOR='subl -w -n'"
 append_to_zshrc "export PAGER='less -f'"
 
+fancy_echo "Rebinding # to the § key"
+create_folder_if_not_there "$HOME/Library/KeyBindings"
+MACOS_KEYMAP_FILE="$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+touch "$MACOS_KEYMAP_FILE"
+cat > "$MACOS_KEYMAP_FILE" << EOM
+{
+  /* Map '#' to the § key */
+  "§" = ("insertText:", "#");
+}
+EOM
+
 fancy_echo "Globally ignoring .DS_Store files"
 echo .DS_Store >> ~/.gitignore_global
 git config --global core.excludesfile ~/.gitignore_global
