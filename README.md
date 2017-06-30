@@ -72,8 +72,10 @@ Programming languages and configuration:
 Databases:
 
 * [Postgres] for storing relational data
+* [MongoDB] for storing non-relational data
 
 [Postgres]: http://www.postgresql.org/
+[MongoDB]: https://www.mongodb.com/
 
 GUI Apps:
 
