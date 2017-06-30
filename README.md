@@ -50,9 +50,11 @@ Unix tools:
 
 * [Git] for version control
 * [Zsh] as your shell
+* [wget] for downloading files from the Terminal
 
 [Git]: https://git-scm.com/
 [Zsh]: http://www.zsh.org/
+[wget]: https://www.gnu.org/software/wget/
 
 Programming languages and configuration:
 
@@ -61,6 +63,7 @@ Programming languages and configuration:
 * [Rbenv] for managing versions of Ruby
 * [Ruby Build] for installing Rubies
 * [Ruby] stable for writing general-purpose code
+* [Java] and [Junit] for compiling, running and testing Java code
 
 [Bundler]: http://bundler.io/
 [Node.js]: http://nodejs.org/
@@ -68,12 +71,16 @@ Programming languages and configuration:
 [Rbenv]: https://github.com/sstephenson/rbenv
 [Ruby Build]: https://github.com/sstephenson/ruby-build
 [Ruby]: https://www.ruby-lang.org/en/
+[Java]: https://java.com/en/
+[Junit]: http://junit.org/
 
 Databases:
 
 * [Postgres] for storing relational data
+* [MongoDB] for storing non-relational data
 
 [Postgres]: http://www.postgresql.org/
+[MongoDB]: https://www.mongodb.com/
 
 GUI Apps:
 

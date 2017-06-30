@@ -39,7 +39,7 @@ create_folder_if_not_there() {
       sudo chown -R "$LOGNAME:admin" "$folder"
     fi
   else
-    sudo mkdir "$folder"
+    sudo mkdir -p "$folder"
     sudo chflags norestricted "$folder"
     sudo chown -R "$LOGNAME:admin" "$folder"
   fi
@@ -113,6 +113,9 @@ if brew list | grep -Fq brew-cask; then
   brew uninstall --force brew-cask
 fi
 
+# Create data directory for MongoDB
+create_folder_if_not_there "/data/db"
+
 fancy_echo "Updating Homebrew formulae ..."
 brew update
 brew bundle --file=- <<EOF
@@ -122,18 +125,39 @@ tap "caskroom/fonts"
 # Unix
 brew "git"
 brew "zsh"
+brew "wget"
 
 # Programming languages
 brew "node"
 brew "rbenv"
 brew "ruby-build"
+cask "java"
 
 # Databases
 brew "postgres", restart_service: true
+brew "mongodb"
 
 # Fonts
 cask "font-opendyslexic"
 EOF
+
+fancy_echo "Installing Oh-My-Zsh ..."
+curl -L \
+  "https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh" | sh
+
+# Junit
+fancy_echo "Installing Junit ..."
+# Download junit
+create_folder_if_not_there "$HOME/junit"
+wget -O "$HOME/junit/junit-4.12.jar" "http://search.maven.org/remotecontent?filepath=junit/junit/4.12/junit-4.12.jar"
+wget -O "$HOME/junit/hamcrest-core-1.3.jar" "http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"
+# Add junit to PATH
+append_to_zshrc 'export JUNIT_HOME="$HOME/junit"'
+append_to_zshrc 'export PATH="$PATH:$JUNIT_HOME"'
+# Add Junit to Java CLASSPATH
+append_to_zshrc 'export CLASSPATH="$CLASSPATH:$JUNIT_HOME/junit-4.12.jar:$JUNIT_HOME/hamcrest-core-1.3.jar"'
+# Add alias to provide 'junit' command
+append_to_zshrc 'alias junit="java org.junit.runner.JUnitCore $1"'
 
 fancy_echo "Installing GUI apps"
 
@@ -150,16 +174,12 @@ install_gui_app "slack" "slack"
 # Android
 install_gui_app "android studio" "android-studio"
 
-fancy_echo "Installing Oh-My-Zsh ..."
-curl -L \
-  "https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh" | sh
-
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
   rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
 }
 
-ruby_version="$(find_latest_ruby)"
+ruby_version="2.4.1"
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
 eval "$(rbenv init -)"
@@ -188,6 +208,17 @@ fi
 fancy_echo "Setting sublime as default text editor ..."
 append_to_zshrc "export EDITOR='subl -w -n'"
 append_to_zshrc "export PAGER='less -f'"
+
+fancy_echo "Rebinding # to the § key"
+create_folder_if_not_there "$HOME/Library/KeyBindings"
+MACOS_KEYMAP_FILE="$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+touch "$MACOS_KEYMAP_FILE"
+cat > "$MACOS_KEYMAP_FILE" << EOM
+{
+  /* Map '#' to the § key */
+  "§" = ("insertText:", "#");
+}
+EOM
 
 fancy_echo "Globally ignoring .DS_Store files"
 echo .DS_Store >> ~/.gitignore_global
