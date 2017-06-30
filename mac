@@ -140,6 +140,10 @@ brew "mongodb"
 cask "font-opendyslexic"
 EOF
 
+fancy_echo "Installing Oh-My-Zsh ..."
+curl -L \
+  "https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh" | sh
+
 fancy_echo "Installing GUI apps"
 
 # # Web browsing
@@ -154,10 +158,6 @@ install_gui_app "slack" "slack"
 
 # Android
 install_gui_app "android studio" "android-studio"
-
-fancy_echo "Installing Oh-My-Zsh ..."
-curl -L \
-  "https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh" | sh
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
