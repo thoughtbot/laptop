@@ -25,9 +25,17 @@ Install
 
 Download, review, then execute the script:
 
+Enter the following commands sequentially into your Terminal. 
+
 ```sh
 curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+```
+
+```sh
 less mac
+```
+
+```sh
 sh mac 2>&1 | tee ~/laptop.log
 ```
 
