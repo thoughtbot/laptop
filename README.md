@@ -23,21 +23,27 @@ Bug reports for older versions are welcome.
 Install
 -------
 
-Download, review, then execute the script:
+The following commands should be run in Terminal.
 
-Enter the following commands sequentially into your Terminal. 
 
-```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
-```
+1.  You the will need to download the script, the script will be downloaded into your current directory using the `curl` command, choose an appropriate location such as your home directory `~/`, when you are ready, run the command:
+    ```sh
+    curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+    ```
 
-```sh
-less mac
-```
+2. The `less` command will display to you in Terminal the content of the script. Review the script by running the command and read through the script:
 
-```sh
-sh mac 2>&1 | tee ~/laptop.log
-```
+    > It is very important that you read through every script that you run on your operating system. Scripts can make make major changes that you did not intend. Please review this script carefully before running this script on your system.
+
+    ```sh
+    less mac
+    ```
+
+3. Finally, when you are satisfied with the script, you can execute it. Be aware that you can access the log at the location `~/laptop.log`. You can use the log to see exactly what the script has been able to achieve or diagnose any issues. Run the following command to execute the script:
+
+    ```sh
+    sh mac 2>&1 | tee ~/laptop.log
+    ```
 
 Optionally, [install thoughtbot/dotfiles][dotfiles].
 
