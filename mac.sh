@@ -34,7 +34,7 @@ append_to_zshrc() {
 cask_install_or_upgrade() {
   if ! cask_is_installed "$1"; then
     fancy_echo "Installing %s ..." "$1"
-    brew cask install --appdir="/Applications" "$@"
+    brew cask install --appdir="/Applications" "$@" --force
   fi
 }
 
