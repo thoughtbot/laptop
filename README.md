@@ -22,6 +22,9 @@ Bug reports for older versions are welcome.
 
 Install
 -------
+Install Mac OS X Command Line Tools
+
+`xcode-select --install`
 
 Download, review, then execute the script:
 
