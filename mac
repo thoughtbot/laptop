@@ -127,7 +127,7 @@ brew "watchman"
 brew "zsh"
 
 # Heroku
-brew "heroku-toolbelt"
+brew "heroku"
 brew "parity"
 
 # GitHub
