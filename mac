@@ -155,6 +155,10 @@ fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
 brew unlink qt@5.5
 brew link --force qt@5.5
 
+fancy_echo "Update heroku binary..."
+brew unlink heroku
+brew link --force heroku
+
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
   rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
