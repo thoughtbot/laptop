@@ -147,8 +147,8 @@ brew "ruby-build"
 brew "yarn"
 
 # Databases
-brew "postgres", restart_service: true
-brew "redis", restart_service: true
+brew "postgres", restart_service: :changed
+brew "redis", restart_service: :changed
 EOF
 
 fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
