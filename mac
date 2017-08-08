@@ -138,7 +138,7 @@ brew "hub"
 brew "imagemagick"
 
 # Testing
-brew "qt@5.5"
+brew "qt@5.5" if MacOS::Xcode.installed?
 
 # Programming languages and package managers
 brew "libyaml" # should come after openssl
@@ -152,9 +152,11 @@ brew "postgres", restart_service: :changed
 brew "redis", restart_service: :changed
 EOF
 
-fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
-brew unlink qt@5.5
-brew link --force qt@5.5
+if brew list | grep --silent "qt@5.5"; then
+  fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
+  brew unlink qt@5.5
+  brew link --force qt@5.5
+fi
 
 fancy_echo "Update heroku binary..."
 brew unlink heroku
