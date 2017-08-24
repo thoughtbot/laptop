@@ -138,7 +138,7 @@ install_or_update_homebrew() {
 
 install_latest_ruby() {
   append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-  ruby_version="2.3.1"
+  ruby_version="2.3.4"
   eval "$(rbenv init - zsh)"
 
   if ! rbenv versions | grep -Fq "$ruby_version"; then
@@ -274,6 +274,16 @@ install_shift_it
 install_elasticsearch
 install_latest_ruby
 install_vim_config
+
+# Setup Google Cloud Platform/Kubernetes Tooling
+cask_install_or_upgrade 'google-cloud-sdk'
+gcloud components install kubectl docker-credential-gcr pubsub-emulator
+brew_install_or_upgrade 'kubernetes-helm'
+append_to_zshrc 'source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+append_to_zshrc 'source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+append_to_zshrc 'eval "$(kubectl completion zsh)"'
+append_to_zshrc 'eval "$(helm completion zsh)"'
+helm init -c
 
 # Configure git aliases
 git config --global alias.st status
