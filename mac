@@ -173,6 +173,9 @@ install_gui_app "slack" "slack"
 # Android
 install_gui_app "android studio" "android-studio"
 
+# Insomnia
+install_gui_app "insomnia" "insomnia"
+
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
   rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
