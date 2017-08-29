@@ -207,6 +207,10 @@ if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
 
+fancy_echo "Setting Atom as default text editor ..."
+append_to_zshrc "export EDITOR='atom'"
+append_to_zshrc "export PAGER='less -f'"
+
 fancy_echo "Rebinding # to the § key"
 create_folder_if_not_there "$HOME/Library/KeyBindings"
 MACOS_KEYMAP_FILE="$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
