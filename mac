@@ -166,6 +166,7 @@ install_gui_app "google chrome" "google-chrome"
 
 # Text editing
 install_gui_app "atom" "atom"
+install_gui_app "sublime text" "sublime-text"
 
 # Chat
 install_gui_app "slack" "slack"
@@ -207,8 +208,8 @@ if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
 
-fancy_echo "Setting Atom as default text editor ..."
-append_to_zshrc "export EDITOR='atom -nw'"
+fancy_echo "Setting sublime as default text editor ..."
+append_to_zshrc "export EDITOR='subl -w -n'"
 append_to_zshrc "export PAGER='less -f'"
 
 fancy_echo "Rebinding # to the § key"
@@ -230,5 +231,78 @@ fancy_echo "Creating Postgres database under current user name"
 if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
   createdb "$(whoami)"
 fi
+
+fancy_echo "Creating 'subl' command to open Sublime Text from Terminal ..."
+create_folder_if_not_there "/usr/local/bin"
+if [ ! -f /usr/local/bin/subl ]; then
+  ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin
+fi
+
+fancy_echo "Customizing Sublime Text"
+SUBLIME_DIR="$HOME/Library/Application Support/Sublime Text 3"
+SUBLIME_INSTALLED_PACKAGE_DIR="$SUBLIME_DIR/Installed Packages"
+SUBLIME_PACKAGE_CONTROL="Package Control.sublime-package"
+SUBLIME_PACKAGE_CTRL_DEST="$SUBLIME_INSTALLED_PACKAGE_DIR/$SUBLIME_PACKAGE_CONTROL"
+
+fancy_echo "Installing Package Control"
+create_folder_if_not_there "$SUBLIME_DIR"
+create_folder_if_not_there "$SUBLIME_INSTALLED_PACKAGE_DIR"
+
+curl -o "$SUBLIME_PACKAGE_CONTROL" "https://packagecontrol.io/Package%20Control.sublime-package"
+mv "$SUBLIME_PACKAGE_CONTROL" "$SUBLIME_PACKAGE_CTRL_DEST"
+
+SUBLIME_PACKAGE_DIR="$SUBLIME_DIR/Packages"
+SUBLIME_DEFAULT_PACKAGE_DIR="$SUBLIME_PACKAGE_DIR/User"
+SUBLIME_KEYMAP_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Default (OSX).sublime-keymap"
+SUBLIME_PREFS_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Preferences.sublime-settings"
+SUBLIME_PACKAGES_FILE="$SUBLIME_DEFAULT_PACKAGE_DIR/Package Control.sublime-settings"
+
+create_folder_if_not_there "$SUBLIME_PACKAGE_DIR"
+create_folder_if_not_there "$SUBLIME_DEFAULT_PACKAGE_DIR"
+
+fancy_echo "Adding keyboard shortcuts"
+touch "$SUBLIME_KEYMAP_FILE"
+cat > "$SUBLIME_KEYMAP_FILE" << EOM
+[
+  { "keys": ["super+v"], "command": "paste_and_indent" },
+  { "keys": ["super+shift+v"], "command": "paste" },
+  { "keys": ["super+shift+r"],  "command": "reindent" }
+]
+EOM
+
+fancy_echo "Adding default package info"
+touch "$SUBLIME_PACKAGES_FILE"
+cat > "$SUBLIME_PACKAGES_FILE" << EOM
+{
+	"installed_packages":
+	[
+    "GitGutter",
+    "Maybs Quit",
+    "SideBarEnhancements",
+    "SublimeLinter",
+    "SublimeLinter-ruby"
+	]
+}
+EOM
+
+# N.b. replace Monaco with OpenDyslexic here if necessary
+fancy_echo "Adding sensible default preferences"
+touch "$SUBLIME_PREFS_FILE"
+cat > "$SUBLIME_PREFS_FILE" << EOM
+{
+  "auto_complete_commit_on_tab": true,
+  "find_selected_text": true,
+  "font_face": "Monaco",
+  "highlight_active_indent_guide": true,
+  "highlight_line": true,
+  "highlight_modified_tabs": true,
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
+  "hot_exit": false,
+  "word_wrap": true
+}
+EOM
+
+fancy_echo ""
 
 fancy_echo "Laptop completed successfully! Let's celebrate! 🎉"
