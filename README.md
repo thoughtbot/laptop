@@ -83,6 +83,17 @@ PolicyGenius specific tips
   * Run `ps aux | grep elasticsearch` to ensure that the Elasticsearch process started in the laptop script is not still running. If it is, kill the process with `kill -9 $PID` where `$PID` is the ID for the Elasticsearch process.
   * Then, run `brew search elasticsearch` to see a current list of Elasticsearch versions and install `elasticsearch@2.4` through Homebrew with `brew install elasticsearch@2.4`.
   * Once installed, run `brew services start elasticsearch@2.4` and you should be able to seed the database (don't forget to drop, create and migrate if necessary!) properly.
+
+Google Cloud Platform setup
+---------------------------
+
+* Log into GCP with the `gcloud` command
+  * `gcloud auth login`
+* Configure `gcloud` to use the sandbox project
+  * `gcloud config set project pg-sandbox-165613`
+* Configure `kubectl` to use the sandbox Kubernetes cluster
+  * `gcloud containers clusters get-credentials sandbox-v3 --zone us-central1-f --project pg-sandbox-165613`
+
 What it sets up
 ---------------
 
