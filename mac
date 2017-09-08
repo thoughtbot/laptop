@@ -86,7 +86,6 @@ gem_install_or_update() {
     gem update "$@"
   else
     gem install "$@"
-    rbenv rehash
   fi
 }
 
@@ -114,6 +113,7 @@ brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 tap "homebrew/services"
 tap "universal-ctags/universal-ctags"
+tap "caskroom/cask"
 
 # Unix
 brew "universal-ctags", args: ["HEAD"]
@@ -140,12 +140,11 @@ brew "imagemagick"
 # Testing
 brew "qt@5.5" if MacOS::Xcode.installed?
 
-# Programming languages and package managers
+# Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
-brew "node"
-brew "rbenv"
-brew "ruby-build"
+brew "coreutils"
 brew "yarn"
+cask "gpgtools"
 
 # Databases
 brew "postgres", restart_service: :changed
@@ -162,26 +161,47 @@ fancy_echo "Update heroku binary..."
 brew unlink heroku
 brew link --force heroku
 
-fancy_echo "Configuring Ruby ..."
-find_latest_ruby() {
-  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
-}
-
-ruby_version="$(find_latest_ruby)"
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
-eval "$(rbenv init -)"
-
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
+fancy_echo "Configuring asdf version manager..."
+if [ ! -d "$HOME/.asdf" ]; then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.3.0
+  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
 fi
 
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
+install_asdf_plugin() {
+  local name="$1"
+  local url="$2"
+
+  if ! asdf plugin-list | grep -Fq "$name"; then
+    asdf plugin-add "$name" "$url"
+  fi
+}
+
+# shellcheck disable=SC1090
+source "$HOME/.asdf/asdf.sh"
+install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+
+install_asdf_language() {
+  local language="$1"
+  local version
+  version="$(asdf list-all "$language" | tail -1)"
+
+  if ! asdf list "$language" | grep -Fq "$version"; then
+    asdf install "$language" "$version"
+    asdf global "$language" "$version"
+  fi
+}
+
+fancy_echo "Installing latest Ruby..."
+install_asdf_language "ruby"
 gem update --system
-gem_install_or_update 'bundler'
+gem_install_or_update "bundler"
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
+
+fancy_echo "Installing latest Node..."
+bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
+install_asdf_language "nodejs"
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
