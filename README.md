@@ -92,7 +92,7 @@ Google Cloud Platform setup
 * Configure `gcloud` to use the sandbox project
   * `gcloud config set project pg-sandbox-165613`
 * Configure `kubectl` to use the sandbox Kubernetes cluster
-  * `gcloud containers clusters get-credentials sandbox-v3 --zone us-central1-f --project pg-sandbox-165613`
+  * `gcloud container clusters get-credentials sandbox-v3 --zone us-central1-f --project pg-sandbox-165613`
 
 What it sets up
 ---------------
