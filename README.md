@@ -1,84 +1,87 @@
 Laptop
 ======
 
-Laptop is a script to set up an macOS laptop for web and mobile development.
+Laptop es un script para configurar una laptop macOS para desarrollo web y móvil.
+Puede ejecutarse múltiples veces en la misma computadora de forma segura.
+Laptop instala, actualiza o salta paquetes
+basado en lo que ya está instalado en la computadora.
 
-It can be run multiple times on the same machine safely.
-It installs, upgrades, or skips packages
-based on what is already installed on the machine.
-
-Requirements
+Traducciones
 ------------
+* [Inglés](https://github.com/thoughtbot/laptop/blob/master/README.md)
 
-We support:
+Requerimientos
+--------------
+
+Soportamos:
 
 * macOS Mavericks (10.9)
 * macOS Yosemite (10.10)
 * macOS El Capitan (10.11)
 * macOS Sierra (10.12)
 
-Older versions may work but aren't regularly tested.
-Bug reports for older versions are welcome.
+Tal vez funcionen versiones antiguas, pero no son regularmente probadas.
+Reportes de bugs para versiones antiguas son bienvenidos.
 
-Install
--------
+Instalación
+-----------
 
-Download the script:
+Descarga el script:
 
 ```sh
 curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
 ```
 
-Review the script (avoid running scripts you haven't read!):
+Revisa el script (evita ejecutar scripts que no haz leído!):
 
 ```sh
 less mac
 ```
 
-Execute the downloaded script:
+Ejecuta el script que descargaste:
 
 ```sh
 sh mac 2>&1 | tee ~/laptop.log
 ```
 
-Optionally, review the log:
+Opcionalmente revisa el log:
 
 ```sh
 less ~/laptop.log
 ```
 
-Optionally, [install thoughtbot/dotfiles][dotfiles].
+Opcionalmente, [instala los thoughtbot/dotfiles][dotfiles].
 
 [dotfiles]: https://github.com/thoughtbot/dotfiles#install
 
-Debugging
+Depurando
 ---------
 
-Your last Laptop run will be saved to `~/laptop.log`.
-Read through it to see if you can debug the issue yourself.
-If not, copy the lines where the script failed into a
-[new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
-Or, attach the whole log file as an attachment.
+Tu última ejecución de Laptop se guardará en `~/laptop.log`.
+Léela completamente para ver si tu puedes depurarlo.
+Si no, copia las lineas en donde el script falló en un
+[nuevo problema de GitHub](https://github.com/thoughtbot/laptop/issues/new) para nosotros.
+O, envía el archivo completo del log como archivo adjunto.
 
-What it sets up
----------------
+Lo que configura
+----------------
 
-macOS tools:
+Herramientas macOS:
 
-* [Homebrew] for managing operating system libraries.
+* [Homebrew] para adminsitrar las librerías operativas del sistema.
 
 [Homebrew]: http://brew.sh/
 
-Unix tools:
+Herramientas Unix:
 
-* [Exuberant Ctags] for indexing files for vim tab completion
-* [Git] for version control
-* [OpenSSL] for Transport Layer Security (TLS)
-* [RCM] for managing company and personal dotfiles
-* [The Silver Searcher] for finding things in files
-* [Tmux] for saving project state and switching between projects
-* [Watchman] for watching for filesystem events
-* [Zsh] as your shell
+* [Exuberant Ctags] para indexar archivos para que vim complete con tab
+* [Git] para control de versiones
+* [OpenSSL] para la seguridad de la capa de transporte (TLS – Transport Layer Security)
+* [RCM] para administrar dotfiles de la compañía y personales
+* [The Silver Searcher] para encontrar cosas en los archivos
+* [Tmux] para guardar el estado de cada proyecto y cambiar de proyecto
+* [Watchman] para ver cambios en los archivos del sistema
+* [Zsh] como tu intérprete de comandos (shell)
 
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Git]: https://git-scm.com/
@@ -89,37 +92,37 @@ Unix tools:
 [Watchman]: https://facebook.github.io/watchman/
 [Zsh]: http://www.zsh.org/
 
-Heroku tools:
+Herramientas de Heroku:
 
-* [Heroku CLI] and [Parity] for interacting with the Heroku API
+* [Heroku CLI] y [Parity] para interactuar con el API de Heroku
 
 [Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
 [Parity]: https://github.com/thoughtbot/parity
 
-GitHub tools:
+Herramientas de GitHub:
 
-* [Hub] for interacting with the GitHub API
+* [Hub] para interactuar con el API de GitHub
 
 [Hub]: http://hub.github.com/
 
-Image tools:
+Herramientas para Imágenes:
 
-* [ImageMagick] for cropping and resizing images
+* [ImageMagick] para cortar y cambiar el tamaño de imágenes
 
-Testing tools:
+Herramientas para pruebas:
 
-* [Qt 5] for headless JavaScript testing via [Capybara Webkit]
+* [Qt 5] para pruebas de JavaScript via [Capybara Webkit]
 
 [Qt 5]: http://qt-project.org/
 [Capybara Webkit]: https://github.com/thoughtbot/capybara-webkit
 
-Programming languages, package managers, and configuration:
+Lenguajes de programación, administradores de paquetes, y configuración:
 
-* [ASDF] for managing programming language versions
-* [Bundler] for managing Ruby libraries
-* [Node.js] and [NPM], for running apps and installing JavaScript packages
-* [Ruby] stable for writing general-purpose code
-* [Yarn] for managing JavaScript packages
+* [ASDF] para administrar las versiones de los lenguajes de programación
+* [Bundler] para administrar las librerías de Ruby
+* [Node.js] y [NPM], para ejecutar apps e instalar paquetes de JavaScript
+* [Ruby] estable para escribir código de uso en general
+* [Yarn] para administrar los paquetes de JavaScript
 
 [Bundler]: http://bundler.io/
 [ImageMagick]: http://www.imagemagick.org/
@@ -129,22 +132,22 @@ Programming languages, package managers, and configuration:
 [Ruby]: https://www.ruby-lang.org/en/
 [Yarn]: https://yarnpkg.com/en/
 
-Databases:
+Bases de datos:
 
-* [Postgres] for storing relational data
-* [Redis] for storing key-value data
+* [Postgres] para almacenar datos relacionales
+* [Redis] para almacenar datos llave-valor
 
 [Postgres]: http://www.postgresql.org/
 [Redis]: http://redis.io/
 
-It should take less than 15 minutes to install (depends on your machine).
+Debe tomar menos de 15 minutos para instalar (depende de tu computadora).
 
-Customize in `~/.laptop.local`
+Personaliza en `~/.laptop.local`
 ------------------------------
 
-Your `~/.laptop.local` is run at the end of the Laptop script.
-Put your customizations there.
-For example:
+Tu `~/.laptop.local` se ejecuta al final del script Laptop.
+Pon tus personalizaciones ahí.
+Por ejemplo:
 
 ```sh
 #!/bin/sh
@@ -182,22 +185,23 @@ if [ -r "$HOME/.rcrc" ]; then
 fi
 ```
 
-Write your customizations such that they can be run safely more than once.
-See the `mac` script for examples.
+Escribe tus personalizaciones par que puedan ser ejecutadas de forma
+segura más de una vez
+Ve el script `mac` para ejemplos.
 
-Laptop functions such as `fancy_echo` and
+Las funciones de Laptop como `fancy_echo` y
 `gem_install_or_update`
-can be used in your `~/.laptop.local`.
+pueden ser usadas en tu `~/.laptop.local`.
 
-See the [wiki](https://github.com/thoughtbot/laptop/wiki)
-for more customization examples.
+Ve el [wiki](https://github.com/thoughtbot/laptop/wiki)
+para más ejemplos de personalización.
 
-Contributing
-------------
+Contribuye
+----------
 
-Edit the `mac` file.
-Document in the `README.md` file.
-Follow shell style guidelines by using [ShellCheck] and [Syntastic].
+Edita el archivo `mac`.
+Documenta en el archivo `README.md`
+Sigue la guía de estilo shell al utilizar [ShellCheck] y [Syntastic].
 
 ```sh
 brew install shellcheck
@@ -206,35 +210,35 @@ brew install shellcheck
 [ShellCheck]: http://www.shellcheck.net/about.html
 [Syntastic]: https://github.com/scrooloose/syntastic
 
-Thank you, [contributors]!
+Gracias, [contribuyentes]!
 
-[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
+[contribuyentes]: https://github.com/thoughtbot/laptop/graphs/contributors
 
-By participating in this project,
-you agree to abide by the thoughtbot [code of conduct].
+Al participar en este proyecto,
+estás de acuerdo en atenerte al [código de conducta] de thoughtbot.
 
-[code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
+[código de conducta]: https://thoughtbot.com/open-source-code-of-conduct
 
-License
+Licencia
 -------
 
 Laptop is © 2011-2017 thoughtbot, inc.
-It is free software,
-and may be redistributed under the terms specified in the [LICENSE] file.
+Es software gratuito,
+y podrá ser redistribuido bajo los términos específicados en el archivo de la [LICENCIA]
 
-[LICENSE]: LICENSE
+[LICENCIA]: LICENSE
 
-About thoughtbot
+Acerca de thoughtbot
 ----------------
 
 ![thoughtbot](http://presskit.thoughtbot.com/images/thoughtbot-logo-for-readmes.svg)
 
-Laptop is maintained and funded by thoughtbot, inc.
-The names and logos for thoughtbot are trademarks of thoughtbot, inc.
+Laptop es mantenido y fundado por thoughtbot, inc.
+Los nombres y logos de thoughtbot son marcas registradas de thoughtbot, inc.
 
-We are passionate about open source software.
-See [our other projects][community].
-We are [available for hire][hire].
+Somos apasionados acerca del software de fuente abierta.
+Ve [nuestros otros proyectos][community].
+Estamos[disponibles para contratar][hire].
 
 [community]: https://thoughtbot.com/community?utm_source=github
 [hire]: https://thoughtbot.com?utm_source=github
