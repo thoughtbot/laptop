@@ -7,6 +7,12 @@ It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
 based on what is already installed on the machine.
 
+Translations
+------------
+
+- [Spanish](https://github.com/CodigoSemilla/laptop/blob/master/README.md)
+
+
 Requirements
 ------------
 
