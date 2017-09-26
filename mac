@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Welcome to the thoughtbot laptop script!
-# Be prepared to turn your laptop (or desktop, no haters here)
-# into an awesome development machine.
+# Bienvenido/a al script laptop de thoughtbot
+# Prepárate para convertir tu laptop (o comptadora, no somos fijados aquí)
+# en una increíble máquina de desarrollo.
 
 fancy_echo() {
   local fmt="$1"; shift
@@ -134,19 +134,19 @@ brew "parity"
 # GitHub
 brew "hub"
 
-# Image manipulation
+# Manipulación de imagen
 brew "imagemagick"
 
-# Testing
+# Pruebas
 brew "qt@5.5" if MacOS::Xcode.installed?
 
-# Programming language prerequisites and package managers
+# Prerrequisitos de lenguajes de programación y administradores de paquetes
 brew "libyaml" # should come after openssl
 brew "coreutils"
 brew "yarn"
 cask "gpgtools"
 
-# Databases
+# Bases de datos
 brew "postgres", restart_service: :changed
 brew "redis", restart_service: :changed
 EOF
@@ -157,11 +157,11 @@ if brew list | grep --silent "qt@5.5"; then
   brew link --force qt@5.5
 fi
 
-fancy_echo "Update heroku binary..."
+fancy_echo "Actualiza el binario de Heroku..."
 brew unlink heroku
 brew link --force heroku
 
-fancy_echo "Configuring asdf version manager..."
+fancy_echo "Configurando asdf administrador de versiones..."
 if [ ! -d "$HOME/.asdf" ]; then
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.3.0
   append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
@@ -192,19 +192,19 @@ install_asdf_language() {
   fi
 }
 
-fancy_echo "Installing latest Ruby..."
+fancy_echo "Instalando la última versión de Ruby..."
 install_asdf_language "ruby"
 gem update --system
 gem_install_or_update "bundler"
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
-fancy_echo "Installing latest Node..."
+fancy_echo "Instalando la última versión de Node..."
 bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
 install_asdf_language "nodejs"
 
 if [ -f "$HOME/.laptop.local" ]; then
-  fancy_echo "Running your customizations from ~/.laptop.local ..."
+  fancy_echo "Ejecutando tus personalizaciones desde ~/.laptop.local ..."
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
