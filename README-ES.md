@@ -48,7 +48,7 @@ less ~/laptop.log
 
 Opcionalmente, [instala los thoughtbot/dotfiles][dotfiles].
 
-[dotfiles]: https://github.com/thoughtbot/dotfiles#install
+[dotfiles]: https://github.com/thoughtbot/dotfiles/blob/master/README-ES.md
 
 Depurando
 ---------
