@@ -110,7 +110,6 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
 tap "homebrew/services"
 tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
@@ -119,7 +118,6 @@ tap "caskroom/cask"
 brew "universal-ctags", args: ["HEAD"]
 brew "git"
 brew "openssl"
-brew "rcm"
 brew "reattach-to-user-namespace"
 brew "the_silver_searcher"
 brew "tmux"
@@ -129,7 +127,6 @@ brew "zsh"
 
 # Heroku
 brew "heroku"
-brew "parity"
 
 # GitHub
 brew "hub"
