@@ -110,26 +110,25 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
 tap "homebrew/services"
+tap "homebrew/science"
 tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
 
 # Unix
 brew "universal-ctags", args: ["HEAD"]
+brew "dos2unix"
 brew "git"
 brew "openssl"
-brew "rcm"
 brew "reattach-to-user-namespace"
+brew "ssh-copy-id"
 brew "the_silver_searcher"
 brew "tmux"
+brew "tree"
 brew "vim"
 brew "watchman"
+brew "wget"
 brew "zsh"
-
-# Heroku
-brew "heroku"
-brew "parity"
 
 # GitHub
 brew "hub"
@@ -146,9 +145,12 @@ brew "coreutils"
 brew "yarn"
 cask "gpgtools"
 
-# Databases
-brew "postgres", restart_service: :changed
-brew "redis", restart_service: :changed
+# Common apps
+cask "alfred"
+cask "google-chrome"
+cask "iterm2"
+cask "slack"
+
 EOF
 
 if brew list | grep --silent "qt@5.5"; then
@@ -156,10 +158,6 @@ if brew list | grep --silent "qt@5.5"; then
   brew unlink qt@5.5
   brew link --force qt@5.5
 fi
-
-fancy_echo "Update heroku binary..."
-brew unlink heroku
-brew link --force heroku
 
 fancy_echo "Configuring asdf version manager..."
 if [ ! -d "$HOME/.asdf" ]; then
@@ -178,13 +176,15 @@ install_asdf_plugin() {
 
 # shellcheck disable=SC1090
 source "$HOME/.asdf/asdf.sh"
+install_asdf_plugin "golang" "https://github.com/kennyp/asdf-golang.git"
+install_asdf_plugin "python" "https://github.com/tuvistavie/asdf-python"
 install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
 install_asdf_language() {
   local language="$1"
   local version
-  version="$(asdf list-all "$language" | tail -1)"
+  version="${2:-$(asdf list-all "$language" | tail -1)}"
 
   if ! asdf list "$language" | grep -Fq "$version"; then
     asdf install "$language" "$version"
@@ -202,6 +202,18 @@ bundle config --global jobs $((number_of_cores - 1))
 fancy_echo "Installing latest Node..."
 bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
 install_asdf_language "nodejs"
+
+fancy_echo "Installing specific Golang..."
+# unlike Ruby and Node, the version list provided by Golang has arch
+#  specific versions at the end.  We cannot just use 'tail -1' to get
+#  the latest.  Hardcode for now.
+install_asdf_language "golang" "1.8.3"
+
+fancy_echo "Installing specific Python..."
+# unlike Ruby and Node, the version list provided by Python has arch
+#  specific versions at the end.  We cannot just use 'tail -1' to get
+#  the latest.  Hardcode for now.
+install_asdf_language "python" "3.6.2"
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
