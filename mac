@@ -145,6 +145,12 @@ brew "coreutils"
 brew "yarn"
 cask "gpgtools"
 
+# Common apps
+cask "alfred"
+cask "google-chrome"
+cask "iterm2"
+cask "slack"
+
 EOF
 
 if brew list | grep --silent "qt@5.5"; then
