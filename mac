@@ -111,18 +111,23 @@ fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
 tap "homebrew/services"
+tap "homebrew/science"
 tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
 
 # Unix
 brew "universal-ctags", args: ["HEAD"]
+brew "dos2unix"
 brew "git"
 brew "openssl"
 brew "reattach-to-user-namespace"
+brew "ssh-copy-id"
 brew "the_silver_searcher"
 brew "tmux"
+brew "tree"
 brew "vim"
 brew "watchman"
+brew "wget"
 brew "zsh"
 
 # GitHub
