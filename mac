@@ -176,7 +176,7 @@ install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 install_asdf_language() {
   local language="$1"
   local version
-  version="$(asdf list-all "$language" | tail -1)"
+  version="${2:-$(asdf list-all "$language" | tail -1)}"
 
   if ! asdf list "$language" | grep -Fq "$version"; then
     asdf install "$language" "$version"
