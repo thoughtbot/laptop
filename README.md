@@ -21,7 +21,7 @@ versions are welcome.
 
 * [Xcode]:(https://itunes.apple.com/us/app/xcode/id497799835) must be installed.
 
-Install
+Base Install
 -------
 
 Download, review, then execute the script:
@@ -61,6 +61,16 @@ With Xcode 8.0, when trying to compile the gem you may get the error Project ERR
 5. Save & re-install the gem
 
 _For further reading: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macos-sierra-1012_
+
+kutil Install
+--------------
+```sh
+pushd /usr/local/bin
+curl --remote-name https://raw.githubusercontent.com/policygenius/laptop/master/mac.sh
+mv kutil{.rb,}
+chmod +x kutil
+popd
+```
 
 
 Debugging
