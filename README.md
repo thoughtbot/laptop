@@ -66,7 +66,7 @@ kutil Install
 --------------
 ```sh
 pushd /usr/local/bin
-curl --remote-name https://raw.githubusercontent.com/policygenius/laptop/master/mac.sh
+curl --remote-name https://raw.githubusercontent.com/policygenius/laptop/master/kutil.rb
 mv kutil{.rb,}
 chmod +x kutil
 popd
