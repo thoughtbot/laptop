@@ -144,7 +144,7 @@ brew "qt@5.5" if MacOS::Xcode.installed?
 brew "libyaml" # should come after openssl
 brew "coreutils"
 brew "yarn"
-cask "gpgtools"
+cask "gpg-suite"
 
 # Databases
 brew "postgres", restart_service: :changed
