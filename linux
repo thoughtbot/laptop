@@ -1,0 +1,203 @@
+#!/bin/sh
+
+# Turn your laptop into an awesome development machine, to get logs do
+# sh linux 2>&1 | tee ~/setup.log
+
+set -o xtrace  # aka 'set -x' to trace what gets executed
+set -o errexit # aka 'set -e' to exit when command fails
+# shellcheck disable=SC2154
+#trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+echo "create some helper functions ..."
+#######################################
+append_to_zshrc() {
+  local text="$1" zshrc
+  local skip_new_line="${2:-0}"
+
+  if [ -w "$HOME/.zshrc.local" ]; then
+    zshrc="$HOME/.zshrc.local"
+  else
+    zshrc="$HOME/.zshrc"
+  fi
+
+  if ! grep -Fqs "$text" "$zshrc"; then
+    if [ "$skip_new_line" -eq 1 ]; then
+      printf "%s\n" "$text" >> "$zshrc"
+    else
+      printf "\n%s\n" "$text" >> "$zshrc"
+    fi
+  fi
+
+  source "$zshrc"
+}
+
+install_asdf_plugin() {
+  local name="$1"
+  local url="$2"
+
+  if ! asdf plugin-list | grep -Fq "$name"; then
+    asdf plugin-add "$name" "$url"
+  fi
+}
+
+install_asdf_language() {
+  local language="$1"
+  local version
+  version="$(asdf list-all "$language" | tail -1)"
+
+  if ! asdf list "$language" | grep -Fq "$version"; then
+    asdf install "$language" "$version"
+    asdf global "$language" "$version"
+  fi
+}
+
+gem_install_or_update() {
+  if gem list "$1" --installed > /dev/null; then
+    gem update "$@"
+  else
+    gem install "$@"
+  fi
+}
+
+echo "create lolca bin directory ..."
+#####################################
+if [ ! -d "$HOME/.bin/" ]; then
+  mkdir "$HOME/.bin"
+  # shellcheck disable=SC2016
+  append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
+fi
+
+echo "change shell to zsh ..."
+##############################
+if [ ! -f "$HOME/.zshrc" ]; then
+  touch "$HOME/.zshrc"
+fi
+
+chsh -s "$(which zsh)"
+
+echo "install linux packages ..."
+#################################
+sudo apt install --assume-yes \
+  exuberant-ctags \
+  git \
+  imagemagick \
+  openssl \
+  silversearcher-ag \
+  tmux \
+  vim \
+  zsh
+
+echo "install asdf version manager ..."
+#######################################
+sudo apt install --assume-yes \
+  automake autoconf libreadline-dev libncurses-dev libssl-dev \
+  libyaml-dev libxslt-dev libffi-dev libtool make unixodbc-dev
+
+if [ ! -d "$HOME/.asdf" ]; then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0
+  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
+  append_to_zshrc "source $HOME/.asdf/completions/asdf.bash" 1
+fi
+
+echo "install latest Ruby ..."
+##############################
+install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+install_asdf_language "ruby"
+
+gem update --system
+gem_install_or_update "bundler"
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
+
+echo "install latest Node ..."
+################################
+install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
+install_asdf_language "nodejs"
+
+echo "install Linuxbrew ..."
+############################
+# see http://linuxbrew.sh/
+# HOMEBREW_PREFIX="/usr/local"
+#
+# if [ -d "$HOMEBREW_PREFIX" ]; then
+#   if ! [ -r "$HOMEBREW_PREFIX" ]; then
+#     sudo chown -R "$LOGNAME:admin" /usr/local
+#   fi
+# else
+#   sudo mkdir "$HOMEBREW_PREFIX"
+#   sudo chflags norestricted "$HOMEBREW_PREFIX"
+#   sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
+# fi
+#
+# if ! command -v brew >/dev/null; then
+#   fancy_echo "Installing Homebrew ..."
+#     curl -fsS \
+#       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+#
+#     append_to_zshrc '# recommended by brew doctor'
+#
+#     # shellcheck disable=SC2016
+#     append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+#
+#     export PATH="/usr/local/bin:$PATH"
+# fi
+#
+# if brew list | grep -Fq brew-cask; then
+#   fancy_echo "Uninstalling old Homebrew-Cask ..."
+#   brew uninstall --force brew-cask
+# fi
+#
+# fancy_echo "Updating Homebrew formulae ..."
+# brew update --force # https://github.com/Homebrew/brew/issues/1151
+
+echo "brew some packages"
+#########################
+# brew bundle --file=- <<EOF
+# tap "thoughtbot/formulae"
+# tap "homebrew/services"
+# tap "caskroom/cask"
+#
+# # Unix
+# brew "rcm"
+# brew "reattach-to-user-namespace"
+# brew "watchman"
+#
+# # GitHub
+# brew "hub"
+#
+# # Heroku
+# brew "heroku"
+# brew "parity"
+#
+# # Testing
+# brew "qt@5.5" if MacOS::Xcode.installed?
+#
+# # Programming language prerequisites and package managers
+# brew "libyaml" # should come after openssl
+# brew "coreutils"
+# brew "yarn"
+# cask "gpg-suite"
+#
+# # Databases
+# brew "postgres", restart_service: :changed
+# brew "redis", restart_service: :changed
+# EOF
+#
+# if brew list | grep --silent "qt@5.5"; then
+#   fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
+#   brew unlink qt@5.5
+#   brew link --force qt@5.5
+# fi
+#
+# fancy_echo "Update heroku binary..."
+# brew unlink heroku
+# brew link --force heroku
+
+echo "run customizations from ~/.laptop.local ..."
+##################################################
+if [ -f "$HOME/.laptop.local" ]; then
+  # shellcheck disable=SC1090
+  source "$HOME/.laptop.local"
+  # include aptitude mc shellcheck
+fi
