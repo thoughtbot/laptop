@@ -170,9 +170,6 @@ install_gui_app "atom" "atom"
 # Chat
 install_gui_app "slack" "slack"
 
-# Android
-install_gui_app "android studio" "android-studio"
-
 # Insomnia
 install_gui_app "insomnia" "insomnia"
 
@@ -230,5 +227,12 @@ fancy_echo "Creating Postgres database under current user name"
 if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
   createdb "$(whoami)"
 fi
+
+# IntelliJ
+fancy_echo "Installing IntelliJ and Android Studio. NB: Either / both steps could be completed at home if this is taking too long during MYC."
+install_gui_app "intellij idea ce" "intellij-idea-ce"
+
+# Android
+install_gui_app "android studio" "android-studio"
 
 fancy_echo "Laptop completed successfully! Let's celebrate! 🎉"
