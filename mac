@@ -229,10 +229,8 @@ if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
 fi
 
 # IntelliJ
-
+fancy_echo "Installing IntelliJ and Android Studio. NB: Either / both steps could be completed at home if this is taking too long during MYC."
 install_gui_app "intellij idea ce" "intellij-idea-ce"
-
-fancy_echo "Installing Android Studio. NB: This step could be completed at home if this is taking too long during MYC"
 
 # Android
 install_gui_app "android studio" "android-studio"
