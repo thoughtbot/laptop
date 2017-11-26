@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Turn your laptop into an awesome development machine.
-# Usage: $ bash linux 2>&1 | tee ~/setup.log
+# Usage: $ bash linux 2>&1 | tee ~/laptop.log
 
 #set -o xtrace  # aka 'set -x' to trace what gets executed ... for debugging
 set -o errexit # aka 'set -e' to exit when command fails
@@ -76,8 +76,8 @@ fi
 
 echo "### add other source repositories ..."
 echo "#####################################"
-wget -qO- https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+wget -qO- https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add -
+echo "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
   $(lsb_release -cs) \
   stable edge" | sudo tee /etc/apt/sources.list.d/docker.list
 
@@ -89,6 +89,7 @@ echo "deb https://cli-assets.heroku.com/branches/stable/apt ./" | sudo tee /etc/
 wget -qO- https://apt.thoughtbot.com/thoughtbot.gpg.key | sudo apt-key add -
 echo "deb http://apt.thoughtbot.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/thoughtbot.list
 
+# TODO test 'brew install yarn' on linux compatibilty
 wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
@@ -164,6 +165,8 @@ fi
 echo "### brew some packages ..."
 echo "##########################"
 brew update --force # https://github.com/Homebrew/brew/issues/1151
+# TODO consider pull-request for linux compatibilty of thoughtbot/formulae
+# to install heroku, parity, rcm via brew
 brew bundle --file=- <<EOF
 #tap "thoughtbot/formulae"
 
