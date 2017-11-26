@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Turn your laptop into an awesome development machine.
 # Usage: $ bash linux 2>&1 | tee ~/setup.log
 
@@ -7,8 +8,8 @@ set -o errexit # aka 'set -e' to exit when command fails
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
-echo "### create some helper functions ..."
-##########################################
+### create some helper functions ...
+####################################
 append_to_zshrc() {
   local text="$1" zshrc
   local skip_new_line="${2:-0}"
@@ -57,15 +58,15 @@ gem_install_or_update() {
 }
 
 echo "### change shell to zsh ..."
-#################################
+echo "###########################"
 if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
 
 chsh -s "$(which zsh)"
 
-echo "### create lolca bin directory ..."
-########################################
+echo "### create local bin directory ..."
+echo "##################################"
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 
@@ -73,21 +74,41 @@ if [ ! -d "$HOME/.bin/" ]; then
   append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 fi
 
-echo "### install linux packages ..."
-####################################
-sudo apt update && sudo apt upgrade
-sudo apt install --assume-yes \
+echo "### add other source repositories ..."
+echo "#####################################"
+wget -qO- https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) \
+  stable edge" | sudo tee /etc/apt/sources.list.d/docker.list
+
+# TODO consider standalone installation for auto updating feature
+wget -qO- https://cli-assets.heroku.com/apt/release.key | sudo apt-key add -
+echo "deb https://cli-assets.heroku.com/branches/stable/apt ./" | sudo tee /etc/apt/sources.list.d/heroku.list
+
+# TODO consider pull-request to use 'brew install rcm' instead
+wget -qO- https://apt.thoughtbot.com/thoughtbot.gpg.key | sudo apt-key add -
+echo "deb http://apt.thoughtbot.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/thoughtbot.list
+
+wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+echo "### install base linux packages ..."
+echo "###################################"
+sudo apt update && sudo apt install --assume-yes \
+  docker-ce \
   exuberant-ctags \
   git \
+  heroku \
   imagemagick \
   openssl \
+  rcm \
   silversearcher-ag \
   tmux \
   vim \
   zsh
 
 echo "### install asdf version manager ..."
-##########################################
+echo "####################################"
 sudo apt install --assume-yes \
   automake autoconf libreadline-dev libncurses-dev libssl-dev \
   libyaml-dev libxslt-dev libffi-dev libtool make unixodbc-dev
@@ -105,7 +126,7 @@ fi
 source ~/.asdf/asdf.sh
 
 echo "### install latest Ruby ..."
-#################################
+echo "###########################"
 install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 install_asdf_language "ruby"
 
@@ -115,13 +136,13 @@ number_of_cores="$(cat /proc/cpuinfo | grep processor | wc -l)"
 bundle config --global jobs $((number_of_cores - 1))
 
 echo "### install latest Node ..."
-#################################
+echo "###########################"
 install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
 install_asdf_language "nodejs"
 
 echo "### install Linuxbrew ..."
-###############################
+echo "#########################"
 if ! command -v brew >/dev/null; then
   # see http://linuxbrew.sh/
   sudo apt install --assume-yes build-essential
@@ -135,54 +156,35 @@ if ! command -v brew >/dev/null; then
   append_to_zshrc 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' 1
 fi
 
-echo "### brew some packages"
-############################
+echo "### brew some packages ..."
+echo "##########################"
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
-tap "homebrew/services"
-tap "caskroom/cask"
+#tap "thoughtbot/formulae"
 
 # Unix
-#brew "rcm" via apt!
-#brew "reattach-to-user-namespace"
+#brew "rcm"
 brew "watchman"
 
 # GitHub
 brew "hub"
 
-# # Heroku
+# Heroku
 #brew "heroku"
 #brew "parity"
 
-# # Testing
-# brew "qt@5.5" if MacOS::Xcode.installed?
-
-# # Programming language prerequisites and package managers
-# brew "libyaml" # should come after openssl
-# brew "coreutils"
-# brew "yarn"
-# cask "gpg-suite"
-
-# # Databases
-# brew "postgres", restart_service: :changed
-# brew "redis", restart_service: :changed
+# Databases
+#brew "postgres", restart_service: :changed
+#brew "redis", restart_service: :changed
 EOF
 
-# if brew list | grep --silent "qt@5.5"; then
-#   fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
-#   brew unlink qt@5.5
-#   brew link --force qt@5.5
-# fi
-#
 # fancy_echo "Update heroku binary..."
-# brew unlink heroku
-# brew link --force heroku
+#brew unlink heroku
+#brew link --force heroku
 
 echo "### run customizations from ~/.laptop.local ..."
-#####################################################
+echo "###############################################"
 if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1090
   source "$HOME/.laptop.local"
-  # include aptitude mc shellcheck
 fi
