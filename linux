@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+
+# Turn your laptop into an awesome development machine.
+# Usage: $ bash linux 2>&1 | tee ~/laptop.log
+
+#set -o xtrace  # aka 'set -x' to trace what gets executed ... for debugging
+set -o errexit # aka 'set -e' to exit when command fails
+# shellcheck disable=SC2154
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+### create some helper functions ...
+####################################
+append_to_zshrc() {
+  local text="$1" zshrc
+  local skip_new_line="${2:-0}"
+
+  if [ -w "$HOME/.zshrc.local" ]; then
+    zshrc="$HOME/.zshrc.local"
+  else
+    zshrc="$HOME/.zshrc"
+  fi
+
+  if ! grep -Fqs "$text" "$zshrc"; then
+    if [ "$skip_new_line" -eq 1 ]; then
+      printf "%s\n" "$text" >> "$zshrc"
+    else
+      printf "\n%s\n" "$text" >> "$zshrc"
+    fi
+  fi
+}
+
+install_asdf_plugin() {
+  local name="$1"
+  local url="$2"
+
+  if ! asdf plugin-list | grep -Fq "$name"; then
+    asdf plugin-add "$name" "$url"
+  fi
+}
+
+install_asdf_language() {
+  local language="$1"
+  local version
+  version="$(asdf list-all "$language" | tail -1)"
+
+  if ! asdf list "$language" | grep -Fq "$version"; then
+    asdf install "$language" "$version"
+    asdf global "$language" "$version"
+  fi
+}
+
+gem_install_or_update() {
+  if gem list "$1" --installed > /dev/null; then
+    gem update "$@"
+  else
+    gem install "$@"
+  fi
+}
+
+echo "### change shell to zsh ..."
+echo "###########################"
+if [ ! -f "$HOME/.zshrc" ]; then
+  touch "$HOME/.zshrc"
+fi
+
+chsh -s "$(which zsh)"
+
+echo "### create local bin directory ..."
+echo "##################################"
+if [ ! -d "$HOME/.bin/" ]; then
+  mkdir "$HOME/.bin"
+
+  # shellcheck disable=SC2016
+  append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
+fi
+
+echo "### add other source repositories ..."
+echo "#####################################"
+wget -qO- https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add -
+echo "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+  $(lsb_release -cs) \
+  stable edge" | sudo tee /etc/apt/sources.list.d/docker.list
+
+# TODO consider standalone installation for auto updating feature
+wget -qO- https://cli-assets.heroku.com/apt/release.key | sudo apt-key add -
+echo "deb https://cli-assets.heroku.com/branches/stable/apt ./" | sudo tee /etc/apt/sources.list.d/heroku.list
+
+# TODO consider pull-request to use 'brew install rcm' instead
+wget -qO- https://apt.thoughtbot.com/thoughtbot.gpg.key | sudo apt-key add -
+echo "deb http://apt.thoughtbot.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/thoughtbot.list
+
+# TODO test 'brew install yarn' on linux compatibilty
+wget -qO- https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+echo "### install base linux packages ..."
+echo "###################################"
+sudo apt update && sudo apt install --assume-yes \
+  docker-ce \
+  exuberant-ctags \
+  git \
+  heroku \
+  imagemagick \
+  openssl \
+  postgresql \
+  redis-server \
+  rcm \
+  silversearcher-ag \
+  tmux \
+  vim \
+  zsh
+
+echo "### install asdf version manager ..."
+echo "####################################"
+sudo apt install --assume-yes \
+  automake autoconf libreadline-dev libncurses-dev libssl-dev \
+  libyaml-dev libxslt-dev libffi-dev libtool make unixodbc-dev
+
+if [ ! -d "$HOME/.asdf" ]; then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0
+
+  # shellcheck disable=SC2016
+  append_to_zshrc '# Add asdf version manager'
+  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
+  append_to_zshrc "source $HOME/.asdf/completions/asdf.bash" 1
+fi
+
+# shellcheck disable=SC1090
+source ~/.asdf/asdf.sh
+
+echo "### install latest Ruby ..."
+echo "###########################"
+install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+install_asdf_language "ruby"
+
+gem update --system
+gem_install_or_update "bundler"
+number_of_cores="$(cat < /proc/cpuinfo | grep -c processor)"
+bundle config --global jobs $((number_of_cores - 1))
+
+echo "### install latest Node ..."
+echo "###########################"
+install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
+install_asdf_language "nodejs"
+
+echo "### install Linuxbrew ..."
+echo "#########################"
+if ! command -v brew >/dev/null; then
+  # see http://linuxbrew.sh/
+  sudo apt install --assume-yes build-essential
+  sudo curl -fsSL 'https://raw.githubusercontent.com/Linuxbrew/install/master/install' | ruby
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+
+  # shellcheck disable=SC2016
+  append_to_zshrc '# Add linuxbrew to PATHs'
+  # shellcheck disable=SC2016
+  append_to_zshrc 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' 1
+  # shellcheck disable=SC2016
+  append_to_zshrc 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' 1
+  # shellcheck disable=SC2016
+  append_to_zshrc 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' 1
+fi
+
+echo "### brew some packages ..."
+echo "##########################"
+brew update --force # https://github.com/Homebrew/brew/issues/1151
+# TODO consider pull-request for linux compatibilty of thoughtbot/formulae
+# to install heroku, parity, rcm via brew
+brew bundle --file=- <<EOF
+#tap "thoughtbot/formulae"
+
+# Unix
+#brew "rcm"
+brew "watchman"
+
+# GitHub
+brew "hub"
+
+# Heroku
+#brew "heroku"
+#brew "parity"
+
+# Databases
+#brew "postgres", restart_service: :changed
+#brew "redis", restart_service: :changed
+EOF
+
+#echo "### update heroku binary..."
+#echo "###########################"
+#brew unlink heroku
+#brew link --force heroku
+
+echo "### run customizations from ~/.laptop.local ..."
+echo "###############################################"
+if [ -f "$HOME/.laptop.local" ]; then
+  # shellcheck disable=SC1090
+  source "$HOME/.laptop.local"
+fi
