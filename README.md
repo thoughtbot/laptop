@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a script to set up an macOS laptop for web and mobile development.
+Laptop is a script to set up an macOS / linux laptop for web and mobile development.
 
 It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
@@ -16,6 +16,7 @@ We support:
 * macOS Yosemite (10.10)
 * macOS El Capitan (10.11)
 * macOS Sierra (10.12)
+* linux Debian / Ubuntu based distros
 
 Older versions may work but aren't regularly tested.
 Bug reports for older versions are welcome.
@@ -23,22 +24,25 @@ Bug reports for older versions are welcome.
 Install
 -------
 
-Download the script:
+Download the appropiate script:
 
 ```sh
 curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/linux
 ```
 
 Review the script (avoid running scripts you haven't read!):
 
 ```sh
-less mac
+cat mac
+cat linux
 ```
 
 Execute the downloaded script:
 
 ```sh
 sh mac 2>&1 | tee ~/laptop.log
+bash linux 2>&1 | tee ~/laptop.log
 ```
 
 Optionally, review the log:
@@ -63,11 +67,13 @@ Or, attach the whole log file as an attachment.
 What it sets up
 ---------------
 
-macOS tools:
+Package manager:
 
-* [Homebrew] for managing operating system libraries.
+* [Homebrew] for macOS operating system libraries or
+* [Linuxbrew] for linux operating system libraries
 
 [Homebrew]: http://brew.sh/
+[Linuxbrew]: http://linuxbrew.sh/
 
 Unix tools:
 
