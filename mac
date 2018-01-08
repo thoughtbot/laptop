@@ -131,7 +131,10 @@ brew "wget"
 brew "node"
 brew "rbenv"
 brew "ruby-build"
-cask "java"
+
+# Fix for forcing java8 install
+tap "caskroom/versions"
+cask "java8"
 
 # Databases
 brew "postgres", restart_service: true
