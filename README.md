@@ -24,8 +24,7 @@ curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/master/mac
 Then run it:
 
 ```sh
-chmod +x mac
-./mac
+sh mac 2>&1 | tee ~/laptop.log
 ```
 
 ## What it sets up
