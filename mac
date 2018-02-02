@@ -67,7 +67,7 @@ update_shell() {
     fancy_echo "Adding '$shell_path' to /etc/shells"
     sudo sh -c "echo $shell_path >> /etc/shells"
   fi
-  chsh -s "$shell_path"
+  sudo chsh -s "$shell_path" "$USER"
 }
 
 case "$SHELL" in
@@ -86,7 +86,6 @@ gem_install_or_update() {
     gem update "$@"
   else
     gem install "$@"
-    rbenv rehash
   fi
 }
 
@@ -109,13 +108,15 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 fancy_echo "Updating Homebrew formulae ..."
-brew update
+brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 tap "homebrew/services"
+tap "universal-ctags/universal-ctags"
+tap "caskroom/cask"
 
 # Unix
-brew "ctags"
+brew "universal-ctags", args: ["HEAD"]
 brew "git"
 brew "openssl"
 brew "rcm"
@@ -127,7 +128,7 @@ brew "watchman"
 brew "zsh"
 
 # Heroku
-brew "heroku-toolbelt"
+brew "heroku"
 brew "parity"
 
 # GitHub
@@ -137,44 +138,70 @@ brew "hub"
 brew "imagemagick"
 
 # Testing
-brew "qt@5.5"
+brew "qt@5.5" if MacOS::Xcode.installed?
 
-# Programming languages and package managers
+# Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
-brew "node"
-brew "rbenv"
-brew "ruby-build"
+brew "coreutils"
 brew "yarn"
+cask "gpg-suite"
 
 # Databases
-brew "postgres", restart_service: true
-brew "redis", restart_service: true
+brew "postgres", restart_service: :changed
+brew "redis", restart_service: :changed
 EOF
 
-fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
-brew unlink qt@5.5
-brew link --force qt@5.5
-
-fancy_echo "Configuring Ruby ..."
-find_latest_ruby() {
-  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
-}
-
-ruby_version="$(find_latest_ruby)"
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
-eval "$(rbenv init -)"
-
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
+if brew list | grep --silent "qt@5.5"; then
+  fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
+  brew unlink qt@5.5
+  brew link --force qt@5.5
 fi
 
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
+fancy_echo "Update heroku binary..."
+brew unlink heroku
+brew link --force heroku
+
+fancy_echo "Configuring asdf version manager..."
+if [ ! -d "$HOME/.asdf" ]; then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.3.0
+  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
+fi
+
+install_asdf_plugin() {
+  local name="$1"
+  local url="$2"
+
+  if ! asdf plugin-list | grep -Fq "$name"; then
+    asdf plugin-add "$name" "$url"
+  fi
+}
+
+# shellcheck disable=SC1090
+source "$HOME/.asdf/asdf.sh"
+install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+
+install_asdf_language() {
+  local language="$1"
+  local version
+  version="$(asdf list-all "$language" | tail -1)"
+
+  if ! asdf list "$language" | grep -Fq "$version"; then
+    asdf install "$language" "$version"
+    asdf global "$language" "$version"
+  fi
+}
+
+fancy_echo "Installing latest Ruby..."
+install_asdf_language "ruby"
 gem update --system
-gem_install_or_update 'bundler'
+gem_install_or_update "bundler"
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
+
+fancy_echo "Installing latest Node..."
+bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
+install_asdf_language "nodejs"
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
