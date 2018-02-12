@@ -3,7 +3,6 @@
 # Welcome to the thoughtbot laptop script!
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
-
 fancy_echo() {
   local fmt="$1"; shift
 
@@ -136,7 +135,21 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 
 brew_tap 'caskroom/cask'
-brew update
+
+###########################
+#         NODEJS
+##########################
+nodeversions=`./node-versions.rb`
+mostrecentnode=$(echo "${nodeversions[@]:-1:1}" | tail -1)
+
+# Install each versions
+for version in $nodeversions; do
+  brew_install_or_upgrade $version
+done
+
+# Link the last, most recent version
+brew unlink $mostrecentnode
+brew link --force $mostrecentnode
 
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
@@ -152,15 +165,11 @@ brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'qt'
 brew_install_or_upgrade 'hub'
-brew_install_or_upgrade 'node'
-brew_install_or_upgrade 'vim'
-
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 brew cask install firefox
 brew cask install google-chrome
-
 brew_install_or_upgrade 'heroku-toolbelt'
 
 if ! command -v rcup >/dev/null; then
@@ -219,4 +228,3 @@ sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/iOS Simulat
 defaults write com.apple.terminal StringEncodings -array 4
 
 fancy_echo "You'll need to restart your computer before all iOS settings can take effect."
-
