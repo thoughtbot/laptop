@@ -238,4 +238,4 @@ install_gui_app "intellij idea ce" "intellij-idea-ce"
 # Android
 install_gui_app "android studio" "android-studio"
 
-fancy_echo "Laptop completed successfully! Let's celebrate! 🎉"
+fancy_echo "⚠️ Script has finished - please scroll the lines above and bring any errors to an instructor's attention during Meet Your Cohort ⚠️"
