@@ -126,6 +126,7 @@ tap "caskroom/fonts"
 brew "git"
 brew "zsh"
 brew "wget"
+brew "tree"
 
 # Programming languages
 brew "node"

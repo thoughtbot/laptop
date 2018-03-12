@@ -40,6 +40,7 @@ sh mac 2>&1 | tee ~/laptop.log
 * [Zsh](http://www.zsh.org/) as your shell
 * [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) because we don't hate you
 * [wget](https://www.gnu.org/software/wget/) for downloading files from the Terminal
+* [tree](https://linux.die.net/man/1/tree) for visualising directory structure from the Terminal
 
 ### Programming languages and configuration:
 
