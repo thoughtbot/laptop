@@ -1,6 +1,6 @@
 #!/bin/sh
 
-log_filename="codeclan_laptop_install_report"
+log_filename="codeclan_laptop_install_report.log"
 
 if [ -f "$HOME/$log_filename" ]
 then
