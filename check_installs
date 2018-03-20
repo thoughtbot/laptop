@@ -13,7 +13,7 @@ then
     rm "$HOME/$log_filename"
     # script continues
   else
-    echo "Enter a name for the log file, or enter nothing to exit"
+    echo "Enter a name for the log file, or enter nothing to exit without checking for unsuccessful installs"
     read chosen_filename
     if [ "$chosen_filename" = "" ]
     then
