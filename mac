@@ -150,7 +150,7 @@ curl -L \
 
 fancy_echo "Installing GUI apps"
 
-# # Web browsing
+# Web browsing
 install_gui_app "google chrome" "google-chrome"
 
 # Text editing
