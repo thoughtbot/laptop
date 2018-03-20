@@ -28,10 +28,6 @@ log_version_info() {
     # the version_info variable
     "java") version_info="$(java -version 2>&1 )" ;;
     "mongod") version_info="$(mongo --version)" ;;
-    # junit is an alias and therefore is not available within this script
-    # I also can't figure out how best to programatically check for the version
-    # number without simply running JUnit as the version number is in the output
-    "junit") version_info="$(java org.junit.runner.JUnitCore)" ;;
   esac
   version_info=$(head -n 1 <<< $version_info)
   echo "$1 version info:\n$version_info\n" >> "$HOME/laptop_install_report"
@@ -89,11 +85,3 @@ do
     log_install_success "$cli_app_name"
   fi
 done
-# special case check for junit because it's not a native binary
-java org.junit.runner.JUnitCore 2>&1>/dev/null
-if [ $? -ne 0 ]
-then
-  log_install_fail "$cli_app_name"
-else
-  log_install_success "$cli_app_name"
-fi
