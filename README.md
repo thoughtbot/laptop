@@ -2,7 +2,7 @@
 
 A script to set up a macOS laptop for development.
 
-It can be run multiple times on the same machine safely. It installs, upgrades, or skips packagesbased on what is already installed on the machine.
+It can be run multiple times on the same machine safely. It installs, upgrades, or skips packages based on what is already installed on the machine.
 
 ## Requirements
 
@@ -39,15 +39,14 @@ sh mac 2>&1 | tee ~/laptop.log
 * [Git](https://git-scm.com/) for version control
 * [Zsh](http://www.zsh.org/) as your shell
 * [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) because we don't hate you
-* [wget](https://www.gnu.org/software/wget/) for downloading files from the Terminal
 
 ### Programming languages and configuration:
 
-* [Ruby](https://www.ruby-lang.org/en/) for writing general-purpose code
+* [Ruby](https://www.ruby-lang.org/en/)
 * [Rbenv](https://github.com/sstephenson/rbenv) for managing versions of Ruby
 * [Bundler](http://bundler.io/) for managing Ruby libraries
 * [Ruby Build](https://github.com/sstephenson/rbenv) for installing Rubies
-* [Java](https://java.com/en/) and [Junit](http://junit.org/) for compiling, running and testing Java code
+* [Java](https://java.com/en/)
 * [Node.js](http://nodejs.org/) for JavaScript back-end development, and
 * [NPM](https://www.npmjs.org/) for installing JavaScript packages
 
@@ -61,6 +60,7 @@ sh mac 2>&1 | tee ~/laptop.log
 * [Google Chrome](https://www.google.com/chrome/) for web browsing and development
 * [Atom](https://atom.io/) for text editing
 * [Slack](https://slack.com) for team chat
+* [IntelliJ IDEA CE](https://www.jetbrains.com/idea/) for Java development
 * [Android Studio](https://developer.android.com/studio/index.html) for mobile development
 
 ### Fonts:
