@@ -238,4 +238,8 @@ install_gui_app "intellij idea ce" "intellij-idea-ce"
 # Android
 install_gui_app "android studio" "android-studio"
 
+fancy_echo "Checking for unsuccessful installs"
+
+curl --remote-name "https://raw.githubusercontent.com/codeclan/laptop/master/check_installs" | sh
+
 fancy_echo "⚠️ Script has finished - please scroll the lines above and bring any errors to an instructor's attention during Meet Your Cohort ⚠️"
