@@ -1,0 +1,99 @@
+#!/bin/sh
+
+rm "$HOME/laptop_install_report" 2>/dev/null
+
+log_install_success() {
+  echo "$1 ✅" >> "$HOME/laptop_install_report"
+  log_version_info $1
+}
+
+log_install_fail() {
+  message="$1 is NOT installed!! 🚫"
+  echo "$message" 1>&2
+  echo "$message" >> "$HOME/laptop_install_report"
+}
+
+log_version_info() {
+  local version_info
+  case "$1" in
+    "git") version_info="$(git --version)" ;;
+    "zsh") version_info="$(zsh --version)" ;;
+    "wget") version_info="$(wget --version)" ;;
+    "node") version_info="$(node -v)" ;;
+    "rbenv") version_info="$(rbenv -v)" ;;
+    "ruby-build") version_info="$(ruby-build --version)" ;;
+    "postgres") version_info="$(postgres --version)" ;;
+    # java seems to print to stderr for no apparent reason. `2>&1` redirects
+    # stderr to stdout to silence the CLI output and allow it to be captured in
+    # the version_info variable
+    "java") version_info="$(java -version 2>&1 )" ;;
+    "mongod") version_info="$(mongo --version)" ;;
+    # junit is an alias and therefore is not available within this script
+    # I also can't figure out how best to programatically check for the version
+    # number without simply running JUnit as the version number is in the output
+    "junit") version_info="$(java org.junit.runner.JUnitCore)" ;;
+  esac
+  version_info=$(head -n 1 <<< $version_info)
+  echo "$1 version info:\n$version_info\n" >> "$HOME/laptop_install_report"
+}
+
+is_gui_app_installed() {
+  local appNameOrBundleId=$1 bundleId
+
+  # convert app name to bundle ID
+  bundleId=$(osascript -e "id of application \"$appNameOrBundleId\"" 2>/dev/null) || { return 1; }
+
+  # search for location of app with given bundle ID
+  osascript -e "tell application \"Finder\" to POSIX path of (get application file id \"$bundleId\" as alias)" 2>/dev/null || { return 1; }
+}
+
+GUI_APPS=(
+  "google chrome"
+  "atom"
+  "slack"
+  "insomnia"
+  "intellij idea ce"
+  "android studio"
+)
+
+for gui_app_name in "${GUI_APPS[@]}"
+do
+  is_gui_app_installed "$gui_app_name" 2>&1>/dev/null
+  if [ $? -ne 0 ]
+  then
+    log_install_fail "$gui_app_name"
+  else
+    log_install_success "$gui_app_name"
+  fi
+done
+
+CLI_APPS=(
+  "git"
+  "zsh"
+  "wget"
+  "node"
+  "rbenv"
+  "ruby-build"
+  "postgres"
+  "java"
+  "mongod"
+)
+
+for cli_app_name in "${CLI_APPS[@]}"
+do
+  which "$cli_app_name" 2>&1>/dev/null
+  if [ $? -ne 0 ]
+  then
+    log_install_fail "$cli_app_name"
+  else
+    log_install_success "$cli_app_name"
+  fi
+done
+# special case check for junit because it's not a native binary
+java org.junit.runner.JUnitCore 2>&1>/dev/null
+if [ $? -ne 0 ]
+then
+  log_install_fail "$cli_app_name"
+else
+  log_install_success "$cli_app_name"
+fi
