@@ -55,6 +55,28 @@ log_version_info() {
   echo "$1 version info:\n$version_info\n" >> "$HOME/$log_filename"
 }
 
+CLI_APPS=(
+  "git"
+  "zsh"
+  "node"
+  "rbenv"
+  "ruby-build"
+  "postgres"
+  "java"
+  "mongod"
+)
+
+for cli_app_name in "${CLI_APPS[@]}"
+do
+  which "$cli_app_name" 2>&1>/dev/null
+  if [ $? -ne 0 ]
+  then
+    log_install_fail "$cli_app_name"
+  else
+    log_install_success "$cli_app_name"
+  fi
+done
+
 is_gui_app_installed() {
   local appNameOrBundleId=$1 bundleId
 
@@ -82,27 +104,5 @@ do
     log_install_fail "$gui_app_name"
   else
     log_install_success "$gui_app_name"
-  fi
-done
-
-CLI_APPS=(
-  "git"
-  "zsh"
-  "node"
-  "rbenv"
-  "ruby-build"
-  "postgres"
-  "java"
-  "mongod"
-)
-
-for cli_app_name in "${CLI_APPS[@]}"
-do
-  which "$cli_app_name" 2>&1>/dev/null
-  if [ $? -ne 0 ]
-  then
-    log_install_fail "$cli_app_name"
-  else
-    log_install_success "$cli_app_name"
   fi
 done
