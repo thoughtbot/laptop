@@ -14,7 +14,7 @@ log_install_fail() {
 }
 
 log_version_info() {
-  local version_info
+  local version_info="Version unknown"
   case "$1" in
     "git") version_info="$(git --version)" ;;
     "zsh") version_info="$(zsh --version)" ;;
