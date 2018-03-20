@@ -1,16 +1,39 @@
 #!/bin/sh
 
-rm "$HOME/laptop_install_report" 2>/dev/null
+log_filename="codeclan_laptop_install_report"
+
+if [ -f "$HOME/$log_filename" ]
+then
+  echo "~/codeclan_laptop_install_report already exists. Replace it?"
+  printf "[Y/n] "
+  read response
+  if [ "$response" = "y" ] || [ "$response" = "Y" ]
+  then
+    echo "Replacing ~/$log_filename with updated install log"
+    rm "$HOME/$log_filename"
+    # script continues
+  else
+    echo "Enter a name for the log file, or enter nothing to exit"
+    read chosen_filename
+    if [ "$chosen_filename" = "" ]
+    then
+      exit
+    else
+      log_filename="$chosen_filename"
+      # script continues
+    fi
+  fi
+fi
 
 log_install_success() {
-  echo "$1 ✅" >> "$HOME/laptop_install_report"
+  echo "$1 ✅" >> "$HOME/$log_filename"
   log_version_info $1
 }
 
 log_install_fail() {
   message="$1 is NOT installed!! 🚫"
   echo "$message" 1>&2
-  echo "$message" >> "$HOME/laptop_install_report"
+  echo "$message" >> "$HOME/$log_filename"
 }
 
 log_version_info() {
@@ -29,7 +52,7 @@ log_version_info() {
     "mongod") version_info="$(mongo --version)" ;;
   esac
   version_info=$(head -n 1 <<< $version_info)
-  echo "$1 version info:\n$version_info\n" >> "$HOME/laptop_install_report"
+  echo "$1 version info:\n$version_info\n" >> "$HOME/$log_filename"
 }
 
 is_gui_app_installed() {
