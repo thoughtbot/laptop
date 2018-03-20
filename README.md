@@ -39,7 +39,6 @@ sh mac 2>&1 | tee ~/laptop.log
 * [Git](https://git-scm.com/) for version control
 * [Zsh](http://www.zsh.org/) as your shell
 * [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) because we don't hate you
-* [wget](https://www.gnu.org/software/wget/) for downloading files from the Terminal
 
 ### Programming languages and configuration:
 
@@ -47,7 +46,7 @@ sh mac 2>&1 | tee ~/laptop.log
 * [Rbenv](https://github.com/sstephenson/rbenv) for managing versions of Ruby
 * [Bundler](http://bundler.io/) for managing Ruby libraries
 * [Ruby Build](https://github.com/sstephenson/rbenv) for installing Rubies
-* [Java](https://java.com/en/) and [Junit](http://junit.org/) for compiling, running and testing Java code
+* [Java](https://java.com/en/) for compiling and running
 * [Node.js](http://nodejs.org/) for JavaScript back-end development, and
 * [NPM](https://www.npmjs.org/) for installing JavaScript packages
 
