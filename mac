@@ -125,7 +125,6 @@ tap "caskroom/fonts"
 # Unix
 brew "git"
 brew "zsh"
-brew "wget"
 
 # Programming languages
 brew "node"
@@ -148,23 +147,10 @@ fancy_echo "Installing Oh-My-Zsh ..."
 curl -L \
   "https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh" | sh
 
-# Junit
-fancy_echo "Installing Junit ..."
-# Download junit
-create_folder_if_not_there "$HOME/junit"
-wget -O "$HOME/junit/junit-4.12.jar" "http://search.maven.org/remotecontent?filepath=junit/junit/4.12/junit-4.12.jar"
-wget -O "$HOME/junit/hamcrest-core-1.3.jar" "http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"
-# Add junit to PATH
-append_to_zshrc 'export JUNIT_HOME="$HOME/junit"'
-append_to_zshrc 'export PATH="$PATH:$JUNIT_HOME"'
-# Add Junit to Java CLASSPATH
-append_to_zshrc 'export CLASSPATH="$CLASSPATH:$JUNIT_HOME/junit-4.12.jar:$JUNIT_HOME/hamcrest-core-1.3.jar"'
-# Add alias to provide 'junit' command
-append_to_zshrc 'alias junit="java org.junit.runner.JUnitCore $1"'
 
 fancy_echo "Installing GUI apps"
 
-# # Web browsing
+# Web browsing
 install_gui_app "google chrome" "google-chrome"
 
 # Text editing
