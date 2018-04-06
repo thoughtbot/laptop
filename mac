@@ -172,11 +172,6 @@ brew cask install firefox
 brew cask install google-chrome
 brew_install_or_upgrade 'heroku-toolbelt'
 
-if ! command -v rcup >/dev/null; then
-  brew_tap 'thoughtbot/formulae'
-  brew_install_or_upgrade 'rcm'
-fi
-
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
