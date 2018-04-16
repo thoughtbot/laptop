@@ -112,11 +112,9 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 tap "homebrew/services"
-tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
 
 # Unix
-brew "universal-ctags", args: ["HEAD"]
 brew "git"
 brew "openssl"
 brew "rcm"
