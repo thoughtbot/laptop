@@ -172,6 +172,9 @@ brew cask install firefox
 brew cask install google-chrome
 brew_install_or_upgrade 'heroku-toolbelt'
 
+# Install PHP with FPM
+. ./php.sh
+
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
