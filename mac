@@ -172,6 +172,9 @@ brew cask install firefox
 brew cask install google-chrome
 brew_install_or_upgrade 'heroku-toolbelt'
 
+# Install PHP with FPM for use with the Sparkbox Standard Apache setup
+. ./php.sh
+
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
