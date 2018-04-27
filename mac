@@ -122,9 +122,6 @@ brew bundle --file=- <<EOF
 tap "homebrew/services"
 tap "caskroom/fonts"
 
-
-
-
 # Unix
 brew "git"
 brew "zsh"
