@@ -257,6 +257,7 @@ brew_install_or_upgrade 'libyaml'
 brew_install_or_upgrade 'chromedriver'
 brew_install_or_upgrade 'httpie'
 brew_install_or_upgrade 'z'
+brew_install_or_upgrade 'watchman'
 
 # Install applications
 cask_install_or_upgrade 'macvim'
