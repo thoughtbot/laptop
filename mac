@@ -144,12 +144,13 @@ brew "qt@5.5" if MacOS::Xcode.installed?
 brew "libyaml" # should come after openssl
 brew "coreutils"
 brew "yarn"
-cask "gpg-suite"
 
 # Databases
 brew "postgres", restart_service: :changed
 brew "redis", restart_service: :changed
 EOF
+
+rm /Library/Mail/Bundles/GPGMail.mailbundle
 
 if brew list | grep --silent "qt@5.5"; then
   fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
