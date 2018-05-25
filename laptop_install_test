@@ -106,3 +106,5 @@ do
     log_install_success "$gui_app_name"
   fi
 done
+
+cat ~/$log_filename
