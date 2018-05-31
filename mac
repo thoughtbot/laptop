@@ -142,6 +142,7 @@ brew "qt@5.5" if MacOS::Xcode.installed?
 brew "libyaml" # should come after openssl
 brew "coreutils"
 brew "yarn"
+brew "rbenv"
 cask "gpg-suite"
 
 # Databases
@@ -158,16 +159,10 @@ fancy_echo "Update heroku binary..."
 brew unlink heroku
 brew link --force heroku
 
-fancy_echo "Installing latest Ruby..."
-install_asdf_language "ruby"
 gem update --system
 gem_install_or_update "bundler"
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
-
-fancy_echo "Installing latest Node..."
-bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-install_asdf_language "nodejs"
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
