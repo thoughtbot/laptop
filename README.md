@@ -27,6 +27,13 @@ Then run it:
 sh mac 2>&1 | tee ~/laptop.log
 ```
 
+Check the script was successful (occasionally may claim some application are missing that aren't) -
+
+```sh
+curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/feature/install_success_check/laptop_install_test --output ~/laptop_install_test
+sh ~/laptop_install_test
+```
+
 ## What it sets up
 
 ### macOS tools:
