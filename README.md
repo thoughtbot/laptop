@@ -71,14 +71,13 @@ Unix tools:
 * [Git] for version control
 * [OpenSSL] for Transport Layer Security (TLS)
 * [The Silver Searcher] for finding things in files
-* [Watchman] for watching for filesystem events
 * [Zsh] as your shell
 
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Git]: https://git-scm.com/
 [OpenSSL]: https://www.openssl.org/
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
-[Watchman]: https://facebook.github.io/watchman/
+[Tmux]: http://tmux.github.io/
 [Zsh]: http://www.zsh.org/
 
 Heroku tools:
