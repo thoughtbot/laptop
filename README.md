@@ -1,5 +1,4 @@
-Laptop
-======
+# Laptop
 
 Laptop is a script to set up a Mac for web development.
 
@@ -7,25 +6,23 @@ It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
 based on what is already installed on the machine.
 
-Requirements
-------------
+## Requirements
 
 We support:
 
-* macOS Sierra (10.12)
-* OS X El Capitan (10.11)
-* OS X Yosemite (10.10)
+- macOS Sierra (10.12)
+- OS X El Capitan (10.11)
+- OS X Yosemite (10.10)
 
 Older versions may work but aren't regularly tested. Bug reports for older
 versions are welcome.
 
-Install
--------
+## Install
 
 Download, review, then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+git clone git@github.com:sparkbox/laptop.git
 less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
@@ -34,8 +31,7 @@ Optionally, [install thoughtbot/dotfiles][dotfiles].
 
 [dotfiles]: https://github.com/thoughtbot/dotfiles#install
 
-Debugging
----------
+## Debugging
 
 Your last Laptop run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
@@ -43,55 +39,52 @@ If not, copy the lines where the script failed into a
 [new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
 Or, attach the whole log file as an attachment.
 
+## What it sets up
 
-What it sets up
----------------
+- [Bundler] for managing Ruby libraries
+- [Exuberant Ctags] for indexing files for vim tab completion
+- [Foreman] for managing web processes
+- [hub] for interacting with the GitHub API
+- [Heroku Toolbelt] for interacting with the Heroku API
+- [Homebrew] for managing operating system libraries
+- [ImageMagick] for cropping and resizing images
+- [Node.js] and [NPM], for running apps and installing JavaScript packages
+- [Postgres] for storing relational data
+- [Qt] for headless JavaScript testing via Capybara Webkit
+- [Rbenv] for managing versions of Ruby
+- [RCM] for managing company and personal dotfiles
+- [Redis] for storing key-value data
+- [Ruby Build] for installing Rubies
+- [Ruby] stable for writing general-purpose code
+- [The Silver Searcher] for finding things in files
+- [Tmux] for saving project state and switching between projects
+- [Zsh] as your shell
 
-* [Bundler] for managing Ruby libraries
-* [Exuberant Ctags] for indexing files for vim tab completion
-* [Foreman] for managing web processes
-* [hub] for interacting with the GitHub API
-* [Heroku Toolbelt] for interacting with the Heroku API
-* [Homebrew] for managing operating system libraries
-* [ImageMagick] for cropping and resizing images
-* [Node.js] and [NPM], for running apps and installing JavaScript packages
-* [Postgres] for storing relational data
-* [Qt] for headless JavaScript testing via Capybara Webkit
-* [Rbenv] for managing versions of Ruby
-* [RCM] for managing company and personal dotfiles
-* [Redis] for storing key-value data
-* [Ruby Build] for installing Rubies
-* [Ruby] stable for writing general-purpose code
-* [The Silver Searcher] for finding things in files
-* [Tmux] for saving project state and switching between projects
-* [Zsh] as your shell
-
-[Bundler]: http://bundler.io/
-[Exuberant Ctags]: http://ctags.sourceforge.net/
-[Firefox]: https://www.mozilla.org/en-US/firefox/
-[Foreman]: https://github.com/ddollar/foreman
-[Google Chrome]: https://www.google.com/chrome/
+[bundler]: http://bundler.io/
+[exuberant ctags]: http://ctags.sourceforge.net/
+[firefox]: https://www.mozilla.org/en-US/firefox/
+[foreman]: https://github.com/ddollar/foreman
+[google chrome]: https://www.google.com/chrome/
 [hub]: http://hub.github.com/
-[Heroku Toolbelt]: https://toolbelt.heroku.com/
-[Homebrew]: http://brew.sh/
-[ImageMagick]: http://www.imagemagick.org/
-[Node.js]: http://nodejs.org/
-[NPM]: https://www.npmjs.org/
-[Postgres]: http://www.postgresql.org/
-[Qt]: http://qt-project.org/
-[RVM]: https://rvm.io
-[RCM]: https://github.com/thoughtbot/rcm
-[Redis]: http://redis.io/
-[Ruby]: https://www.ruby-lang.org/en/
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
-[Tmux]: http://tmux.sourceforge.net/
-[Vim]: https://github.com/vim/vim/
-[Zsh]: http://www.zsh.org/
+[heroku toolbelt]: https://toolbelt.heroku.com/
+[homebrew]: http://brew.sh/
+[imagemagick]: http://www.imagemagick.org/
+[node.js]: http://nodejs.org/
+[npm]: https://www.npmjs.org/
+[postgres]: http://www.postgresql.org/
+[qt]: http://qt-project.org/
+[rvm]: https://rvm.io
+[rcm]: https://github.com/thoughtbot/rcm
+[redis]: http://redis.io/
+[ruby]: https://www.ruby-lang.org/en/
+[the silver searcher]: https://github.com/ggreer/the_silver_searcher
+[tmux]: http://tmux.sourceforge.net/
+[vim]: https://github.com/vim/vim/
+[zsh]: http://www.zsh.org/
 
 It should take less than 15 minutes to install (depends on your machine).
 
-Customize in `~/.laptop.local`
-------------------------------
+## Customize in `~/.laptop.local`
 
 Your `~/.laptop.local` is run at the end of the Laptop script.
 Put your customizations there.
@@ -124,8 +117,7 @@ can be used in your `~/.laptop.local`.
 See the [wiki](https://github.com/thoughtbot/laptop/wiki)
 for more customization examples.
 
-Contributing
-------------
+## Contributing
 
 Edit the `mac` file.
 Document in the `README.md` file.
@@ -135,8 +127,8 @@ Follow shell style guidelines by using [ShellCheck] and [Syntastic].
 brew install shellcheck
 ```
 
-[ShellCheck]: http://www.shellcheck.net/about.html
-[Syntastic]: https://github.com/scrooloose/syntastic
+[shellcheck]: http://www.shellcheck.net/about.html
+[syntastic]: https://github.com/scrooloose/syntastic
 
 Thank you, [contributors]!
 
@@ -147,17 +139,15 @@ you agree to abide by the thoughtbot [code of conduct].
 
 [code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
 
-License
--------
+## License
 
 Laptop is © 2011-2015 thoughtbot, inc.
 It is free software,
 and may be redistributed under the terms specified in the [LICENSE] file.
 
-[LICENSE]: LICENSE
+[license]: LICENSE
 
-About thoughtbot
-----------------
+## About thoughtbot
 
 ![thoughtbot](https://thoughtbot.com/logo.png)
 
