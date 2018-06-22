@@ -176,7 +176,6 @@ install_asdf_plugin() {
   fi
 }
 
-# shellcheck disable=SC2039
 # shellcheck disable=SC1090
 source "$HOME/.asdf/asdf.sh"
 install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
