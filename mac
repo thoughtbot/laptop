@@ -52,6 +52,13 @@ case "$SHELL" in
     ;;
 esac
 
+brew_uninstall() {
+  if brew_is_installed "$1"; then
+    fancy_echo "Uninstalling %s ..." "$1"
+    brew uninstall "$@"
+  fi
+}
+
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then
@@ -159,7 +166,7 @@ brew unlink $mostrecentnode
 brew link --force $mostrecentnode
 
 # Cleanup after old packages
-brew uninstall mysql
+brew_uninstall 'mysql'
 
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
