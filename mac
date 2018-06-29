@@ -170,6 +170,7 @@ brew_uninstall 'mysql'
 
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
+brew_install_or_upgrade 'httpd'
 brew_install_or_upgrade 'mysql@5.7'
 brew_launchctl_restart 'mysql@5.7'
 brew_install_or_upgrade 'redis'
@@ -187,6 +188,8 @@ brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 brew cask install firefox
 brew cask install google-chrome
+brew cask install sequel-pro
+brew cask install 1password
 brew_install_or_upgrade 'heroku-toolbelt'
 
 # Install PHP with FPM for use with the Sparkbox Standard Apache setup
