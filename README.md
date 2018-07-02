@@ -21,13 +21,15 @@ versions are welcome.
 Install
 -------
 
-Download, review, then execute the script:
+You don't have to clone this repo, just download, review, then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/givewellgetwell/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/wellist/laptop/master/mac
 less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
+
+This script automatically adds to your .bashrc file. If you don't use .bashrc (e.g. .bash_profile, .zshrc), ensure those additions are copied to where they need to be and refresh your terminal, if need be. 
 
 Debugging
 ---------
@@ -35,7 +37,7 @@ Debugging
 Your last Laptop run will be saved to `~/laptop.log`. Read through it to see if
 you can debug the issue yourself. If not, copy the lines where the script
 failed into a [new GitHub
-Issue](https://github.com/givewellgetwell/laptop/issues/new) for us. Or, attach the
+Issue](https://github.com/wellist/laptop/issues/new) for us. Or, attach the
 whole log file as an attachment.
 
 What it sets up

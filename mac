@@ -4,7 +4,7 @@
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
 
-ruby_version="2.3.0"
+ruby_version="2.4.4"
 
 fancy_echo() {
   local fmt="$1"; shift
@@ -94,6 +94,13 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
+if ! command -v xcode-select >/dev/null; then
+  fancy_echo "Installing xcode-select ..."
+  xcode-select --install
+else
+  fancy_echo "xcode-select already installed. Skipping ..."
+fi
+
 brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'postgis'
 brew_launchctl_restart 'postgresql'
@@ -107,10 +114,20 @@ brew_install_or_upgrade 'qt5'
 brew unlink qt5 && brew link qt5 --force
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
+brew_install_or_upgrade 'awscli'
+brew_install_or_upgrade 'geckodriver'
+brew cask install chromedriver
+
 
 brew_install_or_upgrade 'rbenv'
 echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 source ~/.bashrc
+
+brew_install_or_upgrade 'nvm'
+
+mkdir -p ~/.nvm
+echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+echo '. "$(brew --prefix nvm)/nvm.sh"' >> ~/.bashrc
 
 brew_install_or_upgrade 'ruby-build'
 
@@ -132,9 +149,12 @@ fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-gem_install_or_update 'foreman'
-
 brew_install_or_upgrade 'heroku-toolbelt'
+
+brew_install_or_upgrade 'kops'
+brew_install_or_upgrade 'gettext'
+
+echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bashrc
 
 if ! command -v rcup >/dev/null; then
   brew_tap 'thoughtbot/formulae'
