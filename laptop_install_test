@@ -94,6 +94,7 @@ GUI_APPS=(
   "insomnia"
   "intellij idea ce"
   "android studio"
+  "mongodb compass community"
 )
 
 for gui_app_name in "${GUI_APPS[@]}"

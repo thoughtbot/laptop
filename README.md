@@ -69,6 +69,7 @@ sh ~/laptop_install_test
 * [Slack](https://slack.com) for team chat
 * [IntelliJ IDEA CE](https://www.jetbrains.com/idea/) for Java development
 * [Android Studio](https://developer.android.com/studio/index.html) for mobile development
+* [MongoDB Compass](https://www.mongodb.com/products/compass) for accessing MongoDB databases from a GUI
 
 ### Fonts:
 * Open Dyslexic for accessibility
