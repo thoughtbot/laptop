@@ -198,6 +198,14 @@ install_elasticsearch() {
   brew services start elasticsearch@5.6
 }
 
+install_postgresql() {
+  brew_install_or_upgrade 'postgresql@9.6'
+  brew_launchctl_restart 'postgresql'
+  if [ `psql -U postgres -c "select 1" &> /dev/null` ]; then
+    /usr/local/bin/createuser -U `whoami` --superuser postgres
+  fi
+}
+
 ##### Start Installation #####
 
 if [ ! -d "$HOME/.bin/" ]; then
@@ -218,11 +226,7 @@ install_oh_my_zsh
 # Install packages
 install_or_update_homebrew
 brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'postgres'
-brew_launchctl_restart 'postgresql'
-if [ `psql -U postgres -c "select 1" &> /dev/null` ]; then
-  /usr/local/bin/createuser -U `whoami` --superuser postgres
-fi
+install_postgresql
 brew_install_or_upgrade 'redis'
 brew_launchctl_restart 'redis'
 brew_install_or_upgrade 'the_silver_searcher'
