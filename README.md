@@ -68,7 +68,6 @@ sh ~/laptop_install_test
 * [Atom](https://atom.io/) for text editing
 * [Slack](https://slack.com) for team chat
 * [IntelliJ IDEA CE](https://www.jetbrains.com/idea/) for Java development
-* [Android Studio](https://developer.android.com/studio/index.html) for mobile development
 
 ### Fonts:
 * Open Dyslexic for accessibility
