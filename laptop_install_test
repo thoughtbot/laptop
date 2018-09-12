@@ -93,7 +93,6 @@ GUI_APPS=(
   "slack"
   "insomnia"
   "intellij idea ce"
-  "android studio"
 )
 
 for gui_app_name in "${GUI_APPS[@]}"
