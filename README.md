@@ -8,8 +8,8 @@ It can be run multiple times on the same machine safely. It installs, upgrades, 
 
 We support:
 
-* macOS El Capitan (10.11)
 * macOS Sierra (10.12)
+* macOS High Sierra (10.13)
 
 Older versions may work but aren't tested.
 
