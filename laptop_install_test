@@ -64,6 +64,7 @@ CLI_APPS=(
   "postgres"
   "java"
   "mongod"
+  "tree"
 )
 
 for cli_app_name in "${CLI_APPS[@]}"
@@ -93,7 +94,7 @@ GUI_APPS=(
   "slack"
   "insomnia"
   "intellij idea ce"
-  "android studio"
+  "mongodb compass community"
 )
 
 for gui_app_name in "${GUI_APPS[@]}"
@@ -106,5 +107,3 @@ do
     log_install_success "$gui_app_name"
   fi
 done
-
-cat ~/$log_filename

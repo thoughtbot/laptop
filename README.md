@@ -8,8 +8,8 @@ It can be run multiple times on the same machine safely. It installs, upgrades, 
 
 We support:
 
-* macOS El Capitan (10.11)
 * macOS Sierra (10.12)
+* macOS High Sierra (10.13)
 
 Older versions may work but aren't tested.
 
@@ -46,6 +46,7 @@ sh ~/laptop_install_test
 * [Git](https://git-scm.com/) for version control
 * [Zsh](http://www.zsh.org/) as your shell
 * [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) because we don't hate you
+* [tree](https://linux.die.net/man/1/tree) for visualising directory structure from the Terminal
 
 ### Programming languages and configuration:
 
@@ -53,7 +54,7 @@ sh ~/laptop_install_test
 * [Rbenv](https://github.com/sstephenson/rbenv) for managing versions of Ruby
 * [Bundler](http://bundler.io/) for managing Ruby libraries
 * [Ruby Build](https://github.com/sstephenson/rbenv) for installing Rubies
-* [Java](https://java.com/en/) for compiling and running Java code
+* [Java](https://java.com/en/)
 * [Node.js](http://nodejs.org/) for JavaScript back-end development, and
 * [NPM](https://www.npmjs.org/) for installing JavaScript packages
 
@@ -68,7 +69,7 @@ sh ~/laptop_install_test
 * [Atom](https://atom.io/) for text editing
 * [Slack](https://slack.com) for team chat
 * [IntelliJ IDEA CE](https://www.jetbrains.com/idea/) for Java development
-* [Android Studio](https://developer.android.com/studio/index.html) for mobile development
+* [MongoDB Compass](https://www.mongodb.com/products/compass) for accessing MongoDB databases from a GUI
 
 ### Fonts:
 * Open Dyslexic for accessibility

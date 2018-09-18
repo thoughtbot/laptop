@@ -142,6 +142,7 @@ tap "caskroom/fonts"
 # Unix
 brew "git"
 brew "zsh"
+brew "tree"
 
 # Programming languages
 brew "node"
@@ -155,6 +156,7 @@ cask "java8"
 # Databases
 brew "postgres", restart_service: true
 brew "mongodb"
+cask "mongodb-compass-community"
 
 # Fonts
 cask "font-opendyslexic"
@@ -235,14 +237,12 @@ if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
 fi
 
 # IntelliJ
-fancy_echo "Installing IntelliJ and Android Studio. NB: Either / both steps could be completed at home if this is taking too long during MYC."
+fancy_echo "Installing IntelliJ"
 install_gui_app "intellij idea ce" "intellij-idea-ce"
-
-# Android
-install_gui_app "android studio" "android-studio"
 
 fancy_echo "Checking for unsuccessful installs"
 
-curl --remote-name "https://raw.githubusercontent.com/codeclan/laptop/master/laptop_install_test" | sh
+curl --remote-name "https://raw.githubusercontent.com/codeclan/laptop/master/laptop_install_test"
+sh laptop_install_test
 
 fancy_echo "⚠️ Script has finished - please scroll the lines above and bring any errors to an instructor's attention during Meet Your Cohort ⚠️"
