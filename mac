@@ -226,6 +226,7 @@ install_gui_app "android studio" "android-studio"
 
 fancy_echo "Checking for unsuccessful installs"
 
-curl --remote-name "https://raw.githubusercontent.com/codeclan/laptop/master/laptop_install_test" | sh
+curl --remote-name "https://raw.githubusercontent.com/codeclan/laptop/master/laptop_install_test"
+sh laptop_install_test
 
 fancy_echo "⚠️ Script has finished - please scroll the lines above and bring any errors to an instructor's attention during Meet Your Cohort ⚠️"
