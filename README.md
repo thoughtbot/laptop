@@ -8,8 +8,8 @@ It can be run multiple times on the same machine safely. It installs, upgrades, 
 
 We support:
 
-* macOS El Capitan (10.11)
 * macOS Sierra (10.12)
+* macOS High Sierra (10.13)
 
 Older versions may work but aren't tested.
 
@@ -25,6 +25,13 @@ Then run it:
 
 ```sh
 sh mac 2>&1 | tee ~/laptop.log
+```
+
+Check the script was successful (occasionally may claim some application are missing that aren't) -
+
+```sh
+curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/feature/install_success_check/laptop_install_test --output ~/laptop_install_test
+sh ~/laptop_install_test
 ```
 
 ## What it sets up
@@ -62,7 +69,6 @@ sh mac 2>&1 | tee ~/laptop.log
 * [Atom](https://atom.io/) for text editing
 * [Slack](https://slack.com) for team chat
 * [IntelliJ IDEA CE](https://www.jetbrains.com/idea/) for Java development
-* [Android Studio](https://developer.android.com/studio/index.html) for mobile development
 
 ### Fonts:
 * Open Dyslexic for accessibility
