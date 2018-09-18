@@ -64,6 +64,7 @@ CLI_APPS=(
   "postgres"
   "java"
   "mongod"
+  "tree"
 )
 
 for cli_app_name in "${CLI_APPS[@]}"
