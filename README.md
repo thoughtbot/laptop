@@ -54,7 +54,7 @@ sh ~/laptop_install_test
 * [Rbenv](https://github.com/sstephenson/rbenv) for managing versions of Ruby
 * [Bundler](http://bundler.io/) for managing Ruby libraries
 * [Ruby Build](https://github.com/sstephenson/rbenv) for installing Rubies
-* [Java](https://java.com/en/) for compiling and running Java code
+* [Java](https://java.com/en/)
 * [Node.js](http://nodejs.org/) for JavaScript back-end development, and
 * [NPM](https://www.npmjs.org/) for installing JavaScript packages
 
@@ -69,6 +69,7 @@ sh ~/laptop_install_test
 * [Atom](https://atom.io/) for text editing
 * [Slack](https://slack.com) for team chat
 * [IntelliJ IDEA CE](https://www.jetbrains.com/idea/) for Java development
+* [MongoDB Compass](https://www.mongodb.com/products/compass) for accessing MongoDB databases from a GUI
 
 ### Fonts:
 * Open Dyslexic for accessibility

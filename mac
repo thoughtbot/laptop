@@ -139,6 +139,7 @@ cask "java8"
 # Databases
 brew "postgres", restart_service: true
 brew "mongodb"
+cask "mongodb-compass-community"
 
 # Fonts
 cask "font-opendyslexic"
