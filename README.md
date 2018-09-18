@@ -46,6 +46,7 @@ sh ~/laptop_install_test
 * [Git](https://git-scm.com/) for version control
 * [Zsh](http://www.zsh.org/) as your shell
 * [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) because we don't hate you
+* [tree](https://linux.die.net/man/1/tree) for visualising directory structure from the Terminal
 
 ### Programming languages and configuration:
 
