@@ -42,7 +42,7 @@ sh laptop_install_test
 
 ### macOS tools:
 
-* [Xcode](https://developer.apple.com/xcode/) which apparently you can't do anything on macOS without.
+* [Apple's Command Line Developer Tools](https://developer.apple.com/) to enable developer functionality on our macOS system.
 
 ### Command line tools:
 
