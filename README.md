@@ -15,19 +15,23 @@ Older versions may work but aren't tested.
 
 ## Install
 
-Download, review, then execute the script:
+Download and review the script:
 
 ```sh
 curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/master/mac
 ```
 
-Then run it:
+Then run it and start the installation:
 
 ```sh
 sh mac 2>&1 | tee ~/laptop.log
 ```
 
-Check the script was successful (occasionally may claim some application are missing that aren't) -
+You will need to enter your computer password a few times throughout the script to allow installations.
+
+At the end of the installation script, another script will run to attempt to check if any applications failed to install. (occasionally may claim some application are missing that aren't)
+
+You can repeat this by running the following lines in terminal:
 
 ```sh
 curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/feature/install_success_check/laptop_install_test --output ~/laptop_install_test
