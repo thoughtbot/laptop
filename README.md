@@ -15,37 +15,41 @@ Older versions may work but aren't tested.
 
 ## Install
 
-Download, review, then execute the script:
+Download and review the script:
 
 ```sh
 curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/master/mac
 ```
 
-Then run it:
+Then run it and start the installation:
 
 ```sh
 sh mac 2>&1 | tee ~/laptop.log
 ```
 
-Check the script was successful (occasionally may claim some application are missing that aren't) -
+You will need to enter your computer password a few times throughout the script to allow installations.
+
+At the end of the installation script, another script will run to attempt to check if any applications failed to install. (occasionally may claim some application are missing that aren't)
+
+You can repeat this by running the following lines in terminal:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/feature/install_success_check/laptop_install_test --output ~/laptop_install_test
-sh ~/laptop_install_test
+curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/master/laptop_install_test
+sh laptop_install_test
 ```
 
 ## What it sets up
 
 ### macOS tools:
 
-* [Homebrew](http://brew.sh/) for managing operating system libraries.
-* [Xcode](https://developer.apple.com/xcode/) which apparently you can't do anything on macOS without.
+* [Apple's Command Line Developer Tools](https://developer.apple.com/) to enable developer functionality on our macOS system.
 
 ### Command line tools:
 
+* [Homebrew](http://brew.sh/) for managing operating system libraries.
 * [Git](https://git-scm.com/) for version control
-* [Zsh](http://www.zsh.org/) as your shell
-* [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) because we don't hate you
+* [Zsh](http://www.zsh.org/) as your command line shell
+* [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) to add nice features to zsh - autocompletions, shortcuts etc.
 * [tree](https://linux.die.net/man/1/tree) for visualising directory structure from the Terminal
 
 ### Programming languages and configuration:
