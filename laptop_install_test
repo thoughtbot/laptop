@@ -26,6 +26,7 @@ then
 fi
 
 log_install_success() {
+  echo "$1 ✅"
   echo "$1 ✅" >> "$HOME/$log_filename"
   log_version_info $1
 }
