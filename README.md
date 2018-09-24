@@ -34,8 +34,8 @@ At the end of the installation script, another script will run to attempt to che
 You can repeat this by running the following lines in terminal:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/feature/install_success_check/laptop_install_test --output ~/laptop_install_test
-sh ~/laptop_install_test
+curl --remote-name https://raw.githubusercontent.com/codeclan/laptop/master/laptop_install_test
+sh laptop_install_test
 ```
 
 ## What it sets up
