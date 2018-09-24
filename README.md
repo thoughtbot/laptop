@@ -48,8 +48,8 @@ sh laptop_install_test
 
 * [Homebrew](http://brew.sh/) for managing operating system libraries.
 * [Git](https://git-scm.com/) for version control
-* [Zsh](http://www.zsh.org/) as your shell
-* [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) because we don't hate you
+* [Zsh](http://www.zsh.org/) as your command line shell
+* [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) to add nice features to zsh - autocompletions, shortcuts etc.
 * [tree](https://linux.die.net/man/1/tree) for visualising directory structure from the Terminal
 
 ### Programming languages and configuration:
