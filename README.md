@@ -42,11 +42,11 @@ sh laptop_install_test
 
 ### macOS tools:
 
-* [Homebrew](http://brew.sh/) for managing operating system libraries.
 * [Xcode](https://developer.apple.com/xcode/) which apparently you can't do anything on macOS without.
 
 ### Command line tools:
 
+* [Homebrew](http://brew.sh/) for managing operating system libraries.
 * [Git](https://git-scm.com/) for version control
 * [Zsh](http://www.zsh.org/) as your shell
 * [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) because we don't hate you
