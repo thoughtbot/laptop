@@ -26,12 +26,13 @@ then
 fi
 
 log_install_success() {
-  echo "$1 ✅" >> "$HOME/$log_filename"
+  echo "✅ $1"
+  echo "✅ $1" >> "$HOME/$log_filename"
   log_version_info $1
 }
 
 log_install_fail() {
-  message="$1 is NOT installed!! 🚫"
+  message="🚫 $1 is NOT installed!!"
   echo "$message" 1>&2
   echo "$message" >> "$HOME/$log_filename"
 }
