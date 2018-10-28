@@ -153,16 +153,16 @@ brew "redis", restart_service: :changed
 EOF
 
 if brew list | grep --silent "qt@5.5"; then
-  fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
+  fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit ..."
   brew unlink qt@5.5
   brew link --force qt@5.5
 fi
 
-fancy_echo "Update heroku binary..."
+fancy_echo "Update heroku binary ..."
 brew unlink heroku
 brew link --force heroku
 
-fancy_echo "Configuring asdf version manager..."
+fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
   append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
@@ -193,14 +193,14 @@ install_asdf_language() {
   fi
 }
 
-fancy_echo "Installing latest Ruby..."
+fancy_echo "Installing latest Ruby ..."
 install_asdf_language "ruby"
 gem update --system
 gem_install_or_update "bundler"
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
-fancy_echo "Installing latest Node..."
+fancy_echo "Installing latest Node ..."
 bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
 install_asdf_language "nodejs"
 
