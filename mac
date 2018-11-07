@@ -114,6 +114,7 @@ tap "thoughtbot/formulae"
 tap "homebrew/services"
 tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
+tap "heroku/brew"
 
 # Unix
 brew "universal-ctags", args: ["HEAD"]
@@ -128,7 +129,7 @@ brew "watchman"
 brew "zsh"
 
 # Heroku
-brew "heroku"
+brew "heroku/brew/heroku"
 brew "parity"
 
 # GitHub
