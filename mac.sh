@@ -193,7 +193,7 @@ install_oh_my_zsh() {
 }
 
 install_elasticsearch() {
-  cask_install_or_upgrade 'java'
+  cask_install_or_upgrade 'homebrew/cask-versions/java8'
   brew_install_or_upgrade 'elasticsearch@5.6'
   brew services start elasticsearch@5.6
 }
@@ -243,7 +243,6 @@ brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'n'
 sudo n 0.12 && sudo n stable
 brew_install_or_upgrade 'yarn'
-brew_install_or_upgrade 'phantomjs'
 brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
@@ -257,7 +256,6 @@ brew_install_or_upgrade 'git-pair'
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
-brew_install_or_upgrade 'chromedriver'
 brew_install_or_upgrade 'httpie'
 brew_install_or_upgrade 'z'
 brew_install_or_upgrade 'watchman'
@@ -274,6 +272,9 @@ cask_install_or_upgrade 'xquartz'
 cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade '1password'
 cask_install_or_upgrade 'alfred'
+brew_tap 'homebrew/cask'
+cask_install_or_upgrade 'phantomjs'
+cask_install_or_upgrade 'chromedriver'
 install_shift_it
 install_elasticsearch
 install_latest_ruby
