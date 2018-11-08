@@ -16,10 +16,12 @@ We support:
 
 * [OS X Yosemite (10.10)](https://www.apple.com/osx/)
 
-Older versions may work but aren't regularly tested. Bug reports for older
-versions are welcome.
+    _Older OS X versions may work but aren't regularly tested. Bug reports for older
+versions are welcome._
 
-* [Xcode]:(https://itunes.apple.com/us/app/xcode/id497799835) must be installed.
+* [XCode version 9.4](https://developer.apple.com/download/more/?name=Xcode) (requires Apple ID login)
+
+    _Latest version of XCode may cause build problems with Qt 5.5 and capybara.  XCode version 9.4 is recommended.  For instructions on downgrading versions see [this article](https://medium.com/@tseboho/how-to-downgrade-xcode-4359df5158d5)._
 
 Base Install
 -------
@@ -61,6 +63,8 @@ With Xcode 8.0, when trying to compile the gem you may get the error Project ERR
 5. Save & re-install the gem
 
 _For further reading: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macos-sierra-1012_
+
+_Details for manual install of Qt 5.5: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macos-high-sierra-1013-macos-sierra-1012-el-capitan-1011-and-yosemite-1010_
 
 kutil Install
 --------------
