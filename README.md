@@ -107,13 +107,6 @@ Image tools:
 
 * [ImageMagick] for cropping and resizing images
 
-Testing tools:
-
-* [Qt 5] for headless JavaScript testing via [Capybara Webkit]
-
-[Qt 5]: http://qt-project.org/
-[Capybara Webkit]: https://github.com/thoughtbot/capybara-webkit
-
 Programming languages, package managers, and configuration:
 
 * [ASDF] for managing programming language versions
