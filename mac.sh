@@ -193,7 +193,7 @@ install_oh_my_zsh() {
 }
 
 install_elasticsearch() {
-  cask_install_or_upgrade 'java'
+  cask_install_or_upgrade 'homebrew/cask-versions/java8'
   brew_install_or_upgrade 'elasticsearch@5.6'
   brew services start elasticsearch@5.6
 }
@@ -204,6 +204,17 @@ install_postgresql() {
   if [ `psql -U postgres -c "select 1" &> /dev/null` ]; then
     /usr/local/bin/createuser -U `whoami` --superuser postgres
   fi
+}
+
+install_qt55() {
+  cd  `brew --prefix`/Homebrew/Library/Taps/homebrew/homebrew-core
+  git fetch --unshallow
+  git checkout 9ba3d6ef8891e5c15dbdc9333f857b13711d4e97 Formula/qt@5.5.rb
+  cd -
+
+  brew_install_or_upgrade 'qt@5.5'
+
+  append_to_zshrc 'export PATH="$(brew --prefix qt@5.5)/bin:$PATH"'
 }
 
 ##### Start Installation #####
@@ -235,15 +246,12 @@ brew_install_or_upgrade 'ctags'
 brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
-brew_install_or_upgrade 'qt55'
-brew link --force qt55
 brew_install_or_upgrade 'fswatch'
 brew_install_or_upgrade 'unison'
 brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'n'
 sudo n 0.12 && sudo n stable
 brew_install_or_upgrade 'yarn'
-brew_install_or_upgrade 'phantomjs'
 brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
@@ -257,10 +265,15 @@ brew_install_or_upgrade 'git-pair'
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
-brew_install_or_upgrade 'chromedriver'
 brew_install_or_upgrade 'httpie'
 brew_install_or_upgrade 'z'
 brew_install_or_upgrade 'watchman'
+
+brew_tap 'homebrew/cask'
+cask_install_or_upgrade 'phantomjs'
+cask_install_or_upgrade 'chromedriver'
+install_elasticsearch
+install_qt55
 
 # Install applications
 cask_install_or_upgrade 'macvim'
@@ -275,7 +288,6 @@ cask_install_or_upgrade 'sublime-text'
 cask_install_or_upgrade '1password'
 cask_install_or_upgrade 'alfred'
 install_shift_it
-install_elasticsearch
 install_latest_ruby
 install_vim_config
 
