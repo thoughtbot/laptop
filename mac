@@ -159,19 +159,21 @@ if [ ! -d "$HOME/.asdf" ]; then
   append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
 fi
 
-install_asdf_plugin() {
+add_or_update_asdf_plugin() {
   local name="$1"
   local url="$2"
 
   if ! asdf plugin-list | grep -Fq "$name"; then
     asdf plugin-add "$name" "$url"
+  else
+    asdf plugin-update "$name"
   fi
 }
 
 # shellcheck disable=SC1090
 source "$HOME/.asdf/asdf.sh"
-install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
-install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
 install_asdf_language() {
   local language="$1"
