@@ -148,8 +148,6 @@ fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
 
-brew_install_or_upgrade 'heroku-toolbelt'
-
 brew_install_or_upgrade 'kops'
 brew_install_or_upgrade 'gettext'
 
