@@ -117,7 +117,7 @@ tap "caskroom/cask"
 # Unix
 brew "git"
 brew "openssl"
-brew "rcm"
+brew "rvm"
 brew "reattach-to-user-namespace"
 brew "the_silver_searcher"
 brew "tmux"
