@@ -246,9 +246,6 @@ brew_install_or_upgrade 'ctags'
 brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
-brew_install_or_upgrade 'fswatch'
-brew_install_or_upgrade 'unison'
-brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'n'
 sudo n 0.12 && sudo n stable
 brew_install_or_upgrade 'yarn'
@@ -256,37 +253,20 @@ brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'wget'
-brew_install_or_upgrade 'dockutil'
-brew_install_or_upgrade 'tree'
 brew_install_or_upgrade 'autojump'
-brew_install_or_upgrade 'tig'
-brew_tap 'pivotal/tap'
-brew_install_or_upgrade 'git-pair'
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'libyaml'
-brew_install_or_upgrade 'httpie'
 brew_install_or_upgrade 'z'
-brew_install_or_upgrade 'watchman'
 
 brew_tap 'homebrew/cask'
-cask_install_or_upgrade 'phantomjs'
 cask_install_or_upgrade 'chromedriver'
 install_elasticsearch
 install_qt55
 
 # Install applications
-cask_install_or_upgrade 'macvim'
 cask_install_or_upgrade 'google-chrome'
-cask_install_or_upgrade 'firefox'
 cask_install_or_upgrade 'iterm2'
 cask_install_or_upgrade 'slack'
-cask_install_or_upgrade 'screenhero'
-cask_install_or_upgrade 'sourcetree'
-cask_install_or_upgrade 'xquartz'
-cask_install_or_upgrade 'sublime-text'
-cask_install_or_upgrade '1password'
-cask_install_or_upgrade 'alfred'
 install_shift_it
 install_latest_ruby
 install_vim_config
