@@ -151,7 +151,6 @@ install_latest_ruby() {
   gem update --system
 
   gem_install_or_update 'bundler'
-  gem_install_or_update 'aptible-cli'
 
   fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
