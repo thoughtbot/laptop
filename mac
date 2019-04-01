@@ -57,8 +57,14 @@ tap "caskroom/cask"
 brew "git"
 brew "openssl"
 
-#Google Cloud
+# Google Cloud
 cask "google-cloud-sdk"
+
+# Kubernetes ClI
+brew "kubernetes-cli"
+
+# Docker
+brew "Caskroom/cask/dockertoolbox"
 
 # Programming language prerequisites and package managers
 brew "jq"
@@ -73,3 +79,19 @@ brew "node"
 brew "go"
 
 EOF
+
+default_docker_machine() {
+  docker-machine ls | grep -Fq "default"
+}
+
+if ! default_docker_machine; then
+  docker-machine create --driver virtualbox default
+fi
+
+default_docker_machine_running() {
+  default_docker_machine | grep -Fq "Running"
+}
+
+if ! default_docker_machine_running; then
+  docker-machine start default
+fi

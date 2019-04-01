@@ -79,6 +79,11 @@ Unix tools:
 
 [Google-Cloud-Sdk]: https://cloud.google.com/sdk/docs/quickstart-macos
 
+# Kubernetes CLI
+* [Kubernetes-cli] Kubectl is a command line interface for running commands against Kubernetes clusters.
+
+[Kubernetes-cli]: https://kubernetes.io/docs/reference/kubectl/overview/
+
 Programming languages, package managers, and configuration:
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Go], for running apps
