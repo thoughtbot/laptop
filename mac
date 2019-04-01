@@ -64,7 +64,7 @@ cask "google-cloud-sdk"
 brew "kubernetes-cli"
 
 # Docker
-brew "Caskroom/cask/dockertoolbox"
+cask "docker-toolbox"
 
 # Programming language prerequisites and package managers
 brew "jq"
