@@ -81,16 +81,8 @@ case "$SHELL" in
     ;;
 esac
 
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
-  else
-    gem install "$@"
-  fi
-}
-
 if ! xcode-select -p 1>/dev/null; then
-  fancy_echo "Foo installing xcode"
+  xcode-select --install
 fi
 
 if ! command -v brew >/dev/null; then
@@ -137,8 +129,4 @@ brew "node"
 # Go lang
 brew "go"
 
-# Databases
-brew "mongodb-community@4.0"
-brew "postgres", restart_service: :changed
-brew "redis", restart_service: :changed
 EOF

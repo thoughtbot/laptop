@@ -72,57 +72,22 @@ macOS tools:
 [Homebrew]: http://brew.sh/
 
 Unix tools:
-
-* [Exuberant Ctags] for indexing files for vim tab completion
 * [Git] for version control
 * [OpenSSL] for Transport Layer Security (TLS)
-* [RCM] for managing company and personal dotfiles
-* [The Silver Searcher] for finding things in files
-* [Tmux] for saving project state and switching between projects
-* [Watchman] for watching for filesystem events
 * [Zsh] as your shell
 
-[Exuberant Ctags]: http://ctags.sourceforge.net/
 [Git]: https://git-scm.com/
 [OpenSSL]: https://www.openssl.org/
-[RCM]: https://github.com/thoughtbot/rcm
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
-[Tmux]: http://tmux.github.io/
-[Watchman]: https://facebook.github.io/watchman/
 [Zsh]: http://www.zsh.org/
 
-Heroku tools:
-
-* [Heroku CLI] and [Parity] for interacting with the Heroku API
-
-[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
-[Parity]: https://github.com/thoughtbot/parity
-
-GitHub tools:
-
-* [Hub] for interacting with the GitHub API
-
-[Hub]: http://hub.github.com/
-
-Image tools:
-
-* [ImageMagick] for cropping and resizing images
-
 Programming languages, package managers, and configuration:
-
-* [ASDF] for managing programming language versions
-* [Bundler] for managing Ruby libraries
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
-* [Ruby] stable for writing general-purpose code
+* [Go], for running apps
 * [Yarn] for managing JavaScript packages
 
-[Bundler]: http://bundler.io/
-[ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
-[NPM]: https://www.npmjs.org/
-[ASDF]: https://github.com/asdf-vm/asdf
-[Ruby]: https://www.ruby-lang.org/en/
 [Yarn]: https://yarnpkg.com/en/
+[Go]: https://golang.org/
 
 Databases:
 
