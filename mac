@@ -57,14 +57,14 @@ tap "caskroom/cask"
 brew "git"
 brew "openssl"
 
+# Docker
+cask "docker"
+
 # Google Cloud
 cask "google-cloud-sdk"
 
 # Kubernetes ClI
 brew "kubernetes-cli"
-
-# Docker
-cask "docker-toolbox"
 
 # Programming language prerequisites and package managers
 brew "jq"
