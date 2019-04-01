@@ -114,7 +114,6 @@ tap "mongodb/brew"
 # Unix
 brew "git"
 brew "openssl"
-brew "vim"
 brew "zsh"
 
 # Programming language prerequisites and package managers
