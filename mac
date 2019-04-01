@@ -116,6 +116,9 @@ brew "git"
 brew "openssl"
 brew "zsh"
 
+#Google Cloud
+brew "google-cloud-sdk"
+
 # Programming language prerequisites and package managers
 brew "jq"
 brew "libyaml" # should come after openssl
