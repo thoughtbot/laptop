@@ -52,7 +52,6 @@ brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 tap "homebrew/services"
 tap "caskroom/cask"
-tap "mongodb/brew"
 
 # Unix
 brew "git"
