@@ -60,6 +60,9 @@ brew "openssl"
 # Docker
 cask "docker"
 
+# Slack
+cask "slack"
+
 # Google Cloud
 cask "google-cloud-sdk"
 
