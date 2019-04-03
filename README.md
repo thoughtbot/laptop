@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a script to set up an macOS laptop for web and mobile development.
+Script to setup an macOS laptop for web and mobile development.
 
 It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
@@ -52,11 +52,8 @@ less ~/laptop.log
 Debugging
 ---------
 
-Your last Laptop run will be saved to `~/laptop.log`.
+Your last run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
-If not, copy the lines where the script failed into a
-[new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
-Or, attach the whole log file as an attachment.
 
 What it sets up
 ---------------
@@ -74,7 +71,17 @@ Unix tools:
 [Git]: https://git-scm.com/
 [OpenSSL]: https://www.openssl.org/
 
-# Google Cloud
+# Docker
+* [Docker] Docker is a computer program that performs operating-system-level virtualization, used in development and production
+
+[Docker]: https://docs.docker.com/engine/docker-overview/
+
+# Slack
+* [Slack] Slack is a collaboration hub for work, which we use as a communication channel
+
+[Slack]: https://slack.com/
+
+# Google Cloud SDK
 * [Google-Cloud-Sdk] for interacting with GCP
 
 [Google-Cloud-Sdk]: https://cloud.google.com/sdk/docs/quickstart-macos
@@ -98,13 +105,3 @@ Contributing
 
 Edit the `mac` file.
 Document in the `README.md` file.
-
-License
--------
-
-Laptop is © 2011-2018 thoughtbot, inc.
-It is free software,
-and may be redistributed under the terms specified in the [LICENSE] file.
-
-[LICENSE]: LICENSE
-

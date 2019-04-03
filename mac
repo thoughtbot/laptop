@@ -64,6 +64,8 @@ brew "kubernetes-cli"
 brew "jq"
 brew "libyaml" # should come after openssl
 brew "coreutils"
+
+# Yarn
 brew "yarn"
 
 # Node
