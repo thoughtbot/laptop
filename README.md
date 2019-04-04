@@ -1,4 +1,4 @@
-Laptop
+OSX Setup
 ======
 
 Script to setup an macOS laptop for web and mobile development.
