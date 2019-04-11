@@ -114,28 +114,27 @@ tap "thoughtbot/formulae"
 tap "homebrew/services"
 tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
-tap "heroku/brew"
+tap "securityscorecard/homebrew-repo"
 
-# Unix
-brew "universal-ctags", args: ["HEAD"]
-brew "git"
-brew "openssl"
-brew "rcm"
-brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
-brew "tmux"
-brew "vim"
-brew "watchman"
+# Shell , editor , ssl tool , system stats
 brew "zsh"
+brew "vim"
+brew "openssl"
+brew "htop"
+brew "nmap"
 
-# Heroku
-brew "heroku/brew/heroku"
-brew "parity"
+#Git
+brew "git"
 
-# GitHub
-brew "hub"
+#okta2aws and Terraform
+brew "okta2aws", args: ["HEAD"]
+brew "terraform"
 
-# Image manipulation
+#Tags and AG search tool
+brew "universal-ctags", args: ["HEAD"]
+brew "the_silver_searcher"
+
+# Image manipulation - https://www.imagemagick.org
 brew "imagemagick"
 
 # Programming language prerequisites and package managers
@@ -144,14 +143,7 @@ brew "coreutils"
 brew "yarn"
 cask "gpg-suite"
 
-# Databases
-brew "postgres", restart_service: :changed
-brew "redis", restart_service: :changed
 EOF
-
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
