@@ -198,8 +198,13 @@ fancy_echo "Installing latest Node ..."
 bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
 install_asdf_language "nodejs"
 
-if [ -f "$HOME/.laptop.local" ]; then
-  fancy_echo "Running your customizations from ~/.laptop.local ..."
-  # shellcheck disable=SC1090
-  . "$HOME/.laptop.local"
-fi
+### EH customization
+fancy_echo "Installing HeroCLI ..."
+yarn global add ehcli
+
+### Self Customization
+# if [ -f "$HOME/.laptop.local" ]; then
+#   fancy_echo "Running your customizations from ~/.laptop.local ..."
+#   # shellcheck disable=SC1090
+#   . "$HOME/.laptop.local"
+# fi
