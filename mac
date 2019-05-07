@@ -150,8 +150,8 @@ brew "rbenv"
 brew "ruby-build"
 
 # Fix for forcing java8 install
-tap "caskroom/versions"
-cask "java8"
+tap "adoptopenjdk/openjdk"
+cask "adoptopenjdk/openjdk/adoptopenjdk8"
 
 # Databases
 brew "postgres", restart_service: true
