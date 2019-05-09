@@ -235,6 +235,7 @@ fancy_echo "Creating Postgres database under current user name"
 if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
   createdb "$(whoami)"
 fi
+createuser "postgres"
 
 # IntelliJ
 fancy_echo "Installing IntelliJ"
