@@ -143,6 +143,14 @@ brew "coreutils"
 brew "yarn"
 cask "gpg-suite"
 
+# Spark recommended stuff
+brew "postman"
+brew "slack" 
+brew "google-chrome"
+brew "dashlane"
+brew "psequel"
+brew "iterm2"
+
 # Databases
 brew "postgres", restart_service: :changed
 brew "redis", restart_service: :changed
