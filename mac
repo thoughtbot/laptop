@@ -150,6 +150,7 @@ brew "google-chrome"
 brew "dashlane"
 brew "psequel"
 brew "iterm2"
+brew "dashlane"
 
 # Databases
 brew "postgres", restart_service: :changed
