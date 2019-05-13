@@ -114,7 +114,7 @@ tap "thoughtbot/formulae"
 tap "homebrew/services"
 tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
-tap "heroku/brew"
+tap "d12frosted/emacs-plus"
 
 # Unix
 brew "universal-ctags", args: ["HEAD"]
@@ -124,12 +124,13 @@ brew "rcm"
 brew "reattach-to-user-namespace"
 brew "the_silver_searcher"
 brew "tmux"
-brew "vim"
+brew "neovim"
 brew "watchman"
 brew "zsh"
 
-# Heroku
-brew "heroku/brew/heroku"
+brew "vim"
+brew "ripgrep"
+
 brew "parity"
 
 # GitHub
@@ -147,58 +148,19 @@ cask "gpg-suite"
 # Databases
 brew "postgres", restart_service: :changed
 brew "redis", restart_service: :changed
+brew "rbenv"
+brew "ruby-build"
+brew "nodejs"
 EOF
 
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
 
-fancy_echo "Configuring asdf version manager ..."
-if [ ! -d "$HOME/.asdf" ]; then
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
-  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
-fi
+# Ruby stuff
 
-alias install_asdf_plugin=add_or_update_asdf_plugin
-add_or_update_asdf_plugin() {
-  local name="$1"
-  local url="$2"
-
-  if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
-  else
-    asdf plugin-update "$name"
-  fi
-}
-
-# shellcheck disable=SC1090
-source "$HOME/.asdf/asdf.sh"
-add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
-add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
-
-install_asdf_language() {
-  local language="$1"
-  local version
-  version="$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"
-
-  if ! asdf list "$language" | grep -Fq "$version"; then
-    asdf install "$language" "$version"
-    asdf global "$language" "$version"
-  fi
-}
-
-fancy_echo "Installing latest Ruby ..."
-install_asdf_language "ruby"
+# TODO - use scripting magic to grab official version from https://github.com/sprk/spark/blob/master/.ruby-version
+rbenv install 2.4.5
+rbenv rehash
 gem update --system
+gem i bundler
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
-fancy_echo "Installing latest Node ..."
-bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-install_asdf_language "nodejs"
-
-if [ -f "$HOME/.laptop.local" ]; then
-  fancy_echo "Running your customizations from ~/.laptop.local ..."
-  # shellcheck disable=SC1090
-  . "$HOME/.laptop.local"
-fi
