@@ -28,7 +28,7 @@ Install
 Download the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/sprk/laptop/master/mac
 ```
 
 Review the script (avoid running scripts you haven't read!):
@@ -78,9 +78,11 @@ Unix tools:
 * [OpenSSL] for Transport Layer Security (TLS)
 * [RCM] for managing company and personal dotfiles
 * [The Silver Searcher] for finding things in files
+* [RipGrep] as a faster alternative to the Silver Surfer
 * [Tmux] for saving project state and switching between projects
 * [Watchman] for watching for filesystem events
 * [Zsh] as your shell
+* [Neovim] as the one true editor(tm) that you may choose to ignore
 
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Git]: https://git-scm.com/
@@ -89,14 +91,9 @@ Unix tools:
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
 [Tmux]: http://tmux.github.io/
 [Watchman]: https://facebook.github.io/watchman/
+[Neovim]: https://neovim.io/
+[RipGrep]: https://github.com/BurntSushi/ripgrep
 [Zsh]: http://www.zsh.org/
-
-Heroku tools:
-
-* [Heroku CLI] and [Parity] for interacting with the Heroku API
-
-[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
-[Parity]: https://github.com/thoughtbot/parity
 
 GitHub tools:
 
@@ -110,8 +107,6 @@ Image tools:
 
 Programming languages, package managers, and configuration:
 
-* [ASDF] for managing programming language versions
-* [Bundler] for managing Ruby libraries
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Ruby] stable for writing general-purpose code
 * [Yarn] for managing JavaScript packages
@@ -120,7 +115,6 @@ Programming languages, package managers, and configuration:
 [ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
-[ASDF]: https://github.com/asdf-vm/asdf
 [Ruby]: https://www.ruby-lang.org/en/
 [Yarn]: https://yarnpkg.com/en/
 
@@ -201,8 +195,9 @@ brew install shellcheck
 [ShellCheck]: http://www.shellcheck.net/about.html
 [Syntastic]: https://github.com/scrooloose/syntastic
 
-Thank you, [contributors]!
+Thank you, !
 
+Spark fork maintainers (you!) + original [contributors]
 [contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
 
 By participating in this project,
