@@ -110,28 +110,26 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
-tap "homebrew/services"
-tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
 tap "d12frosted/emacs-plus"
+tap "homebrew/services"
+tap "thoughtbot/formulae"
+tap "universal-ctags/universal-ctags"
 
 # Unix
-brew "universal-ctags", args: ["HEAD"]
 brew "git"
+brew "neovim"
 brew "openssl"
+brew "parity"
 brew "rcm"
 brew "reattach-to-user-namespace"
+brew "ripgrep"
 brew "the_silver_searcher"
 brew "tmux"
-brew "neovim"
+brew "universal-ctags", args: ["HEAD"]
+brew "vim"
 brew "watchman"
 brew "zsh"
-
-brew "vim"
-brew "ripgrep"
-
-brew "parity"
 
 # GitHub
 brew "hub"
