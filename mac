@@ -45,6 +45,9 @@ tap "caskroom/cask"
 brew "git"
 brew "openssl"
 
+# Chrome
+cask google-chrome
+
 # Docker
 cask "docker"
 
