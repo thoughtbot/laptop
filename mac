@@ -46,7 +46,7 @@ brew "git"
 brew "openssl"
 
 # Chrome
-cask google-chrome
+cask "google-chrome"
 
 # Docker
 cask "docker"
