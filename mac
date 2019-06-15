@@ -63,6 +63,9 @@ cask "tunnelblick"
 # Kubernetes ClI
 brew "kubernetes-cli"
 
+# Vault
+brew "vault"
+
 # Programming language prerequisites and package managers
 brew "jq"
 brew "libyaml" # should come after openssl
