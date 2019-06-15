@@ -72,17 +72,17 @@ Unix tools:
 [OpenSSL]: https://www.openssl.org/
 
 # Docker
-* [Docker] Docker is a computer program that performs operating-system-level virtualization, used in development and production
+* [Docker] is a computer program that performs operating-system-level virtualization, used in development and production
 
 [Docker]: https://docs.docker.com/engine/docker-overview/
 
 # Slack
-* [Slack] Slack is a collaboration hub for work, which we use as a communication channel
+* [Slack] is a collaboration hub for work, which we use as a communication channel
 
 [Slack]: https://slack.com/
 
 # Google Chrome
-* [Google Chrome] Google Chrome is a browser that comes with great developer tools for web development
+* [Google Chrome] is a browser that comes with great developer tools for web development
 
 [Google Chrome]: https://www.google.com/chrome/
 
@@ -92,12 +92,12 @@ Unix tools:
 [Google-Cloud-Sdk]: https://cloud.google.com/sdk/docs/quickstart-macos
 
 # Kubernetes CLI
-* [Kubernetes-cli] Kubectl is a command line interface for running commands against Kubernetes clusters
+* [Kubernetes-cli] is a command line interface for running commands against Kubernetes clusters
 
 [Kubernetes-cli]: https://kubernetes.io/docs/reference/kubectl/overview/
 
 # Vault
-* [Vault] Vault is a tool used for securely storing and tightly controlling the access to secrets
+* [Vault] is a tool used for securely storing and tightly controlling the access to secrets
 
 [Vault]: https://www.vaultproject.io/
 
