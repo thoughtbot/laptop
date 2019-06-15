@@ -101,7 +101,7 @@ Unix tools:
 
 [Vault]: https://www.vaultproject.io/
 
-Programming languages, package managers, and configuration:
+# Programming languages, package managers, and configuration:
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Go], for running apps
 * [Yarn] for managing JavaScript packages
