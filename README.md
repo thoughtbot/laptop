@@ -81,15 +81,25 @@ Unix tools:
 
 [Slack]: https://slack.com/
 
+# Google Chrome
+* [Google Chrome] Google Chrome is a browser that comes with great developer tools for web development
+
+[Google Chrome]: https://www.google.com/chrome/
+
 # Google Cloud SDK
 * [Google-Cloud-Sdk] for interacting with GCP
 
 [Google-Cloud-Sdk]: https://cloud.google.com/sdk/docs/quickstart-macos
 
 # Kubernetes CLI
-* [Kubernetes-cli] Kubectl is a command line interface for running commands against Kubernetes clusters.
+* [Kubernetes-cli] Kubectl is a command line interface for running commands against Kubernetes clusters
 
 [Kubernetes-cli]: https://kubernetes.io/docs/reference/kubectl/overview/
+
+# Vault
+* [Vault] Vault is a tool used for securely storing and tightly controlling the access to secrets
+
+[Vault]: https://www.vaultproject.io/
 
 Programming languages, package managers, and configuration:
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
