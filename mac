@@ -124,9 +124,10 @@ brew "rcm"
 brew "reattach-to-user-namespace"
 brew "the_silver_searcher"
 brew "tmux"
-brew "vim"
-brew "watchman"
+brew "neovim"
 brew "zsh"
+brew "direnv"
+brew "python"
 
 # Heroku
 brew "heroku/brew/heroku"
@@ -143,10 +144,6 @@ brew "libyaml" # should come after openssl
 brew "coreutils"
 brew "yarn"
 cask "gpg-suite"
-
-# Databases
-brew "postgres", restart_service: :changed
-brew "redis", restart_service: :changed
 EOF
 
 fancy_echo "Update heroku binary ..."
@@ -202,3 +199,16 @@ if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "Installing my dotfiles"
+git clone https://github.com/fespinoza/dotfiles.git ~/Dotfiles
+rcup
+
+fancy_echo "Installing my neovim"
+git clone https://github.com/fespinoza/neovim.git ~/Neovim
+mkdir ~/Config
+ln -s ~/Neovim ~/Config/nvim
+
+# neovimstuff
+pip3 install --user --upgrade pynvim
+gem install neovim environment
