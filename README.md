@@ -19,10 +19,6 @@ We support:
     _Older OS X versions may work but aren't regularly tested. Bug reports for older
 versions are welcome._
 
-* [XCode version 9.4](https://developer.apple.com/download/more/?name=Xcode) (requires Apple ID login)
-
-    _Latest version of XCode may cause build problems with Qt 5.5 and capybara.  XCode version 9.4 is recommended.  For instructions on downgrading versions see [this article](https://medium.com/@tseboho/how-to-downgrade-xcode-4359df5158d5)._
-
 Base Install
 -------
 
@@ -38,33 +34,6 @@ In order to ensure consistent Docker environment, it should be downloaded manual
 
 [Mac Download](https://www.docker.com/docker-mac)
 [Windows Download](https://www.docker.com/docker-windows)
-
-**For OS X Sierra + (10.12+) and XCode 8:**
-
-With Xcode 8.0, when trying to compile the gem you may get the error Project ERROR: Xcode not set up properly. You may need to confirm the license agreement by running /usr/bin/xcodebuild. — even after confirming the license agreement. This is an upstream Qt bug that can be worked around by following these instructions:
-
-1. Find the Qt install folder
-2. Open [Qt_install_folder]/[Qt_version](/clang_64 || )/mkspecs/features/mac/default_pre.prf in a text editor
-
-   If you can't find the file, look for it by searching all files for the following line by running grep -rn /usr/bin/xcrun . in the [Qt_install_folder] or [Qt_version] director
-
-   For this laptop script and Qt 5.5.1, you edit the file directly in VIM via the command line:
-
-   `vim /usr/local/Cellar/qt@5.5/5.5.1/mkspecs/features/mac/default_pre.prf`
-
-3. Find the line with this text (for me it was line 15):
-
-   `isEmpty($$list($$system("/usr/bin/xcrun -find xcrun 2>/dev/null"))): \`
-
-4. Replace line with:
-
-   `isEmpty($$list($$system("/usr/bin/xcrun -find xcodebuild 2>/dev/null"))): \`
-
-5. Save & re-install the gem
-
-_For further reading: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macos-sierra-1012_
-
-_Details for manual install of Qt 5.5: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macos-high-sierra-1013-macos-sierra-1012-el-capitan-1011-and-yosemite-1010_
 
 kutil Install
 --------------
@@ -120,7 +89,6 @@ What it sets up
 * [ImageMagick] for cropping and resizing images
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Postgres] for storing relational data
-* [Qt] for headless JavaScript testing via Capybara Webkit
 * [Rbenv] for managing versions of Ruby
 * [Redis] for storing key-value data
 * [Ruby Build] for installing Rubies
@@ -150,7 +118,6 @@ What it sets up
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
 [Postgres]: http://www.postgresql.org/
-[Qt]: http://qt-project.org/
 [Rbenv]: https://github.com/sstephenson/rbenv
 [Redis]: http://redis.io/
 [Ruby Build]: https://github.com/sstephenson/ruby-build

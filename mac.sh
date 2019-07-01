@@ -205,16 +205,6 @@ install_postgresql() {
   fi
 }
 
-install_qt55() {
-  cd  `brew --prefix`/Homebrew/Library/Taps/homebrew/homebrew-core
-  git fetch --unshallow
-  git checkout 9ba3d6ef8891e5c15dbdc9333f857b13711d4e97 Formula/qt@5.5.rb
-  cd -
-
-  brew_install_or_upgrade 'qt@5.5'
-
-  append_to_zshrc 'export PATH="$(brew --prefix qt@5.5)/bin:$PATH"'
-}
 
 ##### Start Installation #####
 
@@ -260,7 +250,6 @@ brew_install_or_upgrade 'z'
 brew_tap 'homebrew/cask'
 cask_install_or_upgrade 'chromedriver'
 install_elasticsearch
-install_qt55
 
 # Install applications
 cask_install_or_upgrade 'google-chrome'
