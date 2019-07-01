@@ -173,8 +173,6 @@ install_n
 install_yarn
 
 #policygenius project dependencies
-apt_install 'qt5-default'
-apt_install 'libqt5webkit5-dev'
 apt_install 'redis-server'
 install_postgres
 install_elasticsearch
