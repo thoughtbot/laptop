@@ -134,6 +134,7 @@ brew "watch"
 brew "wget"
 brew "python@2"
 brew "python"
+brew "thefuck"
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then
