@@ -57,9 +57,6 @@ cask "slack"
 # Google Cloud
 cask "google-cloud-sdk"
 
-# Tunnelblick for VPN
-cask "tunnelblick"
-
 # Kubernetes ClI
 brew "kubernetes-cli"
 
