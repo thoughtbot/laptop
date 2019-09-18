@@ -138,7 +138,7 @@ install_or_update_homebrew() {
 
 install_latest_ruby() {
   append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-  ruby_version="2.3.4"
+  ruby_version="2.3.7"
   eval "$(rbenv init - zsh)"
 
   if ! rbenv versions | grep -Fq "$ruby_version"; then
@@ -192,7 +192,7 @@ install_oh_my_zsh() {
 }
 
 install_elasticsearch() {
-  cask_install_or_upgrade 'homebrew/cask-versions/java8'
+  cask_install_or_upgrade 'homebrew/cask-versions/adoptopenjdk8'
   brew_install_or_upgrade 'elasticsearch@5.6'
   brew services start elasticsearch@5.6
 }
@@ -236,7 +236,7 @@ brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'n'
-sudo n 0.12 && sudo n stable
+sudo n stable
 brew_install_or_upgrade 'yarn'
 brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'rbenv'
