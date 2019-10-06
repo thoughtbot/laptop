@@ -81,13 +81,6 @@ case "$SHELL" in
     ;;
 esac
 
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
-  else
-    gem install "$@"
-  fi
-}
 
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
@@ -110,48 +103,38 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
-tap "homebrew/services"
-tap "universal-ctags/universal-ctags"
-tap "caskroom/cask"
-tap "heroku/brew"
+tap "homebrew/cask"
+tap "homebrew/cask-versions"
 
 # Unix
-brew "universal-ctags", args: ["HEAD"]
 brew "git"
-brew "openssl"
-brew "rcm"
-brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
-brew "tmux"
 brew "vim"
-brew "watchman"
 brew "zsh"
-
-# Heroku
-brew "heroku/brew/heroku"
-brew "parity"
-
-# GitHub
-brew "hub"
+brew "httpie"
+brew "htop"
 
 # Image manipulation
 brew "imagemagick"
 
 # Programming language prerequisites and package managers
-brew "libyaml" # should come after openssl
-brew "coreutils"
 brew "yarn"
-cask "gpg-suite"
 
 # Databases
 brew "postgres", restart_service: :changed
-brew "redis", restart_service: :changed
-EOF
 
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
+# Programs
+cask "iterm2"
+cask "visual-studio-code"
+cask "bettertouchtool"
+cask "karabiner-elements"
+cask "google-chrome"
+cask "lulu"
+cask "iina"
+cask "zoomus"
+cask "findergo"
+cask "firefox-developer-edition"
+
+EOF
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
@@ -173,8 +156,10 @@ add_or_update_asdf_plugin() {
 
 # shellcheck disable=SC1090
 source "$HOME/.asdf/asdf.sh"
-add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+add_or_update_asdf_plugin "elixir" "https://github.com/asdf-vm/asdf-elixir.git"
+add_or_update_asdf_plugin "erlang" "https://github.com/asdf-vm/asdf-erlang.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+
 
 install_asdf_language() {
   local language="$1"
@@ -187,18 +172,12 @@ install_asdf_language() {
   fi
 }
 
-fancy_echo "Installing latest Ruby ..."
-install_asdf_language "ruby"
-gem update --system
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
+fancy_echo "Installing latest Elixir ..."
+install_asdf_language "elixir"
+
+fancy_echo "Installing latest Erlang ..."
+install_asdf_language "erlang"
 
 fancy_echo "Installing latest Node ..."
 bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
 install_asdf_language "nodejs"
-
-if [ -f "$HOME/.laptop.local" ]; then
-  fancy_echo "Running your customizations from ~/.laptop.local ..."
-  # shellcheck disable=SC1090
-  . "$HOME/.laptop.local"
-fi
