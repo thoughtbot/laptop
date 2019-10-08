@@ -128,7 +128,6 @@ brew "postgres", restart_service: :changed
 cask "iterm2"
 cask "visual-studio-code"
 cask "bettertouchtool"
-cask "karabiner-elements"
 cask "google-chrome"
 cask "lulu"
 cask "iina"
