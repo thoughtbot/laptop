@@ -112,6 +112,8 @@ brew "vim"
 brew "zsh"
 brew "httpie"
 brew "htop"
+brew "kubectl"
+brew "kubectx"
 
 # Image manipulation
 brew "imagemagick"
