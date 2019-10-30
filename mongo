@@ -1,0 +1,6 @@
+brew bundle --file=- <<EOF 
+
+tap "mongodb/brew"
+brew "mongodb-community", restart_service: true
+
+EOF
