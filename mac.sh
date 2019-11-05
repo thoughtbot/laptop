@@ -200,6 +200,7 @@ install_elasticsearch() {
 
 install_postgresql() {
   brew_install_or_upgrade 'postgresql@9.6'
+  brew link postgresql@9.6 --force
   brew_launchctl_restart 'postgresql'
   if [ `psql -U postgres -c "select 1" &> /dev/null` ]; then
     /usr/local/bin/createuser -U `whoami` --superuser postgres
