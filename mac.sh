@@ -142,7 +142,8 @@ install_latest_ruby() {
   eval "$(rbenv init - zsh)"
 
   if ! rbenv versions | grep -Fq "$ruby_version"; then
-    rbenv install -s "$ruby_version"
+    # See: https://github.com/rbenv/ruby-build/issues/1353#issuecomment-537749304
+    RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl" rbenv install -s "$ruby_version"
   fi
 
   rbenv global "$ruby_version"
@@ -238,7 +239,6 @@ brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'n'
 sudo n stable
 brew_install_or_upgrade 'yarn'
-brew_tap 'caskroom/cask'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'wget'
