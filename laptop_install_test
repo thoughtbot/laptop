@@ -105,7 +105,7 @@ GUI_APPS=(
   "slack"
   "insomnia"
   "intellij idea ce"
-  "mongodb compass community"
+  "mongodb compass"
   "postico"
 )
 
