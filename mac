@@ -180,6 +180,9 @@ install_gui_app "slack" "slack"
 # Insomnia
 install_gui_app "insomnia" "insomnia"
 
+# Postico
+install_gui_app "postico" "postico"
+
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
   rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
