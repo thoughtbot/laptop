@@ -81,8 +81,8 @@ done
 
 # Check that a rbenv version of ruby is default, not the system
 which ruby | grep ".rbenv" 2>&1>/dev/null
-if [ $? -ne 0 ] 
-then 
+if [ $? -ne 0 ]
+then
   log_install_fail "rbenv ruby"
 else
   log_install_success "rbenv ruby"
@@ -105,7 +105,8 @@ GUI_APPS=(
   "slack"
   "insomnia"
   "intellij idea ce"
-  "mongodb compass community"
+  "mongodb compass"
+  "postico"
 )
 
 for gui_app_name in "${GUI_APPS[@]}"
