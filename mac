@@ -74,5 +74,7 @@ brew "node"
 # Go lang
 brew "go"
 
+EOF
+
 # Open docker
 open /Applications/Docker.app
