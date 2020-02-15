@@ -110,17 +110,17 @@ Image tools:
 
 Programming languages, package managers, and configuration:
 
-* [ASDF] for managing programming language versions
+* [asdf-vm] for managing programming language versions
 * [Bundler] for managing Ruby libraries
-* [Node.js] and [NPM], for running apps and installing JavaScript packages
+* [Node.js] and [npm], for running apps and installing JavaScript packages
 * [Ruby] stable for writing general-purpose code
 * [Yarn] for managing JavaScript packages
 
 [Bundler]: http://bundler.io/
 [ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
-[NPM]: https://www.npmjs.org/
-[ASDF]: https://github.com/asdf-vm/asdf
+[npm]: https://www.npmjs.org/
+[asdf-vm]: https://github.com/asdf-vm/asdf
 [Ruby]: https://www.ruby-lang.org/en/
 [Yarn]: https://yarnpkg.com/en/
 
