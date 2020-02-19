@@ -21,7 +21,7 @@ versions are welcome.
 Install
 -------
 
-You don't have to clone this repo, just download, review, then execute the script:
+You don't have to clone this repo, just download, review, then execute the script. Don't neglect to tee the output to a log file!
 
 ```sh
 curl --remote-name https://raw.githubusercontent.com/wellist/laptop/master/mac
@@ -29,7 +29,16 @@ less mac
 sh mac 2>&1 | tee ~/laptop.log
 ```
 
-This script automatically adds to your .bashrc file. If you don't use .bashrc (e.g. .bash_profile, .zshrc), ensure those additions are copied to where they need to be and refresh your terminal, if need be. 
+This script automatically adds to your .bashrc file. If you don't use .bashrc (e.g. .bash_profile, .zshrc), ensure those additions are copied to where they need to be and refresh your terminal, if need be. Specifically, make sure that your PATH is modified correctly for rbenv. This may fix other problems you might encounter, so if you have an issue, check your rbenv and try running the script again.
+
+If you run into issues related to bundling during the setup script, check that rbenv is setup correctly using the following [rbenv-doctor](https://github.com/rbenv/rbenv#homebrew-on-macos) script:
+
+    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+
+During the laptop script, rbenv commands are added to `.bashrc`. Your terminal may use `.bash_profile` or `.zshrc` for zshell. Try running these command in your terminal (using the correct shell config file, of course).
+
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+    echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 
 Debugging
 ---------
@@ -46,7 +55,6 @@ What it sets up
 * [Bundler] for managing Ruby libraries
 * [Foreman] for managing web processes
 * [gh] for interacting with the GitHub API
-* [Heroku Toolbelt] for interacting with the Heroku API
 * [Homebrew] for managing operating system libraries
 * [ImageMagick] for cropping and resizing images
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
@@ -64,7 +72,6 @@ What it sets up
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Foreman]: https://github.com/ddollar/foreman
 [gh]: https://github.com/jingweno/gh
-[Heroku Toolbelt]: https://toolbelt.heroku.com/
 [Homebrew]: http://brew.sh/
 [ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
