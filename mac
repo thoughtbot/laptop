@@ -139,8 +139,12 @@ cask "zoomus"
 cask "iterm2"
 cask "firefox"
 cask "sublime-text"
+cask "sublime-merge"
 cask "lastpass"
 cask "browserstacklocal"
+cask "insomnia"
+cask "flycut"
+cask "evernote"
 EOF
 
 fancy_echo "Installing ohmyzsh framework for zsh ..."
