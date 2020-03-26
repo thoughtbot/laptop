@@ -15,6 +15,3 @@ fi
 
 fancy_echo "Updating Homebrew formulas ..."
   brew update
-
-fancy_echo "Add Hombrew old versions support ..."
-  brew_tap 'homebrew/versions'

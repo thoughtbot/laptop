@@ -1,2 +1,0 @@
-brew_launchctl_restart 'mysql56'
-brew_launchctl_restart 'redis'

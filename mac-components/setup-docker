@@ -1,0 +1,11 @@
+fancy_echo "Setup Docker Machine ..."
+  if docker-machine inspect default >/dev/null;
+  then
+    echo "\033[0;33mYou already have a default docker machine.\033[0m You'll need to remove it before I can setup a new one"
+  else
+    docker-machine create --driver virtualbox --virtualbox-cpu-count "4" --virtualbox-disk-size "100000" --virtualbox-memory "16384" default
+    docker-machine-nfs default
+    brew services start docker-machine
+    docker-machine ssh default sudo sysctl -w vm.max_map_count=262144
+    docker-machine ssh default "echo 'sysctl -w vm.max_map_count=262144' | sudo tee -a /var/lib/boot2docker/profile > /dev/null"
+  fi

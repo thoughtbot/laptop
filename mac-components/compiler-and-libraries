@@ -1,2 +1,0 @@
-brew_install_or_upgrade 'openssl'
-brew unlink openssl && brew link openssl --force

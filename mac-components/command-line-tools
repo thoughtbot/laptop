@@ -2,7 +2,8 @@ fancy_echo "Install command line tools ..."
   touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
   PROD=$(softwareupdate -l |
     grep "\*.*Command Line" |
-    head -n 1 | awk -F"*" '{print $2}' |
+    tail -n 1 | awk -F": " '{print $2}' |
     sed -e 's/^ *//' |
     tr -d '\n')
-  softwareupdate -i "$PROD" -v;
+  echo "Install $PROD"
+  softwareupdate -i "$PROD" --verbose;

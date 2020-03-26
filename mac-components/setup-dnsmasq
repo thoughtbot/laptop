@@ -1,0 +1,15 @@
+fancy_echo "Setup dnsmasq ..."
+  if [ -f /etc/resolver/dev.sageone.com ]
+  then
+    echo "\033[0;33mYou already have a dnsmasq setup.\033[0m You'll need to remove it before I can setup it again"
+  else
+    mkdir -pv $(brew --prefix)/etc/
+    echo "address=/dev.sageone.com/`docker-machine ip`" > $(brew --prefix)/etc/dnsmasq.conf
+
+    sudo brew services start dnsmasq
+
+    sudo mkdir -v /etc/resolver
+    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/dev.sageone.com'
+
+    sudo killall -HUP mDNSResponder
+  fi
