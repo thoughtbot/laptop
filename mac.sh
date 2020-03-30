@@ -138,12 +138,12 @@ install_or_update_homebrew() {
 
 install_latest_ruby() {
   append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-  ruby_version="2.3.7"
+  ruby_version="2.3.7" # TODO: If we bump this, openssl should be bumped to 1.1.x, probably.
   eval "$(rbenv init - zsh)"
 
   if ! rbenv versions | grep -Fq "$ruby_version"; then
-    # See: https://github.com/rbenv/ruby-build/issues/1353#issuecomment-537749304
-    RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl" rbenv install -s "$ruby_version"
+    # See: https://github.com/rbenv/ruby-build/issues/1353#issuecomment-573414540
+    RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.0)" rbenv install -s "$ruby_version"
   fi
 
   rbenv global "$ruby_version"
@@ -231,6 +231,7 @@ brew_install_or_upgrade 'git'
 install_postgresql
 brew_install_or_upgrade 'redis'
 brew_launchctl_restart 'redis'
+brew_install_or_upgrade 'sops'
 brew_install_or_upgrade 'the_silver_searcher'
 brew_install_or_upgrade 'vim'
 brew_install_or_upgrade 'ctags'
@@ -245,6 +246,7 @@ brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'wget'
 brew_install_or_upgrade 'autojump'
 brew_install_or_upgrade 'openssl'
+brew_install_or_upgrade 'rbenv/tap/openssl@1.0' # For ruby-build specifically
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'z'
 
@@ -263,7 +265,7 @@ install_vim_config
 # Setup Google Cloud Platform/Kubernetes Tooling
 cask_install_or_upgrade 'google-cloud-sdk'
 gcloud components install kubectl docker-credential-gcr pubsub-emulator
-brew_install_or_upgrade 'kubernetes-helm'
+brew_install_or_upgrade 'helm@2'
 append_to_zshrc 'source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 append_to_zshrc 'source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 append_to_zshrc 'eval "$(kubectl completion zsh)"'
