@@ -138,12 +138,12 @@ install_or_update_homebrew() {
 
 install_latest_ruby() {
   append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-  ruby_version="2.3.7" # TODO: If we bump this, openssl should be bumped to 1.1.x, probably.
+  ruby_version="2.4.5"
   eval "$(rbenv init - zsh)"
 
   if ! rbenv versions | grep -Fq "$ruby_version"; then
     # See: https://github.com/rbenv/ruby-build/issues/1353#issuecomment-573414540
-    RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.0)" rbenv install -s "$ruby_version"
+    RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)" rbenv install -s "$ruby_version"
   fi
 
   rbenv global "$ruby_version"
@@ -246,7 +246,6 @@ brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'wget'
 brew_install_or_upgrade 'autojump'
 brew_install_or_upgrade 'openssl'
-brew_install_or_upgrade 'rbenv/tap/openssl@1.0' # For ruby-build specifically
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'z'
 
