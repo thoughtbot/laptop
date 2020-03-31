@@ -151,7 +151,7 @@ install_latest_ruby() {
 
   gem update --system
 
-  gem install 'bundler --version 1.9.9'
+  gem install bundler --version 1.9.9
 
   fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
