@@ -146,6 +146,7 @@ brew "tree"
 brew "node"
 brew "rbenv"
 brew "ruby-build"
+brew "python"
 
 # Fix for forcing java8 install
 tap "adoptopenjdk/openjdk"
@@ -182,6 +183,14 @@ install_gui_app "insomnia" "insomnia"
 
 # Postico
 install_gui_app "postico" "postico"
+
+# VSCode
+install_gui_app "visual studio code" "visual-studio-code"
+cat << EOF >> ~/.zshrc
+# Add Visual Studio Code (code)
+export PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+EOF
+code --install-extension ms-vsliveshare.vsliveshare
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
