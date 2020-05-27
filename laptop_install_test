@@ -66,6 +66,7 @@ CLI_APPS=(
   "java"
   "mongod"
   "tree"
+  "pip3"
 )
 
 for cli_app_name in "${CLI_APPS[@]}"
