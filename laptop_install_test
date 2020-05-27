@@ -66,6 +66,7 @@ CLI_APPS=(
   "java"
   "mongod"
   "tree"
+  "pip3"
 )
 
 for cli_app_name in "${CLI_APPS[@]}"
@@ -107,6 +108,7 @@ GUI_APPS=(
   "intellij idea ce"
   "mongodb compass"
   "postico"
+  "visual studio code"
 )
 
 for gui_app_name in "${GUI_APPS[@]}"
@@ -119,3 +121,44 @@ do
     log_install_success "$gui_app_name"
   fi
 done
+
+which_python=$(which python3)
+if [ $which_python != '/usr/local/bin/python3' ]
+then
+  message="🚫 Python path is not correct"
+  echo "$message" 1>&2
+  echo "$message" >> "$HOME/$log_filename"
+else
+  echo "✅ Python path is correct."
+  echo "✅ Python" >> "$HOME/$log_filename"
+fi
+
+liveshare_installed=$(code --list-extensions)
+case "$liveshare_installed" in
+  *"ms-vsliveshare.vsliveshare"*)
+    message="✅ LiveShare extension installed."
+    echo $message
+    echo $message >> "$HOME/$log_filename"
+  ;;
+  *)
+    message="🚫 LiveShare extension is NOT installed."
+    echo message
+    echo "$message" 1>&2
+    echo "$message" >> "$HOME/$log_filename"
+  ;;
+esac
+
+teletype_installed=$(apm list)
+case "$teletype_installed" in
+  *"teletype"*)
+    message="✅ Teletype extension installed."
+    echo $message
+    echo $message >> "$HOME/$log_filename"
+  ;;
+  *)
+    message="🚫 Teletype extension is NOT installed."
+    echo message
+    echo "$message" 1>&2
+    echo "$message" >> "$HOME/$log_filename"
+  ;;
+esac
