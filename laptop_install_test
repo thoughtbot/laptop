@@ -146,3 +146,18 @@ case "$liveshare_installed" in
     echo "$message" >> "$HOME/$log_filename"
   ;;
 esac
+
+teletype_installed=$(apm list)
+case "$teletype_installed" in
+  *"teletype"*)
+    message="✅ Teletype extension installed."
+    echo $message
+    echo $message >> "$HOME/$log_filename"
+  ;;
+  *)
+    message="🚫 Teletype extension is NOT installed."
+    echo message
+    echo "$message" 1>&2
+    echo "$message" >> "$HOME/$log_filename"
+  ;;
+esac
