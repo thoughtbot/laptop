@@ -136,8 +136,8 @@ install_or_update_homebrew() {
   brew update
 }
 
-install_latest_ruby() {
-  append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
+install_ruby_2_4_5() {
+  append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
   ruby_version="2.4.5"
   eval "$(rbenv init - zsh)"
 
@@ -150,8 +150,11 @@ install_latest_ruby() {
   rbenv shell "$ruby_version"
 
   gem update --system
+}
 
-  gem install bundler --version 1.9.9
+install_bundler_1_17_3() {
+  gem install bundler --version 1.17.3
+  rbenv rehash
 
   fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
@@ -258,7 +261,8 @@ cask_install_or_upgrade 'google-chrome'
 cask_install_or_upgrade 'iterm2'
 cask_install_or_upgrade 'slack'
 install_shift_it
-install_latest_ruby
+install_ruby_2_4_5
+install_bundler_1_17_3
 install_vim_config
 
 # Setup Google Cloud Platform/Kubernetes Tooling
