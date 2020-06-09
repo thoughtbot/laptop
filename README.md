@@ -4,23 +4,19 @@ Laptop
 Laptop is a script to set up a macOS laptop for web and mobile development.
 
 It can be run multiple times on the same machine safely.
-It installs, upgrades, or skips packages
-based on what is already installed on the machine.
+It installs, upgrades, or skips packages based on what is already installed on the machine.
+
+*NOTE*: Please take a moment to read *and customize* this script before running. The packages below are helpful suggestions, not a prescriptive list.
 
 Requirements
 ------------
 
 We support:
 
-* macOS Mavericks (10.9)
-* macOS Yosemite (10.10)
-* macOS El Capitan (10.11)
-* macOS Sierra (10.12)
-* macOS High Sierra (10.13)
 * macOS Mojave (10.14)
+* macOS Catalina (10.15)
 
-Older versions may work but aren't regularly tested.
-Bug reports for older versions are welcome.
+Older versions may work but haven't been tested recently.
 
 Install
 -------
@@ -49,10 +45,6 @@ Optionally, review the log:
 less ~/laptop.log
 ```
 
-Optionally, [install thoughtbot/dotfiles][dotfiles].
-
-[dotfiles]: https://github.com/thoughtbot/dotfiles#install
-
 Debugging
 ---------
 
@@ -74,24 +66,39 @@ macOS tools:
 Unix tools:
 
 * [Git] for version control
+* [htop] for viewing process information in the CLI
 * [OpenSSL] for Transport Layer Security (TLS)
 * [The Silver Searcher] for finding things in files
+* [vim] as a handy in-terminal editor for rainy days
 * [Zsh] as your shell
 * [Oh My Zsh] framework for Zsh
 
 [Git]: https://git-scm.com/
+[htop]: https://hisham.hm/htop/
 [OpenSSL]: https://www.openssl.org/
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
+[vim]: https://www.vim.org/
 [Zsh]: http://www.zsh.org/
+
+Development tools:
+
+* [AWS CLI] for interacting with the Amazon API
+* [Heroku CLI] for interacting with the Heroku API
+* [Sentry CLI] for interacting with the Sentry API
+
+[AWS CLI]: https://aws.amazon.com/cli/
+[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
+[Sentry CLI]: https://github.com/getsentry/sentry-cli
 [Oh My Zsh]: https://ohmyz.sh/
 
 Programming languages, package managers, and configuration:
 
+* [Node.js] and [npm], for running apps and installing JavaScript packages. This installer uses `nvm` to manage Node versions.
+* [Ruby] stable for writing general-purpose code. This installer uses `rbenv` to manage Ruby versions.
 * [rbenv] for managing your Ruby environment
 * [Node.js] and [npm], for running apps and installing JavaScript packages
 * [nvm] for managing versions of node.js
 * [Ruby] stable for writing general-purpose code
-
 
 [Node.js]: http://nodejs.org/
 [npm]: https://www.npmjs.org/
@@ -110,19 +117,35 @@ Databases:
 
 Applications:
 
-* Chrome
-* Slack
-* Zoom
-* iTerm2
-* Firefox
-* Sublime Text (Text editor)
-* Sublime Merge (using sublime to resolve git conflicts)
-* Lastpass (Password manager)
-* Insomnia (REST client)
-* Flycut (clipboard manager)
+* [Google Chrome] as a browser option, and for testing
+* [Firefox] as a browser option, and for testing
+* [Slack] for team communication
+* [iTerm2] for an improved terminal experience
+* [Sublime Text] as a text editor option
+* [Sublime Merge] as a merge/diff tool and as a companion to Sublime Text
+* [Visual Studio Code] as a text editor option
+* [Insomnia] for a convenient UI to experiment with API endpoints
+* [Flycut] to expand the depth/history of your clipboard
+* [BitWarden] to store passwords/secrets and share them with teammates
+* [Caffeine] to keep your computer from falling asleep when you don't want it to
+* [Docker] for managing portable VMs
+* [Zoom] for videoconferencing
+* [TablePlus] for connecting to local and remote relational DBs
 
-
-It should take less than 15 minutes to install (depends on your machine).
+[Google Chrome]: https://www.google.com/chrome/
+[Firefox]: https://www.mozilla.org/en-US/firefox/new/
+[Slack]: https://slack.com/
+[iTerm2]: https://www.iterm2.com/
+[Sublime Text]: https://www.sublimetext.com/
+[Sublime Merge]: https://www.sublimemerge.com/
+[Visual Studio Code]: https://code.visualstudio.com/
+[Insomnia]: https://insomnia.rest/
+[Flycut]: https://github.com/TermiT/flycut
+[BitWarden]: https://bitwarden.com/
+[Caffeine]: http://lightheadsw.com/caffeine/
+[Docker]: https://www.docker.com/
+[Zoom]: https://zoom.us/
+[TablePlus]: https://tableplus.com/
 
 Customize in `~/.laptop.local`
 ------------------------------
@@ -188,17 +211,13 @@ Follow shell style guidelines by using [ShellCheck] and [Syntastic].
 brew install shellcheck
 ```
 
-[ShellCheck]: http://www.shellcheck.net/about.html
-[Syntastic]: https://github.com/scrooloose/syntastic
+Fork Information
+----------------
 
-Thank you, [contributors]!
+This repo is a fork of one originally put together by Thoughtbot, and has been customized to meet some of the needs of CoProcure engineers while retaining some opinionation about handy tools and common configurations.
 
-[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
+The original Thoughtbot project has some features that have been excluded in this fork, and that project may also continue to recieve updates that are of interest to some developers. For more info, visit the original Thoughtbot repo at https://github.com/thoughtbot/laptop
 
-By participating in this project,
-you agree to abide by the thoughtbot [code of conduct].
-
-[code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
 
 License
 -------
