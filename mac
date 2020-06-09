@@ -142,10 +142,9 @@ brew "getsentry/tools/sentry-cli"
 
 # Applications
 cask "google-chrome"
-cask "slack"
-cask "zoomus"
-cask "iterm2"
 cask "firefox"
+cask "slack"
+cask "iterm2"
 cask "sublime-text"
 cask "sublime-merge"
 cask "visual-studio-code"
