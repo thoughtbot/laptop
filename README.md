@@ -4,23 +4,19 @@ Laptop
 Laptop is a script to set up a macOS laptop for web and mobile development.
 
 It can be run multiple times on the same machine safely.
-It installs, upgrades, or skips packages
-based on what is already installed on the machine.
+It installs, upgrades, or skips packages based on what is already installed on the machine.
+
+*NOTE*: Please take a moment to read *and customize* this script before running. The packages below are helpful suggestions, not a prescriptive list.
 
 Requirements
 ------------
 
 We support:
 
-* macOS Mavericks (10.9)
-* macOS Yosemite (10.10)
-* macOS El Capitan (10.11)
-* macOS Sierra (10.12)
-* macOS High Sierra (10.13)
 * macOS Mojave (10.14)
+* macOS Catalina (10.15)
 
-Older versions may work but aren't regularly tested.
-Bug reports for older versions are welcome.
+Older versions may work but haven't been tested recently.
 
 Install
 -------
