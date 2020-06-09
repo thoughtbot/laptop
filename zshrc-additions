@@ -1,6 +1,8 @@
 # The following sections can be added to the bottom of your ~/.zshrc file
 # They may provide improved integrations with certain CLI tools
 
+plugins=(git gitfast nvm pyenv pipenv)
+
 # nvm config
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
