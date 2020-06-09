@@ -114,6 +114,7 @@ tap "homebrew/services"
 
 # Unix
 brew "git"
+brew "htop"
 brew "openssl"
 brew "the_silver_searcher"
 brew "vim"
@@ -126,6 +127,7 @@ brew "rbenv"
 brew "nvm"
 brew "pyenv"
 brew "pipenv"
+brew "tfenv"
 
 # Databases
 brew "postgres", restart_service: :changed
@@ -133,6 +135,8 @@ brew "redis", restart_service: :changed
 
 # Development tools
 brew "awscli"
+brew "heroku/brew/heroku"
+brew "getsentry/tools/sentry-cli"
 
 # Applications
 cask "google-chrome"
@@ -146,12 +150,17 @@ cask "lastpass"
 cask "insomnia"
 cask "flycut"
 cask "evernote"
+cask "bitwarden"
+cask "caffeine"
+cask "docker"
+cask "zoomus"
+cask "tableplus"
 EOF
 
 fancy_echo "Installing ohmyzsh framework for zsh ..."
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# fancy_echo "Installing Node 10 (for AWS Lambda compatibility)..."
+# fancy_echo "Installing NodeJS versions..."
 nvm install 10
 nvm install 12
 
@@ -160,3 +169,6 @@ if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "Don't forget to scroll up through the install logs above to see if any packages have setup/config instructions!"
+fancy_echo "Also, you may enjoy some of the modificiations in the `zshrc-additions` file in this repo."
