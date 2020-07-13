@@ -135,7 +135,7 @@ fancy_echo "Updating Homebrew formulae ..."
 brew update
 brew bundle --file=- <<EOF
 tap "homebrew/services"
-tap "caskroom/fonts"
+tap "homebrew/cask-fonts"
 
 # Unix
 brew "git"
