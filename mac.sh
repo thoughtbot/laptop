@@ -197,8 +197,15 @@ install_oh_my_zsh() {
 
 install_elasticsearch() {
   cask_install_or_upgrade 'homebrew/cask-versions/adoptopenjdk8'
-  brew_install_or_upgrade 'elasticsearch@5.6'
-  brew services start elasticsearch@5.6
+
+  # Elasticsearch 5.6 was removed from homebrew in this PR: https://github.com/Homebrew/homebrew-core/pull/57875.
+  # In order to install this version, we can point homebrew to a local directory which contains the
+  # elasticsearch@5.6.rb config file copied from that homebrew PR.
+  brew tap-new pg-shims/elasticsearch
+  cp elasticsearch@5.6.rb /usr/local/Homebrew/Library/Taps/pg-shims/homebrew-elasticsearch/Formula
+  brew tap pg-shims/elasticsearch
+  brew install elasticsearch@5.6
+  brew services start pg-shims/elasticsearch/elasticsearch@5.6
 }
 
 install_postgresql() {
