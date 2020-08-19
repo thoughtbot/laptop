@@ -204,6 +204,7 @@ install_elasticsearch() {
   brew tap-new pg-shims/elasticsearch
   cp elasticsearch@5.6.rb /usr/local/Homebrew/Library/Taps/pg-shims/homebrew-elasticsearch/Formula
   brew tap pg-shims/elasticsearch
+  brew install elasticsearch@5.6
   brew services start pg-shims/elasticsearch/elasticsearch@5.6
 }
 
