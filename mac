@@ -132,7 +132,7 @@ brew "heroku/brew/heroku"
 brew "parity"
 
 # GitHub
-brew "hub"
+brew "gh"
 
 # Image manipulation
 brew "imagemagick"

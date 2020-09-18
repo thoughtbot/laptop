@@ -100,9 +100,9 @@ Heroku tools:
 
 GitHub tools:
 
-* [Hub] for interacting with the GitHub API
+* [GitHub CLI] for interacting with the GitHub API
 
-[Hub]: http://hub.github.com/
+[GitHub CLI]: https://cli.github.com/
 
 Image tools:
 
