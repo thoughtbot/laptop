@@ -233,3 +233,8 @@ We are [available for hire][hire].
 
 [community]: https://thoughtbot.com/community?utm_source=github
 [hire]: https://thoughtbot.com?utm_source=github
+
+
+{ THE SIMPLE LINE OF COOD
+LAPTOP
+WEB
