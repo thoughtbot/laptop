@@ -9,15 +9,12 @@ based on what is already installed on the machine.
 
 It is based on [thoughtbot/laptop](https://github.com/thoughtbot/laptop).
 
-Requirements
+Mac Requirements
 ------------
 
-We support:
+* Make sure that you've installed XCode *before* running the laptop script. If you've not installed XCode, you will see the following error message: 
 
-* [OS X Yosemite (10.10)](https://www.apple.com/osx/)
-
-    _Older OS X versions may work but aren't regularly tested. Bug reports for older
-versions are welcome._
+> Can't install the software because it is not currently available from the Software Update server.
 
 Base Install
 -------
