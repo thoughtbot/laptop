@@ -12,18 +12,18 @@ It is based on [thoughtbot/laptop](https://github.com/thoughtbot/laptop).
 Mac Requirements
 ------------
 
-* Make sure that you've installed XCode *before* running the laptop script. If you've not installed XCode, you will see the following error message: 
+* Make sure that you've installed XCode *before* running the laptop script. If you've not installed XCode, you will see the following error message:
 
 > Can't install the software because it is not currently available from the Software Update server.
 
 Base Install
 -------
 
-Download, review, then execute the script:
+Clone the `laptop` repo, and then execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/policygenius/laptop/master/mac.sh
-less mac.sh
+git clone git@github.com:policygenius/laptop.git
+cd laptop
 sh mac.sh 2>&1 | tee ~/laptop.log
 ```
 
