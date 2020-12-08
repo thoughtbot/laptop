@@ -34,18 +34,18 @@ append_to_zshrc() {
 cask_install_or_upgrade() {
   if ! cask_is_installed "$1"; then
     fancy_echo "Installing %s ..." "$1"
-    brew cask install --appdir="/Applications" "$@" || true
+    brew install --cask --appdir="/Applications" "$@" || true
   fi
 }
 
 cask_is_installed() {
   local name="$(cask_expand_alias "$1")"
 
-  brew cask list -1 | grep -Fqx "$name"
+  brew list --cask -1 | grep -Fqx "$name"
 }
 
 cask_expand_alias() {
-  brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+  brew info --cask "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
 
 brew_install_or_upgrade() {
@@ -65,7 +65,7 @@ brew_install_or_upgrade() {
 brew_is_installed() {
   local name="$(brew_expand_alias "$1")"
 
-  brew list -1 | grep -Fqx "$name"
+  brew list --formula -1 | grep -Fqx "$name"
 }
 
 brew_is_upgradable() {
