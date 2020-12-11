@@ -275,12 +275,11 @@ install_vim_config
 # Setup Google Cloud Platform/Kubernetes Tooling
 cask_install_or_upgrade 'google-cloud-sdk'
 gcloud components install kubectl docker-credential-gcr pubsub-emulator
-brew_install_or_upgrade 'helm@2'
+brew_install_or_upgrade 'helm'
 append_to_zshrc 'source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 append_to_zshrc 'source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 append_to_zshrc 'eval "$(kubectl completion zsh)"'
 append_to_zshrc 'eval "$(helm completion zsh)"'
-helm init -c
 
 # Configure git aliases
 git config --global alias.st status
