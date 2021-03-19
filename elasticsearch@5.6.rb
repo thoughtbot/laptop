@@ -14,6 +14,8 @@ class ElasticsearchAT56 < Formula
 
   deprecate! :date => "2019-03-11"	
 
+  # comment this line out if you have this version installed correctly and you are getting
+  # a dependency error:
   depends_on :java => "1.8"	
 
   def cluster_name	
