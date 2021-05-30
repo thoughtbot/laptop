@@ -11,60 +11,10 @@ fancy_echo() {
   printf "\\n$fmt\\n" "$@"
 }
 
-# append_to_zshrc() {
-#   local text="$1" zshrc
-#   local skip_new_line="${2:-0}"
-
-#   if [ -w "$HOME/.zshrc.local" ]; then
-#     zshrc="$HOME/.zshrc.local"
-#   else
-#     zshrc="$HOME/.zshrc"
-#   fi
-
-#   if ! grep -Fqs "$text" "$zshrc"; then
-#     if [ "$skip_new_line" -eq 1 ]; then
-#       printf "%s\\n" "$text" >> "$zshrc"
-#     else
-#       printf "\\n%s\\n" "$text" >> "$zshrc"
-#     fi
-#   fi
-# }
-
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed (exit status: $ret)\n\n" >&2; exit $ret' EXIT
 
 set -e
-
-# update_shell() {
-#   local shell_path;
-#   shell_path="$(command -v zsh)"
-
-#   fancy_echo "Changing your shell to zsh ..."
-#   if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
-#     fancy_echo "Adding '$shell_path' to /etc/shells"
-#     sudo sh -c "echo $shell_path >> /etc/shells"
-#   fi
-#   sudo chsh -s "$shell_path" "$USER"
-# }
-
-# case "$SHELL" in
-#   */zsh)
-#     if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
-#       update_shell
-#     fi
-#     ;;
-#   *)
-#     update_shell
-#     ;;
-# esac
-
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
-  else
-    gem install "$@"
-  fi
-}
 
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
@@ -107,7 +57,7 @@ if [ ! -d "$ZSH" ]; then
 fi
 
 fancy_echo "Enabling asdf plugin in Oh My Zsh ..."
-if ! grep -qn "^plugins=.*asdf.*" $HOME/.zshrc; then
+if ! grep -qn "^plugins=.*asdf.*" "$HOME/.zshrc"; then
   sed -i '' 's/^plugins=(\(.*\)/plugins=(asdf \1/' "$HOME/.zshrc"
 fi
 
@@ -123,7 +73,7 @@ add_or_update_asdf_plugin() {
   fi
 }
 
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 source "$HOME/.asdf/asdf.sh"
 fancy_echo "Adding asdf plugins ..."
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
@@ -152,8 +102,8 @@ install_asdf_language "nodejs"
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
-  # shellcheck disable=SC1090
-  . "$HOME/.laptop.local"
+  # shellcheck disable=SC1090,SC1091
+  source "$HOME/.laptop.local"
 fi
 
 fancy_echo "Done. Restart this terminal."
