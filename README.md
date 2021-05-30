@@ -72,42 +72,19 @@ macOS tools:
 
 [Homebrew]: http://brew.sh/
 
-Unix tools:
+CLI tools:
 
-* [Universal Ctags] for indexing files for vim tab completion
 * [Git] for version control
+* [GitHub CLI] for interacting with the GitHub API
 * [OpenSSL] for Transport Layer Security (TLS)
-* [RCM] for managing company and personal dotfiles
-* [The Silver Searcher] for finding things in files
 * [Tmux] for saving project state and switching between projects
-* [Watchman] for watching for filesystem events
 * [Zsh] as your shell
 
-[Universal Ctags]: https://ctags.io/
 [Git]: https://git-scm.com/
-[OpenSSL]: https://www.openssl.org/
-[RCM]: https://github.com/thoughtbot/rcm
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
-[Tmux]: http://tmux.github.io/
-[Watchman]: https://facebook.github.io/watchman/
-[Zsh]: http://www.zsh.org/
-
-Heroku tools:
-
-* [Heroku CLI] and [Parity] for interacting with the Heroku API
-
-[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
-[Parity]: https://github.com/thoughtbot/parity
-
-GitHub tools:
-
-* [GitHub CLI] for interacting with the GitHub API
-
 [GitHub CLI]: https://cli.github.com/
-
-Image tools:
-
-* [ImageMagick] for cropping and resizing images
+[OpenSSL]: https://www.openssl.org/
+[Tmux]: http://tmux.github.io/
+[Zsh]: http://www.zsh.org/
 
 Programming languages, package managers, and configuration:
 
@@ -115,15 +92,12 @@ Programming languages, package managers, and configuration:
 * [Bundler] for managing Ruby libraries
 * [Node.js] and [npm], for running apps and installing JavaScript packages
 * [Ruby] stable for writing general-purpose code
-* [Yarn] for managing JavaScript packages
 
 [Bundler]: http://bundler.io/
-[ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
 [npm]: https://www.npmjs.org/
 [asdf-vm]: https://github.com/asdf-vm/asdf
 [Ruby]: https://www.ruby-lang.org/en/
-[Yarn]: https://yarnpkg.com/en/
 
 Databases:
 
@@ -182,7 +156,7 @@ Write your customizations such that they can be run safely more than once.
 See the `mac` script for examples.
 
 Laptop functions such as `fancy_echo` and
-`gem_install_or_update`
+`add_or_update_asdf_plugin`
 can be used in your `~/.laptop.local`.
 
 See the [wiki](https://github.com/thoughtbot/laptop/wiki)
@@ -197,40 +171,10 @@ Follow shell style guidelines by using [ShellCheck] and [Syntastic].
 
 ```sh
 brew install shellcheck
+
+cd laptop
+shellcheck --shell=bash mac
 ```
 
 [ShellCheck]: http://www.shellcheck.net/about.html
 [Syntastic]: https://github.com/scrooloose/syntastic
-
-Thank you, [contributors]!
-
-[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
-
-By participating in this project,
-you agree to abide by the thoughtbot [code of conduct].
-
-[code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
-
-License
--------
-
-Laptop is © 2011-2020 thoughtbot, inc.
-It is free software,
-and may be redistributed under the terms specified in the [LICENSE] file.
-
-[LICENSE]: LICENSE
-
-About thoughtbot
-----------------
-
-![thoughtbot](https://thoughtbot.com/brand_assets/93:44.svg)
-
-Laptop is maintained and funded by thoughtbot, inc.
-The names and logos for thoughtbot are trademarks of thoughtbot, inc.
-
-We are passionate about open source software.
-See [our other projects][community].
-We are [available for hire][hire].
-
-[community]: https://thoughtbot.com/community?utm_source=github
-[hire]: https://thoughtbot.com?utm_source=github

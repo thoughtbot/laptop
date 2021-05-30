@@ -27,7 +27,7 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
 tap "homebrew/services"
 
-# Unix
+# CLI tools
 brew "gh"
 brew "git"
 brew "openssl"
