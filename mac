@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Welcome to the thoughtbot laptop script!
-# Be prepared to turn your laptop (or desktop, no haters here)
+# Welcome to macbook laptop script!
+# Be prepared to turn your macbook
 # into an awesome development machine.
 
 fancy_echo() {
@@ -11,75 +11,52 @@ fancy_echo() {
   printf "\\n$fmt\\n" "$@"
 }
 
-append_to_zshrc() {
-  local text="$1" zshrc
-  local skip_new_line="${2:-0}"
+# append_to_zshrc() {
+#   local text="$1" zshrc
+#   local skip_new_line="${2:-0}"
 
-  if [ -w "$HOME/.zshrc.local" ]; then
-    zshrc="$HOME/.zshrc.local"
-  else
-    zshrc="$HOME/.zshrc"
-  fi
+#   if [ -w "$HOME/.zshrc.local" ]; then
+#     zshrc="$HOME/.zshrc.local"
+#   else
+#     zshrc="$HOME/.zshrc"
+#   fi
 
-  if ! grep -Fqs "$text" "$zshrc"; then
-    if [ "$skip_new_line" -eq 1 ]; then
-      printf "%s\\n" "$text" >> "$zshrc"
-    else
-      printf "\\n%s\\n" "$text" >> "$zshrc"
-    fi
-  fi
-}
+#   if ! grep -Fqs "$text" "$zshrc"; then
+#     if [ "$skip_new_line" -eq 1 ]; then
+#       printf "%s\\n" "$text" >> "$zshrc"
+#     else
+#       printf "\\n%s\\n" "$text" >> "$zshrc"
+#     fi
+#   fi
+# }
 
 # shellcheck disable=SC2154
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+trap 'ret=$?; test $ret -ne 0 && printf "failed (exit status: $ret)\n\n" >&2; exit $ret' EXIT
 
 set -e
 
-if [ ! -d "$HOME/.bin/" ]; then
-  mkdir "$HOME/.bin"
-fi
+# update_shell() {
+#   local shell_path;
+#   shell_path="$(command -v zsh)"
 
-if [ ! -f "$HOME/.zshrc" ]; then
-  touch "$HOME/.zshrc"
-fi
+#   fancy_echo "Changing your shell to zsh ..."
+#   if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+#     fancy_echo "Adding '$shell_path' to /etc/shells"
+#     sudo sh -c "echo $shell_path >> /etc/shells"
+#   fi
+#   sudo chsh -s "$shell_path" "$USER"
+# }
 
-# shellcheck disable=SC2016
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-
-HOMEBREW_PREFIX="/usr/local"
-
-if [ -d "$HOMEBREW_PREFIX" ]; then
-  if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "$LOGNAME:admin" /usr/local
-  fi
-else
-  sudo mkdir "$HOMEBREW_PREFIX"
-  sudo chflags norestricted "$HOMEBREW_PREFIX"
-  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
-fi
-
-update_shell() {
-  local shell_path;
-  shell_path="$(command -v zsh)"
-
-  fancy_echo "Changing your shell to zsh ..."
-  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
-    fancy_echo "Adding '$shell_path' to /etc/shells"
-    sudo sh -c "echo $shell_path >> /etc/shells"
-  fi
-  sudo chsh -s "$shell_path" "$USER"
-}
-
-case "$SHELL" in
-  */zsh)
-    if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
-      update_shell
-    fi
-    ;;
-  *)
-    update_shell
-    ;;
-esac
+# case "$SHELL" in
+#   */zsh)
+#     if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
+#       update_shell
+#     fi
+#     ;;
+#   *)
+#     update_shell
+#     ;;
+# esac
 
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
@@ -93,65 +70,45 @@ if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     /bin/bash -c \
       "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
-    append_to_zshrc '# recommended by brew doctor'
-
-    # shellcheck disable=SC2016
-    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
-
-    export PATH="/usr/local/bin:$PATH"
-fi
-
-if brew list | grep -Fq brew-cask; then
-  fancy_echo "Uninstalling old Homebrew-Cask ..."
-  brew uninstall --force brew-cask
 fi
 
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
 tap "homebrew/services"
-tap "universal-ctags/universal-ctags"
-tap "heroku/brew"
 
 # Unix
-brew "universal-ctags", args: ["HEAD"]
+brew "gh"
 brew "git"
 brew "openssl"
-brew "rcm"
 brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
 brew "tmux"
 brew "vim"
-brew "watchman"
 brew "zsh"
 
-# Heroku
-brew "heroku/brew/heroku"
-brew "parity"
-
-# GitHub
-brew "gh"
-
-# Image manipulation
-brew "imagemagick"
-
 # Programming language prerequisites and package managers
-brew "libyaml" # should come after openssl
 brew "coreutils"
-brew "yarn"
-cask "gpg-suite"
+brew "gawk"      # used by: nodejs
+brew "gpg"       # used by: nodejs
 
 # Databases
-brew "postgres", restart_service: :changed
+brew "postgres"
 brew "redis", restart_service: :changed
 EOF
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
-  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
+fi
+
+fancy_echo "Installing Oh My Zsh ..."
+if [ ! -d "$ZSH" ]; then
+  sh -c "RUNZSH=no $(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+fi
+
+fancy_echo "Enabling asdf plugin in Oh My Zsh ..."
+if ! grep -qn "^plugins=.*asdf.*" $HOME/.zshrc; then
+  sed -i '' 's/^plugins=(\(.*\)/plugins=(asdf \1/' "$HOME/.zshrc"
 fi
 
 alias install_asdf_plugin=add_or_update_asdf_plugin
@@ -168,6 +125,7 @@ add_or_update_asdf_plugin() {
 
 # shellcheck disable=SC1090
 source "$HOME/.asdf/asdf.sh"
+fancy_echo "Adding asdf plugins ..."
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
@@ -197,3 +155,5 @@ if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "Done. Restart this terminal."
