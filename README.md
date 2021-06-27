@@ -7,6 +7,8 @@ It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
 based on what is already installed on the machine.
 
+[![reviewdog](https://github.com/teohm/laptop/workflows/reviewdog/badge.svg?branch=master&event=push)](https://github.com/teohm/laptop/actions?query=workflow%3Areviewdog+event%3Apush+branch%3Amaster)
+
 Requirements
 ------------
 
