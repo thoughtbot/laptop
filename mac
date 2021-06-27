@@ -58,8 +58,8 @@ fi
 
 enable_ohmyzsh_plugin() {
   local plugin_name="$1"
-  if ! grep -qn "^plugins=.*${plugin_name}.*" "$HOME/.zshrc"; then
-    sed -i '' 's/^plugins=(\(.*\)/plugins=(${plugin_name} \1/' "$HOME/.zshrc"
+  if ! grep -qn "^plugins=.*$plugin_name.*" "$HOME/.zshrc"; then
+    sed -i '' "s/^plugins=(\(.*\)/plugins=($plugin_name \1/" "$HOME/.zshrc"
   fi
 }
 
