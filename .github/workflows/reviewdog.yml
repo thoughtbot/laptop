@@ -1,5 +1,9 @@
 name: reviewdog
-on: [pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 jobs:
   shellcheck:
     name: runner / shellcheck
@@ -10,6 +14,6 @@ jobs:
         uses: reviewdog/action-shellcheck@v1
         with:
           github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check # reporters: [github-pr-check, github-pr-review, github-check]
+          reporter: github-check # reporters: [github-pr-check, github-pr-review, github-check]
           pattern: "mac"
           shellcheck_flags: "--shell=bash"
