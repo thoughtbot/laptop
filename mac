@@ -56,10 +56,17 @@ if [ ! -d "$ZSH" ]; then
   sh -c "RUNZSH=no $(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
-fancy_echo "Enabling asdf plugin in Oh My Zsh ..."
-if ! grep -qn "^plugins=.*asdf.*" "$HOME/.zshrc"; then
-  sed -i '' 's/^plugins=(\(.*\)/plugins=(asdf \1/' "$HOME/.zshrc"
-fi
+enable_ohmyzsh_plugin() {
+  local plugin_name="$1"
+  if ! grep -qn "^plugins=.*${plugin_name}.*" "$HOME/.zshrc"; then
+    sed -i '' 's/^plugins=(\(.*\)/plugins=(${plugin_name} \1/' "$HOME/.zshrc"
+  fi
+}
+
+fancy_echo "Enabling Oh My Zsh plugins ..."
+enable_ohmyzsh_plugin "asdf"
+enable_ohmyzsh_plugin "gh"
+enable_ohmyzsh_plugin "git"
 
 alias install_asdf_plugin=add_or_update_asdf_plugin
 add_or_update_asdf_plugin() {
