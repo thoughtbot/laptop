@@ -94,40 +94,17 @@ What it sets up
 ---------------
 
 * [Bundler] for managing Ruby libraries
-* [Exuberant Ctags] for indexing files for vim tab completion
-* [Foreman] for managing web processes
-* [gh] for interacting with the GitHub API
-* [aptible] for HIPAA-compliant deploys
 * [Homebrew] and [Homebrew Cask] for managing operating system libraries
-* [ImageMagick] for cropping and resizing images
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Postgres] for storing relational data
 * [Rbenv] for managing versions of Ruby
 * [Redis] for storing key-value data
 * [Ruby Build] for installing Rubies
 * [Ruby] stable for writing general-purpose code
-* [The Silver Searcher] for finding things in files
-* [Tmux] for saving project state and switching between projects
-* [Zsh] as your shell and [Oh My ZSH!] as a base config
-  - Includes a [ZSH Syntax Highlighting]
-  - Includes [Z], a script that makes navigating in the terminal much faster.
 * [Docker] for prod-like development environments
-* [MacVim] for writing code and [pivotalcommon/vim-config] as a base config
-* [iTerm2] for your terminal
-* [Slack] for team communication
-* [Screenhero] for remote pairing
-* [Sourcetree] because sometime you just want a GUI
-* [ShiftIt] for window management
-* [Google Chrome] and [Firefox] browsers
 
 [Bundler]: http://bundler.io/
-[Exuberant Ctags]: http://ctags.sourceforge.net/
-[Foreman]: https://github.com/ddollar/foreman
-[gh]: https://github.com/jingweno/gh
-[aptible]: https://github.com/aptible/aptible-cli
 [Homebrew]: http://brew.sh/
-[Homebrew Cask]: http://caskroom.io/
-[ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
 [Postgres]: http://www.postgresql.org/
@@ -135,52 +112,4 @@ What it sets up
 [Redis]: http://redis.io/
 [Ruby Build]: https://github.com/sstephenson/ruby-build
 [Ruby]: https://www.ruby-lang.org/en/
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
-[Tmux]: http://tmux.sourceforge.net/
-[Zsh]: http://www.zsh.org/
-[Oh My ZSH!]: http://ohmyz.sh/
-[ZSH Syntax Highlighting]: https://github.com/zsh-users/zsh-syntax-highlighting
-[Z]: https://github.com/rupa/z
 [Docker]: https://www.docker.com/
-[MacVim]: https://github.com/b4winckler/macvim
-[pivotalcommon/vim-config]: https://github.com/pivotalcommon/vim-config
-[iTerm2]: http://iterm2.com/
-[Slack]: https://slack.com/
-[Screenhero]: https://screenhero.com/
-[SourceTree]: http://www.sourcetreeapp.com/
-[ShiftIt]: https://github.com/onsi/ShiftIt
-[Google Chrome]: https://www.google.com/chrome
-[Firefox]: https://www.mozilla.org/firefox
-
-Customize in `~/.laptop.local`
-------------------------------
-
-Your `~/.laptop.local` is run at the end of the Laptop script.
-Put your customizations there.
-For example:
-
-```sh
-#!/bin/sh
-
-brew_tap 'caskroom/cask'
-brew_install_or_upgrade 'brew-cask'
-
-brew cask install dropbox
-brew cask install google-chrome
-brew cask install rdio
-
-gem_install_or_update 'parity'
-
-brew_install_or_upgrade 'tree'
-brew_install_or_upgrade 'watch'
-```
-
-Write your customizations such that they can be run safely more than once.
-See the `mac.sh` script for examples.
-
-Laptop functions such as `fancy_echo`,
-`brew_install_or_upgrade`,
-`cask_install_or_upgrade`,
-`gem_install_or_update`, and
-`append_to_zshrc`
-can be used in your `~/.laptop.local`.

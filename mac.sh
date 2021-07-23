@@ -109,15 +109,6 @@ gem_install_or_update() {
   fi
 }
 
-install_shift_it() {
-  # from Onsi's fork
-  curl -L https://raw.github.com/onsi/ShiftIt/master/ShiftIt.zip -o ShiftIt.zip
-  unzip -oq ShiftIt.zip -d ~/Applications/
-  rm ShiftIt.zip
-
-  open ~/Applications/ShiftIt.app/
-}
-
 install_or_update_homebrew() {
   if ! command -v brew >/dev/null; then
     fancy_echo "Installing Homebrew ..."
@@ -161,40 +152,6 @@ install_bundler_1_17_3() {
   bundle config --global jobs $((number_of_cores - 1))
 }
 
-install_vim_config() {
-  if [ -f ~/.vim/bin/update ]; then
-    echo "vim-config already installed."
-    echo " run ~/.vim/bin/update to upgrade."
-  else
-    if [ -d ~/.vim ]; then
-      echo "Saving old vim config to ~/.vim.old"
-      cp -r ~/.vim ~/.vim.old
-    fi
-    echo "Downloading and installing pivotalcommons/vim-config..."
-    git clone https://github.com/pivotalcommon/vim-config.git ~/.vim
-    ~/.vim/bin/install
-  fi
-}
-
-change_shell_to_zsh() {
-  case "$SHELL" in
-    */zsh) : ;;
-    *)
-      fancy_echo "Changing your shell to zsh ..."
-      chsh -s "$(which zsh)"
-      ;;
-  esac
-}
-
-install_oh_my_zsh() {
-  if [ ! -d ~/.oh-my-zsh ]; then
-    curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-  fi
-  if [ ! -d ~/.oh-my-zsh/zsh-syntax-highlighting ]; then
-    cd ~/.oh-my-zsh && git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
-  fi
-}
-
 install_elasticsearch() {
   cask_install_or_upgrade 'homebrew/cask-versions/adoptopenjdk8'
 
@@ -228,12 +185,7 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
 
-change_shell_to_zsh
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-append_to_zshrc 'export GIT_EDITOR=vim'
-append_to_zshrc 'source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
-append_to_zshrc '. `brew --prefix`/etc/profile.d/z.sh'
-install_oh_my_zsh
 
 # Install packages
 install_or_update_homebrew
@@ -242,22 +194,13 @@ install_postgresql
 brew_install_or_upgrade 'redis'
 brew_launchctl_restart 'redis'
 brew_install_or_upgrade 'sops'
-brew_install_or_upgrade 'the_silver_searcher'
-brew_install_or_upgrade 'vim'
-brew_install_or_upgrade 'ctags'
-brew_install_or_upgrade 'tmux'
-brew_install_or_upgrade 'reattach-to-user-namespace'
-brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'n'
 sudo n stable
 brew_install_or_upgrade 'yarn'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
-brew_install_or_upgrade 'wget'
-brew_install_or_upgrade 'autojump'
 brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'z'
 
 brew_tap 'homebrew/cask'
 cask_install_or_upgrade 'chromedriver'
@@ -265,43 +208,11 @@ install_elasticsearch
 
 # Install applications
 cask_install_or_upgrade 'google-chrome'
-cask_install_or_upgrade 'iterm2'
-cask_install_or_upgrade 'slack'
-install_shift_it
 install_ruby_2_4_5
 install_bundler_1_17_3
-install_vim_config
 
 # Setup Google Cloud Platform/Kubernetes Tooling
 cask_install_or_upgrade 'google-cloud-sdk'
 gcloud components install kubectl docker-credential-gcr pubsub-emulator
 brew_install_or_upgrade 'helm'
 append_to_zshrc 'source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-append_to_zshrc 'source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
-append_to_zshrc 'eval "$(kubectl completion zsh)"'
-append_to_zshrc 'eval "$(helm completion zsh)"'
-
-# Configure git aliases
-git config --global alias.st status
-git config --global alias.di diff
-git config --global alias.dc diff --cached
-git config --global alias.co checkout
-git config --global alias.ci commit
-git config --global alias.br branch
-git config --global alias.sta stash
-git config --global alias.llog "log --date=local"
-git config --global alias.flog "log --pretty=fuller --decorate"
-git config --global alias.lg "log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\" --abbrev-commit --date=relative"
-git config --global alias.lol "log --graph --decorate --oneline"
-git config --global alias.lola "log --graph --decorate --oneline --all"
-git config --global alias.blog "log origin/master... --left-right"
-git config --global alias.ds "diff --staged"
-git config --global alias.fixup "commit --fixup"
-git config --global alias.squash "commit --squash"
-git config --global alias.unstage "reset HEAD"
-git config --global alias.rum "rebase master@{u}"
-
-# Run local customizations
-if [ -f "$HOME/.laptop.local" ]; then
-  . "$HOME/.laptop.local"
-fi
