@@ -152,19 +152,6 @@ install_bundler_1_17_3() {
   bundle config --global jobs $((number_of_cores - 1))
 }
 
-install_elasticsearch() {
-  cask_install_or_upgrade 'homebrew/cask-versions/adoptopenjdk8'
-
-  # Elasticsearch 5.6 was removed from homebrew in this PR: https://github.com/Homebrew/homebrew-core/pull/57875.
-  # In order to install this version, we can point homebrew to a local directory which contains the
-  # elasticsearch@5.6.rb config file copied from that homebrew PR.
-  brew tap-new pg-shims/elasticsearch
-  cp elasticsearch@5.6.rb /usr/local/Homebrew/Library/Taps/pg-shims/homebrew-elasticsearch/Formula
-  brew tap pg-shims/elasticsearch
-  brew install elasticsearch@5.6
-  brew services start pg-shims/elasticsearch/elasticsearch@5.6
-}
-
 install_postgresql() {
   brew_install_or_upgrade 'postgresql@9.6'
   brew link postgresql@9.6 --force
@@ -200,11 +187,13 @@ brew_install_or_upgrade 'yarn'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'openssl'
+brew_install_or_upgrade 'elasticsearch@6'
+brew services start elasticsearch@6
+
 brew unlink openssl && brew link openssl --force
 
 brew_tap 'homebrew/cask'
 cask_install_or_upgrade 'chromedriver'
-install_elasticsearch
 
 # Install applications
 cask_install_or_upgrade 'google-chrome'
