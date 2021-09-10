@@ -52,14 +52,8 @@ brew bundle --file=- <<EOF
 
 # Unix
 brew "git"
-# brew "openssl"
-# brew "rcm"
-# brew "reattach-to-user-namespace"
-# brew "the_silver_searcher"
 # brew "tmux"
 brew "vim"
-# brew "watchman"
-# brew "zsh"
 
 # piscue
 brew "amazon-ecs-cli"
