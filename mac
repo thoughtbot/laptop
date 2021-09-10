@@ -52,7 +52,7 @@ brew bundle --file=- <<EOF
 
 # Unix
 brew "git"
-# brew "tmux"
+brew "tmux"
 brew "vim"
 
 # piscue
