@@ -19,6 +19,13 @@ jobs:
       - name: Update brew
         run: brew update
 
+      - name: avoid conflicts awscli
+        run: |
+          rm /usr/local/bin/aws \
+          /usr/local/bin/aws_completer \
+          /usr/local/bin/go \
+          /usr/local/bin/gofmt
+
       - name: Install shellcheck
         run: brew install shellcheck
 
