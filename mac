@@ -18,14 +18,9 @@ else
 fi
 
 if ! command -v brew >/dev/null; then
-  fancy_echo "Installing Homebrew ..."
-    curl -fsS \
-      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
-
-    append_to_zshrc '# recommended by brew doctor'
-
-    # shellcheck disable=SC2016
-    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+  echo "Installing Homebrew ..."
+    /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
     export PATH="/usr/local/bin:$PATH"
 fi
