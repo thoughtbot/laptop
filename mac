@@ -34,12 +34,8 @@ echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
 
-# Unix
-brew "git"
-brew "tmux"
-brew "vim"
+tap "dteoh/sqa"
 
-# piscue
 brew "amazon-ecs-cli"
 brew "awscli"
 brew "ansible"
@@ -69,7 +65,9 @@ brew "wget"
 brew "python@2"
 brew "python"
 brew "thefuck"
+brew "tmux"
 brew "unison"
+brew "vim"
 brew "wget"
 brew "yabai"
 brew "yq"
