@@ -89,6 +89,13 @@ brew "unison"
 brew "wget"
 brew "yabai"
 brew "yq"
+
+# casks
+cask "alfred"
+cask "docker"
+cask "slowquitapps"
+cask "spotify"
+cask "telegram"
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then
