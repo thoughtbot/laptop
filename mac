@@ -35,6 +35,7 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
 
 tap "dteoh/sqa"
+tap "koekeishiya/formulae"
 
 brew "amazon-ecs-cli"
 brew "awscli"
