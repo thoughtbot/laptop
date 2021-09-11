@@ -85,6 +85,8 @@ brew "wget"
 brew "python@2"
 brew "python"
 brew "thefuck"
+brew "unison"
+brew "wget"
 brew "yabai"
 brew "yq"
 EOF
