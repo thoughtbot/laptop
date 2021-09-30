@@ -112,8 +112,8 @@ gem_install_or_update() {
 install_or_update_homebrew() {
   if ! command -v brew >/dev/null; then
     fancy_echo "Installing Homebrew ..."
-    curl -fsS \
-      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+      /bin/bash -c \
+        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
     append_to_zshrc '# recommended by brew doctor'
 
