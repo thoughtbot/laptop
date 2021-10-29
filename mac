@@ -39,6 +39,7 @@ tap "koekeishiya/formulae"
 
 brew "awscli"
 brew "ansible"
+brew "ansiweather"
 brew "bash"
 brew "bash-completion"
 brew "coreutils"
