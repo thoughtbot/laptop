@@ -36,6 +36,7 @@ brew bundle --file=- <<EOF
 
 tap "dteoh/sqa"
 tap "koekeishiya/formulae"
+tap "warrensbox/homebrew-tap"
 
 brew "awscli"
 brew "ansible"
@@ -67,6 +68,7 @@ brew "thefuck"
 brew "tmux"
 brew "unison"
 brew "vim"
+brew "tfswitch"
 brew "wget"
 brew "yabai"
 brew "yq"
