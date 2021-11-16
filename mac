@@ -78,6 +78,7 @@ brew "yq"
 # casks
 cask "alfred"
 cask "docker"
+cask "raycast"
 cask "slowquitapps"
 cask "spotify"
 cask "telegram"
