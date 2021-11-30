@@ -77,6 +77,7 @@ brew "yq"
 
 # casks
 cask "alfred"
+cask "daisydisk"
 cask "docker"
 cask "raycast"
 cask "slowquitapps"
