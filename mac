@@ -92,6 +92,7 @@ cask "slack"
 cask "slowquitapps"
 cask "spotify"
 cask "telegram"
+cask "utm"
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then
