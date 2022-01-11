@@ -98,6 +98,7 @@ cask "slowquitapps"
 cask "spotify"
 cask "telegram"
 cask "utm"
+cask "zoom"
 cask "whatsapp"
 EOF
 
