@@ -81,7 +81,6 @@ brew "unison"
 brew "vim"
 brew "tfswitch"
 brew "wget"
-brew "yabai"
 brew "yq"
 
 # casks
@@ -101,11 +100,12 @@ cask "spotify"
 cask "telegram"
 cask "utm"
 cask "zoom"
+cask "via"
 cask "whatsapp"
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then
   echo "Running your customizations from ~/.laptop.local ..."
-  # shellcheck disable=SC1090
+  # shellcheck disable=SC1090 disable=SC1091
   . "$HOME/.laptop.local"
 fi
