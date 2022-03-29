@@ -46,16 +46,12 @@ fi
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
-HOMEBREW_PREFIX="/usr/local"
-
-if [ -d "$HOMEBREW_PREFIX" ]; then
-  if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "$LOGNAME:admin" /usr/local
-  fi
+# Determine Homebrew prefix
+arch="$(uname -m)"
+if [ "$arch" = "arm64" ]; then
+  HOMEBREW_PREFIX="/opt/homebrew"
 else
-  sudo mkdir "$HOMEBREW_PREFIX"
-  sudo chflags norestricted "$HOMEBREW_PREFIX"
-  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
+  HOMEBREW_PREFIX="/usr/local"
 fi
 
 update_shell() {
@@ -92,14 +88,11 @@ gem_install_or_update() {
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     /bin/bash -c \
-      "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    append_to_zshrc '# recommended by brew doctor'
+    append_to_zshrc "eval \"\$($HOMEBREW_PREFIX/bin/brew shellenv)\""
 
-    # shellcheck disable=SC2016
-    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
-
-    export PATH="/usr/local/bin:$PATH"
+    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
 if brew list | grep -Fq brew-cask; then
