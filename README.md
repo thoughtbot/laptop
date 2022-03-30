@@ -196,6 +196,17 @@ brew install shellcheck
 [ShellCheck]: http://www.shellcheck.net/about.html
 [Syntastic]: https://github.com/scrooloose/syntastic
 
+### Testing your changes
+
+Test your changes by running the script on a fresh install of macOS.
+You can use the free and open source emulator [UTM].
+
+Tip: Make a fresh virtual machine with the installation of macOS completed and
+your user created and first launch complete. Then duplicate that machine to test
+the script each time on a fresh install thats ready to go.
+
+[UTM]: https://mac.getutm.app
+
 Thank you, [contributors]!
 
 [contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
