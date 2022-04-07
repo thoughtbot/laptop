@@ -88,6 +88,7 @@ brew "yq"
 
 # casks
 cask "brave-browser"
+cask "cool-retro-term"
 cask "daisydisk"
 cask "discord"
 cask "docker"
