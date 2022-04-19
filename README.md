@@ -182,6 +182,10 @@ can be used in your `~/.laptop.local`.
 See the [wiki](https://github.com/thoughtbot/laptop/wiki)
 for more customization examples.
 
+Some things to note.
+------------
+- It's advicable to not install [`NVM`](https://github.com/nvm-sh/nvm) on your machine and opt to using [`ASDF`](https://github.com/asdf-vm/asdf) as this is what the package uses as it's default package manager.
+
 Contributing
 ------------
 
