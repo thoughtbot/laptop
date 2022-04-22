@@ -30,6 +30,19 @@ if brew list | grep -Fq brew-cask; then
   brew uninstall --force brew-cask
 fi
 
+# fix conflicts
+overwrites="
+awscli
+bash-completion
+git
+go
+"
+
+# shellcheck disable=SC2116
+for overwrite in $(echo "$overwrites"); do
+  brew install --overwrite "$overwrite"
+done
+
 echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
@@ -38,6 +51,7 @@ tap "dteoh/sqa"
 tap "koekeishiya/formulae"
 tap "warrensbox/homebrew-tap"
 tap "hashicorp/homebrew-tap"
+tap "romkatv/powerlevel10k"
 
 brew "awscli"
 brew "ansiweather"
@@ -64,6 +78,7 @@ brew "nmap"
 brew "node@16"
 brew "pgcli"
 brew "pipenv"
+brew "powerlevel10k"
 brew "pstree"
 brew "pyenv"
 brew "python@3.9"
@@ -85,6 +100,8 @@ brew "tfswitch"
 brew "wget"
 brew "yabai"
 brew "yq"
+brew "zsh-syntax-highlighting"
+brew "zsh-autosuggestions"
 
 # casks
 cask "brave-browser"
@@ -117,4 +134,9 @@ if [ -f "$HOME/.laptop.local" ]; then
   echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090 disable=SC1091
   . "$HOME/.laptop.local"
+fi
+
+# if powerlevel10k.zsh-theme don't exist in .zshrc then add it
+if ! grep -q "powerlevel10k.zsh-theme" "$HOME/.zshrc"; then
+  echo "source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
 fi

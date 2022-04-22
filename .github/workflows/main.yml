@@ -19,16 +19,6 @@ jobs:
       - name: Update brew
         run: brew update
 
-      - name: avoid conflicts awscli
-        run: |
-          # return always 0 with the echo ""
-          avoid_conflict () { [[ -f $1 ]] && (rm $1 || echo not exist $1); echo ""; }
-          avoid_conflict /usr/local/bin/aws
-          avoid_conflict /usr/local/bin/aws_completer
-          avoid_conflict /usr/local/bin/go
-          avoid_conflict /usr/local/bin/gofmt
-          avoid_conflict /usr/local/etc/bash_completion.d/docker-compose
-
       - name: Install shellcheck
         run: brew install shellcheck
 
