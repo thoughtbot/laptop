@@ -105,9 +105,8 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
 tap "homebrew/services"
-tap "heroku/brew"
+tap "homebrew/cask"
 
 # Unix
 brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
@@ -120,10 +119,6 @@ brew "tmux"
 brew "vim"
 brew "watchman"
 brew "zsh"
-
-# Heroku
-brew "heroku/brew/heroku"
-brew "parity"
 
 # GitHub
 brew "gh"
@@ -140,11 +135,24 @@ cask "gpg-suite-no-mail"
 # Databases
 brew "postgres", restart_service: :changed
 brew "redis", restart_service: :changed
-EOF
 
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
+# COMMS
+cask "microsoft-teams"
+
+# BROWSERS
+cask "firefox"
+cask "google-chrome"
+
+# EDITORS
+cask "visual-studio-code"
+
+# PRODUCTIVITY
+cask "notion"
+
+# UTILS
+cask "1password"
+cask "adobe-acrobat-reader"
+EOF
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then

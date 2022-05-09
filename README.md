@@ -23,7 +23,7 @@ Install
 Download the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/main/mac
+curl --remote-name https://raw.githubusercontent.com/junipereducation/laptop-setup/main/mac
 ```
 
 Review the script (avoid running scripts you haven't read!):
@@ -86,13 +86,6 @@ Unix tools:
 [Watchman]: https://facebook.github.io/watchman/
 [Zsh]: http://www.zsh.org/
 
-Heroku tools:
-
-* [Heroku CLI] and [Parity] for interacting with the Heroku API
-
-[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
-[Parity]: https://github.com/thoughtbot/parity
-
 GitHub tools:
 
 * [GitHub CLI] for interacting with the GitHub API
@@ -127,6 +120,40 @@ Databases:
 [Postgres]: http://www.postgresql.org/
 [Redis]: http://redis.io/
 
+Communications:
+
+* [Microsoft Teams] for communicating with the company
+
+[Microsoft Teams]: https://www.microsoft.com/en-gb/microsoft-teams/group-chat-software
+
+Browsers:
+
+* [Firefox] for browsing the internet
+* [Google Chrome] for browsing the internet
+
+[Firefox]: https://www.mozilla.org/en-GB/firefox/new/
+[Google Chrome]: https://www.google.com/intl/en_uk/chrome/
+
+Editors:
+
+* [VS Code] for code editing
+
+[VC Code]: https://code.visualstudio.com/ 
+
+Productivity:
+
+* [Notion] for note taking/sharing
+
+[Notion]: https://www.notion.so/
+
+Utilities: 
+
+* [1Password] secure password manager
+* [Adobe Reader] for viewing PDF
+
+[1Password]: https://1password.com/
+[Adobe Reader]: https://www.adobe.com/uk/acrobat/pdf-reader.html
+
 It should take less than 15 minutes to install (depends on your machine).
 
 Customize in `~/.laptop.local`
@@ -140,27 +167,10 @@ For example:
 #!/bin/sh
 
 brew bundle --file=- <<EOF
-brew "Caskroom/cask/dockertoolbox"
 brew "go"
 brew "ngrok"
 brew "watch"
 EOF
-
-default_docker_machine() {
-  docker-machine ls | grep -Fq "default"
-}
-
-if ! default_docker_machine; then
-  docker-machine create --driver virtualbox default
-fi
-
-default_docker_machine_running() {
-  default_docker_machine | grep -Fq "Running"
-}
-
-if ! default_docker_machine_running; then
-  docker-machine start default
-fi
 
 fancy_echo "Cleaning up old Homebrew formulae ..."
 brew cleanup
@@ -203,7 +213,7 @@ You can use the free and open source emulator [UTM].
 
 Tip: Make a fresh virtual machine with the installation of macOS completed and
 your user created and first launch complete. Then duplicate that machine to test
-the script each time on a fresh install thats ready to go.
+the script each time on a fresh install that's ready to go.
 
 [UTM]: https://mac.getutm.app
 
