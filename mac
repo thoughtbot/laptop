@@ -133,6 +133,7 @@ cask "spotify"
 cask "telegram"
 cask "utm"
 cask "zoom"
+cask "vlc"
 cask "via"
 cask "whatsapp"
 EOF
