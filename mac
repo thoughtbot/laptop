@@ -125,6 +125,7 @@ cask "notion"
 cask "notion-enhanced"
 cask "obs"
 cask "obs-virtualcam"
+cask "openvpn-connect"
 cask "pgadmin4"
 cask "pocket-casts"
 cask "raycast"
@@ -137,6 +138,7 @@ cask "zoom"
 cask "vlc"
 cask "via"
 cask "whatsapp"
+cask "zenmate-vpn"
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then
