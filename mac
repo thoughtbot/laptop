@@ -105,6 +105,7 @@ brew "zsh-syntax-highlighting"
 brew "zsh-autosuggestions"
 
 # casks
+cask "barrier"
 cask "blackhole-2ch"
 cask "brave-browser"
 cask "cool-retro-term"
