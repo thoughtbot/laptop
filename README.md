@@ -76,6 +76,7 @@ Unix tools:
 * [Tmux] for saving project state and switching between projects
 * [Watchman] for watching for filesystem events
 * [Zsh] as your shell
+* [Graphviz] for visualising graphs
 
 [Universal Ctags]: https://ctags.io/
 [Git]: https://git-scm.com/
@@ -85,6 +86,7 @@ Unix tools:
 [Tmux]: http://tmux.github.io/
 [Watchman]: https://facebook.github.io/watchman/
 [Zsh]: http://www.zsh.org/
+[Graphviz]: https://graphviz.org/
 
 GitHub tools:
 
