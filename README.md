@@ -68,30 +68,15 @@ macOS tools:
 
 Unix tools:
 
-* [Universal Ctags] for indexing files for vim tab completion
 * [Git] for version control
 * [OpenSSL] for Transport Layer Security (TLS)
-* [RCM] for managing company and personal dotfiles
-* [The Silver Searcher] for finding things in files
-* [Tmux] for saving project state and switching between projects
-* [Watchman] for watching for filesystem events
 * [Zsh] as your shell
 
-[Universal Ctags]: https://ctags.io/
 [Git]: https://git-scm.com/
 [OpenSSL]: https://www.openssl.org/
-[RCM]: https://github.com/thoughtbot/rcm
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
-[Tmux]: http://tmux.github.io/
-[Watchman]: https://facebook.github.io/watchman/
 [Zsh]: http://www.zsh.org/
 
-Heroku tools:
 
-* [Heroku CLI] and [Parity] for interacting with the Heroku API
-
-[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
-[Parity]: https://github.com/thoughtbot/parity
 
 GitHub tools:
 
@@ -99,33 +84,90 @@ GitHub tools:
 
 [GitHub CLI]: https://cli.github.com/
 
-Image tools:
 
-* [ImageMagick] for cropping and resizing images
+IDEs:
 
-Programming languages, package managers, and configuration:
+* [Intellij community edition] for JVM languages designed to maximize developer productivity.
+* [Visual studio code] a free-editor that helps the programmer write code, helps in debugging and corrects the code using the intelli-sense method.
+* [Vim] Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.
 
-* [asdf-vm] for managing programming language versions
-* [Bundler] for managing Ruby libraries
-* [Node.js] and [npm], for running apps and installing JavaScript packages
-* [Ruby] stable for writing general-purpose code
-* [Yarn] for managing JavaScript packages
+[intellij community edition]: https://www.jetbrains.com/idea/download/#section=mac
+[Visual studio code]: https://code.visualstudio.com/
+[Vim]: https://www.vim.org/
 
-[Bundler]: http://bundler.io/
-[ImageMagick]: http://www.imagemagick.org/
-[Node.js]: http://nodejs.org/
-[npm]: https://www.npmjs.org/
-[asdf-vm]: https://github.com/asdf-vm/asdf
-[Ruby]: https://www.ruby-lang.org/en/
-[Yarn]: https://yarnpkg.com/en/
+Browsers:
+ * [Google Chrome] is an cross-platform web browser developed by Google.
+ * [Firefox] is an extensible free and open-source web browser developed by Mozilla corp.
 
-Databases:
+[Google Chrome]: https://www.google.com/chrome/
+[Firefox]: https://www.mozilla.org/
 
-* [Postgres] for storing relational data
-* [Redis] for storing key-value data
+Markdown:
+* [Obsidian] is a powerful knowledge base on top of a local folder of plain text Markdown files.
+* [Macdown] is an open source Markdown editor for MacOS.
 
-[Postgres]: http://www.postgresql.org/
-[Redis]: http://redis.io/
+[Obsidian]: https://obsidian.md/ 
+[Macdown]: https://macdown.uranusjr.com/
+
+Slack:
+* [Slack] is a messaging program designed specifically for the office.
+
+[Slack]: https://slack.com
+
+* [Notion] is a project management and note-taking software.
+
+[Notion]: https://notion.so
+
+Zoom:
+* [Zoom] is a video conferencing platform.
+
+[Zoom]: htttps://zoom.us
+
+Google Drive:
+* [Google Drive] backup to Google Photos, and access all of your content directly from your Mac.
+
+[Google Drive]: https://drive.google.com
+
+Lastpass:
+* [lastpass] for password management.
+
+[lastpass]: https://lastpass.com
+
+Maccy:
+* [Maccy] for Clipboard management.
+
+[Maccy]: https://maccy.app/
+
+Libreoffice:
+* [Libreoffice] is a free and open-source office productivity software suite.
+
+[Libreoffice]: https://www.libreoffice.org/
+
+Postman:
+* [Postman] for testing API.
+
+[Postman]: https://www.postman.com/
+
+Table Plus:
+* [Table Plus] for database management.
+
+[Table Plus]: https://tableplus.com/
+
+Scroll Reverser:
+* [Scroll Reverser] is a free Mac app that reverses the direction of scrolling, with independent settings for trackpads and mice.
+
+[Scroll Reverser]: https://pilotmoon.com/scrollreverser/
+
+Rectangle:
+* [Rectangle] Move and resize windows in macOS using keyboard shortcuts or snap areas.
+
+[Rectangle]: https://rectangleapp.com/
+
+Spotify:
+* [Spotify] is all the music you'll ever need.
+
+[Spotify]: https://spotify.com/
+
 
 It should take less than 15 minutes to install (depends on your machine).
 
