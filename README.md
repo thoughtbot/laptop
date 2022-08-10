@@ -57,6 +57,18 @@ If not, copy the lines where the script failed into a
 [new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
 Or, attach the whole log file as an attachment.
 
+In case some package already exists (e.g. google-chrome), and the
+script fails due to some error like
+
+```
+Error: It seems there is already an App at '/Applications/Google Chrome.app'.
+```
+
+use the `-f` (or `--force`) option and run that command again. In this case, run
+`brew install --cask google-chrome --force`. This should reinstall Chrome properly.
+Once done, you can run the main script again.
+
+
 What it sets up
 ---------------
 
