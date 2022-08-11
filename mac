@@ -108,14 +108,22 @@ fancy_echo "Installing Github(gh)"
 brew install gh
 
 # IDE's
+
+# Intellij CE
 fancy_echo "Installing intellij"
 brew install --cask intellij-idea-ce
 
+# Visual Studio Code
 fancy_echo "Installing visual-studio-code"
 brew install --cask visual-studio-code
 
+# Vim
 fancy_echo "Installing vim"
 brew install vim
+
+# Sublime Text
+fancy_echo "Installing sublime text"
+brew install --cask sublime-text
 
 # Docker Desktop
 fancy_echo "Installing Docker-Desktop"
@@ -129,9 +137,11 @@ brew install --cask numi
 fancy_echo "Installing Iterm2"
 brew install --cask iterm2
 
+# Google Chrome
 fancy_echo "Installing Google Chrome"
 brew install --cask google-chrome
 
+# Firefox
 fancy_echo "Installing Firefox"
 brew install --cask firefox
 
@@ -190,12 +200,4 @@ brew install --cask tableplus
 # Spotify
 fancy_echo "Installing spotify"
 brew install --cask spotify
-
-# Spectacle window manager for Mac
-fancy_echo "Installing spectacle - a window manager for mac"
-brew install --cask spectacle
-
-# Sublime Text
-fancy_echo "Installing sublime text"
-brew install --cask sublime-text
 

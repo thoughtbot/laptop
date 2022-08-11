@@ -101,10 +101,12 @@ IDEs:
 
 * [Intellij community edition] for JVM languages designed to maximize developer productivity.
 * [Visual studio code] a free-editor that helps the programmer write code, helps in debugging and corrects the code using the intelli-sense method.
+* [Sublime text] is Sublime Text is a shareware cross-platform source code editor.
 * [Vim] Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.
 
 [intellij community edition]: https://www.jetbrains.com/idea/download/#section=mac
 [Visual studio code]: https://code.visualstudio.com/
+[Sublime text]: https://www.sublimetext.com/
 [Vim]: https://www.vim.org/
 
 Browsers:
