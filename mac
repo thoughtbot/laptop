@@ -31,6 +31,9 @@ append_to_zshrc() {
   fi
 }
 
+# shellcheck disable=SC2154
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
 set -e
 
 if [ ! -d "$HOME/.bin/" ]; then
@@ -201,3 +204,8 @@ brew install --cask tableplus
 fancy_echo "Installing spotify"
 brew install --cask spotify
 
+if [ -f "$HOME/.laptop.local" ]; then
+  fancy_echo "Running your customizations from ~/.laptop.local ..."
+  # shellcheck disable=SC1090
+  . "$HOME/.laptop.local"
+fi
