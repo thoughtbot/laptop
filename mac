@@ -1,10 +1,9 @@
 #!/bin/sh
 
-# Welcome to the thoughtbot laptop script!
-# Be prepared to turn your laptop (or desktop, no haters here)
+# Welcome to the mac script!
+# Be prepared to turn your Mac
 # into an awesome development machine.
 
-# shellcheck disable=SC3043
 
 fancy_echo() {
   local fmt="$1"; shift
@@ -79,18 +78,10 @@ case "$SHELL" in
     ;;
 esac
 
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
-  else
-    gem install "$@"
-  fi
-}
-
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     /bin/bash -c \
-      "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
     append_to_zshrc "eval \"\$($HOMEBREW_PREFIX/bin/brew shellenv)\""
 
@@ -104,90 +95,114 @@ fi
 
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
-brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
-tap "homebrew/services"
-tap "heroku/brew"
 
 # Unix
-brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
-brew "git"
-brew "openssl"
-brew "rcm"
-brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
-brew "tmux"
-brew "vim"
-brew "watchman"
-brew "zsh"
+fancy_echo "Installing git"
+brew install git
 
-# Heroku
-brew "heroku/brew/heroku"
-brew "parity"
+fancy_echo "Installing openssl"
+brew install openssl
+
+fancy_echo "Installing zsh"
+brew install zsh
 
 # GitHub
-brew "gh"
+fancy_echo "Installing Github(gh)"
+brew install gh
 
-# Image manipulation
-brew "imagemagick"
+# IDE's
 
-# Programming language prerequisites and package managers
-brew "libyaml" # should come after openssl
-brew "coreutils"
-brew "yarn"
-cask "gpg-suite-no-mail"
+# Intellij CE
+fancy_echo "Installing intellij"
+brew install --cask intellij-idea-ce
 
-# Databases
-brew "postgres", restart_service: :changed
-brew "redis", restart_service: :changed
-EOF
+# Visual Studio Code
+fancy_echo "Installing visual-studio-code"
+brew install --cask visual-studio-code
 
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
+# Vim
+fancy_echo "Installing vim"
+brew install vim
 
-fancy_echo "Configuring asdf version manager ..."
-if [ ! -d "$HOME/.asdf" ]; then
-  brew install asdf
-  append_to_zshrc "source $(brew --prefix asdf)/asdf.sh" 1
-fi
+# Sublime Text
+fancy_echo "Installing sublime text"
+brew install --cask sublime-text
 
-alias install_asdf_plugin=add_or_update_asdf_plugin
-add_or_update_asdf_plugin() {
-  local name="$1"
-  local url="$2"
+# Docker Desktop
+fancy_echo "Installing Docker-Desktop"
+brew install --cask docker
 
-  if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
-  else
-    asdf plugin-update "$name"
-  fi
-}
+# Numi Calculator
+fancy_echo "Installing Numi Calculator"
+brew install --cask numi
 
-# shellcheck disable=SC1090
-. "$(brew --prefix asdf)/asdf.sh"
-add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
-add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+# Iterm
+fancy_echo "Installing Iterm2"
+brew install --cask iterm2
 
-install_asdf_language() {
-  local language="$1"
-  local version
-  version="$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"
+# Google Chrome
+fancy_echo "Installing Google Chrome"
+brew install --cask google-chrome
 
-  if ! asdf list "$language" | grep -Fq "$version"; then
-    asdf install "$language" "$version"
-    asdf global "$language" "$version"
-  fi
-}
+# Firefox
+fancy_echo "Installing Firefox"
+brew install --cask firefox
 
-fancy_echo "Installing latest Ruby ..."
-install_asdf_language "ruby"
-gem update --system
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
+# Obsidian
+fancy_echo "Installing Obsidian"
+brew install --cask obsidian
 
-fancy_echo "Installing latest Node ..."
-install_asdf_language "nodejs"
+# Slack
+fancy_echo "Installing Slack"
+brew install --cask slack
+
+# Notion
+fancy_echo "Installing Notion"
+brew install --cask notion
+
+# Zoom
+fancy_echo "Installing Zoom"
+brew install --cask zoom
+
+# Macdown
+fancy_echo "Installing macdown"
+brew install --cask macdown
+
+# Google Drive
+fancy_echo "Installing google-drive"
+brew install --cask google-drive
+
+# lastpass 
+fancy_echo "Installing lastpass"
+brew install --cask lastpass
+
+# Maccy
+fancy_echo "Installing maccy"
+brew install --cask maccy
+
+# LibreOffice
+fancy_echo "Installing libreoffice"
+brew install --cask libreoffice
+
+# Postman
+fancy_echo "Installing postman"
+brew install --cask postman
+
+# Scroll Reverser
+fancy_echo "Installing scroll-reverser"
+brew install --cask scroll-reverser
+
+# Rectangle
+fancy_echo "Installing scroll-reverser"
+brew install --cask rectangle
+
+# Table Plus
+fancy_echo "Installing tableplus"
+brew install --cask tableplus
+
+# Spotify
+fancy_echo "Installing spotify"
+brew install --cask spotify
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
