@@ -3,12 +3,6 @@
 # Welcome to the linux laptop script! Be prepared to turn your laptop (or
 # desktop, no haters here) into an awesome development machine.
 
-fancy_echo() {
-  local fmt="$1"
-  shift
-  printf "\n$fmt\n" "$@"
-}
-
 is_installed(){
  if command -v $1 &> /dev/null
  then
@@ -21,7 +15,7 @@ is_installed(){
 install_linux_required(){
 	# gcc
 	sudo apt update 
-	sudo apt install -y gcc gnupg lsb_release libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libreadline-dev build-essential apt-transport-https ca-certificates
+	sudo apt install -y gcc gnupg lsb-release libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libreadline-dev build-essential apt-transport-https ca-certificates
 }
 
 install_tools_required(){
@@ -66,7 +60,7 @@ install_docker(){
 #    echo "Adding DNS Domain in docker daemon"
 #    DNS_DOMAIN=$(systemd-resolve --status | grep "DNS Servers" | cut -d ":" -f 2)
 # bash -c "cat <<EOF >/etc/docker/daemon.json
-#{
+##{
 #    \"dns\": [\"$DNS_DOMAIN\"]
 #}
 #EOF"
@@ -136,10 +130,23 @@ install_miscellaneous(){
 	then
 		arkade get kubens
 	fi
+	if ! is_installed lazydocker
+	then
+		wget -O /tmp/lazydocker.tar.gz  https://github.com/jesseduffield/lazydocker/releases/download/v0.18.1/lazydocker_0.18.1_Linux_x86.tar.gz
+		mkdir /tmp/lazydocker
+		tar -xvzf /tmp/lazydocker.tar.gz -C /tmp/lazydocker
+		sudo mv /tmp/lazydocker/lazydocker /usr/bin/lazydocker
+		sudo chmod +x /usr/bin/lazydocker
+			sudo rm -rf /tmp/lazydocker*
+	fi
+	if ! is_installed hadolint
+	then
+		sudo wget -O /usr/bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64
+		sudo chmod +x /usr/bin/hadolint
+	fi
 
 }
 main(){
-	fancy_echo "hello"
 	install_linux_required
 	install_tools_required
 	install_golang
