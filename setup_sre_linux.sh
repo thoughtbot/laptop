@@ -20,7 +20,7 @@ install_linux_required(){
 
 install_tools_required(){
 	# install screen, tmux, dnsutils, telnet, nslookup
-	sudo apt install -y screen tmux telnet dnsutils curl wget make
+	sudo apt install -y screen tmux telnet dnsutils curl wget make net-tools
     	if ! command -v arkade &> /dev/null
     	then	
 		curl -sLS https://get.arkade.dev | sudo sh
@@ -111,7 +111,7 @@ install_starship_rs(){
 	if ! is_installed starship 
 	then
 		curl -sS https://starship.rs/install.sh | sh
-		echo ' eval "$(starship init bash)"' >> ~/.bashrc
+		echo 'eval "$(starship init bash)"' >> ~/.bashrc
 	fi
 }
 
@@ -144,8 +144,8 @@ install_miscellaneous(){
 		sudo wget -O /usr/bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64
 		sudo chmod +x /usr/bin/hadolint
 	fi
-
 }
+
 main(){
 	install_linux_required
 	install_tools_required
