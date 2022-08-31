@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 ### end common-components/bash-shebang
 
-# Welcome to the linux laptop script! Be prepared to turn your laptop (or
-# desktop, no haters here) into an awesome development machine.
+#####################################
+# Author: Hrithik Sawant
+# Version: v1.0.0
+# Description: Welcome to the linux laptop script! Be prepared to turn your laptop (or
+## desktop, no haters here) into an awesome development machine.
+# Usage: ./linux.sh
+#####################################
 
 fancy_echo() {
   local fmt="$1"
@@ -10,108 +15,261 @@ fancy_echo() {
   printf "\n$fmt\n" "$@"
 }
 
-read -p "Enter your email to generate ssh key: " email
+git() {
+  fancy_echo "Installing git, for source control management ..."
+  sudo apt install -y git
+}
 
-fancy_echo "Installing git, for source control management ..."
-sudo apt install -y git
+wget() {
+  fancy_echo "Installing  wget.."
+  apt-get install -y wget
+}
 
-fancy_echo "Installing libraries for common gem dependencies ..."
-sudo apt install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libreadline-dev build-essential apt-transport-https ca-certificates
+zip() {
+  fancy_echo "Installing zip ..."
+  sudo apt install -y zip
+}
 
-fancy_echo "Installing snapd canonical package manager"
-sudo apt install -y snapd
+common_gem() {
+  # Perfect
+  fancy_echo "Installing libraries for common gem dependencies ..."
+  sudo apt install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libreadline-dev build-essential apt-transport-https ca-certificates
+}
 
-fancy_echo "Installing Zoom-Client"
-sudo snap install zoom-client
+zoom() {
+  fancy_echo "Installing Zoom-Client"
+  sudo snap install zoom-client
+}
 
-fancy_echo "Installing Postman API development environment"
-sudo snap install postman
+postman() {
+  fancy_echo "Installing Postman API development environment"
+  sudo snap install postman
+}
 
-fancy_echo "Installing tmux, to save project state and switch between projects ..."
-sudo apt install -y tmux
+snap() {
+  fancy_echo "Installing snapd canonical package manager"
+  sudo apt install -y snapd
+}
 
-fancy_echo "Installing curl ..."
-sudo apt install -y curl
+tmux() {
+  fancy_echo "Installing tmux, to save project state and switch between projects ..."
+  sudo apt install -y tmux
+}
 
-fancy_echo "Installing Redis ..."
-wget http://download.redis.io/redis-stable.tar.gz &&
-  tar xvzf redis-stable.tar.gz &&
-  cd redis-stable && make
-sudo cp src/redis-server /usr/local/bin/
-sudo cp src/redis-cli /usr/local/bin/
+curl() {
+  fancy_echo "Installing curl ..."
+  sudo apt install -y curl
+}
 
-fancy_echo "Installing Ngrok ..."
-wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip && unzip ngrok-stable-linux-amd64.zip && rm ngrok-stable-linux-amd64.zip
+redis() {
+  fancy_echo "Installing Redis ..."
+  wget http://download.redis.io/redis-stable.tar.gz &&
+    tar xvzf redis-stable.tar.gz &&
+    cd redis-stable && make
+  sudo cp src/redis-server /usr/local/bin/
+  sudo cp src/redis-cli /usr/local/bin/
+}
 
-fancy_echo "Installing Sublime Text 3 ..."
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-sudo apt update && sudo apt install -y sublime-text
+ngrok() {
+  fancy_echo "Installing Ngrok ..."
+  wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip && unzip ngrok-stable-linux-amd64.zip && rm ngrok-stable-linux-amd64.zip
+}
 
-fancy_echo "Installing VS Code ..."
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >microsoft.gpg
-sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt update && sudo apt install -y code
+sublime() {
+  fancy_echo "Installing Sublime Text 3 ..."
+  sudo wget -O- https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/sublimehq.gpg
+  echo 'deb [signed-by=/usr/share/keyrings/sublimehq.gpg] https://download.sublimetext.com/ apt/stable/' | sudo tee /etc/apt/sources.list.d/sublime-text.list
+  sudo apt update && sudo apt install -y sublime-text
+}
 
-fancy_echo "Installing zsh ..."
-sudo apt install -y zsh
+vscode() {
+  fancy_echo "Installing VS Code ..."
+  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >microsoft.gpg
+  sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+  sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+  sudo apt update && sudo apt install -y code
+}
 
-fancy_echo "Installing chrome ..."
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-sudo apt update
-sudo apt install -y google-chrome-stable
+zsh() {
+  fancy_echo "Installing zsh ..."
+  sudo apt install -y zsh
+}
 
-fancy_echo "Generating ssh key"
-ssh-keygen -b 4096 -t ed25519 -f /home/user/.ssh/key-ed25519 -q -N "" -C "$email"
-sudo mv ~/.config/autostart/gnome-keyring-ssh.desktop ~/.config/autostart/gnome-keyring-ssh.backup
-ssh-add /home/user/.ssh/key-ed25519
+chrome() {
+  fancy_echo "Installing chrome ..."
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+  sudo apt update
+  sudo apt install -y google-chrome-stable
+}
 
-fancy_echo "Installing Docker"
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository \
-  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+ssh() {
+  fancy_echo "Checking for SSH key, generating one if not it exists ..."
+  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
+}
 
-fancy_echo "Installing oh-my-zsh ..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+nvm() {
+  fancy_echo "Installing Node version Manager ..."
+  wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  nvm install --lts
+}
 
-fancy_echo "Installing slack ..."
-sudo snap install slack
+docker() {
+  fancy_echo "Installing Docker"
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+     $(lsb_release -cs) \
+     stable"
+  sudo apt-get update
+  sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+}
 
-fancy_echo "Installing vim ..."
-sudo apt install -y vim
+slack() {
+  fancy_echo "Installing slack ..."
+  sudo snap install slack
+}
 
-fancy_echo "Installing dns utils ..."
-sudo apt-get install -y dnsutils
+vim() {
+  fancy_echo "Installing vim ..."
+  sudo apt install -y vim
+}
 
-fancy_echo "Installing net tools .."
-sudo apt install -y net-tools
+dns_utils() {
+  fancy_echo "Installing dns utils ..."
+  sudo apt-get install -y dnsutils
+}
 
-fancy_echo "Install telnet ..."
-sudo apt-get install telnet
+net_tools() {
+  fancy_echo "Installing net tools .."
+  sudo apt install -y net-tools
+}
 
-fancy_echo "Installing screen ..."
-sudo apt-get update sudo apt-get install screen
+telnet() {
+  fancy_echo "Install telnet ..."
+  sudo apt-get install telnet
+}
 
-fancy_echo "Installing Terminator ..."
-sudo apt install terminator
+screen() {
+  fancy_echo "Installing screen ..."
+  sudo apt-get update sudo apt-get install screen
+}
 
-fancy_echo "Installing K9s"
-sudo curl -sS https://webinstall.dev/k9s | bash
+terminator() {
+  fancy_echo "Installing Terminator ..."
+  sudo apt install -y terminator
+}
 
-fancy_echo "Installing terraform ..."
-wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
-# verify key
-gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
+k9s() {
+  fancy_echo "Installing K9s"
+  sudo curl -sS https://webinstall.dev/k9s | bash
+}
 
-#Add the official HashiCorp repository to your system.
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+terraform() {
+  fancy_echo "Installing terraform ..."
+  wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+  # verify key
+  gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
+  sudo apt update
+  sudo apt install terraform -y
+}
+
+aws_cli() {
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip awscliv2.zip
+  sudo ./aws/install
+}
+
+hashicorp() {
+  #Add the official HashiCorp repository to your system.
+  echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" |
     sudo tee /etc/apt/sources.list.d/hashicorp.list
+}
 
-sudo apt update
-sudo apt install terraform -y
+postgres() {
+  fancy_echo "Installing Postgres, a good open source relational database ..."
+  sudo aptitude install -y postgresql postgresql-server-dev-all
+}
+
+virtual_box() {
+  sudo apt install virtualbox
+}
+
+vagrant() {
+  virtual_box
+  wget https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb
+  sudo apt install ./vagrant_2.2.19_x86_64.deb
+}
+
+intellij_idea() {
+  sudo snap install intellij-idea-community --classic
+}
+
+install_sudo() {
+  apt-get install sudo
+}
+
+oh_my_zsh() {
+  fancy_echo "Installing oh-my-zsh ..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+}
+
+sre() {
+  # Site Reliability Engineer
+  hashicorp
+  terraform
+  k9s
+  screen
+  telnet
+  docker
+  aws_cli
+  vagrant
+  tmux
+  terminator
+  oh_my_zsh
+}
+
+se() {
+  # Software Engineer
+  intellij_idea
+  postman
+  redis
+  aws_cli
+  nvm
+}
+
+database() {
+  postgres
+}
+
+essentials() {
+  apt-get update
+  install_sudo
+  common_gem
+  curl
+  wget
+  snap
+  net_tools
+  dns_utils
+  sublime
+  vim
+  git
+  zip
+}
+
+common() {
+  essentials
+  slack
+  zoom
+  vscode
+  zoom
+  chrome
+}
+
+common
+
+#  Note : Comment which are not needed.
+##  Example #se or #sre
+se
+sre
+database
