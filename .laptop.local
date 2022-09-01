@@ -1,5 +1,9 @@
+#!/bin/sh
+
+brew bundle --file=- <<EOF
+
 # Local additions
-brew "iterm2"
+#brew "iterm2"
 brew "nvim"
 brew "timewarrior"
 brew "direnv"
@@ -20,4 +24,19 @@ brew "docker-slim"
 brew "httpie"
 brew "php"
 brew "cmake"
+brew "jenv"
+brew "starship"
+brew "structurizr-cli"
+brew "withgraphite/tap/graphite"
+brew "awscli"
 
+EOF
+
+fancy_echo "Cleaning up old Homebrew formulae ..."
+brew cleanup
+brew cleanup cask
+
+if [ -r "$HOME/.rcrc" ]; then
+  fancy_echo "Updating dotfiles ..."
+  rcup
+fi
