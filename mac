@@ -138,8 +138,13 @@ cask "gpg-suite-no-mail"
 brew "postgresql@14", restart_service: :changed
 brew "redis", restart_service: :changed
 
+# SECURITY
+cask "avast-security"
+cask "intune-company-portal"
+
 # COMMS
 cask "microsoft-teams"
+cask "microsoft-outlook"
 
 # BROWSERS
 cask "firefox"
