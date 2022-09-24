@@ -1,0 +1,21 @@
+#!/bin/sh
+
+brew bundle --file=- <<EOF
+brew "exa"
+brew "fd"
+EOF
+
+fancy_echo "Cleaning up old Homebrew formulae ..."
+brew cleanup
+brew cask cleanup
+
+SKIP_NEW_LINE=1
+
+append_to_zshrc 'alias gc-m="git commit -m"' ${SKIP_NEW_LINE}
+append_to_zshrc 'alias gb="git branch"' ${SKIP_NEW_LINE}
+append_to_zshrc 'alias gs="git status"' ${SKIP_NEW_LINE}
+append_to_zshrc 'alias ga="git add"' ${SKIP_NEW_LINE}
+
+append_to_zshrc 'alias v="code ."' ${SKIP_NEW_LINE}
+append_to_zshrc 'alias de="cd ~/Desktop"' ${SKIP_NEW_LINE}
+append_to_zshrc 'alias sa="cd ~/projects/samples"' ${SKIP_NEW_LINE}
