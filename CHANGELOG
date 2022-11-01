@@ -1,0 +1,22 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+## [Unreleased]
+
+### Fixes 
+
+* [The PostgreSQL Homebrew definition has been fixed](https://github.com/thoughtbot/laptop/pull/612)
+
+## 2022-03-30
+
+### Changed
+
+* Official support for macOS Monterey on Apple Silicon and Intel and removes official support for prior versions of macOS.
+* [Use brew asdk, changes for latest node](https://github.com/thoughtbot/laptop/pull/608)
+* [Ignore shellcheck warning SC3043 globally](https://github.com/thoughtbot/laptop/pull/606)
+* [Use gpg-suite-no-mail](https://github.com/thoughtbot/laptop/pull/607)
+* [Update ctags installation command](https://github.com/thoughtbot/laptop/pull/586)
+
