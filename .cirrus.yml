@@ -3,4 +3,8 @@ task:
     matrix:
       - image: ghcr.io/cirruslabs/macos-monterey-base:latest
       - image: ghcr.io/cirruslabs/macos-ventura-base:latest
+  env:
+    TMPDIR: ${CIRRUS_WORKING_DIR}
   script: sh mac
+  artifacts:
+    path: "**/ruby-build.*.log"
