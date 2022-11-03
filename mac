@@ -152,7 +152,7 @@ brew link --force heroku
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   brew install asdf
-  append_to_zshrc "source $(brew --prefix asdf)/asdf.sh" 1
+  append_to_zshrc "source $(brew --prefix asdf)/libexec/asdf.sh" 1
 fi
 
 alias install_asdf_plugin=add_or_update_asdf_plugin
@@ -168,11 +168,7 @@ add_or_update_asdf_plugin() {
 }
 
 # shellcheck disable=SC1091
-sh "$(brew --prefix asdf)/asdf.sh"
-asdfShExitCode=$?
-if [ $asdfShExitCode -ne 0 ]; then
-  exit $asdfShExitCode
-fi
+. "$(brew --prefix asdf)/libexec/asdf.sh"
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
