@@ -6,5 +6,7 @@ task:
   env:
     TMPDIR: ${CIRRUS_WORKING_DIR}
   script: sh mac
-  artifacts:
-    path: "**/ruby-build.*.log"
+  always:
+    artifacts:
+      path: "./ruby-build.*.log"
+      type: text/plain
