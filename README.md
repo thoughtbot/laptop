@@ -187,8 +187,18 @@ for more customization examples.
 Contributing
 ------------
 
+Thank you, [contributors]!
+
+[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
+
+By participating in this project,
+you agree to abide by the thoughtbot [code of conduct].
+
+[code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
+
 Edit the `mac` file.
 Document in the `README.md` file.
+Update the `CHANGELOG`.
 Follow shell style guidelines by using [ShellCheck] and [Syntastic].
 
 ```sh
@@ -208,15 +218,6 @@ your user created and first launch complete. Then duplicate that machine to test
 the script each time on a fresh install thats ready to go.
 
 [UTM]: https://mac.getutm.app
-
-Thank you, [contributors]!
-
-[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
-
-By participating in this project,
-you agree to abide by the thoughtbot [code of conduct].
-
-[code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
 
 License
 -------
