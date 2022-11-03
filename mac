@@ -168,7 +168,11 @@ add_or_update_asdf_plugin() {
 }
 
 # shellcheck disable=SC1091
-. "$(brew --prefix asdf)/asdf.sh"
+sh "$(brew --prefix asdf)/asdf.sh"
+asdfShExitCode=$?
+if [ $asdfShExitCode -ne 0 ]; then
+  exit $asdfShExitCode
+fi
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
