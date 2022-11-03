@@ -1,5 +1,6 @@
-macos_instance:
-  image: ghcr.io/cirruslabs/macos-monterey-base:latest
-
 task:
+  macos_instance:
+    matrix:
+      - image: ghcr.io/cirruslabs/macos-monterey-base:latest
+      - image: ghcr.io/cirruslabs/macos-ventura-base:latest
   script: sh mac
