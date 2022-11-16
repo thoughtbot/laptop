@@ -204,6 +204,16 @@ brew install --cask tableplus
 fancy_echo "Installing spotify"
 brew install --cask spotify
 
+# WhatsApp
+fancy_echo "Installing WhatsApp"
+brew install --cask whatsapp
+
+
+# Alfred
+fancy_echo "Installing Alfred"
+brew install --cask alfred
+
+
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090
