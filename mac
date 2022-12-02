@@ -110,7 +110,7 @@ tap "homebrew/services"
 tap "heroku/brew"
 
 # Unix
-brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
+brew "universal-ctags"
 brew "git"
 brew "openssl"
 brew "rcm"
