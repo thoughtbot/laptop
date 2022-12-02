@@ -6,12 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## 2022-12-02
+
 ### Added
 
 * Support for macOS Ventura
 
 ### Fixed
 
+* [The warning or failure when installing universal-ctags](https://github.com/thoughtbot/laptop/pull/623)
 * [The PostgreSQL Homebrew definition has been fixed](https://github.com/thoughtbot/laptop/pull/612)
 * [Return error code for failure sourcing asdf.sh](https://github.com/thoughtbot/laptop/pull/620)
 * [Fix for location change of asdf.sh](https://github.com/thoughtbot/laptop/pull/622)
