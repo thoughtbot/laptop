@@ -1,8 +1,8 @@
 task:
   macos_instance:
     matrix:
-      - image: ghcr.io/cirruslabs/macos-monterey-base:latest
-      - image: ghcr.io/cirruslabs/macos-ventura-base:latest
+      - image: ghcr.io/cirruslabs/macos-monterey-vanilla:latest
+      - image: ghcr.io/cirruslabs/macos-ventura-vanilla:latest
   env:
     TMPDIR: ${CIRRUS_WORKING_DIR}
   script: sh mac
