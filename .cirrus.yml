@@ -5,7 +5,6 @@ task:
       - image: ghcr.io/cirruslabs/macos-ventura-base:latest
   env:
     TMPDIR: ${CIRRUS_WORKING_DIR}
-    RUBY_CONFIGURE_OPTS: --disable-install-doc --disable-shared
   script: sh mac
   always:
     artifacts:
