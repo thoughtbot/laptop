@@ -211,14 +211,19 @@ brew install shellcheck
 
 ### Testing your changes
 
-Test your changes by running the script on a fresh install of macOS.
-You can use the free and open source emulator [UTM].
+You can test your changes using [Cirrus CLI]. This will use Docker on your
+local computer to run the same thing that CI runs.
+
+While Cirrus CLI will run the script in a fresh macOS container, it isn't
+possible to interact with the installation. So you may find it useful to
+use the free and open source emulator [UTM].
 
 Tip: Make a fresh virtual machine with the installation of macOS completed and
 your user created and first launch complete. Then duplicate that machine to test
 the script each time on a fresh install thats ready to go.
 
 [UTM]: https://mac.getutm.app
+[Cirrus CI]: https://github.com/cirruslabs/cirrus-cli
 
 License
 -------
