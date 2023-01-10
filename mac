@@ -133,7 +133,7 @@ brew "yarn"
 cask "gpg-suite-no-mail"
 
 # Databases
-brew "postgresql", restart_service: :changed
+brew "postgresql@14", restart_service: :changed
 brew "redis", restart_service: :changed
 
 # COMMS
