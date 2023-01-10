@@ -146,9 +146,6 @@ cask "google-chrome"
 # EDITORS
 cask "visual-studio-code"
 
-# PRODUCTIVITY
-cask "notion"
-
 # UTILS
 cask "1password"
 cask "adobe-acrobat-reader"
