@@ -1,275 +1,210 @@
 #!/usr/bin/env bash
-### end common-components/bash-shebang
-
 #####################################
-# Author: Hrithik Sawant
-# Version: v1.0.0
-# Description: Welcome to the linux laptop script! Be prepared to turn your laptop (or
-## desktop, no haters here) into an awesome development machine.
-# Usage: ./linux.sh
+# Author: 	Hrithik Sawant
+# Version: 	v1.0.1
+# Description:	Welcome to the linux laptop script! Be prepared to turn your laptop (or desktop, no haters here) into an awesome development machine.
+# Usage: 	bash ./linux
 #####################################
 
-fancy_echo() {
-  local fmt="$1"
-  shift
-  printf "\n$fmt\n" "$@"
+#Enable Debugger
+# set -x
+
+help() {
+cat << EOF
+  Usage: $(basename $0) [options]
+
+  Options:
+      -s   | --sudo                             : install sudo package
+      -c   | --common-gem                       : install common packages for development
+      -cu  | --curl                             : install curl package
+      -w   | --wget                             : install wget package
+      -sn  | --snap                             : install snapd package
+      -nt  | --net-tools                        : install net-tools package
+      -du  | --dns-utils                        : install dnsutils package
+      -sub | --sublime                          : install Sublime Text 3
+      -v   | --vim                              : install Vim text editor
+      -g   | --git                              : install Git version control system
+      -z   | --zip                              : install zip package
+      -r   | --redis                            : install Redis package
+      -zh  | --zsh                              : install Zsh shell
+      -t   | --telnet                           : install telnet package
+      -sc  | --screen                           : install screen package
+      -ter | --terminator                       : install terminator package
+      -k   | --k9s                              : install k9s package
+      -tf  | --terraform                        : install Terraform
+      -aws | --aws-cli                          : install AWS CLI package
+      -hc  | --hashicorp                        : install Hashicorp package
+      -p   | --postgresql                       : install PostgreSQL package
+      -vb  | --virtual-box                      : install VirtualBox package
+      -va  | --vagrant                          : install Vagrant package
+      -i   | --intellij-idea                    : install IntelliJ IDEA from snap store
+      -oh  | --oh-my-zsh                        : install Oh My Zsh framework for Zsh
+      -se  | --software-engineering-essentials  : install software engineering essentials
+      -sre | --sre-essentials                   : install Site Reliability Engineering essentials
+      -h   | --help                             : help
+EOF
 }
 
-git() {
-  fancy_echo "Installing git, for source control management ..."
-  sudo apt install -y git
+
+#Sublime Text 3 installation
+install_sublime() {
+    echo "Installing Sublime Text 3..."
+    sudo wget -O- https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/sublimehq.gpg
+    echo 'deb [signed-by=/usr/share/keyrings/sublimehq.gpg] https://download.sublimetext.com/ apt/stable/' | sudo tee /etc/apt/sources.list.d/sublime-text.list
+    sudo apt update && sudo apt install -y sublime-text
 }
 
-wget() {
-  fancy_echo "Installing  wget.."
-  apt-get install -y wget
+#handle package installation
+install_package() {
+    local package="$1"
+    echo "Installing $package..."
+    sudo apt install -y $package
 }
 
-zip() {
-  fancy_echo "Installing zip ..."
-  sudo apt install -y zip
+#handle snap package installation
+install_snap() {
+    local package="$1"
+    echo "Installing $package..."
+    sudo snap install $package
 }
 
-common_gem() {
-  # Perfect
-  fancy_echo "Installing libraries for common gem dependencies ..."
-  sudo apt install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libreadline-dev build-essential apt-transport-https ca-certificates
+main() {
+    # Update package lists
+    apt-get update
+
+    # Check for options
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -s|--sudo)
+                install_package "sudo"
+                shift
+                ;;
+            -c|--common-gem)
+                install_package "libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libreadline-dev build-essential apt-transport-https ca-certificates"
+                shift
+                ;;
+            -cu|--curl)
+                install_package "curl"
+                shift
+                ;;
+            -w|--wget)
+                install_package "wget"
+                shift
+                ;;
+            -sn|--snap)
+                install_package "snapd"
+                shift
+                ;;
+            -nt|--net-tools)
+                install_package "net-tools"
+                shift
+                ;;
+            -du|--dns-utils)
+                install_package "dnsutils"
+                shift
+                ;;
+            -sub|--sublime)
+                install_sublime
+                shift
+                ;;
+            -v|--vim)
+                install_package "vim"
+                shift
+                ;;
+            -g|--git)
+                install_package "git"
+                shift
+                ;;
+            -z|--zip)
+                install_package "zip"
+                shift
+                ;;
+            -r|--redis)
+                install_package "redis-server"
+                shift
+                ;;
+            -zh|--zsh)
+                install_package "zsh"
+                shift
+                ;;
+            -t|--telnet)
+                install_package "telnet"
+                shift
+                ;;
+            -sc|--screen)
+                install_package "screen"
+                shift
+                ;;
+            -ter|--terminator)
+                install_package "terminator"
+                shift
+                ;;
+            -k|--k9s)
+                install_snap "k9s"
+                shift
+                ;;
+            -tf|--terraform)
+                echo "Installing Terraform..."
+                # Download the Terraform binary
+                wget https://releases.hashicorp.com/terraform/0.15.5/terraform_0.15.5_linux_amd64.zip
+                # Unzip the binary
+                unzip terraform_0.15.5_linux_amd64.zip
+                # Move the binary to a directory in the PATH
+                sudo mv terraform /usr/local/bin/
+                # Remove the zip file
+                rm terraform_0.15.5_linux_amd64.zip
+                shift
+                ;;
+            -aws|--aws-cli)
+                install_package "awscli"
+                shift
+            ;;
+            -hc|--hashicorp)
+                install_package "hashicorp"
+                shift
+            ;;
+            -p|--postgresql)
+                install_package "postgresql"
+                shift
+            ;;
+            -vb|--virtual-box)
+                install_package "virtualbox"
+                shift
+            ;;
+            -va|--vagrant)
+                install_package "vagrant"
+                shift
+            ;;
+            -i|--intellij-idea)
+                install_snap "intellij-idea-community --classic"
+                shift
+            ;;
+            -oh|--oh-my-zsh)
+                sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+                shift
+            ;;
+            -se|--software-engineering-essentials)
+                install_package "build-essential cmake clang python3-dev"
+                install_snap "code --classic"
+                shift
+            ;;
+            -sre|--sre-essentials)
+                install_package "prometheus-node-exporter jq htop stress nginx"
+                install_snap "prometheus"
+                install_snap "grafana"
+                shift
+            ;;
+            -h|--help)
+                help
+                shift
+            ;;
+            *)
+                echo "Invalid option: $1"
+                exit 1
+                ;;
+        esac
+    done
 }
 
-zoom() {
-  fancy_echo "Installing Zoom-Client"
-  sudo snap install zoom-client
-}
-
-postman() {
-  fancy_echo "Installing Postman API development environment"
-  sudo snap install postman
-}
-
-snap() {
-  fancy_echo "Installing snapd canonical package manager"
-  sudo apt install -y snapd
-}
-
-tmux() {
-  fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  sudo apt install -y tmux
-}
-
-curl() {
-  fancy_echo "Installing curl ..."
-  sudo apt install -y curl
-}
-
-redis() {
-  fancy_echo "Installing Redis ..."
-  wget http://download.redis.io/redis-stable.tar.gz &&
-    tar xvzf redis-stable.tar.gz &&
-    cd redis-stable && make
-  sudo cp src/redis-server /usr/local/bin/
-  sudo cp src/redis-cli /usr/local/bin/
-}
-
-ngrok() {
-  fancy_echo "Installing Ngrok ..."
-  wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip && unzip ngrok-stable-linux-amd64.zip && rm ngrok-stable-linux-amd64.zip
-}
-
-sublime() {
-  fancy_echo "Installing Sublime Text 3 ..."
-  sudo wget -O- https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/sublimehq.gpg
-  echo 'deb [signed-by=/usr/share/keyrings/sublimehq.gpg] https://download.sublimetext.com/ apt/stable/' | sudo tee /etc/apt/sources.list.d/sublime-text.list
-  sudo apt update && sudo apt install -y sublime-text
-}
-
-vscode() {
-  fancy_echo "Installing VS Code ..."
-  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >microsoft.gpg
-  sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-  sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-  sudo apt update && sudo apt install -y code
-}
-
-zsh() {
-  fancy_echo "Installing zsh ..."
-  sudo apt install -y zsh
-}
-
-chrome() {
-  fancy_echo "Installing chrome ..."
-  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-  sudo apt update
-  sudo apt install -y google-chrome-stable
-}
-
-ssh() {
-  fancy_echo "Checking for SSH key, generating one if not it exists ..."
-  [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
-}
-
-nvm() {
-  fancy_echo "Installing Node version Manager ..."
-  wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-  nvm install --lts
-}
-
-docker() {
-  fancy_echo "Installing Docker"
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  sudo add-apt-repository \
-    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-     $(lsb_release -cs) \
-     stable"
-  sudo apt-get update
-  sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-}
-
-slack() {
-  fancy_echo "Installing slack ..."
-  sudo snap install slack
-}
-
-vim() {
-  fancy_echo "Installing vim ..."
-  sudo apt install -y vim
-}
-
-dns_utils() {
-  fancy_echo "Installing dns utils ..."
-  sudo apt-get install -y dnsutils
-}
-
-net_tools() {
-  fancy_echo "Installing net tools .."
-  sudo apt install -y net-tools
-}
-
-telnet() {
-  fancy_echo "Install telnet ..."
-  sudo apt-get install telnet
-}
-
-screen() {
-  fancy_echo "Installing screen ..."
-  sudo apt-get update sudo apt-get install screen
-}
-
-terminator() {
-  fancy_echo "Installing Terminator ..."
-  sudo apt install -y terminator
-}
-
-k9s() {
-  fancy_echo "Installing K9s"
-  sudo curl -sS https://webinstall.dev/k9s | bash
-}
-
-terraform() {
-  fancy_echo "Installing terraform ..."
-  wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
-  # verify key
-  gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
-  sudo apt update
-  sudo apt install terraform -y
-}
-
-aws_cli() {
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  unzip awscliv2.zip
-  sudo ./aws/install
-}
-
-hashicorp() {
-  #Add the official HashiCorp repository to your system.
-  echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" |
-    sudo tee /etc/apt/sources.list.d/hashicorp.list
-}
-
-postgres() {
-  fancy_echo "Installing Postgres, a good open source relational database ..."
-  sudo aptitude install -y postgresql postgresql-server-dev-all
-}
-
-virtual_box() {
-  sudo apt install virtualbox
-}
-
-vagrant() {
-  virtual_box
-  wget https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb
-  sudo apt install ./vagrant_2.2.19_x86_64.deb
-}
-
-intellij_idea() {
-  sudo snap install intellij-idea-community --classic
-}
-
-install_sudo() {
-  apt-get install sudo
-}
-
-oh_my_zsh() {
-  fancy_echo "Installing oh-my-zsh ..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-}
-
-sre() {
-  # Site Reliability Engineer
-  hashicorp
-  terraform
-  k9s
-  screen
-  telnet
-  docker
-  aws_cli
-  vagrant
-  tmux
-  terminator
-  oh_my_zsh
-}
-
-se() {
-  # Software Engineer
-  intellij_idea
-  postman
-  redis
-  aws_cli
-  nvm
-}
-
-database() {
-  postgres
-}
-
-essentials() {
-  apt-get update
-  install_sudo
-  common_gem
-  curl
-  wget
-  snap
-  net_tools
-  dns_utils
-  sublime
-  vim
-  git
-  zip
-}
-
-common() {
-  essentials
-  slack
-  zoom
-  vscode
-  zoom
-  chrome
-}
-
-common
-
-#  Note : Comment which are not needed.
-##  Example #se or #sre
-se
-sre
-database
+# Call the essentials function with options
+main "$@"
