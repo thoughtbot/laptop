@@ -30,8 +30,20 @@ if brew list | grep -Fq brew-cask; then
   brew uninstall --force brew-cask
 fi
 
+
 # fix conflicts
+removes="
+azure-cli
+python@3.10
+"
+
+# shellcheck disable=SC2116
+for remove in $(echo "$removes"); do
+  brew uninstall "$remove"
+done
+
 overwrites="
+python@3.11
 awscli
 bash-completion
 git
@@ -45,7 +57,7 @@ done
 
 echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
-brew bundle --file=- <<EOF
+brew bundle -f --file=- <<EOF
 
 tap "dteoh/sqa"
 tap "hashicorp/homebrew-tap"
@@ -72,7 +84,6 @@ brew "jq"
 brew "kind"
 brew "k9s"
 brew "kubectx"
-brew "kubernetes-cli@1.22"
 brew "lynx"
 brew "neovim"
 brew "nmap"
@@ -82,7 +93,6 @@ brew "pipenv"
 brew "powerlevel10k"
 brew "pstree"
 brew "pyenv"
-brew "python@3.9"
 brew "qt@5"
 brew "ripgrep"
 brew "shellcheck"
@@ -94,7 +104,6 @@ brew "tldr"
 brew "tmate"
 brew "watch"
 brew "wget"
-brew "python"
 brew "thefuck"
 brew "tmux"
 brew "unison"
@@ -112,6 +121,7 @@ cask "barrier"
 cask "blackhole-2ch"
 cask "brave-browser"
 cask "cool-retro-term"
+cask "cron"
 cask "daisydisk"
 cask "discord"
 cask "docker"
