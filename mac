@@ -126,6 +126,7 @@ brew "gh"
 
 # Image manipulation
 brew "imagemagick"
+brew "libvips"
 
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
