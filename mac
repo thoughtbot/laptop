@@ -56,6 +56,11 @@ else
   HOMEBREW_PREFIX="/usr/local"
 fi
 
+add_unless_present() {
+  local file="$1" line="$2"
+  grep -Fqs "$line" "$file" || echo "$line" >> "$file"
+}
+
 update_shell() {
   local shell_path;
   shell_path="$(command -v zsh)"
@@ -105,25 +110,33 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
-tap "homebrew/services"
 tap "heroku/brew"
 
 # Unix
-brew "universal-ctags"
+brew "bat"
+brew "curl"
+brew "direnv"
+brew "dust"
+brew "exa"
+brew "fd"
 brew "git"
+brew "git"
+brew "git-delta"
+brew "git-lfs"
+brew "jq"
 brew "openssl"
+brew "procs"
 brew "rcm"
 brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
+brew "ripgrep"
+brew "sd"
+brew "starship"
 brew "tmux"
+brew "universal-ctags"
 brew "vim"
 brew "watchman"
+brew "zoxide"
 brew "zsh"
-
-# Heroku
-brew "heroku/brew/heroku"
-brew "parity"
 
 # GitHub
 brew "gh"
@@ -131,28 +144,19 @@ brew "gh"
 # Image manipulation
 brew "imagemagick"
 
-# PDF Rendering
-brew "poppler"
-
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
 brew "coreutils"
-brew "yarn"
 cask "gpg-suite-no-mail"
-
-# Databases
-brew "postgresql@14", restart_service: :changed
-brew "redis", restart_service: :changed
 EOF
-
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   brew install asdf
   append_to_zshrc "source $(brew --prefix asdf)/libexec/asdf.sh" 1
+
+  add_unless_present "$HOME/.default-gems" "bundler"
+  add_unless_present "$HOME/.default-npm-packages" "yarn"
 fi
 
 alias install_asdf_plugin=add_or_update_asdf_plugin
