@@ -59,7 +59,7 @@ create_zshrc() {
   BREW_PREFIX=$1
   echo "Generating zshrc with brew prefix '$BREW_PREFIX'"
   # shellcheck disable=SC2016
-  cat <<'EOF' | envsubst '$BREW_PREFIX' > "$HOME/.zshrc"
+  cat <<'EOF' | envsubst 'BREW_PREFIX' > "$HOME/.zshrc"
 bindkey -e
 
 setopt noclobber
@@ -389,7 +389,7 @@ LANGS=(
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 for lang in "${LANGS[@]}"; do
-  install_asdf_plugin "$lang"
+  add_or_update_asdf_plugin "$lang"
 done
 
 install_asdf_language() {
@@ -414,7 +414,7 @@ install_asdf_language "nodejs"
 
 fancy_echo "Installing additional languages ..."
 for lang in "${LANGS[@]}"; do
-  install_asdf_plugin "$lang"
+  install_asdf_language "$lang"
 done
 
 # ----- Run user specific customisations -----
