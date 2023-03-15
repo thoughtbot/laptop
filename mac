@@ -113,9 +113,6 @@ current-branch = rev-parse --abbrev-ref HEAD
 recent-branches = for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short)'
 cob = !"git branch -l --format '%(refname:short)' --sort=-committerdate | fzf --preview 'git log --oneline --decorate --color {}' | xargs -n1 git co"
 
-[url "ssh://git@github.com/"]
-  insteadOf = https://github.com/
-
 [url "git@github.com:"]
   insteadOf = gh:
 
@@ -284,7 +281,7 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap homebrew/cask-fonts
+tap "homebrew/cask-fonts"
 
 # Unix
 brew "bat"
