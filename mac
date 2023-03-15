@@ -280,7 +280,7 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "heroku/brew"
+tap homebrew/cask-fonts
 
 # Unix
 brew "bat"
@@ -313,6 +313,9 @@ brew "gh"
 
 # Image manipulation
 brew "imagemagick"
+
+# Fonts
+brew font-inconsolata
 
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
