@@ -57,6 +57,7 @@ set -e
 create_zshrc() {
   # shellcheck disable=SC2034
   BREW_PREFIX=$1
+  echo "Generating zshrc with brew prefix '$BREW_PREFIX'"
   # shellcheck disable=SC2016
   cat <<'EOF' | envsubst '$BREW_PREFIX' > "$HOME/.zshrc"
 bindkey -e
