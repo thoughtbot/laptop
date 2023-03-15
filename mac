@@ -316,7 +316,7 @@ brew "gh"
 brew "imagemagick"
 
 # Fonts
-brew font-inconsolata
+brew "font-inconsolata"
 
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
@@ -324,7 +324,7 @@ brew "coreutils"
 cask "gpg-suite-no-mail"
 
 # Install postgres for the dev headers and tools
-brew "postgres"
+brew "postgresql@14"
 EOF
 
 # ----- Install ASDF and setup Ruby & Node -----
