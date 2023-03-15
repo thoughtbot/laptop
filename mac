@@ -116,7 +116,7 @@ alias_if_installed dfc df
 alias_if_installed dust du
 alias_if_installed procs ps
 
-if [ -x $(command fzf) ]; then
+if [ -x $(command -v fzf) ]; then
   [[ $- == *i* ]] && source "$BREW_PREFIX/opt/fzf/shell/completion.zsh" 2> /dev/null 
   source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 fi
