@@ -87,6 +87,10 @@ if [ -x "$(command -v starship)" ]; then
   eval "$(starship init zsh)"
 fi
 
+if [ -x "$(command -v direnv)" ]; then
+  eval "$(direnv hook zsh)"
+fi
+
 autoload -Uz compinit && compinit
 
 alias be='bundle exec'
@@ -287,6 +291,7 @@ brew bundle --file=- <<EOF
 tap "homebrew/cask-fonts"
 
 # Unix
+brew "awscli"
 brew "bat"
 brew "curl"
 brew "direnv"
@@ -298,12 +303,14 @@ brew "git"
 brew "git-delta"
 brew "git-lfs"
 brew "jq"
+brew "mkcert"
 brew "openssl"
 brew "procs"
 brew "rcm"
 brew "reattach-to-user-namespace"
 brew "ripgrep"
 brew "sd"
+brew "shared-mime-info"
 brew "starship"
 brew "tmux"
 brew "universal-ctags"
@@ -384,4 +391,41 @@ if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customisations from ~/.laptop.local ..."
   # shellcheck disable=SC1091
   . "$HOME/.laptop.local"
+fi
+
+if confirm_action "Do you want to setup the Relay Development environment?"; then
+  mkdir -p ~/dev/relay
+  cd ~/dev/relay
+
+  REPOS=(
+    "api"
+    "web"
+    "portal"
+    "docgen"
+    "rainbow-dash"
+    "proposals"
+    "handbook"
+  )
+
+  for repo in "${REPOS[@]}"; do
+    if [ ! -d "$repo" ]; then
+      fancy_echo "Cloning ${repo} ..."
+      git clone "relay:${repo}"
+      pushd "${repo}"
+      asdf install
+      direnv allow
+      popd
+    fi
+  done
+
+  fancy_echo "Setting up API"
+  cd api
+  bundle install
+  mkcert -install
+  mkdir -p config/ssl
+  rake ssl:setup
+
+  fancy_echo "Setting up Web"
+  cd ../web
+  yarn install
 fi
