@@ -434,7 +434,6 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
     "portal"
     "docgen"
     "rainbow-dash"
-    "proposals"
     "handbook"
   )
 
@@ -442,11 +441,11 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
     if [ ! -d "$repo" ]; then
       fancy_echo "Cloning ${repo} ..."
       git clone "relay:${repo}"
-      pushd "${repo}"
-      asdf install
-      direnv allow
-      popd
     fi
+    pushd "${repo}"
+    asdf install
+    direnv allow
+    popd
   done
 
   fancy_echo "Setting up API"
