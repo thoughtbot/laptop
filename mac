@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
-# Welcome to the thoughtbot laptop script!
+# Welcome to the Relay laptop script!
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
+
+# Thanks Thoughtbot for the initial work
 
 # shellcheck disable=SC3043
 
@@ -11,6 +13,21 @@ fancy_echo() {
 
   # shellcheck disable=SC2059
   printf "\\n$fmt\\n" "$@"
+}
+
+add_unless_present() {
+  local file="$1" line="$2"
+  grep -Fqs "$line" "$file" || echo "$line" >> "$file"
+}
+
+confirm_action() {
+  local action="$1"
+  read -r -p "$action (y/n) " response
+  if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 append_to_zshrc() {
@@ -37,6 +54,162 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+create_zshrc() {
+  cat <<'EOF' > "$HOME/.zshrc"
+bindkey -e
+
+setopt noclobber
+setopt autopushd pushdminus pushdsilent pushdtohome
+
+setopt braceccl
+
+setopt notify
+setopt no_bgnice
+setopt nohup
+setopt checkjobs
+
+setopt bsd_echo
+
+setopt nullglob
+setopt extended_glob
+setopt no_nomatch
+
+setopt no_beep
+
+setopt c_bases
+
+if [ -x "$(command -v starship)" ]; then
+  eval "$(starship init zsh)"
+fi
+
+autoload -Uz compinit && compinit
+
+alias be='bundle exec'
+
+# Better programs if they're installed
+if [ -x "$(command -v dfc)" ]; then
+  alias df='dfc'
+fi
+if [ -x "$(command -v htop)" ]; then
+  alias top='htop'
+fi
+EOF
+}
+
+create_gitconfig() {
+  cat <<'EOF' > "$HOME/.gitconfig"
+[alias]
+st = status
+cm = commit -v
+co = checkout
+dc = diff --cached
+please = push --force-with-lease
+fix = commit --amend --no-edit
+lb = log --graph --format=format:'%C(blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative main..HEAD
+current-branch = rev-parse --abbrev-ref HEAD
+recent-branches = for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short)'
+cob = !"git branch -l --format '%(refname:short)' --sort=-committerdate | fzf --preview 'git log --oneline --decorate --color {}' | xargs -n1 git co"
+
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+
+[url "git@github.com:"]
+  insteadOf = gh:
+
+[url "git@github.com:relayplatform/"]
+  insteadOf = relay:
+
+[core]
+  pager = delta
+  trustctime = false
+  excludesfile = ~/.config/git/ignore
+
+[delta]
+  navigate = true
+  side-by-side = true
+  line-numbers = true
+  syntax-theme = "Monokai Extended"
+
+[merge]
+  conflictStyle = diff3
+  ff = false
+  log = true
+
+[rerere]
+  enabled = true
+
+[push]
+  default = current
+EOF
+
+create_gitignore() {
+  cat <<'EOF' > "$HOME/.config/git/ignore"
+# Mac
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Vim
+[._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# VSCode
+vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+EOF
+
+
+if [ ! -f "$HOME/.ssh/id_rsa" ]; then
+  fancy_echo "Generating SSH key..."
+  ssh-keygen -t rsa -b 4096 -C "Relay Platform" -N "" -f "$HOME/.ssh/id_rsa"
+  cat "$HOME/.ssh/id_rsa.pub" | pbcopy
+  fancy_echo "SSH key copied to clipboard. Paste it into your GitHub account."
+  open "https://github.com/settings/ssh/new"
+  read -p "Press enter when done"
+fi
+
+if confirm_action "Do you want to setup a nicer shell environment?"; then
+  if [ ! -f "$HOME/.zshrc" ]; then
+    fancy_echo "Setting up zshrc..."
+    create_zshrc
+  else
+    fancy_echo "zshrc already exists, skipping..."
+  fi
+
+  if [ ! -f "$HOME/.gitconfig" ]; then
+    fancy_echo "Setting up gitconfig..."
+    create_gitconfig
+  else
+    fancy_echo "gitconfig already exists, skipping..."
+  fi
+
+  mkdir -p .config/git
+  if [ ! -f "$HOME/.config/git/ignore" ]; then
+    fancy_echo "Setting up global gitignore..."
+    create_gitignore()
+  else
+    fancy_echo "gitignore already exists, skipping..."
+  fi
+fi
+
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
@@ -55,11 +228,6 @@ if [ "$arch" = "arm64" ]; then
 else
   HOMEBREW_PREFIX="/usr/local"
 fi
-
-add_unless_present() {
-  local file="$1" line="$2"
-  grep -Fqs "$line" "$file" || echo "$line" >> "$file"
-}
 
 update_shell() {
   local shell_path;
@@ -92,6 +260,8 @@ gem_install_or_update() {
   fi
 }
 
+# ----- Install Homebrew and useful apps -----
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     /bin/bash -c \
@@ -119,7 +289,7 @@ brew "direnv"
 brew "dust"
 brew "exa"
 brew "fd"
-brew "git"
+brew "fzf"
 brew "git"
 brew "git-delta"
 brew "git-lfs"
@@ -149,6 +319,8 @@ brew "libyaml" # should come after openssl
 brew "coreutils"
 cask "gpg-suite-no-mail"
 EOF
+
+# ----- Install ASDF and setup Ruby & Node -----
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
@@ -196,8 +368,10 @@ bundle config --global jobs $((number_of_cores - 1))
 fancy_echo "Installing latest Node ..."
 install_asdf_language "nodejs"
 
+# ----- Run user specific customisations -----
+
 if [ -f "$HOME/.laptop.local" ]; then
-  fancy_echo "Running your customizations from ~/.laptop.local ..."
+  fancy_echo "Running your customisations from ~/.laptop.local ..."
   # shellcheck disable=SC1091
   . "$HOME/.laptop.local"
 fi
