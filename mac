@@ -93,6 +93,9 @@ fi
 if [ -x "$(command -v htop)" ]; then
   alias top='htop'
 fi
+
+export FZF_DEFAULT_COMMAND=rg --files --hidden --smart-case --follow --glob "!.git/*"
+export FZF_CTRL_T_COMMAND=rg --files --hidden --smart-case --follow --glob "!.git/*"
 EOF
 }
 
@@ -141,6 +144,7 @@ cob = !"git branch -l --format '%(refname:short)' --sort=-committerdate | fzf --
 [push]
   default = current
 EOF
+}
 
 create_gitignore() {
   cat <<'EOF' > "$HOME/.config/git/ignore"
@@ -175,7 +179,7 @@ vscode/*
 # Built Visual Studio Code Extensions
 *.vsix
 EOF
-
+}
 
 if [ ! -f "$HOME/.ssh/id_rsa" ]; then
   fancy_echo "Generating SSH key..."
@@ -204,7 +208,7 @@ if confirm_action "Do you want to setup a nicer shell environment?"; then
   mkdir -p .config/git
   if [ ! -f "$HOME/.config/git/ignore" ]; then
     fancy_echo "Setting up global gitignore..."
-    create_gitignore()
+    create_gitignore
   else
     fancy_echo "gitignore already exists, skipping..."
   fi
@@ -321,6 +325,9 @@ brew font-inconsolata
 brew "libyaml" # should come after openssl
 brew "coreutils"
 cask "gpg-suite-no-mail"
+
+# Install postgres for the dev headers and tools
+brew "postgres"
 EOF
 
 # ----- Install ASDF and setup Ruby & Node -----

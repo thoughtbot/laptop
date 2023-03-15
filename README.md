@@ -24,7 +24,7 @@ Install
 Download the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/main/mac
+curl --remote-name https://raw.githubusercontent.com/relayplatform/laptop/main/mac
 ```
 
 Review the script (avoid running scripts you haven't read!):
@@ -55,7 +55,7 @@ Debugging
 Your last Laptop run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
 If not, copy the lines where the script failed into a
-[new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
+[new GitHub Issue](https://github.com/relayplatform/laptop/issues/new) for us.
 Or, attach the whole log file as an attachment.
 
 What it sets up
@@ -73,7 +73,8 @@ Unix tools:
 * [Git] for version control
 * [OpenSSL] for Transport Layer Security (TLS)
 * [RCM] for managing company and personal dotfiles
-* [The Silver Searcher] for finding things in files
+* [Ripgrep] for finding things in files
+* [Fzf] for fuzzy finding anything
 * [Tmux] for saving project state and switching between projects
 * [Watchman] for watching for filesystem events
 * [Zsh] as your shell
@@ -82,17 +83,11 @@ Unix tools:
 [Git]: https://git-scm.com/
 [OpenSSL]: https://www.openssl.org/
 [RCM]: https://github.com/thoughtbot/rcm
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
+[Ripgrep]: https://github.com/BurntSushi/ripgrep
+[Fzf]: https://github.com/junegunn/fzf
 [Tmux]: http://tmux.github.io/
 [Watchman]: https://facebook.github.io/watchman/
 [Zsh]: http://www.zsh.org/
-
-Heroku tools:
-
-* [Heroku CLI] and [Parity] for interacting with the Heroku API
-
-[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
-[Parity]: https://github.com/thoughtbot/parity
 
 GitHub tools:
 
@@ -110,7 +105,6 @@ Programming languages, package managers, and configuration:
 * [Bundler] for managing Ruby libraries
 * [Node.js] and [npm], for running apps and installing JavaScript packages
 * [Ruby] stable for writing general-purpose code
-* [Yarn] for managing JavaScript packages
 
 [Bundler]: http://bundler.io/
 [ImageMagick]: http://www.imagemagick.org/
@@ -118,15 +112,12 @@ Programming languages, package managers, and configuration:
 [npm]: https://www.npmjs.org/
 [asdf-vm]: https://github.com/asdf-vm/asdf
 [Ruby]: https://www.ruby-lang.org/en/
-[Yarn]: https://yarnpkg.com/en/
 
 Databases:
 
 * [Postgres] for storing relational data
-* [Redis] for storing key-value data
 
 [Postgres]: http://www.postgresql.org/
-[Redis]: http://redis.io/
 
 It should take less than 15 minutes to install (depends on your machine).
 
