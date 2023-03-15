@@ -100,13 +100,24 @@ autoload -Uz compinit && compinit
 alias be='bundle exec'
 
 # Better programs if they're installed
-if [ -x "$(command -v dfc)" ]; then
-  alias df='dfc'
-fi
-if [ -x "$(command -v htop)" ]; then
-  alias top='htop'
-fi
+function alias_if_installed() {
+  local command="$1" alias="$2"
+  if [ -x "$(command -v "$command")" ]; then
+    alias "$alias"="$command"
+  fi
+}
 
+alias_if_installed exa ls
+alias_if_installed bat cat
+alias_if_installed htop top
+alias_if_installed dfc df
+alias_if_installed dust du
+alias_if_installed procs ps
+
+if [ -x $(command fzf) ]; then
+  [[ $- == *i* ]] && source "$BREW_PREFIX/opt/fzf/shell/completion.zsh" 2> /dev/null 
+  source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+fi
 export FZF_DEFAULT_COMMAND=rg --files --hidden --smart-case --follow --glob "!.git/*"
 export FZF_CTRL_T_COMMAND=rg --files --hidden --smart-case --follow --glob "!.git/*"
 EOF
@@ -214,7 +225,7 @@ if confirm_action "Do you want to setup a nicer shell environment?"; then
     fancy_echo "Setting up zshrc..."
     create_zshrc $HOMEBREW_PREFIX
   else
-    fancy_echo "zshrc already exists, skipping..."
+    confirm_action "You already have a zshrc, would you like to overwrite it?" && create_zshrc $HOMEBREW_PREFIX
   fi
 
   if [ ! -f "$HOME/.gitconfig" ]; then
