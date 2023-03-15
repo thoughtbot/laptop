@@ -56,10 +56,10 @@ set -e
 
 create_zshrc() {
   # shellcheck disable=SC2034
-  BREW_PREFIX=$1
+  export BREW_PREFIX=$1
   echo "Generating zshrc with brew prefix '$BREW_PREFIX'"
   # shellcheck disable=SC2016
-  BREW_PREFIX=$BREW_PREFIX cat <<'EOF' | envsubst '$BREW_PREFIX' > "$HOME/.zshrc"
+  cat <<'EOF' | envsubst '$BREW_PREFIX' > "$HOME/.zshrc"
 bindkey -e
 
 setopt noclobber
@@ -82,6 +82,7 @@ setopt no_beep
 
 setopt c_bases
 
+export WORDCHARS="${WORDCHARS//\/}"
 export PATH="$HOME/.bin:$BREW_PREFIX/bin:$PATH"
 
 if [ -x "$(command -v starship)" ]; then
