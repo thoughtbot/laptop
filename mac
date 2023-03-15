@@ -97,6 +97,12 @@ if [ -x "$(command -v zoxide)" ]; then
   eval "$(zoxide init zsh)"
 fi
 
+if [ -x "$(command -v brew)" ]; then
+  eval "$($BREW_PREFIX/bin/brew shellenv)"
+fi
+
+[ -f $BREW_PREFIX/opt/asdf/libexec/asdf.sh ] && . $BREW_PREFIX/opt/asdf/libexec/asdf.sh
+
 autoload -Uz compinit && compinit
 
 alias be='bundle exec'
@@ -120,8 +126,8 @@ if [ -x $(command -v fzf) ]; then
   [[ $- == *i* ]] && source "$BREW_PREFIX/opt/fzf/shell/completion.zsh" 2> /dev/null 
   source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 fi
-export FZF_DEFAULT_COMMAND=rg --files --hidden --smart-case --follow --glob "!.git/*"
-export FZF_CTRL_T_COMMAND=rg --files --hidden --smart-case --follow --glob "!.git/*"
+export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --follow --glob "!.git/*"'
+export FZF_CTRL_T_COMMAND='rg --files --hidden --smart-case --follow --glob "!.git/*"'
 EOF
 }
 
@@ -291,10 +297,6 @@ if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     /bin/bash -c \
       "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    append_to_zshrc "eval \"\$($HOMEBREW_PREFIX/bin/brew shellenv)\""
-
-    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
 if brew list | grep -Fq brew-cask; then
@@ -359,7 +361,7 @@ EOF
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   brew install asdf
-  append_to_zshrc "source $(brew --prefix asdf)/libexec/asdf.sh" 1
+  source $(brew --prefix asdf)/libexec/asdf.sh
 
   add_unless_present "$HOME/.default-gems" "bundler"
   add_unless_present "$HOME/.default-npm-packages" "yarn"
@@ -426,7 +428,19 @@ if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
 
+function set_private_env_var() {
+  local var=$1
+  local prompt=${2:-"Enter $var"}
+  local value
+  touch .envrc-private
+  if ! grep -q "${var}" .envrc-private; then
+    read -s -p "${prompt}: " value
+    echo "export ${var}=${value}" >> .envrc-private
+  fi
+ }
+
 if confirm_action "Do you want to setup the Relay Development environment?"; then
+  eval "$(direnv hook bash)"
   mkdir -p ~/dev/relay
   cd ~/dev/relay
 
@@ -446,12 +460,17 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
     fi
     pushd "${repo}"
     asdf install
-    direnv allow
+    [ -f ".envrc" ] && direnv allow
     popd
   done
 
   fancy_echo "Setting up API"
   cd api
+  set_private_env_var "BUNDLE_GEMS__GRAPHQL__PRO" "Enter the GraphQL Pro Key from 1Password"
+  set_private_env_var "RAILS_MASTER_KEY" "Enter the Api Master Key from 1Password"
+  echo "export DEVISE_JWT_SECRET_KEY=thisisasecret" >> .envrc-private
+  direnv allow
+  fancy_echo "Installing the bundle ..."
   bundle install
   mkcert -install
   mkdir -p config/ssl
@@ -459,5 +478,8 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
 
   fancy_echo "Setting up Web"
   cd ../web
+  set_private_env_var "FONTAWESOME_NPM_AUTH_TOKEN" "Enter the Font Awesome Auth Token from 1Password"
+  set_private_env_var "GITHUB_PACKAGES_TOKEN" "Enter your Github Packages (read only) token - you can generate this on Github at https://github.com/settings/tokens"
+  direnv allow
   yarn install
 fi
