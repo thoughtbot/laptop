@@ -393,8 +393,7 @@ done
 
 install_asdf_language() {
   local language="$1"
-  local version
-  version="$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"
+  local version=${2:-"$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"}
 
   if ! asdf list "$language" | grep -Fq "$version"; then
     asdf install "$language" "$version"
@@ -413,7 +412,9 @@ install_asdf_language "nodejs"
 
 fancy_echo "Installing additional languages ..."
 for lang in "${LANGS[@]}"; do
-  install_asdf_language "$lang"
+  latest="$(asdf latest "$lang")"
+  install_asdf_language "$lang" "$latest"
+  asdf global "$lang" "$latest"
 done
 
 # ----- Run user specific customisations -----
