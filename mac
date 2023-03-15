@@ -59,7 +59,7 @@ create_zshrc() {
   BREW_PREFIX=$1
   echo "Generating zshrc with brew prefix '$BREW_PREFIX'"
   # shellcheck disable=SC2016
-  cat <<'EOF' | envsubst 'BREW_PREFIX' > "$HOME/.zshrc"
+  BREW_PREFIX=$BREW_PREFIX cat <<'EOF' | envsubst '$BREW_PREFIX' > "$HOME/.zshrc"
 bindkey -e
 
 setopt noclobber
