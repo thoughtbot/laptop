@@ -364,7 +364,6 @@ if [ ! -d "$HOME/.asdf" ]; then
   add_unless_present "$HOME/.default-npm-packages" "yarn"
 fi
 
-alias install_asdf_plugin=add_or_update_asdf_plugin
 add_or_update_asdf_plugin() {
   local name="$1"
   local url="$2"
