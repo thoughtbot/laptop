@@ -55,7 +55,10 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 
 create_zshrc() {
-  cat <<'EOF' > "$HOME/.zshrc"
+  # shellcheck disable=SC2034
+  BREW_PREFIX=$1
+  # shellcheck disable=SC2016
+  cat <<'EOF' | envsubst '$BREW_PREFIX' > "$HOME/.zshrc"
 bindkey -e
 
 setopt noclobber
@@ -77,6 +80,8 @@ setopt no_nomatch
 setopt no_beep
 
 setopt c_bases
+
+export PATH="$HOME/.bin:$BREW_PREFIX/bin:$PATH"
 
 if [ -x "$(command -v starship)" ]; then
   eval "$(starship init zsh)"
@@ -178,19 +183,28 @@ vscode/*
 EOF
 }
 
-if [ ! -f "$HOME/.ssh/id_rsa" ]; then
+if [ ! -f "$HOME/.ssh/id_ed25519" ]; then
   fancy_echo "Generating SSH key..."
-  ssh-keygen -t rsa -b 4096 -C "Relay Platform" -N "" -f "$HOME/.ssh/id_rsa"
-  cat "$HOME/.ssh/id_rsa.pub" | pbcopy
-  fancy_echo "SSH key copied to clipboard. Paste it into your GitHub account."
+  ssh-keygen -t ed25519 -C "Relay Platform - ${USER}" -N "" -f "$HOME/.ssh/id_ed25519"
+  pbcopy < "$HOME/.ssh/id_ed25519.pub"
+  fancy_echo "SSH key copied to clipboard. Press enter to open Github so you can add the new key."
+  read -r
   open "https://github.com/settings/ssh/new"
-  read -p "Press enter when done"
+  read -r -p "Press enter when done"
+fi
+
+# Determine Homebrew prefix
+arch="$(uname -m)"
+if [ "$arch" = "arm64" ]; then
+  HOMEBREW_PREFIX="/opt/homebrew"
+else
+  HOMEBREW_PREFIX="/usr/local"
 fi
 
 if confirm_action "Do you want to setup a nicer shell environment?"; then
   if [ ! -f "$HOME/.zshrc" ]; then
     fancy_echo "Setting up zshrc..."
-    create_zshrc
+    create_zshrc $HOMEBREW_PREFIX
   else
     fancy_echo "zshrc already exists, skipping..."
   fi
@@ -217,17 +231,6 @@ fi
 
 if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
-fi
-
-# shellcheck disable=SC2016
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-
-# Determine Homebrew prefix
-arch="$(uname -m)"
-if [ "$arch" = "arm64" ]; then
-  HOMEBREW_PREFIX="/opt/homebrew"
-else
-  HOMEBREW_PREFIX="/usr/local"
 fi
 
 update_shell() {
@@ -316,7 +319,7 @@ brew "gh"
 brew "imagemagick"
 
 # Fonts
-brew "font-inconsolata"
+brew "font-inconsolata-nerd-font"
 
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
