@@ -319,7 +319,7 @@ brew "gh"
 brew "imagemagick"
 
 # Fonts
-brew "font-inconsolata-nerd-font"
+cask "font-inconsolata-nerd-font"
 
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
