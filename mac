@@ -181,6 +181,7 @@ cob = !"git branch -l --format '%(refname:short)' --sort=-committerdate | fzf --
 
 [push]
   default = current
+  autoSetupRemote = true
 EOF
 }
 
