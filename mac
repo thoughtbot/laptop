@@ -459,33 +459,22 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
     fi
     pushd "${repo}"
     asdf install
+    grep -Fqsx '.envrc-private:' Makefile && make .envrc-private
+    source .envrc-private
     [ -f ".envrc" ] && direnv allow
     popd
   done
 
-  fancy_echo "Setting up API"
+  fancy_echo "\nSetting up API"
   cd api
-  set_private_env_var "BUNDLE_GEMS__GRAPHQL__PRO" "Enter the GraphQL Pro Key from 1Password"
-  set_private_env_var "RAILS_MASTER_KEY" "Enter the Api Master Key from 1Password"
-  echo "export DEVISE_JWT_SECRET_KEY=thisisasecret" >> .envrc-private
-  echo "" >> .envrc-private
-  echo "export USE_POSTGRES_14=true" >> .envrc-private
-  echo "export DATABASE_USERNAME=postgres" >> .envrc-private
-  echo "export DATABASE_PASSWORD=postgres" >> .envrc-private
-  source .envrc-private
-  direnv allow
   fancy_echo "Installing the bundle ..."
   bundle install
   mkcert -install
   mkdir -p config/ssl
   rake ssl:setup
 
-  fancy_echo "Setting up Web"
+  fancy_echo "\nSetting up Web"
   cd ../web
-  set_private_env_var "FONTAWESOME_NPM_AUTH_TOKEN" "Enter the Font Awesome Auth Token from 1Password"
-  set_private_env_var "GITHUB_PACKAGES_TOKEN" "Enter your Github Packages (read only) token - you can generate this on Github at https://github.com/settings/tokens"
-  direnv allow
-  source .envrc-private
   yarn install
 
   fancy_echo "Setting up your hosts file"
