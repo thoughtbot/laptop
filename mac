@@ -228,6 +228,10 @@ else
   HOMEBREW_PREFIX="/usr/local"
 fi
 
+if [ ! -d "$HOME/.bin/" ]; then
+  mkdir "$HOME/.bin"
+fi
+
 if confirm_action "Do you want to setup a nicer shell environment?"; then
   if [ ! -f "$HOME/.zshrc" ]; then
     fancy_echo "Setting up zshrc..."
@@ -250,63 +254,56 @@ if confirm_action "Do you want to setup a nicer shell environment?"; then
   else
     fancy_echo "gitignore already exists, skipping..."
   fi
-fi
 
-if [ ! -d "$HOME/.bin/" ]; then
-  mkdir "$HOME/.bin"
-fi
+  update_shell() {
+    local shell_path;
+    shell_path="$(command -v zsh)"
 
-if [ ! -f "$HOME/.zshrc" ]; then
-  touch "$HOME/.zshrc"
-fi
-
-update_shell() {
-  local shell_path;
-  shell_path="$(command -v zsh)"
-
-  fancy_echo "Changing your shell to zsh ..."
-  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
-    fancy_echo "Adding '$shell_path' to /etc/shells"
-    sudo sh -c "echo $shell_path >> /etc/shells"
-  fi
-  sudo chsh -s "$shell_path" "$USER"
-}
-
-case "$SHELL" in
-  */zsh)
-    if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
-      update_shell
+    fancy_echo "Changing your shell to zsh ..."
+    if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+      fancy_echo "Adding '$shell_path' to /etc/shells"
+      sudo sh -c "echo $shell_path >> /etc/shells"
     fi
-    ;;
-  *)
-    update_shell
-    ;;
-esac
+    sudo chsh -s "$shell_path" "$USER"
+  }
 
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
-  else
-    gem install "$@"
+  case "$SHELL" in
+    */zsh)
+      if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
+        update_shell
+      fi
+      ;;
+    *)
+      update_shell
+      ;;
+  esac
+fi
+
+if confirm_action "Do you want to setup Homebrew and ASDF?"; then
+  gem_install_or_update() {
+    if gem list "$1" --installed > /dev/null; then
+      gem update "$@"
+    else
+      gem install "$@"
+    fi
+  }
+
+  # ----- Install Homebrew and useful apps -----
+
+  if ! command -v brew >/dev/null; then
+    fancy_echo "Installing Homebrew ..."
+      /bin/bash -c \
+        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
-}
 
-# ----- Install Homebrew and useful apps -----
+  if brew list | grep -Fq brew-cask; then
+    fancy_echo "Uninstalling old Homebrew-Cask ..."
+    brew uninstall --force brew-cask
+  fi
 
-if ! command -v brew >/dev/null; then
-  fancy_echo "Installing Homebrew ..."
-    /bin/bash -c \
-      "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
-if brew list | grep -Fq brew-cask; then
-  fancy_echo "Uninstalling old Homebrew-Cask ..."
-  brew uninstall --force brew-cask
-fi
-
-fancy_echo "Updating Homebrew formulae ..."
-brew update --force # https://github.com/Homebrew/brew/issues/1151
-brew bundle --file=- <<EOF
+  fancy_echo "Updating Homebrew formulae ..."
+  brew update --force # https://github.com/Homebrew/brew/issues/1151
+  brew bundle --file=- <<EOF
 tap "homebrew/cask-fonts"
 
 # Unix
@@ -356,69 +353,70 @@ cask "gpg-suite-no-mail"
 brew "postgresql@14"
 EOF
 
-# ----- Install ASDF and setup Ruby & Node -----
+  # ----- Install ASDF and setup Ruby & Node -----
 
-fancy_echo "Configuring asdf version manager ..."
-if [ ! -d "$HOME/.asdf" ]; then
-  brew install asdf
-  source $(brew --prefix asdf)/libexec/asdf.sh
+  fancy_echo "Configuring asdf version manager ..."
+  if [ ! -d "$HOME/.asdf" ]; then
+    brew install asdf
+    source $(brew --prefix asdf)/libexec/asdf.sh
 
-  add_unless_present "$HOME/.default-gems" "bundler"
-  add_unless_present "$HOME/.default-npm-packages" "yarn"
+    add_unless_present "$HOME/.default-gems" "bundler"
+    add_unless_present "$HOME/.default-npm-packages" "yarn"
+  fi
+
+  add_or_update_asdf_plugin() {
+    local name="$1"
+    local url="$2"
+
+    if ! asdf plugin-list | grep -Fq "$name"; then
+      asdf plugin-add "$name" "$url"
+    else
+      asdf plugin-update "$name"
+    fi
+  }
+
+  LANGS=(
+    "python"
+    "yarn"
+    "golang"
+    "terraform"
+    "shellcheck"
+  )
+
+  # shellcheck disable=SC1091
+  . "$(brew --prefix asdf)/libexec/asdf.sh"
+  add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+  add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+  for lang in "${LANGS[@]}"; do
+    add_or_update_asdf_plugin "$lang"
+  done
+
+  install_asdf_language() {
+    local language="$1"
+    local version=${2:-"$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"}
+
+    if ! asdf list "$language" | grep -Fq "$version"; then
+      asdf install "$language" "$version"
+      asdf global "$language" "$version"
+    fi
+  }
+
+  fancy_echo "Installing latest Ruby ..."
+  install_asdf_language "ruby"
+  gem update --system
+  number_of_cores=$(sysctl -n hw.ncpu)
+  bundle config --global jobs $((number_of_cores - 1))
+
+  fancy_echo "Installing latest Node ..."
+  install_asdf_language "nodejs"
+
+  fancy_echo "Installing additional languages ..."
+  for lang in "${LANGS[@]}"; do
+    latest="$(asdf latest "$lang")"
+    install_asdf_language "$lang" "$latest"
+    asdf global "$lang" "$latest"
+  done
 fi
-
-add_or_update_asdf_plugin() {
-  local name="$1"
-  local url="$2"
-
-  if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
-  else
-    asdf plugin-update "$name"
-  fi
-}
-
-LANGS=(
-  "python"
-  "yarn"
-  "golang"
-  "terraform"
-  "shellcheck"
-)
-
-# shellcheck disable=SC1091
-. "$(brew --prefix asdf)/libexec/asdf.sh"
-add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
-add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
-for lang in "${LANGS[@]}"; do
-  add_or_update_asdf_plugin "$lang"
-done
-
-install_asdf_language() {
-  local language="$1"
-  local version=${2:-"$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"}
-
-  if ! asdf list "$language" | grep -Fq "$version"; then
-    asdf install "$language" "$version"
-    asdf global "$language" "$version"
-  fi
-}
-
-fancy_echo "Installing latest Ruby ..."
-install_asdf_language "ruby"
-gem update --system
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
-
-fancy_echo "Installing latest Node ..."
-install_asdf_language "nodejs"
-
-fancy_echo "Installing additional languages ..."
-for lang in "${LANGS[@]}"; do
-  latest="$(asdf latest "$lang")"
-  install_asdf_language "$lang" "$latest"
-  asdf global "$lang" "$latest"
-done
 
 # ----- Run user specific customisations -----
 
@@ -470,6 +468,10 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
   set_private_env_var "BUNDLE_GEMS__GRAPHQL__PRO" "Enter the GraphQL Pro Key from 1Password"
   set_private_env_var "RAILS_MASTER_KEY" "Enter the Api Master Key from 1Password"
   echo "export DEVISE_JWT_SECRET_KEY=thisisasecret" >> .envrc-private
+  echo "" >> .envrc-private
+  echo "export USE_POSTGRES_14=true" >> .envrc-private
+  echo "export DATABASE_USERNAME=postgres" >> .envrc-private
+  echo "export DATABASE_PASSWORD=postgres" >> .envrc-private
   source .envrc-private
   direnv allow
   fancy_echo "Installing the bundle ..."
@@ -485,4 +487,20 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
   direnv allow
   source .envrc-private
   yarn install
+
+  fancy_echo "Setting up your hosts file"
+  function add_to_hosts() {
+    local entry="$1"
+    grep -Fqs "$entry" /etc/hosts || echo "127.0.0.1 ${entry}" >> /tmp/laptop-hosts
+  }
+
+  touch /tmp/laptop-hosts
+  add_to_hosts "relay.test"
+  add_to_hosts "broker.relay.test"
+  add_to_hosts "insurer.relay.test"
+  add_to_hosts "retailer.relay.test"
+  add_to_hosts "wholesaler.relay.test"
+  add_to_hosts "appund.relay.test"
+  sudo tee -a /etc/hosts < /tmp/laptop-hosts
+  rm /tmp/laptop-hosts
 fi
