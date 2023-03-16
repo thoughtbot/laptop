@@ -436,6 +436,7 @@ function set_private_env_var() {
   if ! grep -q "${var}" .envrc-private; then
     read -s -p "${prompt}: " value
     echo "export ${var}=${value}" >> .envrc-private
+    echo
   fi
  }
 
@@ -469,6 +470,7 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
   set_private_env_var "BUNDLE_GEMS__GRAPHQL__PRO" "Enter the GraphQL Pro Key from 1Password"
   set_private_env_var "RAILS_MASTER_KEY" "Enter the Api Master Key from 1Password"
   echo "export DEVISE_JWT_SECRET_KEY=thisisasecret" >> .envrc-private
+  source .envrc-private
   direnv allow
   fancy_echo "Installing the bundle ..."
   bundle install
@@ -481,5 +483,6 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
   set_private_env_var "FONTAWESOME_NPM_AUTH_TOKEN" "Enter the Font Awesome Auth Token from 1Password"
   set_private_env_var "GITHUB_PACKAGES_TOKEN" "Enter your Github Packages (read only) token - you can generate this on Github at https://github.com/settings/tokens"
   direnv allow
+  source .envrc-private
   yarn install
 fi
