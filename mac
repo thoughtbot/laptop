@@ -8,6 +8,11 @@
 
 # shellcheck disable=SC3043
 
+SECTIONS=$*
+if [[ -z "$SECTIONS" ]]; then
+  SECTIONS="all"
+fi
+
 fancy_echo() {
   local fmt="$1"; shift
 
@@ -22,6 +27,10 @@ add_unless_present() {
 
 confirm_action() {
   local action="$1"
+  local section="$2"
+  if [[ $SECTIONS != *"${section}"* ]] && [[ $SECTIONS != *"all"* ]]; then
+    return 1
+  fi
   read -r -p "$action (y/n) " response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
     return 0
@@ -123,7 +132,7 @@ alias_if_installed dust du
 alias_if_installed procs ps
 
 if [ -x $(command -v fzf) ]; then
-  [[ $- == *i* ]] && source "$BREW_PREFIX/opt/fzf/shell/completion.zsh" 2> /dev/null 
+  [[ $- == *i* ]] && source "$BREW_PREFIX/opt/fzf/shell/completion.zsh" 2> /dev/null
   source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 fi
 export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --follow --glob "!.git/*"'
@@ -232,12 +241,12 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
-if confirm_action "Do you want to setup a nicer shell environment?"; then
+if confirm_action "Do you want to setup a nicer shell environment?" shell; then
   if [ ! -f "$HOME/.zshrc" ]; then
     fancy_echo "Setting up zshrc..."
     create_zshrc $HOMEBREW_PREFIX
   else
-    confirm_action "You already have a zshrc, would you like to overwrite it?" && create_zshrc $HOMEBREW_PREFIX
+    confirm_action "You already have a zshrc, would you like to overwrite it?" zsh && create_zshrc $HOMEBREW_PREFIX
   fi
 
   if [ ! -f "$HOME/.gitconfig" ]; then
@@ -279,7 +288,7 @@ if confirm_action "Do you want to setup a nicer shell environment?"; then
   esac
 fi
 
-if confirm_action "Do you want to setup Homebrew and ASDF?"; then
+if confirm_action "Do you want to setup Homebrew and install useful apps?" brew; then
   gem_install_or_update() {
     if gem list "$1" --installed > /dev/null; then
       gem update "$@"
@@ -305,6 +314,7 @@ if confirm_action "Do you want to setup Homebrew and ASDF?"; then
   brew update --force # https://github.com/Homebrew/brew/issues/1151
   brew bundle --file=- <<EOF
 tap "homebrew/cask-fonts"
+tap "hashicorp/tap"
 
 # Unix
 brew "awscli"
@@ -338,6 +348,13 @@ brew "zsh"
 # GitHub
 brew "gh"
 
+# Hashicorp
+brew "hashicorp/tap/consul"
+brew "hashicorp/tap/nomad"
+brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/terraform-ls"
+brew "hashicorp/tap/vault"
+
 # Image manipulation
 brew "imagemagick"
 
@@ -352,7 +369,9 @@ cask "gpg-suite-no-mail"
 # Install postgres for the dev headers and tools
 brew "postgresql@14"
 EOF
+fi
 
+if confirm_action "Do you want to setup ASDF and install default versions of tools and languages?" asdf; then
   # ----- Install ASDF and setup Ruby & Node -----
 
   fancy_echo "Configuring asdf version manager ..."
@@ -438,7 +457,7 @@ function set_private_env_var() {
   fi
  }
 
-if confirm_action "Do you want to setup the Relay Development environment?"; then
+if confirm_action "Do you want to setup the Relay Development environment?" relay; then
   eval "$(direnv hook bash)"
   mkdir -p ~/dev/relay
   cd ~/dev/relay
