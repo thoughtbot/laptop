@@ -353,6 +353,12 @@ brew "zsh"
 # GitHub
 brew "gh"
 
+# Node package dependencies
+brew "pkg-config"
+brew "pixman"
+brew "cairo"
+brew "pango"
+
 # Hashicorp
 brew "hashicorp/tap/consul"
 brew "hashicorp/tap/nomad"
