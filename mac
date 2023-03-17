@@ -518,7 +518,9 @@ if confirm_action "Do you want to setup the Relay Development environment?" rela
   direnv allow
   source .envrc-private
   yarn install
+fi
 
+if confirm_action "Do you want to setup your /etc/hosts file?" hosts; then
   fancy_echo "Setting up your hosts file"
   function add_to_hosts() {
     local entry="$1"
