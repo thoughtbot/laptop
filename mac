@@ -537,3 +537,81 @@ if confirm_action "Do you want to setup your /etc/hosts file?" hosts; then
   sudo tee -a /etc/hosts < /tmp/laptop-hosts
   rm /tmp/laptop-hosts
 fi
+
+if confirm_action "test1" "test1"; then
+  echo 'test 1'
+fi
+
+if confirm_action "test2" "test2"; then
+  echo 'test 2'
+fi
+
+function echo_if_section() {
+  local section="$1"
+  shift
+  local message="$*"
+  if [[ $SECTIONS == *"${section}"* ]] || [[ $SECTIONS == *"all"* ]]; then
+    echo "$message" | sed -E 's/(.)- /\1\n- /g'
+  fi
+}
+
+echo
+cat <<'EOM'
+All done! Welcome to your new laptop!
+
+Here's a summary of what we did:
+EOM
+
+echo_if_section "shell" $(cat <<'EOM'
+- Setup a basic zshrc, with a nicer prompt and some useful aliases.
+  * Homebrew and ASDF are added to the path.
+  * Try the fzf integration by pressing Ctrl+R or Ctrl+T.
+- Setup a basic git config, with some useful aliases.
+  * `git st`, `git co` and `git cm` should do what you (hopefully) expect.
+  * `git lb` will show the commits on your branch.
+  * `git cob` opens a fuzzy finder for recent branches and check out the selected branch.
+- Sets up a basic global .gitignore file so you don\'t accidentally commit things like .DS_Store files.
+EOM
+)
+echo_if_section "brew" $(cat <<'EOM'
+- Installed and/or updated Homebrew
+- Installed several useful Homebrew packages
+EOM
+)
+echo_if_section "asdf" $(cat <<'EOM'
+- Installed ASDF and set it up with useful plugins and languages including Ruby, Node, Python and Go.
+EOM
+)
+echo_if_section "asdf" $(cat <<'EOM'
+- Installed ASDF and set it up with useful plugins and languages including Ruby, Node, Python and Go.
+EOM
+)
+echo_if_section "relay" $(cat <<'EOM'
+- Set up the Relay Development environment at ~/dev/relay.
+- Checked out the api, web, portal, docgen, and handbook repos. You can clone others with `git clone relay:<repo>`.
+- Installed the right versions of each language for each repo.
+- Set up .envrc-private files with the values you provided.
+- Installed the bundle for the api and the node modules for the web.
+EOM
+)
+echo_if_section "hosts" $(cat <<'EOM'
+- Added relay.test and several subdomains to your /etc/hosts file as aliases for localhost.
+EOM
+)
+
+cat <<'EOM'
+
+To get started with the Relay app there are a few steps left for you to do:
+
+In the api repo:
+1. Bring up the database and other services with `docker-compose up -d`
+2. Set up your DB with `rails db:setup`
+3. Start the server with `rails s` - leave this running
+4. Run the jobs with `rails jobs:work` - you'll need another terminal for this
+
+In the web repo:
+1. Start the server with `yarn start` - leave this running
+2. Open the app at https://relay.test:3333.
+
+If you have other questions, take a look in the handbook, or come ask in #no-bad-eng-questions in Slack.
+EOM
