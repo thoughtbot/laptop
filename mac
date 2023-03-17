@@ -31,8 +31,12 @@ confirm_action() {
   if [[ $SECTIONS != *"${section}"* ]] && [[ $SECTIONS != *"all"* ]]; then
     return 1
   fi
+  if [[ $SECTIONS == *"${section}"* ]]; then
+    return 0
+  fi
   read -r -p "$action (y/n) " response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+    SECTIONS="$SECTIONS $section"
     return 0
   else
     return 1
