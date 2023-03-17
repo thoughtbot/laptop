@@ -396,7 +396,6 @@ if confirm_action "Do you want to setup ASDF and install default versions of too
   }
 
   LANGS=(
-    "python"
     "yarn"
     "golang"
     "terraform"
@@ -426,6 +425,12 @@ if confirm_action "Do you want to setup ASDF and install default versions of too
   gem update --system
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
+
+  fancy_echo "Installing Python so we can build Node"
+  latest_py="$(asdf latest python)"
+  install_asdf_language "python" $latest_py
+  install_asdf_language "python" 3.10.7
+  asdf global python $latest_py 3.10.7
 
   fancy_echo "Installing latest Node ..."
   install_asdf_language "nodejs"
