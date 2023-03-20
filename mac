@@ -283,6 +283,7 @@ brew "dust"
 brew "exa"
 brew "fd"
 brew "fzf"
+brew "gettext"
 brew "git"
 brew "git-delta"
 brew "git-lfs"
@@ -333,6 +334,9 @@ cask "gpg-suite-no-mail"
 # Install postgres for the dev headers and tools
 brew "postgresql@14"
 EOF
+
+# Link gettext to install envsubst (used later)
+brew link --force gettext
 fi
 
 if confirm_action "Do you want to setup a nicer shell environment?" shell; then
