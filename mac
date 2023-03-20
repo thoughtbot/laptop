@@ -490,7 +490,7 @@ if confirm_action "Do you want to setup the Relay Development environment?" rela
   for repo in "${REPOS[@]}"; do
     if [ ! -d "$repo" ]; then
       fancy_echo "Cloning ${repo} ..."
-      git clone "relay:${repo}"
+      git clone "git@github.com:relayplatform/${repo}"
     fi
     pushd "${repo}"
     asdf install
