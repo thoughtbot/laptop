@@ -246,53 +246,6 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
-if confirm_action "Do you want to setup a nicer shell environment?" shell; then
-  if [ ! -f "$HOME/.zshrc" ]; then
-    fancy_echo "Setting up zshrc..."
-    create_zshrc $HOMEBREW_PREFIX
-  else
-    confirm_action "You already have a zshrc, would you like to overwrite it?" zsh && create_zshrc $HOMEBREW_PREFIX
-  fi
-
-  if [ ! -f "$HOME/.gitconfig" ]; then
-    fancy_echo "Setting up gitconfig..."
-    create_gitconfig
-  else
-    fancy_echo "gitconfig already exists, skipping..."
-  fi
-
-  mkdir -p .config/git
-  if [ ! -f "$HOME/.config/git/ignore" ]; then
-    fancy_echo "Setting up global gitignore..."
-    create_gitignore
-  else
-    fancy_echo "gitignore already exists, skipping..."
-  fi
-
-  update_shell() {
-    local shell_path;
-    shell_path="$(command -v zsh)"
-
-    fancy_echo "Changing your shell to zsh ..."
-    if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
-      fancy_echo "Adding '$shell_path' to /etc/shells"
-      sudo sh -c "echo $shell_path >> /etc/shells"
-    fi
-    sudo chsh -s "$shell_path" "$USER"
-  }
-
-  case "$SHELL" in
-    */zsh)
-      if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
-        update_shell
-      fi
-      ;;
-    *)
-      update_shell
-      ;;
-  esac
-fi
-
 if confirm_action "Do you want to setup Homebrew and install useful apps?" brew; then
   gem_install_or_update() {
     if gem list "$1" --installed > /dev/null; then
@@ -381,6 +334,54 @@ cask "gpg-suite-no-mail"
 brew "postgresql@14"
 EOF
 fi
+
+if confirm_action "Do you want to setup a nicer shell environment?" shell; then
+  if [ ! -f "$HOME/.zshrc" ]; then
+    fancy_echo "Setting up zshrc..."
+    create_zshrc $HOMEBREW_PREFIX
+  else
+    confirm_action "You already have a zshrc, would you like to overwrite it?" zsh && create_zshrc $HOMEBREW_PREFIX
+  fi
+
+  if [ ! -f "$HOME/.gitconfig" ]; then
+    fancy_echo "Setting up gitconfig..."
+    create_gitconfig
+  else
+    fancy_echo "gitconfig already exists, skipping..."
+  fi
+
+  mkdir -p .config/git
+  if [ ! -f "$HOME/.config/git/ignore" ]; then
+    fancy_echo "Setting up global gitignore..."
+    create_gitignore
+  else
+    fancy_echo "gitignore already exists, skipping..."
+  fi
+
+  update_shell() {
+    local shell_path;
+    shell_path="$(command -v zsh)"
+
+    fancy_echo "Changing your shell to zsh ..."
+    if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+      fancy_echo "Adding '$shell_path' to /etc/shells"
+      sudo sh -c "echo $shell_path >> /etc/shells"
+    fi
+    sudo chsh -s "$shell_path" "$USER"
+  }
+
+  case "$SHELL" in
+    */zsh)
+      if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
+        update_shell
+      fi
+      ;;
+    *)
+      update_shell
+      ;;
+  esac
+fi
+
 
 if confirm_action "Do you want to setup ASDF and install default versions of tools and languages?" asdf; then
   # ----- Install ASDF and setup Ruby & Node -----
