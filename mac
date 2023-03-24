@@ -232,6 +232,8 @@ if [ ! -f "$HOME/.ssh/id_ed25519" ]; then
   read -r
   open "https://github.com/settings/ssh/new"
   read -r -p "Press enter when done"
+  # Adding Github's SSH keys to known_hosts
+  curl -L https://api.github.com/meta | jq -r '.ssh_keys | .[]' | sed -e 's/^/github.com /' >> "$HOME/.ssh/known_hosts"
 fi
 
 # Determine Homebrew prefix
