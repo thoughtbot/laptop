@@ -8,6 +8,11 @@
 
 # shellcheck disable=SC3043
 
+SECTIONS=$*
+if [[ -z "$SECTIONS" ]]; then
+  SECTIONS="all"
+fi
+
 fancy_echo() {
   local fmt="$1"; shift
 
@@ -22,8 +27,16 @@ add_unless_present() {
 
 confirm_action() {
   local action="$1"
+  local section="$2"
+  if [[ $SECTIONS != *"${section}"* ]] && [[ $SECTIONS != *"all"* ]]; then
+    return 1
+  fi
+  if [[ $SECTIONS == *"${section}"* ]]; then
+    return 0
+  fi
   read -r -p "$action (y/n) " response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+    SECTIONS="$SECTIONS $section"
     return 0
   else
     return 1
@@ -123,7 +136,7 @@ alias_if_installed dust du
 alias_if_installed procs ps
 
 if [ -x $(command -v fzf) ]; then
-  [[ $- == *i* ]] && source "$BREW_PREFIX/opt/fzf/shell/completion.zsh" 2> /dev/null 
+  [[ $- == *i* ]] && source "$BREW_PREFIX/opt/fzf/shell/completion.zsh" 2> /dev/null
   source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 fi
 export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --follow --glob "!.git/*"'
@@ -172,6 +185,7 @@ cob = !"git branch -l --format '%(refname:short)' --sort=-committerdate | fzf --
 
 [push]
   default = current
+  autoSetupRemote = true
 EOF
 }
 
@@ -218,6 +232,8 @@ if [ ! -f "$HOME/.ssh/id_ed25519" ]; then
   read -r
   open "https://github.com/settings/ssh/new"
   read -r -p "Press enter when done"
+  # Adding Github's SSH keys to known_hosts
+  curl -L https://api.github.com/meta | jq -r '.ssh_keys | .[]' | sed -e 's/^/github.com /' >> "$HOME/.ssh/known_hosts"
 fi
 
 # Determine Homebrew prefix
@@ -232,12 +248,106 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
-if confirm_action "Do you want to setup a nicer shell environment?"; then
+if confirm_action "Do you want to setup Homebrew and install useful apps?" brew; then
+  gem_install_or_update() {
+    if gem list "$1" --installed > /dev/null; then
+      gem update "$@"
+    else
+      gem install "$@"
+    fi
+  }
+
+  # ----- Install Homebrew and useful apps -----
+
+  if ! command -v brew >/dev/null; then
+    fancy_echo "Installing Homebrew ..."
+      /bin/bash -c \
+        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+
+  if brew list | grep -Fq brew-cask; then
+    fancy_echo "Uninstalling old Homebrew-Cask ..."
+    brew uninstall --force brew-cask
+  fi
+
+  fancy_echo "Updating Homebrew formulae ..."
+  brew update --force # https://github.com/Homebrew/brew/issues/1151
+  brew bundle --file=- <<EOF
+tap "homebrew/cask-fonts"
+tap "hashicorp/tap"
+
+# Unix
+brew "awscli"
+brew "bat"
+brew "curl"
+brew "direnv"
+brew "dust"
+brew "exa"
+brew "fd"
+brew "fzf"
+brew "gettext"
+brew "git"
+brew "git-delta"
+brew "git-lfs"
+brew "jq"
+brew "mkcert"
+brew "openssl"
+brew "procs"
+brew "rcm"
+brew "reattach-to-user-namespace"
+brew "ripgrep"
+brew "sd"
+brew "session-manager-plugin"
+brew "shared-mime-info"
+brew "starship"
+brew "tmux"
+brew "universal-ctags"
+brew "vim"
+brew "watchman"
+brew "zoxide"
+brew "zsh"
+
+# GitHub
+brew "gh"
+
+# Node package dependencies
+brew "pkg-config"
+brew "pixman"
+brew "cairo"
+brew "pango"
+
+# Hashicorp
+brew "hashicorp/tap/consul"
+brew "hashicorp/tap/nomad"
+brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/terraform-ls"
+brew "hashicorp/tap/vault"
+
+# Image manipulation
+brew "imagemagick"
+
+# Fonts
+cask "font-inconsolata-nerd-font"
+
+# Programming language prerequisites and package managers
+brew "libyaml" # should come after openssl
+brew "coreutils"
+cask "gpg-suite-no-mail"
+
+# Install postgres for the dev headers and tools
+brew "postgresql@14"
+EOF
+
+# Link gettext to install envsubst (used later)
+brew link --force gettext
+fi
+
+if confirm_action "Do you want to setup a nicer shell environment?" shell; then
   if [ ! -f "$HOME/.zshrc" ]; then
     fancy_echo "Setting up zshrc..."
     create_zshrc $HOMEBREW_PREFIX
   else
-    confirm_action "You already have a zshrc, would you like to overwrite it?" && create_zshrc $HOMEBREW_PREFIX
+    confirm_action "You already have a zshrc, would you like to overwrite it?" zsh && create_zshrc $HOMEBREW_PREFIX
   fi
 
   if [ ! -f "$HOME/.gitconfig" ]; then
@@ -279,80 +389,7 @@ if confirm_action "Do you want to setup a nicer shell environment?"; then
   esac
 fi
 
-if confirm_action "Do you want to setup Homebrew and ASDF?"; then
-  gem_install_or_update() {
-    if gem list "$1" --installed > /dev/null; then
-      gem update "$@"
-    else
-      gem install "$@"
-    fi
-  }
-
-  # ----- Install Homebrew and useful apps -----
-
-  if ! command -v brew >/dev/null; then
-    fancy_echo "Installing Homebrew ..."
-      /bin/bash -c \
-        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  fi
-
-  if brew list | grep -Fq brew-cask; then
-    fancy_echo "Uninstalling old Homebrew-Cask ..."
-    brew uninstall --force brew-cask
-  fi
-
-  fancy_echo "Updating Homebrew formulae ..."
-  brew update --force # https://github.com/Homebrew/brew/issues/1151
-  brew bundle --file=- <<EOF
-tap "homebrew/cask-fonts"
-
-# Unix
-brew "awscli"
-brew "bat"
-brew "curl"
-brew "direnv"
-brew "dust"
-brew "exa"
-brew "fd"
-brew "fzf"
-brew "git"
-brew "git-delta"
-brew "git-lfs"
-brew "jq"
-brew "mkcert"
-brew "openssl"
-brew "procs"
-brew "rcm"
-brew "reattach-to-user-namespace"
-brew "ripgrep"
-brew "sd"
-brew "shared-mime-info"
-brew "starship"
-brew "tmux"
-brew "universal-ctags"
-brew "vim"
-brew "watchman"
-brew "zoxide"
-brew "zsh"
-
-# GitHub
-brew "gh"
-
-# Image manipulation
-brew "imagemagick"
-
-# Fonts
-cask "font-inconsolata-nerd-font"
-
-# Programming language prerequisites and package managers
-brew "libyaml" # should come after openssl
-brew "coreutils"
-cask "gpg-suite-no-mail"
-
-# Install postgres for the dev headers and tools
-brew "postgresql@14"
-EOF
-
+if confirm_action "Do you want to setup ASDF and install default versions of tools and languages?" asdf; then
   # ----- Install ASDF and setup Ruby & Node -----
 
   fancy_echo "Configuring asdf version manager ..."
@@ -376,7 +413,6 @@ EOF
   }
 
   LANGS=(
-    "python"
     "yarn"
     "golang"
     "terraform"
@@ -387,6 +423,7 @@ EOF
   . "$(brew --prefix asdf)/libexec/asdf.sh"
   add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
   add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+  add_or_update_asdf_plugin "python"
   for lang in "${LANGS[@]}"; do
     add_or_update_asdf_plugin "$lang"
   done
@@ -406,6 +443,12 @@ EOF
   gem update --system
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
+
+  fancy_echo "Installing Python so we can build Node"
+  latest_py="$(asdf latest python)"
+  install_asdf_language "python" $latest_py
+  install_asdf_language "python" 3.10.7
+  asdf global python $latest_py 3.10.7
 
   fancy_echo "Installing latest Node ..."
   install_asdf_language "nodejs"
@@ -438,7 +481,7 @@ function set_private_env_var() {
   fi
  }
 
-if confirm_action "Do you want to setup the Relay Development environment?"; then
+if confirm_action "Do you want to setup the Relay Development environment?" relay; then
   eval "$(direnv hook bash)"
   mkdir -p ~/dev/relay
   cd ~/dev/relay
@@ -455,7 +498,7 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
   for repo in "${REPOS[@]}"; do
     if [ ! -d "$repo" ]; then
       fancy_echo "Cloning ${repo} ..."
-      git clone "relay:${repo}"
+      git clone "git@github.com:relayplatform/${repo}"
     fi
     pushd "${repo}"
     asdf install
@@ -476,7 +519,9 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
   fancy_echo "\nSetting up Web"
   cd ../web
   yarn install
+fi
 
+if confirm_action "Do you want to setup your /etc/hosts file?" hosts; then
   fancy_echo "Setting up your hosts file"
   function add_to_hosts() {
     local entry="$1"
@@ -493,3 +538,81 @@ if confirm_action "Do you want to setup the Relay Development environment?"; the
   sudo tee -a /etc/hosts < /tmp/laptop-hosts
   rm /tmp/laptop-hosts
 fi
+
+if confirm_action "test1" "test1"; then
+  echo 'test 1'
+fi
+
+if confirm_action "test2" "test2"; then
+  echo 'test 2'
+fi
+
+function echo_if_section() {
+  local section="$1"
+  shift
+  local message="$*"
+  if [[ $SECTIONS == *"${section}"* ]] || [[ $SECTIONS == *"all"* ]]; then
+    echo "$message" | sed -E 's/(.)- /\1\n- /g'
+  fi
+}
+
+echo
+cat <<'EOM'
+All done! Welcome to your new laptop!
+
+Here's a summary of what we did:
+EOM
+
+echo_if_section "shell" $(cat <<'EOM'
+- Setup a basic zshrc, with a nicer prompt and some useful aliases.
+  * Homebrew and ASDF are added to the path.
+  * Try the fzf integration by pressing Ctrl+R or Ctrl+T.
+- Setup a basic git config, with some useful aliases.
+  * `git st`, `git co` and `git cm` should do what you (hopefully) expect.
+  * `git lb` will show the commits on your branch.
+  * `git cob` opens a fuzzy finder for recent branches and check out the selected branch.
+- Sets up a basic global .gitignore file so you don\'t accidentally commit things like .DS_Store files.
+EOM
+)
+echo_if_section "brew" $(cat <<'EOM'
+- Installed and/or updated Homebrew
+- Installed several useful Homebrew packages
+EOM
+)
+echo_if_section "asdf" $(cat <<'EOM'
+- Installed ASDF and set it up with useful plugins and languages including Ruby, Node, Python and Go.
+EOM
+)
+echo_if_section "asdf" $(cat <<'EOM'
+- Installed ASDF and set it up with useful plugins and languages including Ruby, Node, Python and Go.
+EOM
+)
+echo_if_section "relay" $(cat <<'EOM'
+- Set up the Relay Development environment at ~/dev/relay.
+- Checked out the api, web, portal, docgen, and handbook repos. You can clone others with `git clone relay:<repo>`.
+- Installed the right versions of each language for each repo.
+- Set up .envrc-private files with the values you provided.
+- Installed the bundle for the api and the node modules for the web.
+EOM
+)
+echo_if_section "hosts" $(cat <<'EOM'
+- Added relay.test and several subdomains to your /etc/hosts file as aliases for localhost.
+EOM
+)
+
+cat <<'EOM'
+
+To get started with the Relay app there are a few steps left for you to do:
+
+In the api repo:
+1. Bring up the database and other services with `docker-compose up -d`
+2. Set up your DB with `rails db:setup`
+3. Start the server with `rails s` - leave this running
+4. Run the jobs with `rails jobs:work` - you'll need another terminal for this
+
+In the web repo:
+1. Start the server with `yarn start` - leave this running
+2. Open the app at https://relay.test:3333.
+
+If you have other questions, take a look in the handbook, or come ask in #no-bad-eng-questions in Slack.
+EOM
