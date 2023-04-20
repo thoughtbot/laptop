@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+* Configures AWS credentials
+* Generates the Relay SSH config
+
+## 2023-03-01 - Relay Fork
+
+### Added
+
+* Basic support for setting up the Relay app including:
+  * Installing useful development apps through Homebrew
+  * Installing the Relay apps
+  * Setting up envrc-private files for each repo
+  * Setting up /etc/hosts with Relay subdomains
+
 ## 2022-12-02
 
 ### Added

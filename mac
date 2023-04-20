@@ -528,6 +528,30 @@ if confirm_action "Do you want to setup the Relay Development environment?" rela
   yarn install
 fi
 
+if confirm_action "Do you want to setup AWS credentials?" aws; then
+  if [ ! -x "$(command -v aws)" ]; then
+    fancy_echo "Installing AWS CLI"
+    brew install awscli
+  fi
+
+  fancy_echo "Setting up AWS credentials. You will need your access and secret key from 1Password."
+  aws configure
+fi
+
+if confirm_action "Do you want to setup the Relay SSH config?" ssh; then
+  if [ ! -d "$HOME/dev/relay/api" ]; then
+    echo "The Relay development environment is not setup. Please run the Relay setup first."
+  else
+    cd "$HOME/dev/relay/api"
+    bin/generate-relay-ssh-config > ~/.ssh/config-relay-api
+    if [ -f "$HOME/.ssh/config" ]; then
+      printf '%s\n%s\n' "Include ~/.ssh/config-relay-api" "$(cat ~/.ssh/config)" > ~/.ssh/config
+    else
+      echo "Include ~/.ssh/config-relay-api" > ~/.ssh/config
+    fi
+  fi
+fi
+
 if confirm_action "Do you want to setup your /etc/hosts file?" hosts; then
   fancy_echo "Setting up your hosts file"
   function add_to_hosts() {
@@ -604,6 +628,14 @@ EOM
 )
 echo_if_section "hosts" $(cat <<'EOM'
 - Added relay.test and several subdomains to your /etc/hosts file as aliases for localhost.
+EOM
+)
+echo_if_section "aws" $(cat <<'EOM'
+- Setup AWS credentials
+EOM
+)
+echo_if_section "ssh" $(cat <<'EOM'
+- Setup Relay SSH config
 EOM
 )
 
