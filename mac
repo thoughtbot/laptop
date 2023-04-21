@@ -297,7 +297,6 @@ brew "rcm"
 brew "reattach-to-user-namespace"
 brew "ripgrep"
 brew "sd"
-brew "session-manager-plugin"
 brew "shared-mime-info"
 brew "starship"
 brew "tmux"
@@ -328,6 +327,9 @@ brew "imagemagick"
 
 # Fonts
 cask "font-inconsolata-nerd-font"
+
+# AWS session manager plugin
+cask "session-manager-plugin"
 
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
