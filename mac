@@ -79,6 +79,32 @@ case "$SHELL" in
     ;;
 esac
 
+rosetta_install_or_skip() {
+  # check architecture
+  if [[ $(uname -m) == "arm64" ]]
+    then
+    echo "This Macbook has an M1 architecture."
+    # check if Rosetta is already installed
+    if [ $(/usr/bin/pgrep oahd >/dev/null 2>&1;echo $?) -eq 1 ]
+    then
+    	echo "Rosetta is not installed."
+      # Install Rosetta2
+      /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+      if [[ $? -eq 0 ]]
+      then
+        echo "Rosetta has been successfully installed."
+      else
+        echo "Rosetta installation failed. Exiting script."
+        exitcode=1
+      fi
+    else
+    	echo 'Rosetta is installed.'
+    fi
+  fi
+}
+
+rosetta_install_or_skip
+
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
     gem update "$@"
