@@ -198,14 +198,14 @@ you agree to abide by the thoughtbot [code of conduct].
 Edit the `mac` file.
 Document in the `README.md` file.
 Update the `CHANGELOG`.
-Follow shell style guidelines by using [ShellCheck] and [Syntastic].
+Follow shell style guidelines by using [ShellCheck] and [ALE].
 
 ```sh
 brew install shellcheck
 ```
 
 [ShellCheck]: http://www.shellcheck.net/about.html
-[Syntastic]: https://github.com/scrooloose/syntastic
+[ALE]: https://github.com/dense-analysis/ale
 
 ### Testing your changes
 
