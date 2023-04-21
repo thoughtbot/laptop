@@ -505,7 +505,9 @@ if confirm_action "Do you want to setup the Relay Development environment?" rela
     pushd "${repo}"
     asdf install
     grep -Fqsx '.envrc-private:' Makefile && make .envrc-private
-    source .envrc-private
+    if [ -f .envrc-private ]; then
+      source .envrc-private
+    fi
     [ -f ".envrc" ] && direnv allow
     popd
   done
