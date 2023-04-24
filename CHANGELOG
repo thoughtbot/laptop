@@ -29,3 +29,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 * [Use gpg-suite-no-mail](https://github.com/thoughtbot/laptop/pull/607)
 * [Update ctags installation command](https://github.com/thoughtbot/laptop/pull/586)
 
+## 2023-04-24
+
+### Changed
+
+* [Adds Rosetta 2 in case a macbook has M1 architecture](https://github.com/thoughtbot/laptop/pull/628)
