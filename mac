@@ -79,23 +79,16 @@ case "$SHELL" in
     ;;
 esac
 
-# check architecture
+# checks architecture
 if [[ $(uname -m) == "arm64" ]]
   then
   echo "This Macbook has an M1 architecture."
-  # check if Rosetta is already installed
-  if [ $(/usr/bin/pgrep oahd >/dev/null 2>&1;echo $?) -eq 1 ]
+  # checks if Rosetta is already installed
+  if pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto > /dev/null 2>&1
   then
     echo "Rosetta is not installed."
-    # Install Rosetta2
-    /usr/sbin/softwareupdate --install-rosetta --agree-to-license
-    if [[ $? -eq 0 ]]
-    then
-      echo "Rosetta has been successfully installed."
-    else
-      echo "Rosetta installation failed. Exiting script."
-      exitcode=1
-    fi
+    # Installs Rosetta2
+    softwareupdate --install-rosetta --agree-to-license
   else
     echo 'Rosetta is installed.'
   fi
