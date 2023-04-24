@@ -84,7 +84,7 @@ if [[ $(uname -m) == "arm64" ]]
   then
   echo "This Macbook has an M1 architecture."
   # checks if Rosetta is already installed
-  if pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto > /dev/null 2>&1
+  if ! pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto > /dev/null 2>&1
   then
     echo "Rosetta is not installed."
     # Installs Rosetta2
