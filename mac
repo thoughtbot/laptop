@@ -82,15 +82,14 @@ esac
 # checks architecture
 if [[ $(uname -m) == "arm64" ]]
   then
-  echo "This Macbook has an M1 architecture."
   # checks if Rosetta is already installed
   if ! pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto > /dev/null 2>&1
   then
-    echo "Rosetta is not installed."
+    echo "Installing Rosetta"
     # Installs Rosetta2
     softwareupdate --install-rosetta --agree-to-license
   else
-    echo 'Rosetta is installed.'
+    echo "Rosetta is installed"
   fi
 fi
 
