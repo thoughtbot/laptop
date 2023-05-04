@@ -423,6 +423,7 @@ if confirm_action "Do you want to setup ASDF and install default versions of too
 
   # shellcheck disable=SC1091
   . "$(brew --prefix asdf)/libexec/asdf.sh"
+  add_or_update_asdf_plugin "nomad"
   add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
   add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
   add_or_update_asdf_plugin "python"
