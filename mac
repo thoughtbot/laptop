@@ -120,25 +120,25 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
+# tap "thoughtbot/formulae"
 tap "homebrew/services"
-tap "heroku/brew"
+# tap "heroku/brew"
 
 # Unix
 brew "universal-ctags"
 brew "git"
 brew "openssl"
-brew "rcm"
-brew "reattach-to-user-namespace"
+# brew "rcm"
+# brew "reattach-to-user-namespace"
 brew "the_silver_searcher"
-brew "tmux"
-brew "vim"
-brew "watchman"
+# brew "tmux"
+# brew "vim"
+# brew "watchman"
 brew "zsh"
 
 # Heroku
-brew "heroku/brew/heroku"
-brew "parity"
+# brew "heroku/brew/heroku"
+# brew "parity"
 
 # GitHub
 brew "gh"
@@ -153,21 +153,22 @@ brew "poppler"
 brew "libyaml" # should come after openssl
 brew "coreutils"
 brew "yarn"
-cask "gpg-suite-no-mail"
+# cask "gpg-suite-no-mail"
 
 # Databases
 brew "postgresql@14", restart_service: :changed
 brew "redis", restart_service: :changed
 EOF
 
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
+# fancy_echo "Update heroku binary ..."
+# brew unlink heroku
+# brew link --force heroku
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
-  brew install asdf
-  append_to_zshrc "source $(brew --prefix asdf)/libexec/asdf.sh" 1
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.3
+  # shellcheck disable=SC2016
+  append_to_zshrc 'source "$HOME/.asdf/asdf.sh"'
 fi
 
 alias install_asdf_plugin=add_or_update_asdf_plugin
@@ -183,7 +184,7 @@ add_or_update_asdf_plugin() {
 }
 
 # shellcheck disable=SC1091
-. "$(brew --prefix asdf)/libexec/asdf.sh"
+. "${HOME}/.asdf/asdf.sh"
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 

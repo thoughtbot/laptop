@@ -19,19 +19,36 @@ We support:
 Older versions may work but aren't regularly tested.
 Bug reports for older versions are welcome.
 
+Changes to this fork
+--------------------
+
+- Install asdf via git instead of Homebrew
+- Comment out Heroku-related code
+- Comment out unused Homebrew taps and formulae
+
 Install
 -------
 
 Download the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/main/mac
+curl --remote-name https://raw.githubusercontent.com/joshukraine/laptop/main/mac
 ```
 
-Review the script (avoid running scripts you haven't read!):
+Download [`.laptop.local`](https://raw.githubusercontent.com/joshukraine/dotfiles/master/laptop/.laptop.local) (or add your own):
+
+```sh
+curl --remote-name https://raw.githubusercontent.com/joshukraine/dotfiles/master/laptop/.laptop.local
+```
+
+Review both scripts (avoid running scripts you haven't read!):
 
 ```sh
 less mac
+```
+
+```sh
+less .laptop.local
 ```
 
 Execute the downloaded script:
