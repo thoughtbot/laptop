@@ -122,6 +122,7 @@ cask "blackhole-2ch"
 cask "brave-browser"
 cask "cool-retro-term"
 cask "cron"
+cask "cyberghost-vpn"
 cask "daisydisk"
 cask "discord"
 cask "docker"
@@ -157,7 +158,6 @@ cask "vincelwt-chatgpt"
 cask "vlc"
 cask "vpn-by-google-one"
 cask "whatsapp"
-cask "zenmate-vpn"
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then
