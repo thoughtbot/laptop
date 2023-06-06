@@ -263,6 +263,15 @@ if confirm_action "Do you want to setup Homebrew and install useful apps?" brew;
     fancy_echo "Installing Homebrew ..."
       /bin/bash -c \
         "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fancy_echo "Homebrew installed!"
+    fancy_echo "Adding Homebrew to your PATH ..."
+    if [ ! -f "$HOME/.zshrc" ]; then
+      append_to_zshrc 'eval "$(HOMEBREW_PREFIX/bin/brew shellenv)"'
+    else
+      (echo; echo 'eval "$(HOMEBREW_PREFIX/bin/brew shellenv)"') >> $HOME/.zprofile
+      eval "$(HOMEBREW_PREFIX/bin/brew shellenv)"
+
+    fi
   fi
 
   if brew list | grep -Fq brew-cask; then
