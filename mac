@@ -175,6 +175,7 @@ add_or_update_asdf_plugin() {
 . "$(brew --prefix asdf)/libexec/asdf.sh"
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+add_or_update_asdf_plugin "yarn"
 
 install_asdf_language() {
   local language="$1"
