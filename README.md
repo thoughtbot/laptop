@@ -12,6 +12,7 @@ Requirements
 
 We support:
 
+* macOS Sonoma (14.x) on Apple Silicon and Intel
 * macOS Ventura (13.x) on Apple Silicon and Intel
 * macOS Monterey (12.x) on Apple Silicon and Intel
 
@@ -222,7 +223,7 @@ the script each time on a fresh install thats ready to go.
 License
 -------
 
-Laptop is © 2011-2022 thoughtbot, inc.
+Laptop is © 2011-2023 thoughtbot, inc.
 It is free software,
 and may be redistributed under the terms specified in the [LICENSE] file.
 
