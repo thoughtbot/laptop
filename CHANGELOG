@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## 2023-10-03
+
+### Added
+
+* Support for macOS Sonoma
+
 ## 2022-12-02
 
 ### Added
