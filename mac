@@ -4,6 +4,8 @@
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
 
+# shellcheck disable=SC3043
+
 fancy_echo() {
   local fmt="$1"; shift
 
@@ -46,16 +48,12 @@ fi
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
-HOMEBREW_PREFIX="/usr/local"
-
-if [ -d "$HOMEBREW_PREFIX" ]; then
-  if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "$LOGNAME:admin" /usr/local
-  fi
+# Determine Homebrew prefix
+arch="$(uname -m)"
+if [ "$arch" = "arm64" ]; then
+  HOMEBREW_PREFIX="/opt/homebrew"
 else
-  sudo mkdir "$HOMEBREW_PREFIX"
-  sudo chflags norestricted "$HOMEBREW_PREFIX"
-  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
+  HOMEBREW_PREFIX="/usr/local"
 fi
 
 update_shell() {
@@ -72,7 +70,7 @@ update_shell() {
 
 case "$SHELL" in
   */zsh)
-    if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
+    if [ "$(command -v zsh)" != "$HOMEBREW_PREFIX/bin/zsh" ] ; then
       update_shell
     fi
     ;;
@@ -80,6 +78,21 @@ case "$SHELL" in
     update_shell
     ;;
 esac
+
+# checks architecture
+if [ "$(uname -m)" = "arm64" ]
+  then
+  # checks if Rosetta is already installed
+  if ! pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto > /dev/null 2>&1
+  then
+    echo "Installing Rosetta"
+    # Installs Rosetta2
+    softwareupdate --install-rosetta --agree-to-license
+  else
+    echo "Rosetta is installed"
+  fi
+fi
+
 
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
@@ -92,14 +105,11 @@ gem_install_or_update() {
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     /bin/bash -c \
-      "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    append_to_zshrc '# recommended by brew doctor'
+    append_to_zshrc "eval \"\$($HOMEBREW_PREFIX/bin/brew shellenv)\""
 
-    # shellcheck disable=SC2016
-    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
-
-    export PATH="/usr/local/bin:$PATH"
+    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
 if brew list | grep -Fq brew-cask; then
@@ -112,11 +122,10 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 tap "homebrew/services"
-tap "universal-ctags/universal-ctags"
 tap "heroku/brew"
 
 # Unix
-brew "universal-ctags", args: ["HEAD"]
+brew "universal-ctags"
 brew "git"
 brew "openssl"
 brew "rcm"
@@ -137,14 +146,17 @@ brew "gh"
 # Image manipulation
 brew "imagemagick"
 
+# PDF Rendering
+brew "poppler"
+
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
 brew "coreutils"
 brew "yarn"
-cask "gpg-suite"
+cask "gpg-suite-no-mail"
 
 # Databases
-brew "postgres", restart_service: :changed
+brew "postgresql@14", restart_service: :changed
 brew "redis", restart_service: :changed
 EOF
 
@@ -154,8 +166,8 @@ brew link --force heroku
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
-  append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
+  brew install asdf
+  append_to_zshrc "source $(brew --prefix asdf)/libexec/asdf.sh" 1
 fi
 
 alias install_asdf_plugin=add_or_update_asdf_plugin
@@ -170,8 +182,8 @@ add_or_update_asdf_plugin() {
   fi
 }
 
-# shellcheck disable=SC1090
-source "$HOME/.asdf/asdf.sh"
+# shellcheck disable=SC1091
+. "$(brew --prefix asdf)/libexec/asdf.sh"
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
@@ -193,11 +205,10 @@ number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
 fancy_echo "Installing latest Node ..."
-bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
 install_asdf_language "nodejs"
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
-  # shellcheck disable=SC1090
+  # shellcheck disable=SC1091
   . "$HOME/.laptop.local"
 fi
