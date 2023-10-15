@@ -25,7 +25,7 @@ Install
 Download the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/main/mac
+curl --remote-name https://raw.githubusercontent.com/PackratData/laptop/main/mac
 ```
 
 Review the script (avoid running scripts you haven't read!):
