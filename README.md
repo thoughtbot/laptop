@@ -1,5 +1,6 @@
-Laptop
-======
+# Laptop
+
+This is a fork of [thoughtbot/laptop](<https://github.com/thoughtbot/laptop>) modified for my personal laptop setup.
 
 Laptop is a script to set up a macOS laptop for web and mobile development.
 
@@ -7,8 +8,7 @@ It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
 based on what is already installed on the machine.
 
-Requirements
-------------
+## Requirements
 
 We support:
 
@@ -20,19 +20,12 @@ We support:
 Older versions may work but aren't regularly tested.
 Bug reports for older versions are welcome.
 
-Install
--------
+## Install
 
 Download the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/main/mac
-```
-
-Review the script (avoid running scripts you haven't read!):
-
-```sh
-less mac
+curl --remote-name https://raw.githubusercontent.com/czeise/laptop/main/mac
 ```
 
 Execute the downloaded script:
@@ -47,60 +40,46 @@ Optionally, review the log:
 less ~/laptop.log
 ```
 
-Optionally, [install thoughtbot/dotfiles][dotfiles].
+[Install dotfiles][dotfiles].
 
-[dotfiles]: https://github.com/thoughtbot/dotfiles#install
+[dotfiles]: https://github.com/czeise/dotfiles#install
 
-Debugging
----------
+## Debugging
 
 Your last Laptop run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
-If not, copy the lines where the script failed into a
-[new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
-Or, attach the whole log file as an attachment.
 
-What it sets up
----------------
+## What it sets up
 
-macOS tools:
+General tools and applications:
 
 * [Homebrew] for managing operating system libraries.
+* 1password
+* Firefox
 
 [Homebrew]: http://brew.sh/
 
 Unix tools:
 
-* [Universal Ctags] for indexing files for vim tab completion
 * [Git] for version control
 * [OpenSSL] for Transport Layer Security (TLS)
-* [RCM] for managing company and personal dotfiles
+* [RCM] for managing dotfiles
 * [The Silver Searcher] for finding things in files
 * [Tmux] for saving project state and switching between projects
-* [Watchman] for watching for filesystem events
 * [Zsh] as your shell
 
-[Universal Ctags]: https://ctags.io/
 [Git]: https://git-scm.com/
 [OpenSSL]: https://www.openssl.org/
 [RCM]: https://github.com/thoughtbot/rcm
 [The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
 [Tmux]: http://tmux.github.io/
-[Watchman]: https://facebook.github.io/watchman/
 [Zsh]: http://www.zsh.org/
 
-Heroku tools:
-
-* [Heroku CLI] and [Parity] for interacting with the Heroku API
-
-[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
-[Parity]: https://github.com/thoughtbot/parity
-
-GitHub tools:
+<!-- GitHub tools:
 
 * [GitHub CLI] for interacting with the GitHub API
 
-[GitHub CLI]: https://cli.github.com/
+[GitHub CLI]: https://cli.github.com/ -->
 
 Image tools:
 
@@ -113,7 +92,6 @@ Programming languages, package managers, and configuration:
 * [Node.js] and [npm], for running apps and installing JavaScript packages
 * [Ruby] stable for writing general-purpose code
 * [Yarn] for managing JavaScript packages
-* [Rosetta 2] for running tools that are not supported in Apple silicon processors
 
 [Bundler]: http://bundler.io/
 [ImageMagick]: http://www.imagemagick.org/
@@ -122,7 +100,6 @@ Programming languages, package managers, and configuration:
 [asdf-vm]: https://github.com/asdf-vm/asdf
 [Ruby]: https://www.ruby-lang.org/en/
 [Yarn]: https://yarnpkg.com/en/
-[Rosetta 2]: https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment
 
 Databases:
 
@@ -132,10 +109,32 @@ Databases:
 [Postgres]: http://www.postgresql.org/
 [Redis]: http://redis.io/
 
+General development tools and applications:
+
+* exa as an `ls` replacement
+* overmind
+* Terminal and Zsh tools
+* Firefox Developer Edition
+* iterm2
+* Visual Studio Code
+
+Personal development tools and applications (can be on TD laptop):
+
+* exercism for programming exercises
+* flyctl for deploying to Fly.io
+* utm for running macOS in a virtual machine (and testing this script...)
+
+Test Double Tools and applications:
+
+* [Heroku CLI]
+* Hugo
+* Slack
+
+[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
+
 It should take less than 15 minutes to install (depends on your machine).
 
-Customize in `~/.laptop.local`
-------------------------------
+## Customize in `~/.laptop.local`
 
 Your `~/.laptop.local` is run at the end of the Laptop script.
 Put your customizations there.
@@ -186,8 +185,7 @@ can be used in your `~/.laptop.local`.
 See the [wiki](https://github.com/thoughtbot/laptop/wiki)
 for more customization examples.
 
-Contributing
-------------
+## Contributing
 
 Thank you, [contributors]!
 
@@ -221,8 +219,7 @@ the script each time on a fresh install thats ready to go.
 
 [UTM]: https://mac.getutm.app
 
-License
--------
+## License
 
 Copyright © 2011 thoughtbot, inc.
 It is free software,
@@ -244,6 +241,5 @@ We are [available for hire][hire].
 
 [community]: https://thoughtbot.com/community?utm_source=github
 [hire]: https://thoughtbot.com/hire-us?utm_source=github
-
 
 <!-- END /templates/footer.md -->
