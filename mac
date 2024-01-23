@@ -110,6 +110,7 @@ tap "homebrew/services"
 tap "heroku/brew"
 
 # General
+brew "wireguard-tools"
 cask "1password"
 cask "firefox"
 
