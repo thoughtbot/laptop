@@ -223,7 +223,7 @@ the script each time on a fresh install thats ready to go.
 License
 -------
 
-Copyright © 2011 thoughtbot, inc
+Copyright © 2011 thoughtbot, inc.
 It is free software,
 and may be redistributed under the terms specified in the [LICENSE] file.
 
