@@ -211,14 +211,23 @@ brew install --cask spotify
 fancy_echo "Installing WhatsApp"
 brew install --cask whatsapp
 
-
 # Alfred
 fancy_echo "Installing Alfred"
 brew install --cask alfred
-
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+# enable three-finger drag
+defaults write com.apple.AppleMultitouchTrackpad DragLock -bool false
+defaults write com.apple.AppleMultitouchTrackpad Dragging -bool false
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+
+# find out id of current user
+user=`id -un`
+
+# force user to logout for the three-finger drag to take effect
+launchctl bootout user/`id -u $user`
