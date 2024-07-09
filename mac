@@ -96,6 +96,9 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 
+# show only open app icons in dock
+defaults write com.apple.dock static-only -bool true; killall Dock
+
 # Unix
 fancy_echo "Installing git"
 brew install git
