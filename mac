@@ -221,6 +221,10 @@ if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
 
+# set default key repeat rate to some sane values
+defaults write -g InitialKeyRepeat -int 25
+defaults write -g KeyRepeat -int 2
+
 # enable three-finger drag
 defaults write com.apple.AppleMultitouchTrackpad DragLock -bool false
 defaults write com.apple.AppleMultitouchTrackpad Dragging -bool false
@@ -229,5 +233,5 @@ defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool t
 # find out id of current user
 user=`id -un`
 
-# force user to logout for the three-finger drag to take effect
+# force user to logout for the key repeat rate and three-finger drag to take effect
 launchctl bootout user/`id -u $user`
