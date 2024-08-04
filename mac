@@ -131,10 +131,6 @@ brew install vim
 fancy_echo "Installing sublime text"
 brew install --cask sublime-text
 
-# Docker Desktop
-fancy_echo "Installing Docker-Desktop"
-brew install --cask docker
-
 # Numi Calculator
 fancy_echo "Installing Numi Calculator"
 brew install --cask numi
@@ -163,21 +159,9 @@ brew install --cask slack
 fancy_echo "Installing Notion"
 brew install --cask notion
 
-# Zoom
-fancy_echo "Installing Zoom"
-brew install --cask zoom
-
 # Macdown
 fancy_echo "Installing macdown"
 brew install --cask macdown
-
-# Google Drive
-fancy_echo "Installing google-drive"
-brew install --cask google-drive
-
-# lastpass 
-fancy_echo "Installing lastpass"
-brew install --cask lastpass
 
 # Maccy
 fancy_echo "Installing maccy"
@@ -203,10 +187,6 @@ brew install --cask rectangle
 fancy_echo "Installing tableplus"
 brew install --cask tableplus
 
-# Spotify
-fancy_echo "Installing spotify"
-brew install --cask spotify
-
 # WhatsApp
 fancy_echo "Installing WhatsApp"
 brew install --cask whatsapp
@@ -214,6 +194,18 @@ brew install --cask whatsapp
 # Alfred
 fancy_echo "Installing Alfred"
 brew install --cask alfred
+
+# Zoom
+fancy_echo "Installing Zoom"
+brew install --cask zoom
+
+# Docker Desktop
+fancy_echo "Installing Docker-Desktop"
+brew install --cask docker
+
+# Google Drive
+fancy_echo "Installing google-drive"
+brew install --cask google-drive
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
