@@ -54,10 +54,12 @@ Read through it to see if you can debug the issue yourself.
 General tools and applications:
 
 * [Homebrew] for managing operating system libraries.
-* 1password
-* Firefox
+* [1Password] for password management
+* [Discord] for personal and tech community chat
 
 [Homebrew]: http://brew.sh/
+[1Password]: https://1password.com/
+[Discord]: https://discord.com/
 
 Unix tools:
 
@@ -111,23 +113,32 @@ Databases:
 
 General development tools and applications:
 
-* exa as an `ls` replacement
-* overmind
-* Terminal and Zsh tools
-* Firefox Developer Edition
-* iterm2
-* Visual Studio Code
+* [exa] as an `ls` replacement
+* [overmind] for managing Procfile-based applications
+* Terminal and Zsh tools (autocompletion, syntax highlighting, history search, etc.)
+* [Firefox Developer Edition]
+* [iterm2] for a better terminal experience
+* [Visual Studio Code] editor
+
+[exa]: https://the.exa.website/
+[overmind]: https://github.com/DarthSim/overmind
+[Firefox Developer Edition]: https://www.mozilla.org/en-US/firefox/developer/
+[iterm2]: https://iterm2.com/
+[Visual Studio Code]: https://code.visualstudio.com/
 
 Personal development tools and applications (can be on TD laptop):
 
-* exercism for programming exercises
-* flyctl for deploying to Fly.io
-* utm for running macOS in a virtual machine (and testing this script...)
+* [exercism] for programming exercises
+* [flyctl] for deploying to Fly.io
+* [utm] for running macOS in a virtual machine (and testing this script...)
+
+[exercism]: https://exercism.io/
+[flyctl]: https://fly.io/docs/flyctl/
+[utm]: https://mac.getutm.app
 
 Test Double Tools and applications:
 
 * [Heroku CLI]
-* Hugo
 * Slack
 
 [Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
@@ -217,8 +228,6 @@ Tip: Make a fresh virtual machine with the installation of macOS completed and
 your user created and first launch complete. Then duplicate that machine to test
 the script each time on a fresh install thats ready to go.
 
-[UTM]: https://mac.getutm.app
-
 ## License
 
 Copyright © 2011 thoughtbot, inc.
@@ -241,6 +250,5 @@ We are [available for hire][hire].
 
 [community]: https://thoughtbot.com/community?utm_source=github
 [hire]: https://thoughtbot.com/hire-us?utm_source=github
-
 
 <!-- END /templates/footer.md -->

@@ -110,9 +110,8 @@ tap "homebrew/services"
 tap "heroku/brew"
 
 # General
-brew "wireguard-tools"
 cask "1password"
-cask "firefox"
+cask "discord" # Using both for personal and work laptop setups
 
 # Unix
 brew "git"
@@ -155,7 +154,6 @@ cask "utm"
 # Test Double
 cask "slack"
 brew "heroku"
-brew "hugo"
 EOF
 
 fancy_echo "Install Oh My Zsh ..."
