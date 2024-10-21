@@ -105,7 +105,6 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
-tap "homebrew/cask-versions"
 tap "homebrew/services"
 tap "heroku/brew"
 
@@ -132,17 +131,17 @@ brew "yarn"
 cask "gpg-suite-no-mail"
 
 # Databases
-brew "postgresql", restart_service: :changed
+brew "postgresql@17", restart_service: :changed
 brew "redis", restart_service: :changed
 
 # Development tools
-brew "exa"
+brew "eza"
 brew "overmind"
 brew "terminal-notifier"
 brew "zsh-autosuggestions"
 brew "zsh-history-substring-search"
 brew "zsh-syntax-highlighting"
-cask "firefox-developer-edition"
+cask "firefox@developer-edition"
 cask "iterm2"
 cask "visual-studio-code"
 
@@ -153,7 +152,7 @@ cask "utm"
 
 # Test Double
 cask "slack"
-brew "heroku"
+brew "heroku/brew/heroku"
 EOF
 
 fancy_echo "Install Oh My Zsh ..."
