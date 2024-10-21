@@ -113,14 +113,14 @@ Databases:
 
 General development tools and applications:
 
-* [exa] as an `ls` replacement
+* [eza] as an `ls` replacement
 * [overmind] for managing Procfile-based applications
 * Terminal and Zsh tools (autocompletion, syntax highlighting, history search, etc.)
 * [Firefox Developer Edition]
 * [iterm2] for a better terminal experience
 * [Visual Studio Code] editor
 
-[exa]: https://the.exa.website/
+[eza]: https://eza.rocks
 [overmind]: https://github.com/DarthSim/overmind
 [Firefox Developer Edition]: https://www.mozilla.org/en-US/firefox/developer/
 [iterm2]: https://iterm2.com/
