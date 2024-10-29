@@ -138,10 +138,12 @@ brew "redis", restart_service: :changed
 brew "eza"
 brew "overmind"
 brew "terminal-notifier"
+brew "starship"
 brew "zsh-autosuggestions"
 brew "zsh-history-substring-search"
 brew "zsh-syntax-highlighting"
 cask "firefox@developer-edition"
+cask "font-jetbrains-mono"
 cask "iterm2"
 cask "visual-studio-code"
 
@@ -172,6 +174,10 @@ fi
 if [ -d $HOMEBREW_PREFIX/share/zsh-syntax-highlighting ]; then
   append_to_zshrc 'source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 fi
+
+fancy_echo "Install Starship prompt ..."
+# TODO: Continue here...see what dir shows up and add the following line if it's there...
+# append_to_zshrc 'eval "$(starship init zsh)"'
 
 fancy_echo "Update heroku binary ..."
 brew unlink heroku
