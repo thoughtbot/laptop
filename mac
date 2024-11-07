@@ -180,7 +180,7 @@ fancy_echo "Installing scroll-reverser"
 brew install --cask scroll-reverser
 
 # Rectangle
-fancy_echo "Installing scroll-reverser"
+fancy_echo "Installing rectangle"
 brew install --cask rectangle
 
 # Table Plus
