@@ -79,25 +79,28 @@ case "$SHELL" in
     ;;
 esac
 
+# Install Homebrew if not already installed
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
-    /bin/bash -c \
-     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    append_to_zshrc "eval \"\$($HOMEBREW_PREFIX/bin/brew shellenv)\""
+  append_to_zshrc "eval \"\$($HOMEBREW_PREFIX/bin/brew shellenv)\""
 
-    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
+# Uninstall old Homebrew-Cask if present
 if brew list | grep -Fq brew-cask; then
   fancy_echo "Uninstalling old Homebrew-Cask ..."
   brew uninstall --force brew-cask
 fi
 
+# Update Homebrew formulae
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 
-# show only open app icons in dock
+# Show only open app icons in dock
 defaults write com.apple.dock static-only -bool true; killall Dock
 
 # Unix
@@ -220,11 +223,11 @@ if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
 
-# set default key repeat rate to some sane values
+# Set default key repeat rate to some sane values
 defaults write -g InitialKeyRepeat -int 25
 defaults write -g KeyRepeat -int 2
 
-# enable three-finger drag
+# Enable three-finger drag
 defaults write com.apple.AppleMultitouchTrackpad DragLock -bool false
 defaults write com.apple.AppleMultitouchTrackpad Dragging -bool false
 defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
