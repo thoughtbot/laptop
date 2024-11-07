@@ -139,8 +139,6 @@ Rectangle:
 
 - [Rectangle](https://rectangleapp.com/) Move and resize windows in macOS using keyboard shortcuts or snap areas.
 
-It should take less than 15 minutes to install (depends on your machine).
-
 Scroll Reverser:
 
 - [Scroll Reverser](https://pilotmoon.com/scrollreverser/) is a free Mac app that reverses the direction of scrolling, with independent settings for trackpads and mice.
@@ -160,6 +158,8 @@ WhatsApp:
 Zoom:
 
 - [Zoom](https://zoom.us) is a video conferencing platform.
+
+It should take less than 15 minutes to install (depends on your machine).
 
 ## Customize in `~/.laptop.local`
 
