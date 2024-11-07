@@ -103,120 +103,52 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 # Show only open app icons in dock
 defaults write com.apple.dock static-only -bool true; killall Dock
 
-# Unix
-fancy_echo "Installing git"
-brew install git
+# Install essential tools and applications
+install_brew_package() {
+  local package="$1"
+  fancy_echo "Installing $package"
+  brew install "$package"
+}
 
-fancy_echo "Installing openssl"
-brew install openssl
+install_brew_cask() {
+  local cask="$1"
+  fancy_echo "Installing $cask"
+  brew install --cask "$cask"
+}
 
-fancy_echo "Installing zsh"
-brew install zsh
+# Unix tools
+install_brew_package git
+install_brew_package openssl
+install_brew_package zsh
 
-# Alfred
-fancy_echo "Installing Alfred"
-brew install --cask alfred
+# Applications
+install_brew_cask alfred
+install_brew_cask google-chrome
+install_brew_cask firefox
+install_brew_cask docker
+install_brew_package gh
+install_brew_cask google-drive
+install_brew_cask intellij-idea-ce
+install_brew_cask sublime-text
+install_brew_cask visual-studio-code
+install_brew_package vim
+install_brew_cask iterm2
+install_brew_cask lastpass
+install_brew_cask libreoffice
+install_brew_cask maccy
+install_brew_cask macdown
+install_brew_cask obsidian
+install_brew_cask numi
+install_brew_cask notion
+install_brew_cask postman
+install_brew_cask rectangle
+install_brew_cask scroll-reverser
+install_brew_cask slack
+install_brew_cask tableplus
+install_brew_cask whatsapp
+install_brew_cask zoom
 
-# Browsers
-
-# Google Chrome
-fancy_echo "Installing Google Chrome"
-brew install --cask google-chrome
-
-# Firefox
-fancy_echo "Installing Firefox"
-brew install --cask firefox
-
-# Docker Desktop
-fancy_echo "Installing Docker-Desktop"
-brew install --cask docker
-
-# GitHub
-fancy_echo "Installing Github CLI (gh)"
-brew install gh
-
-# Google Drive
-fancy_echo "Installing google-drive"
-brew install --cask google-drive
-
-# IDE's
-
-# Intellij CE
-fancy_echo "Installing intellij"
-brew install --cask intellij-idea-ce
-
-# Sublime Text
-fancy_echo "Installing sublime text"
-brew install --cask sublime-text
-
-# Visual Studio Code
-fancy_echo "Installing visual-studio-code"
-brew install --cask visual-studio-code
-
-# Vim
-fancy_echo "Installing vim"
-brew install vim
-
-# Iterm
-fancy_echo "Installing Iterm2"
-brew install --cask iterm2
-
-# LastPass
-fancy_echo "Installing LastPass"
-brew install --cask lastpass
-
-# LibreOffice
-fancy_echo "Installing libreoffice"
-brew install --cask libreoffice
-
-# Maccy
-fancy_echo "Installing maccy"
-brew install --cask maccy
-
-# Macdown
-fancy_echo "Installing macdown"
-brew install --cask macdown
-
-# Obsidian
-fancy_echo "Installing Obsidian"
-brew install --cask obsidian
-
-# Numi Calculator
-fancy_echo "Installing Numi Calculator"
-brew install --cask numi
-
-# Notion
-fancy_echo "Installing Notion"
-brew install --cask notion
-
-# Postman
-fancy_echo "Installing postman"
-brew install --cask postman
-
-# Rectangle
-fancy_echo "Installing rectangle"
-brew install --cask rectangle
-
-# Scroll Reverser
-fancy_echo "Installing scroll-reverser"
-brew install --cask scroll-reverser
-
-# Slack
-fancy_echo "Installing Slack"
-brew install --cask slack
-
-# Table Plus
-fancy_echo "Installing tableplus"
-brew install --cask tableplus
-
-# WhatsApp
-fancy_echo "Installing WhatsApp"
-brew install --cask whatsapp
-
-# Zoom
-fancy_echo "Installing Zoom"
-brew install --cask zoom
-
+# Run customizations from ~/.laptop.local if present
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090
