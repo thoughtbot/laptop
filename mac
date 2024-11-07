@@ -109,35 +109,11 @@ brew install openssl
 fancy_echo "Installing zsh"
 brew install zsh
 
-# GitHub
-fancy_echo "Installing Github CLI (gh)"
-brew install gh
+# Alfred
+fancy_echo "Installing Alfred"
+brew install --cask alfred
 
-# IDE's
-
-# Intellij CE
-fancy_echo "Installing intellij"
-brew install --cask intellij-idea-ce
-
-# Visual Studio Code
-fancy_echo "Installing visual-studio-code"
-brew install --cask visual-studio-code
-
-# Vim
-fancy_echo "Installing vim"
-brew install vim
-
-# Sublime Text
-fancy_echo "Installing sublime text"
-brew install --cask sublime-text
-
-# Numi Calculator
-fancy_echo "Installing Numi Calculator"
-brew install --cask numi
-
-# Iterm
-fancy_echo "Installing Iterm2"
-brew install --cask iterm2
+# Browsers
 
 # Google Chrome
 fancy_echo "Installing Google Chrome"
@@ -147,41 +123,83 @@ brew install --cask google-chrome
 fancy_echo "Installing Firefox"
 brew install --cask firefox
 
-# Obsidian
-fancy_echo "Installing Obsidian"
-brew install --cask obsidian
+# Docker Desktop
+fancy_echo "Installing Docker-Desktop"
+brew install --cask docker
 
-# Slack
-fancy_echo "Installing Slack"
-brew install --cask slack
+# GitHub
+fancy_echo "Installing Github CLI (gh)"
+brew install gh
 
-# Notion
-fancy_echo "Installing Notion"
-brew install --cask notion
+# Google Drive
+fancy_echo "Installing google-drive"
+brew install --cask google-drive
 
-# Macdown
-fancy_echo "Installing macdown"
-brew install --cask macdown
+# IDE's
 
-# Maccy
-fancy_echo "Installing maccy"
-brew install --cask maccy
+# Intellij CE
+fancy_echo "Installing intellij"
+brew install --cask intellij-idea-ce
+
+# Sublime Text
+fancy_echo "Installing sublime text"
+brew install --cask sublime-text
+
+# Visual Studio Code
+fancy_echo "Installing visual-studio-code"
+brew install --cask visual-studio-code
+
+# Vim
+fancy_echo "Installing vim"
+brew install vim
+
+# Iterm
+fancy_echo "Installing Iterm2"
+brew install --cask iterm2
+
+# LastPass
+fancy_echo "Installing LastPass"
+brew install --cask lastpass
 
 # LibreOffice
 fancy_echo "Installing libreoffice"
 brew install --cask libreoffice
 
+# Maccy
+fancy_echo "Installing maccy"
+brew install --cask maccy
+
+# Macdown
+fancy_echo "Installing macdown"
+brew install --cask macdown
+
+# Obsidian
+fancy_echo "Installing Obsidian"
+brew install --cask obsidian
+
+# Numi Calculator
+fancy_echo "Installing Numi Calculator"
+brew install --cask numi
+
+# Notion
+fancy_echo "Installing Notion"
+brew install --cask notion
+
 # Postman
 fancy_echo "Installing postman"
 brew install --cask postman
+
+# Rectangle
+fancy_echo "Installing rectangle"
+brew install --cask rectangle
 
 # Scroll Reverser
 fancy_echo "Installing scroll-reverser"
 brew install --cask scroll-reverser
 
-# Rectangle
-fancy_echo "Installing rectangle"
-brew install --cask rectangle
+# Slack
+fancy_echo "Installing Slack"
+brew install --cask slack
 
 # Table Plus
 fancy_echo "Installing tableplus"
@@ -191,21 +209,9 @@ brew install --cask tableplus
 fancy_echo "Installing WhatsApp"
 brew install --cask whatsapp
 
-# Alfred
-fancy_echo "Installing Alfred"
-brew install --cask alfred
-
 # Zoom
 fancy_echo "Installing Zoom"
 brew install --cask zoom
-
-# Docker Desktop
-fancy_echo "Installing Docker-Desktop"
-brew install --cask docker
-
-# Google Drive
-fancy_echo "Installing google-drive"
-brew install --cask google-drive
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
