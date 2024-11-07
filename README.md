@@ -19,7 +19,7 @@ We support:
 
 > Older versions may work but aren't regularly tested. Bug reports for older versions are welcome.
 
-## Install
+## Installation Guide
 
 Download the script:
 
