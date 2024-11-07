@@ -51,9 +51,6 @@ Optionally, [install thoughtbot/dotfiles](https://github.com/thoughtbot/dotfiles
 
 Your last Laptop run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
-If not, copy the lines where the script failed into a
-[new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
-Or, attach the whole log file as an attachment.
 
 In case some package already exists (e.g. google-chrome), and the
 script fails due to some error like
