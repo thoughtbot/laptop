@@ -122,27 +122,11 @@ Slack:
 
 [Slack]: https://slack.com
 
+Notion:
+
 - [Notion] is a project management and note-taking software.
 
 [Notion]: https://notion.so
-
-Zoom:
-
-- [Zoom] is a video conferencing platform.
-
-[Zoom]: htttps://zoom.us
-
-Google Drive:
-
-- [Google Drive] backup to Google Photos, and access all of your content directly from your Mac.
-
-[Google Drive]: https://drive.google.com
-
-Lastpass:
-
-- [lastpass] for password management.
-
-[lastpass]: https://lastpass.com
 
 Maccy:
 
@@ -162,12 +146,6 @@ Postman:
 
 [Postman]: https://www.postman.com/
 
-Table Plus:
-
-- [Table Plus] for database management.
-
-[Table Plus]: https://tableplus.com/
-
 Scroll Reverser:
 
 - [Scroll Reverser] is a free Mac app that reverses the direction of scrolling, with independent settings for trackpads and mice.
@@ -180,11 +158,47 @@ Rectangle:
 
 [Rectangle]: https://rectangleapp.com/
 
-Spotify:
+Table Plus:
 
-- [Spotify] is all the music you'll ever need.
+- [Table Plus] for database management.
 
-[Spotify]: https://spotify.com/
+[Table Plus]: https://tableplus.com/
+
+WhatsApp:
+
+- [WhatsApp] for messaging.
+
+[WhatsApp]: https://www.whatsapp.com/
+
+Alfred:
+
+- [Alfred] is an alternative to Spotlight.
+
+[Alfred]: https://www.alfredapp.com/
+
+Zoom:
+
+- [Zoom] is a video conferencing platform.
+
+[Zoom]: htttps://zoom.us
+
+Docker Desktop:
+
+- [Docker Desktop] for containerization.
+
+[Docker Desktop]: https://www.docker.com/products/docker-desktop
+
+Google Drive:
+
+- [Google Drive] backup to Google Photos, and access all of your content directly from your Mac.
+
+[Google Drive]: https://drive.google.com
+
+Lastpass:
+
+- [lastpass] for password management.
+
+[lastpass]: https://lastpass.com
 
 It should take less than 15 minutes to install (depends on your machine).
 
