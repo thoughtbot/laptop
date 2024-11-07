@@ -10,7 +10,7 @@ based on what is already installed on the machine.
 
 We support:
 
-* macOS Monterey (12.3) on Apple Silicon and Intel
+- macOS Monterey (12.3) on Apple Silicon and Intel
 
 Older versions may work but aren't regularly tested.
 Bug reports for older versions are welcome.
@@ -68,35 +68,32 @@ Once done, you can run the main script again.
 
 macOS tools:
 
-* [Homebrew] for managing operating system libraries.
+- [Homebrew] for managing operating system libraries.
 
 [Homebrew]: http://brew.sh/
 
 Unix tools:
 
-* [Git] for version control
-* [OpenSSL] for Transport Layer Security (TLS)
-* [Zsh] as your shell
+- [Git] for version control
+- [OpenSSL] for Transport Layer Security (TLS)
+- [Zsh] as your shell
 
 [Git]: https://git-scm.com/
 [OpenSSL]: https://www.openssl.org/
 [Zsh]: http://www.zsh.org/
 
-
-
 GitHub tools:
 
-* [GitHub CLI] for interacting with the GitHub API
+- [GitHub CLI] for interacting with the GitHub API
 
 [GitHub CLI]: https://cli.github.com/
 
-
 IDEs:
 
-* [Intellij community edition] for JVM languages designed to maximize developer productivity.
-* [Visual studio code] a free-editor that helps the programmer write code, helps in debugging and corrects the code using the intelli-sense method.
-* [Sublime text] is Sublime Text is a shareware cross-platform source code editor.
-* [Vim] Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.
+- [Intellij community edition] for JVM languages designed to maximize developer productivity.
+- [Visual studio code] a free-editor that helps the programmer write code, helps in debugging and corrects the code using the intelli-sense method.
+- [Sublime text] is Sublime Text is a shareware cross-platform source code editor.
+- [Vim] Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.
 
 [intellij community edition]: https://www.jetbrains.com/idea/download/#section=mac
 [Visual studio code]: https://code.visualstudio.com/
@@ -104,78 +101,90 @@ IDEs:
 [Vim]: https://www.vim.org/
 
 Browsers:
- * [Google Chrome] is an cross-platform web browser developed by Google.
- * [Firefox] is an extensible free and open-source web browser developed by Mozilla corp.
+
+- [Google Chrome] is an cross-platform web browser developed by Google.
+- [Firefox] is an extensible free and open-source web browser developed by Mozilla corp.
 
 [Google Chrome]: https://www.google.com/chrome/
 [Firefox]: https://www.mozilla.org/
 
 Markdown:
-* [Obsidian] is a powerful knowledge base on top of a local folder of plain text Markdown files.
-* [Macdown] is an open source Markdown editor for MacOS.
 
-[Obsidian]: https://obsidian.md/ 
+- [Obsidian] is a powerful knowledge base on top of a local folder of plain text Markdown files.
+- [Macdown] is an open source Markdown editor for MacOS.
+
+[Obsidian]: https://obsidian.md/
 [Macdown]: https://macdown.uranusjr.com/
 
 Slack:
-* [Slack] is a messaging program designed specifically for the office.
+
+- [Slack] is a messaging program designed specifically for the office.
 
 [Slack]: https://slack.com
 
-* [Notion] is a project management and note-taking software.
+- [Notion] is a project management and note-taking software.
 
 [Notion]: https://notion.so
 
 Zoom:
-* [Zoom] is a video conferencing platform.
+
+- [Zoom] is a video conferencing platform.
 
 [Zoom]: htttps://zoom.us
 
 Google Drive:
-* [Google Drive] backup to Google Photos, and access all of your content directly from your Mac.
+
+- [Google Drive] backup to Google Photos, and access all of your content directly from your Mac.
 
 [Google Drive]: https://drive.google.com
 
 Lastpass:
-* [lastpass] for password management.
+
+- [lastpass] for password management.
 
 [lastpass]: https://lastpass.com
 
 Maccy:
-* [Maccy] for Clipboard management.
+
+- [Maccy] for Clipboard management.
 
 [Maccy]: https://maccy.app/
 
 Libreoffice:
-* [Libreoffice] is a free and open-source office productivity software suite.
+
+- [Libreoffice] is a free and open-source office productivity software suite.
 
 [Libreoffice]: https://www.libreoffice.org/
 
 Postman:
-* [Postman] for testing API.
+
+- [Postman] for testing API.
 
 [Postman]: https://www.postman.com/
 
 Table Plus:
-* [Table Plus] for database management.
+
+- [Table Plus] for database management.
 
 [Table Plus]: https://tableplus.com/
 
 Scroll Reverser:
-* [Scroll Reverser] is a free Mac app that reverses the direction of scrolling, with independent settings for trackpads and mice.
+
+- [Scroll Reverser] is a free Mac app that reverses the direction of scrolling, with independent settings for trackpads and mice.
 
 [Scroll Reverser]: https://pilotmoon.com/scrollreverser/
 
 Rectangle:
-* [Rectangle] Move and resize windows in macOS using keyboard shortcuts or snap areas.
+
+- [Rectangle] Move and resize windows in macOS using keyboard shortcuts or snap areas.
 
 [Rectangle]: https://rectangleapp.com/
 
 Spotify:
-* [Spotify] is all the music you'll ever need.
+
+- [Spotify] is all the music you'll ever need.
 
 [Spotify]: https://spotify.com/
-
 
 It should take less than 15 minutes to install (depends on your machine).
 
