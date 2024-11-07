@@ -110,7 +110,7 @@ fancy_echo "Installing zsh"
 brew install zsh
 
 # GitHub
-fancy_echo "Installing Github(gh)"
+fancy_echo "Installing Github CLI (gh)"
 brew install gh
 
 # IDE's
