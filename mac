@@ -4,10 +4,8 @@
 # Be prepared to turn your Mac
 # into an awesome development machine.
 
-
 fancy_echo() {
   local fmt="$1"; shift
-
   # shellcheck disable=SC2059
   printf "\\n$fmt\\n" "$@"
 }
@@ -36,18 +34,20 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+# Create .bin directory if it doesn't exist
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
+# Create .zshrc file if it doesn't exist
 if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
 
-# shellcheck disable=SC2016
+# Add .bin to PATH
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
-# Determine Homebrew prefix
+# Determine Homebrew prefix based on architecture
 arch="$(uname -m)"
 if [ "$arch" = "arm64" ]; then
   HOMEBREW_PREFIX="/opt/homebrew"
@@ -56,7 +56,7 @@ else
 fi
 
 update_shell() {
-  local shell_path;
+  local shell_path
   shell_path="$(command -v zsh)"
 
   fancy_echo "Changing your shell to zsh ..."
@@ -67,6 +67,7 @@ update_shell() {
   sudo chsh -s "$shell_path" "$USER"
 }
 
+# Update shell to zsh if not already set
 case "$SHELL" in
   */zsh)
     if [ "$(command -v zsh)" != '/usr/local/bin/zsh' ] ; then
