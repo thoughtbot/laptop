@@ -192,7 +192,7 @@ Zoom:
 
 - [Zoom] is a video conferencing platform.
 
-[Zoom]: htttps://zoom.us
+[Zoom]: https://zoom.us
 
 Docker Desktop:
 
