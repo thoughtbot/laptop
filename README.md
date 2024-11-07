@@ -100,6 +100,18 @@ IDEs:
 [Sublime text]: https://www.sublimetext.com/
 [Vim]: https://www.vim.org/
 
+Numi:
+
+- [Numi] is a calculator that magically combines calculations with text, and allows you to freely share calculations with others.
+
+[Numi]: https://numi.app/
+
+Iterm2:
+
+- [Iterm2] is a terminal emulator for MacOS.
+
+[Iterm2]: https://iterm2.com/
+
 Browsers:
 
 - [Google Chrome] is an cross-platform web browser developed by Google.
