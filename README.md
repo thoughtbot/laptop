@@ -103,7 +103,7 @@ IDEs:
 Browsers:
 
 - [Google Chrome] is an cross-platform web browser developed by Google.
-- [Firefox] is an extensible free and open-source web browser developed by Mozilla corp.
+- [Firefox] is an extensible, free and open-source web browser developed by Mozilla corp.
 
 [Google Chrome]: https://www.google.com/chrome/
 [Firefox]: https://www.mozilla.org/
