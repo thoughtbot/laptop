@@ -74,62 +74,80 @@ Unix tools:
 - [OpenSSL](https://www.openssl.org/) for Transport Layer Security (TLS)
 - [Zsh](http://www.zsh.org/) as your shell
 
-GitHub tools:
+Alfred:
 
-- [GitHub CLI](https://cli.github.com/) for interacting with the GitHub API
-
-IDEs:
-
-- [Intellij community edition](https://www.jetbrains.com/idea/download/#section=mac) for JVM languages designed to maximize developer productivity.
-- [Visual studio code](https://code.visualstudio.com/) a free-editor that helps the programmer write code, helps in debugging and corrects the code using the intelli-sense method.
-- [Sublime text](https://www.sublimetext.com/) is Sublime Text is a shareware cross-platform source code editor.
-- [Vim](https://www.vim.org/) Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.
-
-Numi:
-
-- [Numi](https://numi.app/) is a calculator that magically combines calculations with text, and allows you to freely share calculations with others.
-
-Iterm2:
-
-- [Iterm2](https://iterm2.com/) is a terminal emulator for MacOS.
+- [Alfred](https://www.alfredapp.com/) is an alternative to Spotlight.
 
 Browsers:
 
 - [Google Chrome](https://www.google.com/chrome/) is an cross-platform web browser developed by Google.
 - [Firefox](https://www.mozilla.org/) is an extensible, free and open-source web browser developed by Mozilla corp.
 
-Markdown:
+Docker Desktop:
 
-- [Obsidian](https://obsidian.md/) is a powerful knowledge base on top of a local folder of plain text Markdown files.
-- [Macdown](https://macdown.uranusjr.com/) is an open source Markdown editor for MacOS.
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) for containerization.
 
-Slack:
+GitHub tools:
 
-- [Slack](https://slack.com) is a messaging program designed specifically for the office.
+- [GitHub CLI](https://cli.github.com/) for interacting with the GitHub API
 
-Notion:
+Google Drive:
 
-- [Notion](https://notion.so) is a project management and note-taking software.
+- [Google Drive](https://drive.google.com) backup to Google Photos, and access all of your content directly from your Mac.
 
-Maccy:
+IDEs:
 
-- [Maccy](https://maccy.app/) for Clipboard management.
+- [Intellij community edition](https://www.jetbrains.com/idea/download/#section=mac) for JVM languages designed to maximize developer productivity.
+- [Sublime text](https://www.sublimetext.com/) is Sublime Text is a shareware cross-platform source code editor.
+- [Visual studio code](https://code.visualstudio.com/) a free-editor that helps the programmer write code, helps in debugging and corrects the code using the intelli-sense method.
+- [Vim](https://www.vim.org/) Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.
+
+Iterm2:
+
+- [Iterm2](https://iterm2.com/) is a terminal emulator for MacOS.
+
+Lastpass:
+
+- [lastpass](https://lastpass.com) for password management.
 
 Libreoffice:
 
 - [Libreoffice](https://www.libreoffice.org/) is a free and open-source office productivity software suite.
 
+Maccy:
+
+- [Maccy](https://maccy.app/) for Clipboard management.
+
+Markdown:
+
+- [Macdown](https://macdown.uranusjr.com/) is an open source Markdown editor for MacOS.
+- [Obsidian](https://obsidian.md/) is a powerful knowledge base on top of a local folder of plain text Markdown files.
+
+Numi:
+
+- [Numi](https://numi.app/) is a calculator that magically combines calculations with text, and allows you to freely share calculations with others.
+
+Notion:
+
+- [Notion](https://notion.so) is a project management and note-taking software.
+
 Postman:
 
 - [Postman](https://www.postman.com/) for testing API.
+
+Rectangle:
+
+- [Rectangle](https://rectangleapp.com/) Move and resize windows in macOS using keyboard shortcuts or snap areas.
+
+It should take less than 15 minutes to install (depends on your machine).
 
 Scroll Reverser:
 
 - [Scroll Reverser](https://pilotmoon.com/scrollreverser/) is a free Mac app that reverses the direction of scrolling, with independent settings for trackpads and mice.
 
-Rectangle:
+Slack:
 
-- [Rectangle](https://rectangleapp.com/) Move and resize windows in macOS using keyboard shortcuts or snap areas.
+- [Slack](https://slack.com) is a messaging program designed specifically for the office.
 
 Table Plus:
 
@@ -139,27 +157,9 @@ WhatsApp:
 
 - [WhatsApp](https://www.whatsapp.com/) for messaging.
 
-Alfred:
-
-- [Alfred](https://www.alfredapp.com/) is an alternative to Spotlight.
-
 Zoom:
 
 - [Zoom](https://zoom.us) is a video conferencing platform.
-
-Docker Desktop:
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop) for containerization.
-
-Google Drive:
-
-- [Google Drive](https://drive.google.com) backup to Google Photos, and access all of your content directly from your Mac.
-
-Lastpass:
-
-- [lastpass](https://lastpass.com) for password management.
-
-It should take less than 15 minutes to install (depends on your machine).
 
 ## Customize in `~/.laptop.local`
 
