@@ -41,9 +41,7 @@ Optionally, review the log:
 less ~/laptop.log
 ```
 
-Optionally, [install thoughtbot/dotfiles][dotfiles].
-
-[dotfiles]: https://github.com/thoughtbot/dotfiles#install
+Optionally, [install thoughtbot/dotfiles](https://github.com/thoughtbot/dotfiles#install).
 
 ## Debugging
 
@@ -68,149 +66,98 @@ Once done, you can run the main script again.
 
 macOS tools:
 
-- [Homebrew] for managing operating system libraries.
-
-[Homebrew]: http://brew.sh/
+- [Homebrew](http://brew.sh/) for managing operating system libraries.
 
 Unix tools:
 
-- [Git] for version control
-- [OpenSSL] for Transport Layer Security (TLS)
-- [Zsh] as your shell
-
-[Git]: https://git-scm.com/
-[OpenSSL]: https://www.openssl.org/
-[Zsh]: http://www.zsh.org/
+- [Git](https://git-scm.com/) for version control
+- [OpenSSL](https://www.openssl.org/) for Transport Layer Security (TLS)
+- [Zsh](http://www.zsh.org/) as your shell
 
 GitHub tools:
 
-- [GitHub CLI] for interacting with the GitHub API
-
-[GitHub CLI]: https://cli.github.com/
+- [GitHub CLI](https://cli.github.com/) for interacting with the GitHub API
 
 IDEs:
 
-- [Intellij community edition] for JVM languages designed to maximize developer productivity.
-- [Visual studio code] a free-editor that helps the programmer write code, helps in debugging and corrects the code using the intelli-sense method.
-- [Sublime text] is Sublime Text is a shareware cross-platform source code editor.
-- [Vim] Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.
-
-[intellij community edition]: https://www.jetbrains.com/idea/download/#section=mac
-[Visual studio code]: https://code.visualstudio.com/
-[Sublime text]: https://www.sublimetext.com/
-[Vim]: https://www.vim.org/
+- [Intellij community edition](https://www.jetbrains.com/idea/download/#section=mac) for JVM languages designed to maximize developer productivity.
+- [Visual studio code](https://code.visualstudio.com/) a free-editor that helps the programmer write code, helps in debugging and corrects the code using the intelli-sense method.
+- [Sublime text](https://www.sublimetext.com/) is Sublime Text is a shareware cross-platform source code editor.
+- [Vim](https://www.vim.org/) Vim is a highly configurable text editor built to make creating and changing any kind of text very efficient.
 
 Numi:
 
-- [Numi] is a calculator that magically combines calculations with text, and allows you to freely share calculations with others.
-
-[Numi]: https://numi.app/
+- [Numi](https://numi.app/) is a calculator that magically combines calculations with text, and allows you to freely share calculations with others.
 
 Iterm2:
 
-- [Iterm2] is a terminal emulator for MacOS.
-
-[Iterm2]: https://iterm2.com/
+- [Iterm2](https://iterm2.com/) is a terminal emulator for MacOS.
 
 Browsers:
 
-- [Google Chrome] is an cross-platform web browser developed by Google.
-- [Firefox] is an extensible, free and open-source web browser developed by Mozilla corp.
-
-[Google Chrome]: https://www.google.com/chrome/
-[Firefox]: https://www.mozilla.org/
+- [Google Chrome](https://www.google.com/chrome/) is an cross-platform web browser developed by Google.
+- [Firefox](https://www.mozilla.org/) is an extensible, free and open-source web browser developed by Mozilla corp.
 
 Markdown:
 
-- [Obsidian] is a powerful knowledge base on top of a local folder of plain text Markdown files.
-- [Macdown] is an open source Markdown editor for MacOS.
-
-[Obsidian]: https://obsidian.md/
-[Macdown]: https://macdown.uranusjr.com/
+- [Obsidian](https://obsidian.md/) is a powerful knowledge base on top of a local folder of plain text Markdown files.
+- [Macdown](https://macdown.uranusjr.com/) is an open source Markdown editor for MacOS.
 
 Slack:
 
-- [Slack] is a messaging program designed specifically for the office.
-
-[Slack]: https://slack.com
+- [Slack](https://slack.com) is a messaging program designed specifically for the office.
 
 Notion:
 
-- [Notion] is a project management and note-taking software.
-
-[Notion]: https://notion.so
+- [Notion](https://notion.so) is a project management and note-taking software.
 
 Maccy:
 
-- [Maccy] for Clipboard management.
-
-[Maccy]: https://maccy.app/
+- [Maccy](https://maccy.app/) for Clipboard management.
 
 Libreoffice:
 
-- [Libreoffice] is a free and open-source office productivity software suite.
-
-[Libreoffice]: https://www.libreoffice.org/
+- [Libreoffice](https://www.libreoffice.org/) is a free and open-source office productivity software suite.
 
 Postman:
 
-- [Postman] for testing API.
-
-[Postman]: https://www.postman.com/
+- [Postman](https://www.postman.com/) for testing API.
 
 Scroll Reverser:
 
-- [Scroll Reverser] is a free Mac app that reverses the direction of scrolling, with independent settings for trackpads and mice.
-
-[Scroll Reverser]: https://pilotmoon.com/scrollreverser/
+- [Scroll Reverser](https://pilotmoon.com/scrollreverser/) is a free Mac app that reverses the direction of scrolling, with independent settings for trackpads and mice.
 
 Rectangle:
 
-- [Rectangle] Move and resize windows in macOS using keyboard shortcuts or snap areas.
-
-[Rectangle]: https://rectangleapp.com/
+- [Rectangle](https://rectangleapp.com/) Move and resize windows in macOS using keyboard shortcuts or snap areas.
 
 Table Plus:
 
-- [Table Plus] for database management.
-
-[Table Plus]: https://tableplus.com/
+- [Table Plus](https://tableplus.com/) for database management.
 
 WhatsApp:
 
-- [WhatsApp] for messaging.
-
-[WhatsApp]: https://www.whatsapp.com/
+- [WhatsApp](https://www.whatsapp.com/) for messaging.
 
 Alfred:
 
-- [Alfred] is an alternative to Spotlight.
-
-[Alfred]: https://www.alfredapp.com/
+- [Alfred](https://www.alfredapp.com/) is an alternative to Spotlight.
 
 Zoom:
 
-- [Zoom] is a video conferencing platform.
-
-[Zoom]: https://zoom.us
+- [Zoom](https://zoom.us) is a video conferencing platform.
 
 Docker Desktop:
 
-- [Docker Desktop] for containerization.
-
-[Docker Desktop]: https://www.docker.com/products/docker-desktop
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) for containerization.
 
 Google Drive:
 
-- [Google Drive] backup to Google Photos, and access all of your content directly from your Mac.
-
-[Google Drive]: https://drive.google.com
+- [Google Drive](https://drive.google.com) backup to Google Photos, and access all of your content directly from your Mac.
 
 Lastpass:
 
-- [lastpass] for password management.
-
-[lastpass]: https://lastpass.com
+- [lastpass](https://lastpass.com) for password management.
 
 It should take less than 15 minutes to install (depends on your machine).
 
@@ -270,42 +217,31 @@ for more customization examples.
 
 Edit the `mac` file.
 Document in the `README.md` file.
-Follow shell style guidelines by using [ShellCheck] and [Syntastic].
+Follow shell style guidelines by using [ShellCheck](http://www.shellcheck.net/about.html) and [Syntastic](https://github.com/scrooloose/syntastic).
 
 ```sh
 brew install shellcheck
 ```
 
-[ShellCheck]: http://www.shellcheck.net/about.html
-[Syntastic]: https://github.com/scrooloose/syntastic
-
 ### Testing your changes
 
 Test your changes by running the script on a fresh install of macOS.
-You can use the free and open source emulator [UTM].
+You can use the free and open source emulator [UTM](https://mac.getutm.app).
 
 Tip: Make a fresh virtual machine with the installation of macOS completed and
 your user created and first launch complete. Then duplicate that machine to test
 the script each time on a fresh install thats ready to go.
 
-[UTM]: https://mac.getutm.app
-
-Thank you, [contributors]!
-
-[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
+Thank you, [contributors](https://github.com/thoughtbot/laptop/graphs/contributors)!
 
 By participating in this project,
-you agree to abide by the thoughtbot [code of conduct].
-
-[code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
+you agree to abide by the thoughtbot [code of conduct](https://thoughtbot.com/open-source-code-of-conduct).
 
 ## License
 
 Laptop is © 2011-2022 thoughtbot, inc.
 It is free software,
-and may be redistributed under the terms specified in the [LICENSE] file.
-
-[LICENSE]: LICENSE
+and may be redistributed under the terms specified in the [LICENSE](LICENSE) file.
 
 ## About thoughtbot
 
@@ -315,8 +251,5 @@ Laptop is maintained and funded by thoughtbot, inc.
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
 
 We are passionate about open source software.
-See [our other projects][community].
-We are [available for hire][hire].
-
-[community]: https://thoughtbot.com/community?utm_source=github
-[hire]: https://thoughtbot.com?utm_source=github
+See [our other projects](https://thoughtbot.com/community?utm_source=github).
+We are [available for hire](https://thoughtbot.com?utm_source=github).
