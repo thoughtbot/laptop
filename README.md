@@ -165,7 +165,9 @@ Zoom:
 
 It should take less than 15 minutes to install (depends on your machine).
 
-## Customize in `~/.laptop.local`
+## Customization
+
+Create a `~/.laptop.local` file to add custom configurations:
 
 Your `~/.laptop.local` is run at the end of the Laptop script.
 Put your customizations there.
@@ -175,10 +177,14 @@ For example:
 #!/bin/sh
 
 brew bundle --file=- <<EOF
-brew "Caskroom/cask/dockertoolbox"
+# Add additional packages
 brew "go"
 brew "ngrok"
 brew "watch"
+
+# Add custom casks
+brew "Caskroom/cask/dockertoolbox"
+
 EOF
 
 default_docker_machine() {
@@ -197,10 +203,12 @@ if ! default_docker_machine_running; then
   docker-machine start default
 fi
 
+# Custom cleanup
 fancy_echo "Cleaning up old Homebrew formulae ..."
 brew cleanup
 brew cask cleanup
 
+# Update dotfiles if present
 if [ -r "$HOME/.rcrc" ]; then
   fancy_echo "Updating dotfiles ..."
   rcup
