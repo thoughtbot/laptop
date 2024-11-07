@@ -6,8 +6,7 @@ It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
 based on what is already installed on the machine.
 
-Requirements
-------------
+## Requirements
 
 We support:
 
@@ -16,8 +15,7 @@ We support:
 Older versions may work but aren't regularly tested.
 Bug reports for older versions are welcome.
 
-Install
--------
+## Install
 
 Download the script:
 
@@ -47,8 +45,7 @@ Optionally, [install thoughtbot/dotfiles][dotfiles].
 
 [dotfiles]: https://github.com/thoughtbot/dotfiles#install
 
-Debugging
----------
+## Debugging
 
 Your last Laptop run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
@@ -67,9 +64,7 @@ use the `-f` (or `--force`) option and run that command again. In this case, run
 `brew install --cask google-chrome --force`. This should reinstall Chrome properly.
 Once done, you can run the main script again.
 
-
-What it sets up
----------------
+## What it sets up
 
 macOS tools:
 
@@ -184,8 +179,7 @@ Spotify:
 
 It should take less than 15 minutes to install (depends on your machine).
 
-Customize in `~/.laptop.local`
-------------------------------
+## Customize in `~/.laptop.local`
 
 Your `~/.laptop.local` is run at the end of the Laptop script.
 Put your customizations there.
@@ -237,8 +231,7 @@ can be used in your `~/.laptop.local`.
 See the [wiki](https://github.com/thoughtbot/laptop/wiki)
 for more customization examples.
 
-Contributing
-------------
+## Contributing
 
 Edit the `mac` file.
 Document in the `README.md` file.
@@ -271,8 +264,7 @@ you agree to abide by the thoughtbot [code of conduct].
 
 [code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
 
-License
--------
+## License
 
 Laptop is © 2011-2022 thoughtbot, inc.
 It is free software,
@@ -280,8 +272,7 @@ and may be redistributed under the terms specified in the [LICENSE] file.
 
 [LICENSE]: LICENSE
 
-About thoughtbot
-----------------
+## About thoughtbot
 
 ![thoughtbot](https://thoughtbot.com/brand_assets/93:44.svg)
 
