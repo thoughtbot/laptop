@@ -1,10 +1,15 @@
 # Laptop
 
-Laptop is a script to set up a macOS or Linux laptop for backend and site reliability engineering work at One2N. We expect you to run the Linux or Mac scripts in your first week of joining One2N. Various useful tools (we are opinionated) are installed as part of these scripts.
+## Overview
 
-It can be run multiple times on the same machine safely.
-It installs, upgrades, or skips packages
-based on what is already installed on the machine.
+Laptop is an automated setup script for configuring macOS or Linux laptops for backend and site reliability engineering work at One2N. We expect you to run the Linux or Mac scripts in your first week of joining One2N. Various useful tools (we are opinionated) are installed as part of these scripts.
+
+## Key Features
+
+- **Idempotent Execution:** Can be run multiple times safely on the same machine
+- **Smart Installation:** Automatically handles package installation, upgrades, or skips based on existing state
+- **Logging:** Maintains detailed logs for troubleshooting
+- **Customizable:** Supports local customizations through `~/.laptop.local`
 
 ## Requirements
 
