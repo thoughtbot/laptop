@@ -73,9 +73,12 @@ macOS tools:
 
 - [Homebrew](http://brew.sh/) for managing operating system libraries.
 
-Unix tools:
+Version Control:
 
 - [Git](https://git-scm.com/) for version control
+
+Unix tools:
+
 - [OpenSSL](https://www.openssl.org/) for Transport Layer Security (TLS)
 - [Zsh](http://www.zsh.org/) as your shell
 
