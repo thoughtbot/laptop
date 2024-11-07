@@ -17,8 +17,7 @@ We support:
 
 - macOS Monterey (12.3) on Apple Silicon and Intel
 
-Older versions may work but aren't regularly tested.
-Bug reports for older versions are welcome.
+> Older versions may work but aren't regularly tested. Bug reports for older versions are welcome.
 
 ## Install
 
