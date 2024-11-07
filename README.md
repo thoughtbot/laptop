@@ -1,5 +1,4 @@
-Laptop
-======
+# Laptop
 
 Laptop is a script to set up a macOS or Linux laptop for backend and site reliability engineering work at One2N. We expect you to run the Linux of Mac scripts in your first week of joining One2N. Various useful tools (we are opinionated) are installed as part of these scripts.
 
