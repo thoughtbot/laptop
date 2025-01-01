@@ -219,7 +219,7 @@ You can use the free and open source emulator [UTM].
 
 Tip: Make a fresh virtual machine with the installation of macOS completed and
 your user created and first launch complete. Then duplicate that machine to test
-the script each time on a fresh install thats ready to go.
+the script each time on a fresh install that's ready to go.
 
 [UTM]: https://mac.getutm.app
 
