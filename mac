@@ -170,31 +170,40 @@ if [ ! -d "$HOME/.asdf" ]; then
   append_to_zshrc "source $(brew --prefix asdf)/libexec/asdf.sh" 1
 fi
 
+export ASDF_DATA_DIR="$HOME/.asdf"
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
+
 alias install_asdf_plugin=add_or_update_asdf_plugin
 add_or_update_asdf_plugin() {
   local name="$1"
   local url="$2"
 
-  if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
+  if ! asdf plugin list | grep -Fq "$name"; then
+    asdf plugin add "$name" "$url"
   else
-    asdf plugin-update "$name"
+    asdf plugin update "$name"
   fi
 }
 
 # shellcheck disable=SC1091
-. "$(brew --prefix asdf)/libexec/asdf.sh"
+# Try loading ASDF from the regular home dir location
+if [ -f "$HOME/.asdf/asdf.sh" ]; then
+  . "$HOME/.asdf/asdf.sh"
+elif which brew >/dev/null && [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
+  . "$(brew --prefix asdf)/libexec/asdf.sh"
+fi
+
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
 install_asdf_language() {
   local language="$1"
   local version
-  version="$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"
+  version="$(asdf list all "$language" | grep -v "[a-z]" | tail -1)"
 
   if ! asdf list "$language" | grep -Fq "$version"; then
     asdf install "$language" "$version"
-    asdf global "$language" "$version"
+    asdf set --home "$language" "$version"
   fi
 }
 
