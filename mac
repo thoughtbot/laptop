@@ -194,7 +194,7 @@ install_asdf_language() {
 
   if ! asdf list "$language" | grep -Fq "$version"; then
     asdf install "$language" "$version"
-    asdf global "$language" "$version"
+    asdf set --home "$language" "$version"
   fi
 }
 
