@@ -168,6 +168,8 @@ fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   brew install asdf
   append_to_zshrc "source $(brew --prefix asdf)/libexec/asdf.sh" 1
+else
+  brew upgrade asdf
 fi
 
 alias install_asdf_plugin=add_or_update_asdf_plugin
