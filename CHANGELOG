@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## 2025-06-25
+
+* asdf is now updated if it is already installed and asdf commands were updated
+  to work with latest versions.
+
 ## 2024-09-24
 
 * Support for macOS Sequoia
