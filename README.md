@@ -12,6 +12,7 @@ Requirements
 
 We support:
 
+* macOS Sequoia (15.x) on Apple Silicon and Intel
 * macOS Sonoma (14.x) on Apple Silicon and Intel
 * macOS Ventura (13.x) on Apple Silicon and Intel
 * macOS Monterey (12.x) on Apple Silicon and Intel
@@ -217,7 +218,7 @@ you agree to abide by the thoughtbot [code of conduct].
 Edit the `mac` file.
 Document in the `README.md` file.
 Update the `CHANGELOG`.
-Follow shell style guidelines by using [ShellCheck] and [Syntastic].
+Follow shell style guidelines by using [ShellCheck] and [ALE] or deprecated [Syntastic].
 
 ```sh
 brew install shellcheck
@@ -225,6 +226,8 @@ brew install shellcheck
 
 [ShellCheck]: http://www.shellcheck.net/about.html
 [Syntastic]: https://github.com/scrooloose/syntastic
+[ALE]: https://github.com/dense-analysis/ale
+
 
 ### Testing your changes
 
@@ -233,30 +236,32 @@ You can use the free and open source emulator [UTM].
 
 Tip: Make a fresh virtual machine with the installation of macOS completed and
 your user created and first launch complete. Then duplicate that machine to test
-the script each time on a fresh install thats ready to go.
+the script each time on a fresh install that's ready to go.
 
 [UTM]: https://mac.getutm.app
 
 License
 -------
 
-Laptop is © 2011-2023 thoughtbot, inc.
+Copyright © 2011 thoughtbot, inc.
 It is free software,
 and may be redistributed under the terms specified in the [LICENSE] file.
 
 [LICENSE]: LICENSE
 
-About thoughtbot
-----------------
+<!-- START /templates/footer.md -->
+## About thoughtbot
 
-![thoughtbot](https://thoughtbot.com/brand_assets/93:44.svg)
+![thoughtbot](https://thoughtbot.com/thoughtbot-logo-for-readmes.svg)
 
-Laptop is maintained and funded by thoughtbot, inc.
+This repo is maintained and funded by thoughtbot, inc.
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
 
-We are passionate about open source software.
+We love open source software!
 See [our other projects][community].
 We are [available for hire][hire].
 
 [community]: https://thoughtbot.com/community?utm_source=github
-[hire]: https://thoughtbot.com?utm_source=github
+[hire]: https://thoughtbot.com/hire-us?utm_source=github
+
+<!-- END /templates/footer.md -->
