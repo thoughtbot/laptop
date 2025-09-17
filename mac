@@ -125,6 +125,7 @@ tap "heroku/brew"
 
 # Unix
 brew "universal-ctags"
+brew "fzf"
 brew "git"
 brew "openssl"
 brew "rcm"

@@ -71,6 +71,7 @@ macOS tools:
 
 Unix tools:
 
+* [fzf][] for better command history searching
 * [Universal Ctags] for indexing files for vim tab completion
 * [Git] for version control
 * [OpenSSL] for Transport Layer Security (TLS)
@@ -80,6 +81,7 @@ Unix tools:
 * [Watchman] for watching for filesystem events
 * [Zsh] as your shell
 
+[fzf]: https://github.com/junegunn/fzf
 [Universal Ctags]: https://ctags.io/
 [Git]: https://git-scm.com/
 [OpenSSL]: https://www.openssl.org/
