@@ -214,3 +214,9 @@ if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck disable=SC1091
   . "$HOME/.laptop.local"
 fi
+
+if [ -f "$HOME/.client.local" ]; then
+  fancy_echo "Running your customizations from ~/.client.local ..."
+  # shellcheck disable=SC1091
+  . "$HOME/.client.local"
+fi
