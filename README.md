@@ -63,6 +63,7 @@ General tools and applications:
 
 Unix tools:
 
+* [fzf][] for better command history searching
 * [Git] for version control
 * [OpenSSL] for Transport Layer Security (TLS)
 * [RCM] for managing dotfiles
@@ -70,6 +71,7 @@ Unix tools:
 * [Tmux] for saving project state and switching between projects
 * [Zsh] as your shell
 
+[fzf]: https://github.com/junegunn/fzf
 [Git]: https://git-scm.com/
 [OpenSSL]: https://www.openssl.org/
 [RCM]: https://github.com/thoughtbot/rcm
@@ -210,7 +212,7 @@ you agree to abide by the thoughtbot [code of conduct].
 Edit the `mac` file.
 Document in the `README.md` file.
 Update the `CHANGELOG`.
-Follow shell style guidelines by using [ShellCheck] and [Syntastic].
+Follow shell style guidelines by using [ShellCheck] and [ALE] or deprecated [Syntastic].
 
 ```sh
 brew install shellcheck
@@ -218,6 +220,8 @@ brew install shellcheck
 
 [ShellCheck]: http://www.shellcheck.net/about.html
 [Syntastic]: https://github.com/scrooloose/syntastic
+[ALE]: https://github.com/dense-analysis/ale
+
 
 ### Testing your changes
 
@@ -226,7 +230,7 @@ You can use the free and open source emulator [UTM].
 
 Tip: Make a fresh virtual machine with the installation of macOS completed and
 your user created and first launch complete. Then duplicate that machine to test
-the script each time on a fresh install thats ready to go.
+the script each time on a fresh install that's ready to go.
 
 ## License
 
