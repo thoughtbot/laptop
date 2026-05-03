@@ -1,2 +1,0 @@
-fancy_echo "Installing GitHub CLI client ..."
-  brew install hub

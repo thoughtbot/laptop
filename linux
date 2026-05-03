@@ -1,184 +1,179 @@
 #!/usr/bin/env bash
-### end common-components/bash-shebang
+# Bootstrap a Pop_OS 24.04 / Ubuntu 24.04 development machine.
+# Idempotent: safe to re-run.
 
-# Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
-# desktop, no haters here) into an awesome development machine.
+set -euo pipefail
 
-# This file is auto-generated. Do not edit it by hand unless you know what
-# you're doing. Please see 'CONTRIBUTING.md' for more information.
-### end common-components/header
+DOTFILES_REPO="https://github.com/adamdaw/dotfiles.git"
+DOTFILES_DIR="$HOME/homeProjects/dotfiles"
+HOME_PROJECTS_DIR="$HOME/homeProjects"
 
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+# ── Helpers ──────────────────────────────────────────────────────────────────
 
-set -e
-### end common-components/exit-trap
+step() { printf "\n\033[1;34m==>\033[0m %s\n" "$1"; }
+ok()   { printf "  \033[1;32m✓\033[0m %s\n" "$1"; }
 
-if [[ ! -d "$HOME/.bin/" ]]; then
-  mkdir "$HOME/.bin"
-fi
+cmd_exists() { command -v "$1" &>/dev/null; }
 
-if [ ! -f "$HOME/.zshrc" ]; then
-  touch $HOME/.zshrc
-fi
-
-if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
-  printf 'export PATH="$HOME/.bin:$PATH"\n' >> ~/.zshrc
-  export PATH="$HOME/.bin:$PATH"
-fi
-### end common-components/check-home-bin
-
-fancy_echo() {
-  printf "\n%b\n" "$1"
-}
-### end common-components/shared-functions
-
-if ! grep -qiE 'precise|quantal|wheezy|raring|jessie|saucy' /etc/os-release; then
-  fancy_echo "Sorry! we don't currently support that distro."
-  exit 1
-fi
-### end linux-components/distro-check
-
-fancy_echo "Updating system packages ..."
-  if command -v aptitude >/dev/null; then
-    fancy_echo "Using aptitude ..."
-  else
-    fancy_echo "Installing aptitude ..."
-    sudo apt-get install -y aptitude
-  fi
-
-  sudo aptitude update
-### end linux-components/debian-package-update
-
-fancy_echo "Installing git, for source control management ..."
-  sudo aptitude install -y git
-
-fancy_echo "Installing base ruby build dependencies ..."
-  sudo aptitude build-dep -y ruby1.9.3
-
-fancy_echo "Installing libraries for common gem dependencies ..."
-  sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
-
-fancy_echo "Installing sqlite3, for prototyping database-backed rails apps"
- sudo aptitude install -y libsqlite3-dev sqlite3
-
-fancy_echo "Installing Postgres, a good open source relational database ..."
-  sudo aptitude install -y postgresql postgresql-server-dev-all
-
-fancy_echo "Installing Redis, a good key-value database ..."
-  sudo aptitude install -y redis-server
-
-fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  sudo aptitude install -y exuberant-ctags
-
-fancy_echo "Installing vim ..."
-  sudo aptitude install -y vim-gtk
-
-fancy_echo "Installing tmux, to save project state and switch between projects ..."
-  sudo aptitude install -y tmux
-
-fancy_echo "Installing ImageMagick, to crop and resize images ..."
-  sudo aptitude install -y imagemagick
-
-fancy_echo "Installing watch, to execute a program periodically and show the output ..."
-  sudo aptitude install -y watch
-
-fancy_echo "Installing curl ..."
-  sudo aptitude install -y curl
-
-fancy_echo "Installing zsh ..."
-  sudo aptitude install -y zsh
-
-fancy_echo "Installing node, to render the rails asset pipeline ..."
-  sudo aptitude install -y nodejs
-### end linux-components/debian-derivative-packages
-
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s $(which zsh)
-### end common-components/zsh
-
-if ! which ag &>/dev/null; then
-  fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-    git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-    sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
-    sh /tmp/the_silver_searcher/build.sh
-    cd /tmp/the_silver_searcher
-    sh build.sh
-    sudo make install
-    cd
-    rm -rf /tmp/the_silver_searcher
-fi
-### end linux-components/silver-searcher-from-source
-
-if [[ ! -d "$HOME/.rbenv" ]]; then
-  fancy_echo "Installing rbenv, to change Ruby versions ..."
-    git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
-
-    if ! grep -qs "rbenv init" ~/.zshrc; then
-      printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.zshrc
-      printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.zshrc
+apt_install() {
+  for pkg in "$@"; do
+    if dpkg -s "$pkg" &>/dev/null 2>&1; then
+      ok "$pkg already installed"
+    else
+      sudo apt-get install -y "$pkg"
+      ok "installed $pkg"
     fi
+  done
+}
 
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
+# ── System update ─────────────────────────────────────────────────────────────
+
+step "Updating system packages"
+sudo apt-get update -qq
+sudo apt-get upgrade -y
+
+# ── Core apt packages ─────────────────────────────────────────────────────────
+
+step "Installing core packages"
+apt_install \
+  build-essential \
+  curl \
+  wget \
+  git \
+  stow \
+  zsh \
+  tmux \
+  vim \
+  jq \
+  ripgrep \
+  fd-find \
+  fzf \
+  bat \
+  xclip
+
+# ── gh CLI ───────────────────────────────────────────────────────────────────
+
+step "Installing gh CLI"
+if cmd_exists gh; then
+  ok "gh already installed ($(gh --version | head -1))"
+else
+  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+    | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+  sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+    | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+  sudo apt-get update -qq
+  sudo apt-get install -y gh
+  ok "installed gh"
 fi
 
-if [[ ! -d "$HOME/.rbenv/plugins/rbenv-gem-rehash" ]]; then
-  fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-    git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+# ── NVM + Node ────────────────────────────────────────────────────────────────
+
+step "Installing NVM + Node LTS"
+export NVM_DIR="$HOME/.nvm"
+if [ -d "$NVM_DIR" ]; then
+  ok "nvm already installed"
+else
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+  ok "installed nvm"
+fi
+source "$NVM_DIR/nvm.sh"
+if cmd_exists node; then
+  ok "node already installed ($(node --version))"
+else
+  nvm install --lts
+  nvm use --lts
+  nvm alias default node
+  ok "installed node $(node --version)"
 fi
 
-if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
-  fancy_echo "Installing ruby-build, to install Rubies ..."
-    git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+# ── Claude Code ───────────────────────────────────────────────────────────────
+
+step "Installing Claude Code"
+if cmd_exists claude; then
+  ok "claude already installed"
+else
+  npm install -g @anthropic-ai/claude-code
+  ok "installed claude"
 fi
-### end linux-components/rbenv
 
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+# ── Starship ─────────────────────────────────────────────────────────────────
 
-fancy_echo "Installing Ruby $ruby_version ..."
-  rbenv install "$ruby_version"
+step "Installing Starship prompt"
+if cmd_exists starship; then
+  ok "starship already installed"
+else
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes
+  ok "installed starship"
+fi
 
-fancy_echo "Setting $ruby_version as global default Ruby ..."
-  rbenv global "$ruby_version"
-  rbenv rehash
+# ── Telemetry opt-outs ────────────────────────────────────────────────────────
 
-fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
+step "Disabling telemetry"
+if cmd_exists ubuntu-report; then
+  ubuntu-report send no 2>/dev/null || true
+fi
+if dpkg -s popularity-contest &>/dev/null 2>&1; then
+  sudo apt-get remove -y popularity-contest
+fi
+sudo systemctl disable apport 2>/dev/null || true
+if cmd_exists go; then
+  go telemetry off 2>/dev/null || true
+fi
+npm config set fund false 2>/dev/null || true
+ok "telemetry disabled"
 
-fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
-  gem install bundler --no-document --pre
-### end common-components/ruby-environment
+# ── git config ────────────────────────────────────────────────────────────────
 
-fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
-  number_of_cores=$(nproc)
-  bundle config --global jobs $((number_of_cores - 1))
-### end linux-components/bundler
+step "Configuring git"
+git config --global user.name  "Adam Daw"
+git config --global user.email "adam@adamdaw.com"
+git config --global core.hooksPath "$HOME/.config/git/hooks"
+git config --global credential."https://github.com".helper ""
+git config --global --add credential."https://github.com".helper "!/usr/bin/gh auth git-credential"
+ok "git configured"
 
-fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
-  gem install suspenders --no-document
-### end common-components/default-gems
+# ── SSH ───────────────────────────────────────────────────────────────────────
 
-fancy_echo "Installing Heroku CLI client ..."
-  curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
+step "SSH setup"
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+if [ ! -f ~/.ssh/id_ed25519 ]; then
+  ssh-keygen -t ed25519 -C "adam@adamdaw.com" -f ~/.ssh/id_ed25519 -N ""
+  ok "generated ~/.ssh/id_ed25519"
+  echo ""
+  echo "  Add this public key to GitHub: https://github.com/settings/keys"
+  cat ~/.ssh/id_ed25519.pub
+  echo ""
+else
+  ok "SSH key already exists"
+fi
 
-fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
-### end linux-components/heroku
+# ── Dotfiles ──────────────────────────────────────────────────────────────────
 
-fancy_echo "Installing GitHub CLI client ..."
-  curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  chmod +x ~/.bin/hub
-### end linux-components/github
+step "Cloning and applying dotfiles"
+mkdir -p "$HOME_PROJECTS_DIR"
+if [ -d "$DOTFILES_DIR/.git" ]; then
+  ok "dotfiles already cloned"
+else
+  git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
+  ok "cloned dotfiles"
+fi
 
-fancy_echo "Installing rcm, to manage your dotfiles ..."
-  wget -O /tmp/rcm_1.1.0_all.deb http://mike-burns.com/project/rcm/rcm_1.1.0_all.deb
-  sudo dpkg -i /tmp/rcm_1.1.0_all.deb
-  rm -f /tmp/rcm_1.1.0_all.deb
-### end linux-components/rcm
+cd "$DOTFILES_DIR"
+for pkg in bash zsh git tmux ghostty starship; do
+  stow --restow --target="$HOME" "$pkg" 2>/dev/null && ok "stowed $pkg" || true
+done
 
-fancy_echo "Installing your personal additions from ~/.laptop.local ..."
-  if [[ -f ~/.laptop.local ]]; then
-    source ~/.laptop.local
-  fi
-### end common-components/personal-additions
+# ── Shell ─────────────────────────────────────────────────────────────────────
 
+step "Setting zsh as default shell"
+if [ "$SHELL" = "$(which zsh)" ]; then
+  ok "zsh is already the default shell"
+else
+  chsh -s "$(which zsh)"
+  ok "default shell set to zsh (takes effect on next login)"
+fi
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+
+printf "\n\033[1;32mDone.\033[0m Log out and back in to start using zsh.\n\n"

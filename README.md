@@ -1,108 +1,43 @@
-Laptop
-======
+# laptop
 
-Laptop is a script to set up a Mac OS X or Linux laptop for Rails development.
+Bootstrap script for a fresh Pop_OS 24.04 / Ubuntu 24.04 machine.
 
-Requirements
-------------
+## Usage
 
-### Mac OS X
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/adamdaw/laptop/main/linux)
+```
 
-Install a C compiler:
+Or clone and run locally:
 
-For Snow Leopard (10.6): use [OS X GCC
-Installer](https://github.com/kennethreitz/osx-gcc-installer/).
+```bash
+git clone https://github.com/adamdaw/laptop.git
+bash laptop/linux
+```
 
-For Lion (10.7) or Mountain Lion (10.8): use [Command Line Tools for
-XCode](https://developer.apple.com/downloads/index.action).
+## What it installs
 
-For Mavericks (10.9): run `sudo xcodebuild -license` and follow the instructions
-to accept the XCode agreement.  Then run `xcode-select --install` in your
-terminal and then click "Install".
+| Category | Tools |
+|---|---|
+| Shell | zsh, Starship prompt |
+| Core | git, curl, wget, build-essential, stow |
+| Terminal | tmux, vim, xclip |
+| Search | ripgrep, fd-find, fzf, bat |
+| Data | jq |
+| GitHub | gh CLI |
+| Node | nvm + Node LTS, Claude Code |
 
-### Linux
+## What it configures
 
-We support:
+- git: user name/email, `core.hooksPath`, gh credential helper
+- SSH: generates `~/.ssh/id_ed25519` if absent
+- Dotfiles: clones [adamdaw/dotfiles](https://github.com/adamdaw/dotfiles) into `~/homeProjects/dotfiles` and stows all packages
+- Shell: sets zsh as default
 
-* [13.10: Saucy Salamander](https://wiki.ubuntu.com/SaucySalamander/ReleaseNotes),
-* [13.04: Raring Ringtail](https://wiki.ubuntu.com/RaringRingtail/ReleaseNotes),
-* [12.10: Quantal Quetzal](https://wiki.ubuntu.com/QuantalQuetzal/ReleaseNotes), and
-* [12.04 LTS: Precise Pangolin](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes),
-* Debian stable (currently [wheezy](http://www.debian.org/releases/stable/)).
-* Debian testing (currently [jessie](http://www.debian.org/releases/testing/)).
+## Telemetry
 
-Install
--------
+Disables ubuntu-report, popularity-contest, apport, go telemetry, and npm fund messages. The dotfiles zshrc exports `DO_NOT_TRACK=1` and related opt-outs.
 
-### Mac OS X
+## Idempotent
 
-Read, then run the script:
-
-    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
-
-### Linux
-
-Read, then run the script:
-
-    bash <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux)
-
-What it sets up
----------------
-
-* Zsh as your shell
-* Bundler gem for managing Ruby libraries
-* Exuberant Ctags for indexing files for vim tab completion
-* Foreman gem for serving Rails apps locally
-* Heroku Config plugin for local `ENV` variables
-* Heroku Toolbelt for interacting with the Heroku API
-* Hub gem for interacting with the GitHub API
-* Homebrew for managing operating system libraries (OS X only)
-* ImageMagick for cropping and resizing images
-* Postgres for storing relational data
-* Qt for headless JavaScript testing via Capybara Webkit
-* Rails gem for writing web applications
-* Rbenv for managing versions of the Ruby programming language
-* Redis for storing key-value data
-* Ruby Build for installing Rubies
-* Ruby stable for writing general-purpose code
-* The Silver Searcher for finding things in files
-* Tmux for saving project state and switching between projects
-* Watch for periodically executing a program and displaying the output
-
-It should take less than 15 minutes to install (depends on your machine).
-
-Make your own customizations
-----------------------------
-
-Put your customizations in `~/.laptop.local`. For example, your
-`~/.laptop.local` might look like this:
-
-    #!/bin/sh
-
-    brew tap phinze/homebrew-cask
-    brew install brew-cask
-
-    brew cask install dropbox
-    brew cask install google-chrome
-    brew cask install rdio
-
-Credits
--------
-
-![thoughtbot](http://thoughtbot.com/assets/tm/logo.png)
-
-Laptop is maintained and funded by [thoughtbot, inc](http://thoughtbot.com/community).
-The names and logos for thoughtbot are trademarks of thoughtbot, inc.
-
-Thank you, [contributors](https://github.com/thoughtbot/laptop/graphs/contributors)!
-
-Contributing
-------------
-
-Please see [CONTRIBUTING.md](https://github.com/thoughtbot/laptop/blob/master/CONTRIBUTING.md).
-
-License
--------
-
-Laptop is © 2011-2014 thoughtbot, inc. It is free software, and may be
-redistributed under the terms specified in the LICENSE file.
+Safe to re-run. Each step checks before acting.

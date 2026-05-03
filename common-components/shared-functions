@@ -1,3 +1,0 @@
-fancy_echo() {
-  printf "\n%b\n" "$1"
-}
