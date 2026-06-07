@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## 2026-07-01
+
+* Fixes asdf installs, now compatible with asdf >= 16 (released 2025-01-30)
+
 ## 2025-07-09
 
 * Removed deprecated homebrew/services tap

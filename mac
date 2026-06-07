@@ -166,7 +166,11 @@ brew link --force heroku
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   brew install asdf
-  append_to_zshrc "source $(brew --prefix asdf)/libexec/asdf.sh" 1
+  # for future runs
+  # shellcheck disable=SC2016
+  append_to_zshrc 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"'
+  # for this session, so we don't need to restart the shell to do stuff with asdf
+  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 else
   brew upgrade asdf
 fi
@@ -184,7 +188,6 @@ add_or_update_asdf_plugin() {
 }
 
 # shellcheck disable=SC1091
-. "$(brew --prefix asdf)/libexec/asdf.sh"
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
