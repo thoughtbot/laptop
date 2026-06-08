@@ -159,10 +159,6 @@ brew "postgresql@14", restart_service: :changed
 brew "redis", restart_service: :changed
 EOF
 
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
-
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   brew install asdf
