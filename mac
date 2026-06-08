@@ -120,7 +120,6 @@ fi
 fancy_echo "Updating Homebrew formulae ..."
 brew update
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
 tap "heroku/brew"
 
 # Unix

@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## 2026-06-07
 
-* Removes 3 small steps that were adding time/complexity to the installs that
+* Removes 4 small steps that were adding time/complexity to the installs that
   were all originally added as workarounds for transient issues with other
   software 5+ years ago.
 
