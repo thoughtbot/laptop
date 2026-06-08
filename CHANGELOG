@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## 2026-06-07
+
+* [#659](https://github.com/thoughtbot/laptop/issues/659) Fix deprecated bundler syntax
+
 ## 2025-07-09
 
 * Removed deprecated homebrew/services tap
