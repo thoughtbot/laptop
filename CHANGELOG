@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## 2026-06-07
+
+* Removes 3 small steps that were adding time/complexity to the installs that
+  were all originally added as workarounds for transient issues with other
+  software 5+ years ago.
+
 ## 2025-07-09
 
 * Removed deprecated homebrew/services tap
