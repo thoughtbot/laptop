@@ -144,9 +144,6 @@ brew "gh"
 # Image manipulation
 brew "imagemagick"
 
-# PDF Rendering
-brew "poppler"
-
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
 brew "coreutils"
