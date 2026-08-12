@@ -137,7 +137,7 @@ brew "watchman"
 brew "zsh"
 
 # Heroku
-brew "heroku/brew/heroku"
+brew "heroku/brew/heroku", trusted: true
 
 # GitHub
 brew "gh"
@@ -155,7 +155,7 @@ brew "yarn"
 cask "gpg-suite-no-mail"
 
 # Databases
-brew "postgresql@14", restart_service: :changed
+brew "postgresql@18", restart_service: :changed
 brew "redis", restart_service: :changed
 EOF
 
