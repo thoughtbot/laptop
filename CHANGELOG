@@ -11,6 +11,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 * Install heroku cli with homebrew as trusted
 * Install postgresql@18 instead of 14
 * asdf installs now compatible with asdf >= 16
+* Removes 5 small things that were adding time/complexity to the installs that
+  were all originally added as workarounds for transient issues with other
+  software 5+ years ago.
+  * No longer need to `brew update --force` https://github.com/Homebrew/brew/issues/1151
+  * Remove the tap of `thoughtbot/formulae`
+  * Remove the installation of poppler
+  * Remove the relinking of the heroku binary
+  * No longer need to `gem update --system`
 
 ## 2025-07-09
 

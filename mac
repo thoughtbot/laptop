@@ -118,9 +118,8 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 fancy_echo "Updating Homebrew formulae ..."
-brew update --force # https://github.com/Homebrew/brew/issues/1151
+brew update
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
 tap "heroku/brew"
 
 # Unix
@@ -145,9 +144,6 @@ brew "gh"
 # Image manipulation
 brew "imagemagick"
 
-# PDF Rendering
-brew "poppler"
-
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
 brew "coreutils"
@@ -158,10 +154,6 @@ cask "gpg-suite-no-mail"
 brew "postgresql@18", restart_service: :changed
 brew "redis", restart_service: :changed
 EOF
-
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
@@ -204,7 +196,6 @@ install_asdf_language() {
 
 fancy_echo "Installing latest Ruby ..."
 install_asdf_language "ruby"
-gem update --system
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 gem_install_or_update "parity"
