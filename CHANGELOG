@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 * Install heroku cli with homebrew as trusted
 * Install postgresql@18 instead of 14
+* asdf installs now compatible with asdf >= 16
 
 ## 2025-07-09
 
