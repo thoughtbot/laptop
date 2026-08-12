@@ -118,9 +118,8 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 fancy_echo "Updating Homebrew formulae ..."
-brew update --force # https://github.com/Homebrew/brew/issues/1151
+brew update
 brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
 tap "heroku/brew"
 
 # Unix
@@ -137,16 +136,13 @@ brew "watchman"
 brew "zsh"
 
 # Heroku
-brew "heroku/brew/heroku"
+brew "heroku/brew/heroku", trusted: true
 
 # GitHub
 brew "gh"
 
 # Image manipulation
 brew "imagemagick"
-
-# PDF Rendering
-brew "poppler"
 
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
@@ -155,18 +151,18 @@ brew "yarn"
 cask "gpg-suite-no-mail"
 
 # Databases
-brew "postgresql@14", restart_service: :changed
+brew "postgresql@18", restart_service: :changed
 brew "redis", restart_service: :changed
 EOF
-
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
   brew install asdf
-  append_to_zshrc "source $(brew --prefix asdf)/libexec/asdf.sh" 1
+  # for future runs
+  # shellcheck disable=SC2016
+  append_to_zshrc 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"'
+  # for this session, so we don't need to restart the shell to do stuff with asdf
+  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 else
   brew upgrade asdf
 fi
@@ -184,7 +180,6 @@ add_or_update_asdf_plugin() {
 }
 
 # shellcheck disable=SC1091
-. "$(brew --prefix asdf)/libexec/asdf.sh"
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
@@ -201,7 +196,6 @@ install_asdf_language() {
 
 fancy_echo "Installing latest Ruby ..."
 install_asdf_language "ruby"
-gem update --system
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config set --global jobs $((number_of_cores - 1))
 gem_install_or_update "parity"
