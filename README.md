@@ -12,10 +12,10 @@ Requirements
 
 We support:
 
+* macOS Tahoe (26.x) on Apple Silicon and Intel
 * macOS Sequoia (15.x) on Apple Silicon and Intel
 * macOS Sonoma (14.x) on Apple Silicon and Intel
 * macOS Ventura (13.x) on Apple Silicon and Intel
-* macOS Monterey (12.x) on Apple Silicon and Intel
 
 Older versions may work but aren't regularly tested.
 Bug reports for older versions are welcome.
